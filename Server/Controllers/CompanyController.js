@@ -3,8 +3,9 @@ const logger = require("serverloggerjs/logger")
 const log = new logger(true)
 const Companies = db.companies
 
-function checkExists(id) {
-    const companies = Companies.findAll({ companyId: id })
+async function checkExists(id) {
+    const companies = await Companies.findAll({ where: { companyId: id } })
+    console.log(companies)
     return companies.length > 0 ? true : false
 }
 
