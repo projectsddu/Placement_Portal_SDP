@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         SSC_Board: {
-            type: DataTypes.FLOAT,
+            type: DataTypes.STRING,
             allowNull: false
         },
         SSC_School: {
@@ -58,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         HSC_Board: {
-            type: DataTypes.FLOAT,
+            type: DataTypes.STRING,
             allowNull: false
         },
         HSC_School: {
