@@ -1,6 +1,7 @@
 const express = require("express")
 const app = express()
 const router = require("./Routers/StudentRouter")
+const Company = require("./Routers/CompanyRouter")
 
 // Middlewares
 
@@ -20,3 +21,4 @@ app.listen(port, () => {
 
 //routers
 app.use("/student", router)
+app.use("/company", Company)
