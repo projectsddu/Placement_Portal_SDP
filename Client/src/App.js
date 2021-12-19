@@ -12,6 +12,9 @@ import theme from './themes';
 
 // project imports
 import NavigationScroll from './layout/NavigationScroll';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 //-----------------------|| APP ||-----------------------//
 
@@ -24,6 +27,7 @@ const App = () => {
                 <CssBaseline />
                 <NavigationScroll>
                     <Routes />
+                    <ToastContainer />
                 </NavigationScroll>
             </ThemeProvider>
         </StyledEngineProvider>
