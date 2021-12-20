@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         SSC_School: {
-            type: DataTypes.FLOAT,
+            type: DataTypes.STRING,
             allowNull: false
         },
         HSC_Percentage: {
@@ -62,7 +62,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         HSC_School: {
-            type: DataTypes.FLOAT,
+            type: DataTypes.STRING,
             allowNull: false
         },
         IsD2D: {
