@@ -100,11 +100,33 @@ const updateStudent = async (req, res) => {
     }
 }
 
+// async function checkExists(id) {
+//     const students = await Student.findAll({ where: { id }})
+//     // console.log(students)
+//     return students.length > 0 ? true : false
+// }
+
+async function checkExists(id) {
+    const students = await Student.findAll({ where: { id } })
+    if(students.length == 0) {
+        return false
+     }
+    else {
+        return true
+    } 
+}
+
 const deleteStudent = async (req, res) => {
     try {
         let id = req.params.id
-        await Student.destroy({ where: { id }})
-        return res.json({ status: true, data: "Student data deleted" })
+        const status = await checkExists(id)
+        if(!status) {
+            throw "Error"
+        }
+        else {
+            await Student.destroy({ where: { id }})
+            return res.json({ status: true, data: "Student data deleted" })
+        }
     }
     catch (err) {
         log.error(err.toString())
