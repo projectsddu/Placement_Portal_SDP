@@ -1,5 +1,14 @@
 const db = require("../Models")
+const logger = require("serverloggerjs/logger")
+const log = new logger(true)
 const Announcement = db.announcements
+const AnnouncementService = require("../Services/AnnouncementService")
+
+async function checkExists(id) {
+    const annoucements = await Announcement.findAll({ where: { Announcement_ID: id } })
+    return annoucements.length > 0 ? true : false
+}
+
 const addAnnoucement = async (req, res) => {
     try {
         const { Announcement_ID, Company_ID, Date_of_Visit, Date_of_announcement,
@@ -27,9 +36,14 @@ const addAnnoucement = async (req, res) => {
                 Eligiblity: Eligiblity,
                 IsOpen: IsOpen
             }
-
-            const createdAnnoucement = await Announcement.create(annoucement)
-            res.status(200).send(createdAnnoucement);
+            const annoucementStatus = await AnnouncementService.createdAnnoucement(req.body)
+            if(annoucementStatus)
+            {
+                return res.json({ data: "Announcement Created", status: true })
+            }
+            else {
+                throw "Error from createdAnnoucement controller"
+            }
         }
     }
     catch (e) {
@@ -41,8 +55,13 @@ const addAnnoucement = async (req, res) => {
 // returns all annoucements
 const getAllAnnoucements = async (req, res) => {
     try {
-        let announcements = await Announcement.findAll({})
-        res.send({ status: true, data: announcements })
+        let announcements = await AnnouncementService.getAllAnnoucements()
+        if (announcements) {
+            return res.json({ status: announcements.length == 0 ? false : true, data: announcements.length == 0 ? "No Student data!" : announcements })
+        }
+        else {
+            throw "Error in getAllAnnoucements"
+        }
     }
     catch (e) {
         console.log(e.toString());
@@ -55,15 +74,14 @@ const getAllAnnoucements = async (req, res) => {
 const getAnnoucement = async (req, res) => {
 
     try {
-        const annoucementId = req.params.annoucementId;
-        let annoucement = await Announcement.findAll({
-            where: {
-                Announcement_ID: annoucementId
-            }
-        })
-
-        res.json({ status: annoucement.length == 0 ? false : true, data: annoucement.length == 0 ? "Annoucement Not Found!" : annoucement })
-        // res.send(annoucement)
+        const id = req.params.annoucementId
+        let announcement = await AnnouncementService.getAnnoucement(id)
+        if(announcement) {
+            return res.json({ status: announcement.length == 0 ? false : true, data: announcement.length == 0 ? "Annoucement Not Found!" : announcement })
+        }
+        else {
+            throw "Error in getAnnouncement"
+        }
     }
     catch (e) {
         console.log(e.toString());
@@ -74,53 +92,31 @@ const getAnnoucement = async (req, res) => {
 
 const updateAnnoucement = async (req, res) => {
     try {
-        const annoucementId = req.params.annoucementId;
-
-        let annoucementExist = await Announcement.findAll({
-            where: {
-                Announcement_ID: annoucementId
-            }
-        })
-
-        if (!annoucementExist) {
-            res.json({ status: false, data: "Annoucement Not Found!!" })
+        const id = req.params.annoucementId
+        const annoucement = await AnnouncementService.updateAnnoucement(req.body, id)
+        if(annoucement) {
+            return res.json({ status: true, data: "Announcement Updated!!" })
         }
-
-        let annoucement = await Announcement.update(req.body, {
-            where: {
-                Announcement_ID: annoucementId
-            }
-        })
-
-        res.json({ status: annoucement.length == 0 ? false : true, data: annoucement.length == 0 ? "Annoucement Not Found!" : "updated rows " + annoucement })
+        else { 
+            return res.json({ status: false, data: "Error updating Announcement !!!" })
+        }
     }
     catch (e) {
         console.log(e.toString());
-        res.json({ status: false, data: e.toString() })
+        res.json({ status: false, data: "Error updating announcement !!" })
     }
 }
 
 const deleteAnnoucement = async (req, res) => {
     try {
-        const annoucementId = req.params.annoucementId;
-
-        let annoucementExist = await Announcement.findAll({
-            where: {
-                Announcement_ID: annoucementId
-            }
-        })
-
-        if (!annoucementExist) {
-            res.json({ status: false, data: "Annoucement Not Found!!" })
+        let id = req.params.annoucementId
+        const status = await AnnouncementService.deleteAnnoucement(id)
+        if(status) {
+            return res.json({ status: true, data: "Announcement Deleted Successfully!!" })
         }
-
-        let annoucement = await Announcement.destroy({
-            where: {
-                Announcement_ID: annoucementId
-            }
-        })
-
-        res.json({ status: annoucement.length == 0 ? false : true, data: annoucement.length == 0 ? "Annoucement Not Found!" : "updated rows " + annoucement })
+        else {
+            throw "Error deleting announcement"
+        }
     }
     catch (e) {
         console.log(e.toString());
