@@ -25,6 +25,10 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import usePost from '../../Utilities/UsePost'
+import HandleToast from '../../Utilities/HandleToast'
+import { ToastContainer, toast } from 'react-toastify';
+import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -81,8 +85,40 @@ function AddAnnoucement() {
     });
     useEffect(() => {}, [data]);
 
+
+    function HandleSubmit(e) {
+        console.log("submit..")
+        e.preventDefault();
+        // const res = usePost("/annoucement/addAnnoucement", data, "POST")
+        // const params1 = {
+        //     data: res,
+        //     HandleToast: {
+        //         toast: toast,
+        //         flag: false,
+        //     }
+        // }
+
+        // // To pipeline with params 1
+       
+        //     console.log(res)
+        //     responsePipelineHandler(params1, 0)
+        
+    }   
+
+    // const saveData = async function() {
+    //     // console.log("hello from save data");
+    //     const { res, waiting } = usePost("/annoucement/addAnnoucement", data, "POST")
+    //     const params1 = {
+    //         data: res,
+    //         HandleToast: {
+    //             toast: toast,
+    //             flag: false,
+    //         }
+    //     }
+    // }
+
     return (
-        <MainCard title="Add Annoucement">
+        <MainCard title="Add Annoucement" enctype="multipart/form-data">
             <TextField
                 fullWidth
                 label="Company Name"
@@ -254,7 +290,7 @@ function AddAnnoucement() {
 
             <br />
             <br />
-            <Button variant="contained" size="large" color="primary">
+            <Button onClick={HandleSubmit} variant="contained" size="large" color="primary">
                 Add Annoucement
             </Button>
         </MainCard>

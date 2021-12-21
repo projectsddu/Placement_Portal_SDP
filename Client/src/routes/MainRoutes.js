@@ -22,6 +22,7 @@ const keval = Loadable(lazy(() => import('../views/Own/keval')));
 const SReg = Loadable(lazy(() => import('../views/utilities/StudentRegisterExample')));
 const Announcement = Loadable(lazy(() => import('../views/Announcement/index')));
 const AddAnnouncement = Loadable(lazy(() => import('../views/Announcement/AddAnnoucement')));
+const ViewAnnouncement = Loadable(lazy(() => import('../views/Announcement/ViewAnnoucements')));
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('../views/sample-page')));
@@ -49,7 +50,8 @@ const MainRoutes = () => {
 
                 // Announcement Routes
                 "/announcement/index",
-                '/announcement/add_annoucement'
+                '/announcement/add_annoucement',
+                "/announcement/view_annoucement"
                 // annoucement routers finished
             ]}
         >
@@ -72,6 +74,7 @@ const MainRoutes = () => {
                     {/* Announcement Routes */}
                     <Route path="/announcement/index" component={Announcement} />
                     <Route path="/announcement/add_annoucement" component={AddAnnouncement} />
+                    <Route path="/announcement/view_annoucement" component={ViewAnnouncement} />
 
                     {/* </AuthGuard> */}
                 </Switch>
