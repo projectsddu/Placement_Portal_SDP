@@ -17,6 +17,9 @@ app.use(express.urlencoded({ extended: true }))
 app.get("/", (req, res) => {
     res.send("Workig all right!")
 })
+app.post("/postTest", (req, res) => {
+    res.send(req.body)
+})
 
 const port = 8000
 
