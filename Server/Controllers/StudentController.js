@@ -1,6 +1,7 @@
 const db = require("../Models")
 const logger = require("serverloggerjs/logger")
 const log = new logger(true)
+const StudentService = require("../Services/StudentService")
 const Student = db.students
 const Announcement = db.announcements
 
@@ -52,8 +53,14 @@ const addStudent = async (req, res) => {
         //     Student_Photo: "image1.png",
         //     Branch_Id: "CE"
         // })
-        Student.create(req.body)
-        return res.json({ status: true, data: "Student Added" })
+        // Student.create(req.body)
+        const studentStatus = await StudentService.createStudent(req.body)
+        if (studentStatus) {
+            return res.json({ status: true, data: "Student Added" })
+        }
+        else {
+            throw "Error from create student controller"
+        }
     }
     catch (err) {
         log.error(err.toString())
@@ -64,8 +71,14 @@ const addStudent = async (req, res) => {
 // to get all students info
 const getAllStudents = async (req, res) => {
     try {
-        let students = await Student.findAll({})
-        return res.json({ status: students.length == 0 ? false : true, data: students.length == 0 ? "No Student data!" : students })
+        let students = await StudentService.getAllStudents()
+        if (students) {
+
+            return res.json({ status: students.length == 0 ? false : true, data: students.length == 0 ? "No Student data!" : students })
+        }
+        else {
+            throw "Error in getAllstudents"
+        }
     }
     catch (err) {
         log.error(err.toString())
@@ -77,10 +90,14 @@ const getAllStudents = async (req, res) => {
 const getOneStudent = async (req, res) => {
     try {
         let id = req.params.id
-        let student = await Student.findOne({
-            where: { id }
-        })
-        return res.json({ status: student.length == 0 ? false : true, data: student.length == 0 ? "No Student data!" : student })
+        let student = await StudentService.getOneStudent(id)
+        if (student) {
+
+            return res.json({ status: student.length == 0 ? false : true, data: student.length == 0 ? "No Student data!" : student })
+        }
+        else {
+            throw "Error in get One student"
+        }
     }
     catch (err) {
         log.error(err.toString())
@@ -91,20 +108,35 @@ const getOneStudent = async (req, res) => {
 const updateStudent = async (req, res) => {
     try {
         let id = req.params.id
-        const student = await Student.update(req.body, { where: { id }})
-        return res.json({ status: true, data: "Student data updated" })
+        const student = await StudentService.updateStudent(req.body, id)
+        if (student) {
+            return res.json({ status: true, data: "Student data updated" })
+        }
+        else {
+            throw "Error updating student"
+        }
     }
     catch (err) {
         log.error(err.toString())
+        console.log()
         return res.json({ status: false, data: "Error updating Student data !!!" })
     }
 }
 
+
+
+
 const deleteStudent = async (req, res) => {
     try {
         let id = req.params.id
-        await Student.destroy({ where: { id }})
-        return res.json({ status: true, data: "Student data deleted" })
+        const status = await StudentService.deleteStudent(id)
+        if (status) {
+            res.json({ status: true, data: "Student data deleted" })
+        }
+        else {
+            throw "Error deleting student!"
+        }
+
     }
     catch (err) {
         log.error(err.toString())

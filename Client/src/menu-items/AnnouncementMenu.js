@@ -1,11 +1,13 @@
 // assets
-import { IconDashboard, IconDeviceAnalytics, IconSpeakerphone } from '@tabler/icons';
+import { IconDashboard, IconDeviceAnalytics, IconSpeakerphone, IconLayoutGridAdd, IconCirclePlus } from '@tabler/icons';
 
 // constant
 const icons = {
     IconDashboard: IconDashboard,
     IconDeviceAnalytics,
-    IconSpeakerphone
+    IconSpeakerphone, 
+    IconLayoutGridAdd,
+    IconCirclePlus
 };
 
 //-----------------------|| ANNOUNCEMENT DASHBOARD MENU ITEMS ||-----------------------//
@@ -16,6 +18,14 @@ export const AnnouncementMenu = {
     type: 'group',
     children: [
         {
+            id: 'AddAnnoucement',
+            title: 'Add Annoucement',
+            type: 'item',
+            url: '/announcement/add_annoucement',
+            icon: icons['IconCirclePlus'],
+            breadcrumbs: false
+        },
+        {
             id: 'AnnouncementDetails',
             title: 'All Announcements',
             type: 'item',
@@ -23,6 +33,7 @@ export const AnnouncementMenu = {
             icon: icons['IconSpeakerphone'],
             breadcrumbs: false
         },
+        
 
     ]
 };

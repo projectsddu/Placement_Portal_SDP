@@ -20,7 +20,8 @@ const UtilsTablerIcons = Loadable(lazy(() => import('../views/utilities/TablerIc
 const cards = Loadable(lazy(() => import('../views/utilities/cards')));
 const keval = Loadable(lazy(() => import('../views/Own/keval')));
 const SReg = Loadable(lazy(() => import('../views/utilities/StudentRegisterExample')));
-const Announcement = Loadable(lazy(() => import('../views/Announcement')));
+const Announcement = Loadable(lazy(() => import('../views/Announcement/index')));
+const AddAnnouncement = Loadable(lazy(() => import('../views/Announcement/AddAnnoucement')));
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('../views/sample-page')));
@@ -47,7 +48,9 @@ const MainRoutes = () => {
 
 
                 // Announcement Routes
-                "/announcement/index"
+                "/announcement/index",
+                '/announcement/add_annoucement'
+                // annoucement routers finished
             ]}
         >
             <MainLayout>
@@ -68,6 +71,7 @@ const MainRoutes = () => {
 
                     {/* Announcement Routes */}
                     <Route path="/announcement/index" component={Announcement} />
+                    <Route path="/announcement/add_annoucement" component={AddAnnouncement} />
 
                     {/* </AuthGuard> */}
                 </Switch>
