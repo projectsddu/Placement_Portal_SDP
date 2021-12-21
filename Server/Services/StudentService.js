@@ -52,7 +52,7 @@ const getOneStudent = async (id) => {
 
 const updateStudent = async (data, id) => {
     try {
-        if (checkExists(id)) {
+        if (await checkExists(id)) {
             const student = await Student.update(data, { where: { id } })
             return student
         }
