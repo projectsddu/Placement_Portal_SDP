@@ -4,7 +4,7 @@ const handleToast = function (params) {
     const data = params.data
     const flag = params.HandleToast.flag
     const customMessage = params.HandleToast.customMessage
-    let message = ""
+    let message = "not defined"
     if (!flag) {
         message = data["data"]
     }
