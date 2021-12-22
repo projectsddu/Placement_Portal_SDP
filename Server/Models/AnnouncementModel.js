@@ -58,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         // doubt (JHB Sir)
-        Eligiblity: {
+        Eligibility: {
             type: DataTypes.STRING,
             allowNull: false
         },

@@ -70,7 +70,7 @@ const Input = styled('input')({
 function AddAnnoucement() {
 
     const [selectedFile, setSelectedFile] = useState();
-	const [isFilePicked, setIsFilePicked] = useState(false);
+    const [isFilePicked, setIsFilePicked] = useState(false);
 
     const [data, setData] = useState({
         Company_Name: '',
@@ -96,7 +96,7 @@ function AddAnnoucement() {
         let temp = data
         temp["Job_Description_File"] = file_data
         setData(temp)
-	};
+    };
 
     async function handleSubmit() {
 
@@ -109,7 +109,7 @@ function AddAnnoucement() {
             }
         }
         console.log(res);
-        // responsePipelineHandler(params1, 1)
+        responsePipelineHandler(params1, 1)
         // END OF POSTING DATA EXAMPLE
     }
 
@@ -264,9 +264,9 @@ function AddAnnoucement() {
                     <Grid item>
                         <label htmlFor="contained-button-file">
                             {/* <label>Job Description File</label>    */}
-                            <Input onChange={changeHandler} 
-                            // accept="image/*"
-                            id="contained-button-file" multiple type="file" />
+                            <Input onChange={changeHandler}
+                                // accept="image/*"
+                                id="contained-button-file" multiple type="file" />
                             <Button variant="outlined" component="span">
                                 Upload Job Description File
                             </Button>

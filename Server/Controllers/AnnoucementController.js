@@ -43,13 +43,12 @@ const addAnnoucement = async (req, res) => {
                 Eligibility: Eligibility,
                 IsOpen: IsOpen
             }
-            // console.log(annoucement);
+            console.log(annoucement);
             // console.log("Req.file: ", req);
             // const job_description_file = req.file
 
-            // const annoucementStatus = await AnnouncementService.createdAnnoucement(req.body, job_description_file)
-            if(1)
-            {
+            const annoucementStatus = await AnnouncementService.createdAnnoucement(req.body)
+            if (annoucementStatus) {
                 return res.json({ data: "Announcement Created", status: true })
             }
             else {
@@ -87,7 +86,7 @@ const getAnnoucement = async (req, res) => {
     try {
         const id = req.params.annoucementId
         let announcement = await AnnouncementService.getAnnoucement(id)
-        if(announcement) {
+        if (announcement) {
             return res.json({ status: announcement.length == 0 ? false : true, data: announcement.length == 0 ? "Annoucement Not Found!" : announcement })
         }
         else {
@@ -105,10 +104,10 @@ const updateAnnoucement = async (req, res) => {
     try {
         const id = req.params.annoucementId
         const annoucement = await AnnouncementService.updateAnnoucement(req.body, id)
-        if(annoucement) {
+        if (annoucement) {
             return res.json({ status: true, data: "Announcement Updated!!" })
         }
-        else { 
+        else {
             return res.json({ status: false, data: "Error updating Announcement !!!" })
         }
     }
@@ -122,7 +121,7 @@ const deleteAnnoucement = async (req, res) => {
     try {
         let id = req.params.annoucementId
         const status = await AnnouncementService.deleteAnnoucement(id)
-        if(status) {
+        if (status) {
             return res.json({ status: true, data: "Announcement Deleted Successfully!!" })
         }
         else {

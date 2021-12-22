@@ -9,13 +9,15 @@ const fileStorage = multer.diskStorage({
         cb(null, "./public")
     },
     filename: (req, file, cb) => {
-        cb(null, "keval")
-        console.log(req);
+        const dat = Date.parse(req.body.Date_of_Visit)
+        // console.log(typeof req.body.Date_of_Visit)
+        cb(null, req.body.Company_Name + "-" + dat.toString() + ".pdf")
+        console.log(req.body);
     }
 
 })
 
-const upload = multer({storage: fileStorage })
+const upload = multer({ storage: fileStorage })
 
 router.post("/addAnnoucement", [upload.single("Job_Description_File")], AnnouncementController.addAnnoucement)
 
