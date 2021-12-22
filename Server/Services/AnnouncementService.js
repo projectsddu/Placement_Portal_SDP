@@ -1,18 +1,27 @@
 const logger = require("serverloggerjs/logger")
+const multer = require('multer');
+const path = require('path');
 const { announcements } = require("../Models/index")
 const log = new logger(true)
 const db = require("../Models/index")
 const Announcement = db.announcements
 
 async function checkExists(id) {
-    const announcements = await Announcement.findAll({ 
-        where: { Announcement_ID: id } 
+    const announcements = await Announcement.findAll({
+        where: { Announcement_ID: id }
     })
     return announcements.length > 0 ? true : false
 }
 
-const createdAnnoucement = async (announcementData) => {
+const createdAnnoucement = async (announcementData, job_description_file) => {
     try {
+        console.log(announcementData)
+        const dat = Date.parse(announcementData["Date_of_Visit"])
+        const fileName = "./public/" + announcementData["Company_Name"] + "-" + dat.toString() + ".pdf"
+        announcementData["Job_Description_File"] = fileName
+        announcementData["Company_ID"] = 3 // Temporary static
+        announcementData["IsOpen"] = true // Temporary static
+
         await Announcement.create(announcementData)
         return true
     }
@@ -35,7 +44,7 @@ const getAllAnnoucements = async () => {
 const getAnnoucement = async (id) => {
     try {
         const status = await checkExists(id)
-        if(!status) {
+        if (!status) {
             throw "Error finding announcement detials"
         }
         else {
@@ -53,7 +62,7 @@ const getAnnoucement = async (id) => {
 const updateAnnoucement = async (data, id) => {
     try {
         const status = await checkExists(id)
-        if(!status) {
+        if (!status) {
             throw "Announcement doesn't exist"
         }
         else {
@@ -87,5 +96,5 @@ module.exports = {
     getAllAnnoucements,
     getAnnoucement,
     updateAnnoucement,
-    deleteAnnoucement   
+    deleteAnnoucement
 }
