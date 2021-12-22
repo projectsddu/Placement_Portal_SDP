@@ -26,6 +26,14 @@ export const AnnouncementMenu = {
             breadcrumbs: false
         },
         {
+            id: 'ViewAnnoucement',
+            title: 'View Annoucements',
+            type: 'item',
+            url: '/announcement/view_annoucement',
+            icon: icons['IconCirclePlus'],
+            breadcrumbs: false
+        },
+        {
             id: 'AnnouncementDetails',
             title: 'All Announcements',
             type: 'item',

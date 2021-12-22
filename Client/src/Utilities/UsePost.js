@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
-const usePost = (url, data, method = "POST") => {
-    const [res, setRes] = useState(null);
-    const [waiting, setWaiting] = useState(true);
-    useEffect(async () => {
-        const response = await fetch(
+const UsePost = async (url, data, method = "POST") => {
+    try {
+
+        let response = await fetch(
             url,
             {
                 method: method,
@@ -15,11 +14,12 @@ const usePost = (url, data, method = "POST") => {
             }
         );
         let res1 = await response.json();
-        setRes(res1);
-        setWaiting(false);
-    }, []);
-
-    return { res, waiting };
+        return res1;
+    }
+  
+catch (err) {
+        console.log(err.toString())
+    }
 }
 
-export default usePost
+export default UsePost
