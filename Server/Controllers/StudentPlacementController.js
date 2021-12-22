@@ -3,7 +3,6 @@ const logger = require("serverloggerjs/logger")
 const log = new logger(true)
 const StudentPlacement = db.student_placements
 const StudentPlacementService = require("../Services/StudentPlacementService")
-const StudentPlacementModel = require("../Models/StudentPlacementModel")
 
 async function checkExists(id) {
     const studentplacement = await StudentPlacement.findAll({ where: { id }})
@@ -13,9 +12,12 @@ async function checkExists(id) {
 const addStudentPlacement = async (req, res) => {
     try {
         const data = req.body
+        if(req.emptyField) {
+            throw req.empty_arr[0] + " cannot be empty!!!"
+        }
         const studentplacementStatus = await StudentPlacementService.createStudentPlacement(data)
         if(studentplacementStatus) {
-            return res.json({ data: "StudentPlacement created", status: true})
+            return res.json({ data: "StudentPlacement Record created", status: true})
         }
         else {
             throw  "Error from createStudentPlacement controller"
@@ -31,7 +33,7 @@ const getStudentPlacement = async (req, res) => {
         const id = req.params.id
         let studentplacement = await StudentPlacementService.getStudentPlacement(id)
         if(studentplacement) {
-            return res.json({ status: studentplacement.length == 0 ? false : true, data: studentplacement.length == 0 ? "Student Placement Not Found!" : studentplacement })   
+            return res.json({ status: studentplacement.length == 0 ? false : true, data: studentplacement.length == 0 ? "Student Placement Record Not Found!" : studentplacement })   
         }
         else {
             throw "Error from getStudentPlacement controller"
@@ -46,7 +48,7 @@ const getAllStudentPlacement = async (req, res) => {
     try {
         let studentplacements = await StudentPlacementService.getAllStudentPlacement()
         if(studentplacements) {
-            return res.json({ status: studentplacements.length == 0 ? false : true, data: studentplacements.length == 0 ? "No Student Placement data!" : studentplacements })
+            return res.json({ status: studentplacements.length == 0 ? false : true, data: studentplacements.length == 0 ? "No Student Placement Record found" : studentplacements })
         }
         else {
             throw "Error from getAllStudentPlacement controller"
@@ -60,9 +62,10 @@ const getAllStudentPlacement = async (req, res) => {
 const updateStudentPlacement = async (req, res) => {
     try {
         const id = req.params.id
-        const studentplacement = await StudentPlacementService.updateStudentPlcaement(req.body, id)
+        const studentplacement = await StudentPlacementService.updateStudentPlacement(req.body, id)
+        console.log(studentplacement)
         if(studentplacement) {
-            return res.json({ status: true, data: "Student Placement Updated!!" })
+            return res.json({ status: true, data: "Student Placement Record Updated" })
         }
         else {
             throw "Error from updateStudentPlacement controller"
@@ -78,7 +81,7 @@ const deleteStudentPlacement = async (req, res) => {
         const id = req.params.id
         const studentplacement = await StudentPlacementService.deleteStudentPlacement(id)
         if(studentplacement) {
-            return res.json({ status: true, data: "Student Placement Deleted Successfully!!" })
+            return res.json({ status: true, data: "Student Placement Record Deleted Successfully!!" })
         }
         else {
             throw "Error from deleteStudentPlacement controller"

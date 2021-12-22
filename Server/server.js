@@ -4,11 +4,10 @@ const path = require('path');
 const app = express()
 
 const StudentRouter = require("./Routers/StudentRouter")
-
 const AnnoucementRouter = require("./Routers/AnnoucementRouter")
-const Company = require("./Routers/CompanyRouter")
-
-
+const CompanyRouter = require("./Routers/CompanyRouter")
+const StudentPlacementRouter = require("./Routers/StudentPlacementRouter")
+const StudentInternshipRouter = require("./Routers/StudentInternshipRouter")
 
 // Middlewares
 
@@ -36,5 +35,6 @@ app.listen(port, () => {
 
 app.use("/student", StudentRouter)
 app.use("/annoucement", AnnoucementRouter)
-app.use("/company", Company)
-
+app.use("/company", CompanyRouter)
+app.use("/studentplacement", StudentPlacementRouter)
+app.use("/studentinternship", StudentInternshipRouter)
