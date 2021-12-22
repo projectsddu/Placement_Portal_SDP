@@ -1,7 +1,8 @@
 const StudentPlacementController = require("../Controllers/StudentPlacementController")
 const router = require('express').Router()
+const EmptyFieldCheck = require("../Middlewares/General/EmptyFieldCheck")
 
-router.post("/addStudentPlacement", StudentPlacementController.addStudentPlacement)
+router.post("/addStudentPlacement", [EmptyFieldCheck], StudentPlacementController.addStudentPlacement)
 router.get("/getStudentPlacement/:id", StudentPlacementController.getStudentPlacement)
 router.get("/getAllStudentPlacement", StudentPlacementController.getAllStudentPlacement)
 router.post("/updateStudentPlacement/:id", StudentPlacementController.updateStudentPlacement)

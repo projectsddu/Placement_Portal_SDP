@@ -21,6 +21,7 @@ db.announcements = require("./AnnouncementModel")(sequelize, DataTypes)
 db.companies = require("./CompanyModel")(sequelize, DataTypes)
 db.userLogin = require("./UserLoginModel")(sequelize, DataTypes)
 db.student_placements = require("./StudentPlacementModel")(sequelize, DataTypes)
+db.student_internships = require("./StudentInternshipModel")(sequelize, DataTypes)
 
 db.sequelize.sync({ force: false }).then(() => {
     console.log("Resyncing Done.....")
