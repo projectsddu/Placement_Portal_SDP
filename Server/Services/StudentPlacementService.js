@@ -11,6 +11,7 @@ async function checkExists(id) {
 const createStudentPlacement = async (studentplacementdata) => {
     try {
         await StudentPlacement.create(studentplacementdata)
+        return true
     } catch (error) {
         log.error(error.toString())
         return false
@@ -45,14 +46,14 @@ const getAllStudentPlacement = async () => {
     }
 }
 
-const updateStudentPlcaement = async (studentplacementdata, id) => {
+const updateStudentPlacement = async (studentplacementdata, id) => {
     try {
         const status = await checkExists(id)
         if(!status) {
             throw "Student Placement record doesn't exist"
         }
         else {
-            const studentplacement = await StudentPlacement.update({ studentplacementdata, where: { id } })
+            const studentplacement = await StudentPlacement.update(studentplacementdata, { where: { id } })
             return true
         }
     } catch (error) {
@@ -81,6 +82,6 @@ module.exports = {
     createStudentPlacement,
     getStudentPlacement,
     getAllStudentPlacement,
-    updateStudentPlcaement,
+    updateStudentPlacement,
     deleteStudentPlacement
 }
