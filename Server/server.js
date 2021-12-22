@@ -1,4 +1,6 @@
 const express = require("express")
+const multer = require('multer');
+const path = require('path');
 const app = express()
 
 const StudentRouter = require("./Routers/StudentRouter")
@@ -12,6 +14,9 @@ const Company = require("./Routers/CompanyRouter")
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(express.static(__dirname + '/public'));
+
+
 
 // Testing API
 app.get("/", (req, res) => {

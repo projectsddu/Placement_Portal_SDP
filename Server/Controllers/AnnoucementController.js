@@ -1,18 +1,25 @@
 const db = require("../Models")
+const multer = require('multer');
 const logger = require("serverloggerjs/logger")
 const log = new logger(true)
 const Announcement = db.announcements
-const AnnouncementService = require("../Services/AnnouncementService")
+const AnnouncementService = require("../Services/AnnouncementService");
+const { request } = require("express");
 
 async function checkExists(id) {
     const annoucements = await Announcement.findAll({ where: { Announcement_ID: id } })
     return annoucements.length > 0 ? true : false
 }
 
+
+
 const addAnnoucement = async (req, res) => {
     try {
+
+        // console.log(req);
+
         const { Announcement_ID, Company_ID, Date_of_Visit, Date_of_announcement,
-            Eligible_Branches, Passed_out_year, Job_Role, Salary, Job_Location, Bond_Details, Other_Details, Job_Description_File, Registration_Deadline, Eligiblity, IsOpen } = req.body;
+            Eligible_Branches, Passed_out_year, Job_Role, Salary, Job_Location, Bond_Details, Other_Details, Job_Description_File, Registration_Deadline, Eligibility, IsOpen } = req.body;
 
         if (req.emptyField) {
             throw req.empty_arr[0] + " cannot be empty!!"
@@ -33,11 +40,15 @@ const addAnnoucement = async (req, res) => {
                 Other_Details: Other_Details,
                 Job_Description_File: Job_Description_File,
                 Registration_Deadline: Registration_Deadline,
-                Eligiblity: Eligiblity,
+                Eligibility: Eligibility,
                 IsOpen: IsOpen
             }
-            const annoucementStatus = await AnnouncementService.createdAnnoucement(req.body)
-            if(annoucementStatus)
+            // console.log(annoucement);
+            // console.log("Req.file: ", req);
+            // const job_description_file = req.file
+
+            // const annoucementStatus = await AnnouncementService.createdAnnoucement(req.body, job_description_file)
+            if(1)
             {
                 return res.json({ data: "Announcement Created", status: true })
             }

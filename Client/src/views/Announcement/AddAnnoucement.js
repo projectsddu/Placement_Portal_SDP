@@ -25,7 +25,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import UsePost from '../../Utilities/UsePost'
+import UsePostFile from '../../Utilities/UsePostFile'
 import HandleToast from '../../Utilities/HandleToast'
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
@@ -68,6 +68,10 @@ const Input = styled('input')({
 });
 
 function AddAnnoucement() {
+
+    const [selectedFile, setSelectedFile] = useState();
+	const [isFilePicked, setIsFilePicked] = useState(false);
+
     const [data, setData] = useState({
         Company_Name: '',
         Date_of_announcement: null,
@@ -79,16 +83,24 @@ function AddAnnoucement() {
         Job_Location: '',
         Bond_Details: '',
         Other_Details: '',
-        Job_Description_File: '',
         Registration_Deadline: null,
-        Eligiblity: ''
+        Eligibility: ''
     });
     useEffect(() => { }, [data]);
 
 
+
+    const changeHandler = (event) => {
+        console.log(event.target.files[0])
+        const file_data = event.target.files[0]
+        let temp = data
+        temp["Job_Description_File"] = file_data
+        setData(temp)
+	};
+
     async function handleSubmit() {
 
-        const res = await UsePost("/annoucement/addAnnoucement", data, "POST")
+        const res = await UsePostFile("/annoucement/addAnnoucement", data, "POST")
         const params1 = {
             data: res,
             HandleToast: {
@@ -96,8 +108,8 @@ function AddAnnoucement() {
                 flag: false,
             }
         }
-
-        responsePipelineHandler(params1, 1)
+        console.log(res);
+        // responsePipelineHandler(params1, 1)
         // END OF POSTING DATA EXAMPLE
     }
 
@@ -252,7 +264,9 @@ function AddAnnoucement() {
                     <Grid item>
                         <label htmlFor="contained-button-file">
                             {/* <label>Job Description File</label>    */}
-                            <Input accept="image/*" id="contained-button-file" multiple type="file" />
+                            <Input onChange={changeHandler} 
+                            // accept="image/*"
+                            id="contained-button-file" multiple type="file" />
                             <Button variant="outlined" component="span">
                                 Upload Job Description File
                             </Button>

@@ -1,4 +1,6 @@
 const logger = require("serverloggerjs/logger")
+const multer = require('multer');
+const path = require('path');
 const { announcements } = require("../Models/index")
 const log = new logger(true)
 const db = require("../Models/index")
@@ -11,7 +13,7 @@ async function checkExists(id) {
     return announcements.length > 0 ? true : false
 }
 
-const createdAnnoucement = async (announcementData) => {
+const createdAnnoucement = async (announcementData, job_description_file) => {
     try {
         await Announcement.create(announcementData)
         return true

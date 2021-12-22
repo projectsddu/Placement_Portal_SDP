@@ -26,42 +26,42 @@ const Dashboard = () => {
 
     }, []);
 
-    const { data, loading } = useFetch("/annoucement/getAllAnnoucements", "GET", toast, true)
-    const params = {
-        data: data,
-        HandleToast: {
-            toast: toast,
-            customMessage: "Hey Hi from handler",
-            flag: false,
-        }
-    }
+    // const { data, loading } = useFetch("/annoucement/getAllAnnoucements", "GET", toast, true)
+    // const params = {
+    //     data: data,
+    //     HandleToast: {
+    //         toast: toast,
+    //         customMessage: "Hey Hi from handler",
+    //         flag: false,
+    //     }
+    // }
 
-    if (!loading) {
-        console.log(data)
-        responsePipelineHandler(params, 0)
+    // if (!loading) {
+    //     console.log(data)
+    //     responsePipelineHandler(params, 0)
 
-    }
+    // }
 
 
-    // POSTING DATA TO SERVER CODE EXAMPLE HERE
-    const testingResp = {
-        status: true,
-        data: "Success posting data to server!!"
-    }
-    const { res, waiting } = usePost("/postTest", testingResp, "POST")
-    const params1 = {
-        data: res,
-        HandleToast: {
-            toast: toast,
-            flag: false,
-        }
-    }
+    // // POSTING DATA TO SERVER CODE EXAMPLE HERE
+    // const testingResp = {
+    //     status: true,
+    //     data: "Success posting data to server!!"
+    // }
+    // const { res, waiting } = usePost("/postTest", testingResp, "POST")
+    // const params1 = {
+    //     data: res,
+    //     HandleToast: {
+    //         toast: toast,
+    //         flag: false,
+    //     }
+    // }
 
-    // To pipeline with params 1
-    if (!waiting) {
-        console.log(res)
-        responsePipelineHandler(params1, 0)
-    }
+    // // To pipeline with params 1
+    // if (!waiting) {
+    //     console.log(res)
+    //     responsePipelineHandler(params1, 0)
+    // }
 
     // END OF POSTING DATA EXAMPLE
 
