@@ -62,7 +62,7 @@ const MainRoutes = () => {
 
                 // Company Routes
 
-                '/company/add_company'
+                '/company/add_company',
                 // Company routes finished
 
 

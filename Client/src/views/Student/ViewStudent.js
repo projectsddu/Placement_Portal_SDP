@@ -24,11 +24,9 @@ export default function ViewStudent() {
     const { required_data, loading } = useFetch("/student/getAllStudents", "GET")
 
     let students_list = [];
-    if(!loading)
-    {
+    if (!loading) {
         // console.log(required_data);
-        for(let i = 0; i < required_data["data"].length; i++)
-        {
+        for (let i = 0; i < required_data["data"].length; i++) {
             var obj = {};
             obj = required_data["data"][i];
             // console.log(obj)
@@ -37,17 +35,7 @@ export default function ViewStudent() {
         console.log(students_list);
     }
 
-    const rows = [
-        // { id: 1, Student_ID: "19CEUON133", FirstName: "Jenil", MiddleName: "J", LastName: "Gandhi", Sem_5_SPI: "8.89", Sem_6_SPI: "8.89", Sem_7_SPI: "8.89", CV: icons['IconSpeakerphone'] },
-        // { id: 2, Student_ID: "19CEUON103", FirstName: "Rikin", MiddleName: "D", LastName: "Chauhan", Sem_5_SPI: "9.0", Sem_6_SPI: "9.0", Sem_7_SPI: "9.0", CV: icons['IconSpeakerphone'] },
-        // { id: 3, Student_ID: "19CEUON123", FirstName: "Keval", MiddleName: "D", LastName: "Gandevia", Sem_5_SPI: "9.2", Sem_6_SPI: "9.2", Sem_7_SPI: "9.2", CV: icons['IconSpeakerphone'] },
-        // { id: 2, ID: "19CEUEG017", FullName: "Keval D Gandevia", CPI: "9.34", Semester: 6, CV: icons['IconSpeakerphone'] },
-        // { id: 3, ID: "19CEUOS102", FullName: "Rikin D Chauhan", CPI: "9.13", Semester: 6, CV: icons['IconSpeakerphone'] },
-        // { id: 4, ID: "19CEUON112", FullName: "Harsh Patel", CPI: "7.21", Semester: 5, CV: icons['IconSpeakerphone'] },
-        // { id: 5, ID: "19CEUES017", FullName: "Ansh Shah", CPI: "9.11", Semester: 5, CV: icons['IconSpeakerphone'] },
-
-
-    ];
+    const rows = [];
 
     const columns = [
         { field: "id", headerName: "ID", hide: true },

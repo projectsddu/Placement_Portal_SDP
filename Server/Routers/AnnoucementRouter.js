@@ -14,7 +14,8 @@ const fileStorage = multer.diskStorage({
     filename: (req, file, cb) => {
         const dat = Date.parse(req.body.Date_of_Visit)
         // console.log(typeof req.body.Date_of_Visit)
-        cb(null, req.body.Company_Name + "-" + dat.toString() + ".pdf")
+        console.log(req.body)
+        cb(null, req.body.Company_ID + "-" + dat.toString() + ".pdf")
         console.log(req.body);
     }
 
