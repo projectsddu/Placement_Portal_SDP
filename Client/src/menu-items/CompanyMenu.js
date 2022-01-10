@@ -17,6 +17,14 @@ export const CompanyMenu = {
     type: 'group',
     children: [
         {
+            id: 'CompanyAdd',
+            title: 'Add Company',
+            type: 'item',
+            url: '/company/add_company',
+            icon: icons['IconCirclePlus'],
+            breadcrumbs: false
+        },
+        {
             id: 'CompanyDetails',
             title: 'Company Details',
             type: 'item',
@@ -24,13 +32,6 @@ export const CompanyMenu = {
             icon: icons['IconBuildingCottage'],
             breadcrumbs: false
         },
-        {
-            id: 'CompanyAdd',
-            title: 'Add Company',
-            type: 'item',
-            url: '/icons/form_elements',
-            icon: icons['IconCirclePlus'],
-            breadcrumbs: false
-        }
+
     ]
 };

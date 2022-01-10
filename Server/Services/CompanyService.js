@@ -4,34 +4,49 @@ const db = require("../Models/index")
 const Company = db.companies
 
 async function checkExists(id) {
-    const companies = await Company.findAll({ 
-        where: { Company_ID: id } 
+    const companies = await Company.findAll({
+        where: { Company_ID: id }
     })
     // console.log(companies)
     return companies.length > 0 ? true : false
 }
 
 const createCompany = async (companyData) => {
+    let status = false;
+    let message = ""
     try {
+        const companies = await Company.findAll({
+            where: { Company_name: companyData.Company_name }
+        })
+        if (companies.length > 0) {
+            throw "Company already exists!"
+        }
         await Company.create(companyData)
-        return true
+        status = true
+        message = ""
+        return { status, message }
     }
     catch (err) {
         log.error(err.toString())
-        return false
+        status = false
+        message = "Company Already Exists!"
+        return { status, message }
     }
 }
 
 const getCompany = async (id) => {
     try {
         const status = await checkExists(id)
-        if(!status) {
+        // console.log("Status", status)
+        if (!status) {
             throw "Error finding company detials"
         }
         else {
+            // console.log("Here in else")
             let company = await Company.findOne({
-                where: { id }
+                where: { Company_ID: id }
             })
+            // console.log("CompanyService", company)
             return company
         }
     }
@@ -42,7 +57,7 @@ const getCompany = async (id) => {
 }
 
 const getAllCompany = async () => {
-    try { 
+    try {
         let companies = await Company.findAll({})
         return companies
     }
@@ -55,7 +70,7 @@ const getAllCompany = async () => {
 const updateCompany = async (data, id) => {
     try {
         const status = await checkExists(id)
-        if(!status) {
+        if (!status) {
             throw "Company doesn't exist"
         }
         else {

@@ -16,18 +16,17 @@ const addCompany = async (req, res) => {
     try {
         // Data must be in the format defined in models
         const data = req.body
-        const companyStatus = await CompanyService.createCompany(data)
-        if(companyStatus)
-        {
+        const { status, message } = await CompanyService.createCompany(data)
+        if (status) {
             return res.json({ data: "Company Created", status: true })
         }
         else {
-            throw "Error from createCompany controller"
+            throw message
         }
     }
     catch (err) {
         log.error(err.toString())
-        return res.json({ data: "Error from createCompany controller", status: false })
+        return res.json({ data: err.toString(), status: false })
     }
 
 }
@@ -35,10 +34,12 @@ const addCompany = async (req, res) => {
 const getCompany = async (req, res) => {
 
     try {
+        console.log("Here")
         const companyId = req.params.id
-        // console.log(companyId)
+        console.log("Company_id", companyId)
         let company = await CompanyService.getCompany(companyId)
-        if(company) {
+        console.log(company)
+        if (company) {
             return res.json({ status: company.length == 0 ? false : true, data: company.length == 0 ? "Company Not Found!" : company })
         }
         else {
@@ -74,10 +75,10 @@ const updateCompany = async (req, res) => {
     try {
         const id = req.params.id
         const company = await CompanyService.updateCompany(req.body, id)
-        if(company) {
+        if (company) {
             return res.json({ status: true, data: "Company Updated!!" })
         }
-        else { 
+        else {
             return res.json({ status: false, data: "Error updating Company data !!!" })
         }
     }
@@ -91,7 +92,7 @@ const deleteCompany = async (req, res) => {
     try {
         let id = req.params.id
         const status = await CompanyService.deleteCompany(id)
-        if(status) {
+        if (status) {
             return res.json({ status: true, data: "Company Deleted Successfully!!" })
         }
         else {
