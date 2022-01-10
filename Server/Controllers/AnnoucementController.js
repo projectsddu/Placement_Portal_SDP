@@ -4,7 +4,9 @@ const logger = require("serverloggerjs/logger")
 const log = new logger(true)
 const Announcement = db.announcements
 const AnnouncementService = require("../Services/AnnouncementService");
+const CompanyService = require("../Services/CompanyService");
 const { request } = require("express");
+const { companies } = require("../Models");
 
 async function checkExists(id) {
     const annoucements = await Announcement.findAll({ where: { Announcement_ID: id } })
@@ -18,7 +20,7 @@ const addAnnoucement = async (req, res) => {
 
         // console.log(req);
 
-        const { Announcement_ID, Company_ID, Date_of_Visit, Date_of_announcement,
+        const { Company_ID, Date_of_Visit, Date_of_announcement,
             Eligible_Branches, Passed_out_year, Job_Role, Salary, Job_Location, Bond_Details, Other_Details, Job_Description_File, Registration_Deadline, Eligibility, IsOpen } = req.body;
 
         if (req.emptyField) {
@@ -27,7 +29,6 @@ const addAnnoucement = async (req, res) => {
         // valid
         else {
             let annoucement = {
-                Announcement_ID: Announcement_ID,
                 Company_ID: Company_ID,
                 Date_of_Visit: Date_of_Visit,
                 Date_of_announcement: Date_of_announcement,
@@ -134,10 +135,22 @@ const deleteAnnoucement = async (req, res) => {
     }
 }
 
+const requiredAnnoucementDetails = async (req, res) => {
+    try{
+        let companies = await CompanyService.getAllCompany();
+        return res.json({ status: true, data: companies })
+    }   
+    catch(e) {
+        console.log(e.toString());
+        res.json({ status: false, data: e.toString() })
+    }
+}
+
 module.exports = {
     addAnnoucement,
     getAllAnnoucements,
     getAnnoucement,
     updateAnnoucement,
-    deleteAnnoucement
+    deleteAnnoucement,
+    requiredAnnoucementDetails
 }

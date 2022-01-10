@@ -25,13 +25,13 @@ export const CompanyMenu = {
             breadcrumbs: false
         },
         {
-            id: 'CompanyDetails',
-            title: 'Company Details',
+            id: 'ViewCompany',
+            title: 'View Company',
             type: 'item',
-            url: '/icons/form_elements',
+            url: '/company/view_company',
             icon: icons['IconBuildingCottage'],
             breadcrumbs: false
         },
-
+        
     ]
 };

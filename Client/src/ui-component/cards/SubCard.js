@@ -13,7 +13,7 @@ const SubCard = ({ children, content, contentClass, darkTitle, secondary, sx = {
     return (
         <Card
             sx={{
-                border: '2px solid',
+                border: '4px solid',
                 borderColor: theme.palette.secondary.light,
                 ':hover': {
                     boxShadow: '0 2px 8px 0 rgb(32 40 45 / 20%)'

@@ -48,7 +48,7 @@ const LightBlueTextTypography = withStyles({
     }
 })
 
-function ViewAnnoucements() {
+function ViewCompany() {
     const classes = useStyles();
 
 
@@ -76,54 +76,58 @@ function ViewAnnoucements() {
     return (
         <>
             {/* /**{ (setData(data)).map((e) => {return e})} */}
-            <MainCard title="View Annoucements">
-                <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
-                    <Grid item xs={12} md={6}>
-                        <SubCard title="Amazon Recruitment 2022-23">
+            <MainCard title="View Company">
+                <Grid container rowSpacing={4} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
+                    <Grid item xs={12} md={12}>
+                        <SubCard title="Amazon">
                             <Typography variant="h5">Description</Typography>
                             <List dense={true}>
-                                <ListItem>CTC : 18Lpa</ListItem>
-                                <ListItem>Min CPI : 8.86</ListItem>
-                                <ListItem>Branches : CE , IT</ListItem>
+                                <ListItem>
+                                    ABOUT : Amazon.com, Inc. is an American multinational technology company 
+                                    which focuses on e-commerce, cloud computing, digital streaming, and artificial intelligence.
+                                </ListItem>
                             </List>
 
-                            <Button size='large' fullWidth className={classes.applyBtn}>Apply</Button>
+                            {/* <Button size='large' fullWidth className={classes.applyBtn}>View Details</Button> */}
                         </SubCard>
                     </Grid>
-                    <Grid item xs={12} md={6}>
-                        <SubCard title="Infosys Recruitment 2022-23">
+                    <Grid item xs={12} md={12}>
+                        <SubCard title="Infosys">
                             <Typography variant="h5">Description</Typography>
                             <List dense={true}>
-                                <ListItem>CTC : 18Lpa</ListItem>
-                                <ListItem>Min CPI : 8.86</ListItem>
-                                <ListItem>Branches : CE , IT</ListItem>
+                                <ListItem>
+                                    ABOUT : Infosys Limited is an Indian multinational information technology company 
+                                    that provides business consulting, information technology and outsourcing services
+                                </ListItem>
                             </List>
 
-                            <Button size='large' fullWidth className={classes.applyBtn}>Apply</Button>
+                            {/* <Button size='large' fullWidth className={classes.applyBtn}>View Details</Button> */}
                         </SubCard>
                     </Grid>
-                    <Grid item xs={12} md={6}>
-                        <SubCard title="TCS Recruitment 2022-23">
+                    <Grid item xs={12} md={12}>
+                        <SubCard title="TCS">
                             <Typography variant="h5">Description</Typography>
                             <List dense={true}>
-                                <ListItem>CTC : 4Lpa</ListItem>
-                                <ListItem>Min CPI : 6.86</ListItem>
-                                <ListItem>Branches : CE , IT</ListItem>
+                                <ListItem>
+                                    ABOUT : Tata Consultancy Services is an Indian multinational information technology services and 
+                                    consulting company headquartered in Mumbai, Maharashtra, India with its largest campus located in Chennai, Tamil Nadu, India.
+                                </ListItem>
                             </List>
 
-                            <Button size='large' fullWidth className={classes.applyBtn}>Apply</Button>
+                            {/* <Button size='large' fullWidth className={classes.applyBtn}>View Details</Button> */}
                         </SubCard>
                     </Grid>
-                    <Grid item xs={12} md={6}>
-                        <SubCard title="InfoCusp Pvt Ltd. Recruitment 2022-23">
+                    <Grid item xs={12} md={12}>
+                        <SubCard title="Jio Platforms">
                             <Typography variant="h5">Description</Typography>
                             <List dense={true}>
-                                <ListItem>CTC : 10Lpa</ListItem>
-                                <ListItem>Min CPI : 8.6</ListItem>
-                                <ListItem>Branches : CE , IT</ListItem>
+                                <ListItem>
+                                    ABOUT : Jio Platforms is an Indian technology company and a subsidiary of 
+                                    Reliance Industries, headquartered in Mumbai, India.
+                                </ListItem>
                             </List>
 
-                            <Button size='large' fullWidth className={classes.applyBtn}>Apply</Button>
+                            {/* <Button size='large' fullWidth className={classes.applyBtn}>View Details</Button> */}
                         </SubCard>
                     </Grid>
                 </Grid>
@@ -132,4 +136,4 @@ function ViewAnnoucements() {
     )
 }
 
-export default ViewAnnoucements
+export default ViewCompany
