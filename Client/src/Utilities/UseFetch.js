@@ -6,16 +6,17 @@ import { useHistory } from 'react-router';
 // value .
 // The callback would modify data as you want before setting it.
 const useFetch = (url, method = "POST") => {
-    const [data, setData] = useState(null);
+    const [required_data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(async () => {
         const response = await fetch(url, { method: method });
         let data = await response.json();
+        console.log(data);
         setData(data);
         setLoading(false);
     }, []);
 
-    return { data, loading };
+    return { required_data, loading };
 };
 export default useFetch
