@@ -11,7 +11,7 @@ import TotalIncomeDarkCard from './TotalIncomeDarkCard';
 import TotalIncomeLightCard from './TotalIncomeLightCard';
 import TotalGrowthBarChart from './TotalGrowthBarChart';
 import { gridSpacing } from './../../../store/constant';
-import useFetch from '../../../Utilities/UseFetch';
+import useFetch from '../../../Utilities/useFetch';
 import HandleToast from '../../../Utilities/HandleToast';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
