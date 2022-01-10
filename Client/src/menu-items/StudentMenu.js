@@ -22,6 +22,14 @@ export const StudentMenu = {
             url: '/icons/form_elements',
             icon: icons['IconUsers'],
             breadcrumbs: false
+        },
+        {
+            id: 'ViewStudent',
+            title: 'View Student',
+            type: 'item',
+            url: '/student/view_student',
+            icon: icons['IconUsers'],
+            breadcrumbs: false
         }
     ]
 };

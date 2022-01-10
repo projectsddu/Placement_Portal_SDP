@@ -25,6 +25,14 @@ export const CompanyMenu = {
             breadcrumbs: false
         },
         {
+            id: 'ViewCompany',
+            title: 'View Company',
+            type: 'item',
+            url: '/company/view_company',
+            icon: icons['IconBuildingCottage'],
+            breadcrumbs: false
+        },
+        {
             id: 'CompanyAdd',
             title: 'Add Company',
             type: 'item',
