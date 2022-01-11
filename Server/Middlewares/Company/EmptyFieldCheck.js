@@ -1,7 +1,7 @@
 const EmptyFieldCheck = function (req, res, next) {
     console.log("From Here", req.body)
     try {
-        if (req.body.Company_Name == "") {
+        if (req.body.Company_name == "") {
             throw "Company name cannot be empty"
         }
         else if (req.body.Contact_person_1_designation == "") {

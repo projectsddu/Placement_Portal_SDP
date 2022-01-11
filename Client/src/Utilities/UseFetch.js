@@ -12,7 +12,7 @@ const useFetch = (url, method = "POST") => {
     useEffect(async () => {
         const response = await fetch(url, { method: method });
         let data = await response.json();
-        console.log(data);
+        // console.log(data);
         setData(data);
         setLoading(false);
     }, []);

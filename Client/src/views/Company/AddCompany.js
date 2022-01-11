@@ -342,9 +342,8 @@ function AddCompany() {
                 <br />
 
                 <br />
-                <Button onClick={() => { console.log(data) }}>Click here</Button>
                 <Button onClick={handleSubmit} variant="contained" size="large" color="primary">
-                    Add Annoucement
+                    Add Company
                 </Button>
 
             </form>

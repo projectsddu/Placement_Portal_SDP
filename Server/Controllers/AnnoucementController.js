@@ -87,8 +87,16 @@ const getAnnoucement = async (req, res) => {
     try {
         const id = req.params.annoucementId
         let announcement = await AnnouncementService.getAnnoucement(id)
+        
         if (announcement) {
-            return res.json({ status: announcement.length == 0 ? false : true, data: announcement.length == 0 ? "Annoucement Not Found!" : announcement })
+            var announcement_data = JSON.parse(JSON.stringify(announcement))
+            console.log(announcement_data[0]["Company_ID"]);
+
+            let company = await CompanyService.getCompany(announcement_data[0]["Company_ID"])
+
+            announcement_data[0]["Company_Details"] = company
+            // console.log(JSON.parse(JSON.stringify(company)))
+            return res.json({ status: announcement.length == 0 ? false : true, data: announcement.length == 0 ? "Annoucement Not Found!" : announcement_data })
         }
         else {
             throw "Error in getAnnouncement"

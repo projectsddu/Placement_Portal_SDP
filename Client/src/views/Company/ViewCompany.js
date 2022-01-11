@@ -8,7 +8,7 @@ import { withStyles } from '@material-ui/styles';
 import { color } from '@material-ui/system';
 import { ClassNames } from '@emotion/react';
 import usePost from '../../Utilities/UsePost';
-import useFetch from '../../Utilities/useFetch';
+// import useFetch from '../../Utilities/useFetch';
 import HandleToast from '../../Utilities/HandleToast'
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
@@ -52,24 +52,24 @@ function ViewCompany() {
     const classes = useStyles();
 
 
-    const { data, loading } = useFetch("/annoucement/getAllAnnoucements/", "GET", toast, true)
-    const params = {
-        data: data,
-        HandleToast: {
-            toast: toast,
-            customMessage: "Hey Hi from handler",
-            flag: false,
-        }
-    }
+    // const { data, loading } = useFetch("/annoucement/getAllAnnoucements/", "GET", toast, true)
+    // const params = {
+    //     data: data,
+    //     HandleToast: {
+    //         toast: toast,
+    //         customMessage: "Hey Hi from handler",
+    //         flag: false,
+    //     }
+    // }
 
-    if (!loading) {
-        console.log(data)
-        responsePipelineHandler(params, 0)
-    }
+    // if (!loading) {
+    //     console.log(data)
+    //     responsePipelineHandler(params, 0)
+    // }
 
-    function setData() {
+    // function setData() {
         
-    }
+    // }
 
 
 

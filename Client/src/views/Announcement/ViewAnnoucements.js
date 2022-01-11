@@ -8,10 +8,11 @@ import { withStyles } from '@material-ui/styles';
 import { color } from '@material-ui/system';
 import { ClassNames } from '@emotion/react';
 import usePost from '../../Utilities/UsePost';
-import useFetch from '../../Utilities/useFetch';
 import HandleToast from '../../Utilities/HandleToast'
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
+import useFetch from '../../Utilities/useFetch';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     applyBtn: {
@@ -52,33 +53,66 @@ function ViewAnnoucements() {
     const classes = useStyles();
 
 
-    const { data, loading } = useFetch("/annoucement/getAllAnnoucements/", "GET", toast, true)
-    const params = {
-        data: data,
-        HandleToast: {
-            toast: toast,
-            customMessage: "Hey Hi from handler",
-            flag: false,
-        }
-    }
+    const { required_data, loading } = useFetch("/annoucement/getAllAnnoucements/", "GET")
+
+    var annoucements;
 
     if (!loading) {
-        console.log(data)
-        responsePipelineHandler(params, 0)
+        // console.log(required_data["data"]);
+
+        annoucements = required_data["data"];
+        console.log(annoucements);
+
+        // annoucements.map((e) => console.log(e.Announcement_ID))
+
     }
 
-    function setData() {
-        
+    let history = useHistory();
+
+    function handleRedirect(id) {
+        // console.log(id)
+        history.push('/announcement/view_annoucement/' + id)
     }
-
-
 
     return (
         <>
             {/* /**{ (setData(data)).map((e) => {return e})} */}
             <MainCard title="View Annoucements">
                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
-                    <Grid item xs={12} md={6}>
+
+                    {loading ? "" : annoucements.map((e) => (
+                        <Grid item xs={12} md={6}>
+                            <SubCard title={e.Announcement_ID}>
+                                <Typography variant="h5">Description</Typography>
+                                <List dense={true}>
+                                    <ListItem>Job Role: {e.Job_Role}</ListItem>
+                                    <ListItem>Job Location: {e.Job_Location}</ListItem>
+                                    <ListItem>Branches: {e.Eligible_Branches}</ListItem>
+                                </List>
+
+                                <Button onClick={() => handleRedirect(e.Announcement_ID)} size='large' fullWidth className={classes.applyBtn}>View Full Annoucement</Button>
+                            </SubCard>
+                        </Grid>
+                    ))}
+
+
+                    {/* {
+                        annoucements.map((e) => (
+                            <Grid item xs={12} md={6}>
+                                <SubCard title={e.Announcement_ID}>
+                                    <Typography variant="h5">Description</Typography>
+                                    <List dense={true}>
+                                        <ListItem>Job Role: {e.Job_Role}</ListItem>
+                                        <ListItem>Job Location: {e.Job_Location}</ListItem>
+                                        <ListItem>Branches: {e.Eligible_Branches}</ListItem>
+                                    </List>
+
+                                    <Button size='large' fullWidth className={classes.applyBtn}>View Full Annoucement</Button>
+                                </SubCard>
+                            </Grid>
+                        ))
+                    } */}
+                    {/* <Grid item xs={12} md={6}>
                         <SubCard title="Amazon Recruitment 2022-23">
                             <Typography variant="h5">Description</Typography>
                             <List dense={true}>
@@ -87,10 +121,10 @@ function ViewAnnoucements() {
                                 <ListItem>Branches : CE , IT</ListItem>
                             </List>
 
-                            <Button size='large' fullWidth className={classes.applyBtn}>Apply</Button>
+                            <Button size='large' fullWidth className={classes.applyBtn}>View Full Annoucement</Button>
                         </SubCard>
-                    </Grid>
-                    <Grid item xs={12} md={6}>
+                    </Grid> */}
+                    {/* <Grid item xs={12} md={6}>
                         <SubCard title="Infosys Recruitment 2022-23">
                             <Typography variant="h5">Description</Typography>
                             <List dense={true}>
@@ -101,8 +135,8 @@ function ViewAnnoucements() {
 
                             <Button size='large' fullWidth className={classes.applyBtn}>Apply</Button>
                         </SubCard>
-                    </Grid>
-                    <Grid item xs={12} md={6}>
+                    </Grid> */}
+                    {/* <Grid item xs={12} md={6}>
                         <SubCard title="TCS Recruitment 2022-23">
                             <Typography variant="h5">Description</Typography>
                             <List dense={true}>
@@ -113,8 +147,8 @@ function ViewAnnoucements() {
 
                             <Button size='large' fullWidth className={classes.applyBtn}>Apply</Button>
                         </SubCard>
-                    </Grid>
-                    <Grid item xs={12} md={6}>
+                    </Grid> */}
+                    {/* <Grid item xs={12} md={6}>
                         <SubCard title="InfoCusp Pvt Ltd. Recruitment 2022-23">
                             <Typography variant="h5">Description</Typography>
                             <List dense={true}>
@@ -125,7 +159,7 @@ function ViewAnnoucements() {
 
                             <Button size='large' fullWidth className={classes.applyBtn}>Apply</Button>
                         </SubCard>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
             </MainCard>
         </>

@@ -111,7 +111,7 @@ function AddAnnoucement() {
             companies.push(obj);
         }
 
-        console.log(companies)
+        // console.log(companies)
     }
 
     const changeHandler = (event) => {

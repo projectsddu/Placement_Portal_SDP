@@ -4,6 +4,7 @@ const path = require('path');
 const { announcements } = require("../Models/index")
 const log = new logger(true)
 const db = require("../Models/index")
+const CompanyService = require("./CompanyService");
 const Announcement = db.announcements
 
 async function checkExists(id) {
@@ -51,6 +52,7 @@ const getAnnoucement = async (id) => {
             let announcement = await Announcement.findAll({
                 where: { Announcement_ID: id }
             })
+
             return announcement
         }
     } catch (error) {
