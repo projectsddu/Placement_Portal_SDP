@@ -4,7 +4,7 @@ const EmptyFieldCheck = async function (req, res, next) {
         const { Company_ID, Date_of_Visit, Date_of_announcement,
             Eligible_Branches, Passed_out_year, Job_Role, Salary, Job_Location, Bond_Details, Other_Details, Job_Description_File, Registration_Deadline, Eligibility, IsOpen } = req.body;
 
-        console.log(req.body);
+        // console.log(req.body);
 
         if(!Company_ID) {
             throw "Company Name can not be empty!!"

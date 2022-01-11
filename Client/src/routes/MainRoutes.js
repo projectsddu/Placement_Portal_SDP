@@ -23,6 +23,7 @@ const SReg = Loadable(lazy(() => import('../views/utilities/StudentRegisterExamp
 const Announcement = Loadable(lazy(() => import('../views/Announcement/index')));
 const AddAnnouncement = Loadable(lazy(() => import('../views/Announcement/AddAnnoucement')));
 const ViewAnnouncement = Loadable(lazy(() => import('../views/Announcement/ViewAnnoucements')));
+const ViewSingleAnnoucement = Loadable(lazy(() => import('../views/Announcement/ViewSingleAnnoucement')));
 
 const AddCompany = Loadable(lazy(() => import('../views/Company/AddCompany')));
 
@@ -58,6 +59,7 @@ const MainRoutes = () => {
                 "/announcement/index",
                 '/announcement/add_annoucement',
                 "/announcement/view_annoucement",
+                "/announcement/view_annoucement/:annoucement_id",
                 // annoucement routers finished
 
                 // Company Routes
@@ -92,11 +94,13 @@ const MainRoutes = () => {
                     {/* Announcement Routes */}
                     <Route path="/announcement/index" component={Announcement} />
                     <Route path="/announcement/add_annoucement" component={AddAnnouncement} />
+                    <Route path="/announcement/view_annoucement/:annoucement_id" component={ViewSingleAnnoucement} />
                     <Route path="/announcement/view_annoucement" component={ViewAnnouncement} />
-                    <Route path="/company/add_company" component={AddCompany} />
+                    
 
                     {/* Company Routes */}
                     <Route path="/company/view_company" component={ViewCompany} />
+                    <Route path="/company/add_company" component={AddCompany} />
 
                     {/* Student Routes */}
                     <Route path="/student/view_student" component={ViewStudent} />

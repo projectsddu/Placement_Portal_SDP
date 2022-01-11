@@ -4,6 +4,7 @@ const db = require("../Models/index")
 const Company = db.companies
 
 async function checkExists(id) {
+    console.log(id)
     const companies = await Company.findAll({
         where: { Company_ID: id }
     })
@@ -37,6 +38,8 @@ const createCompany = async (companyData) => {
 const getCompany = async (id) => {
     try {
         const status = await checkExists(id)
+
+        console.log("Conapny service: ", id)
         // console.log("Status", status)
         if (!status) {
             throw "Error finding company detials"
