@@ -1,4 +1,5 @@
 import React from 'react'
+import { Button } from '@material-ui/core';
 import MainCard from '../../ui-component/cards/MainCard'
 import { Typography } from '@mui/material'
 import useFetch from '../../Utilities/useFetch';
@@ -12,6 +13,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import ParseDate from '../../Utilities/ParseDate';
 import SearchSection from '../../layout/MainLayout/Header/SearchSection';
+import { useHistory } from "react-router-dom";
 
 function ViewSingleAnnoucement() {
 
@@ -20,6 +22,13 @@ function ViewSingleAnnoucement() {
             value = "Not Defined!"
         }
         return { key, value };
+    }
+
+    let history = useHistory();
+
+    function handleEdit(id) {
+        console.log(id);
+        history.push('/announcement/edit_announcement/' + id)
     }
 
     const location = useLocation().pathname;
@@ -62,7 +71,11 @@ function ViewSingleAnnoucement() {
                 ) : (
                     <>
 
-
+                        <Button onClick={() => handleEdit(announcement_details["Announcement_ID"])} variant="contained"      size="large"     color="primary">
+                            Edit Annoucement
+                        </Button>
+                        <br/>
+                        <br/>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 200 }} aria-label="simple table">
                                 {/* <TableHead>

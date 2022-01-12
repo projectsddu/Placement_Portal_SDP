@@ -18,8 +18,8 @@ export const AnnouncementMenu = {
     type: 'group',
     children: [
         {
-            id: 'AddAnnoucement',
-            title: 'Add Annoucement',
+            id: 'AddAnnouncement',
+            title: 'Add Announcement',
             type: 'item',
             url: '/announcement/add_annoucement',
             icon: icons['IconCirclePlus'],
