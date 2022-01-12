@@ -34,7 +34,17 @@ const createdAnnoucement = async (announcementData, job_description_file) => {
 
 const getAllAnnoucements = async () => {
     try {
-        let announcements = await Announcement.findAll({})
+        let announcements = await Announcement.findAll({
+            order: [
+                ['Announcement_ID', 'DESC']]
+        })
+        if (announcements) {
+            announcements = JSON.parse(JSON.stringify(announcements))
+            for (let i = 0; i < announcements.length; i++) {
+                const company = await CompanyService.getCompany(announcements[i].Company_ID)
+                announcements[i]["Company_details"] = JSON.parse(JSON.stringify(company))
+            }
+        }
         return announcements
     } catch (error) {
         log.error(error.toString())
