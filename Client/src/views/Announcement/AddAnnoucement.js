@@ -79,7 +79,7 @@ function AddAnnoucement() {
     const [selectedFile, setSelectedFile] = useState();
     const [isFilePicked, setIsFilePicked] = useState(false);
 
-    
+
 
     const [data, setData] = useState({
         Company_ID: '',

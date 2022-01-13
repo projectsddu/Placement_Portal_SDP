@@ -8,8 +8,9 @@ import { withStyles } from '@material-ui/styles';
 import { color } from '@material-ui/system';
 import { ClassNames } from '@emotion/react';
 import usePost from '../../Utilities/UsePost';
-// import useFetch from '../../Utilities/useFetch';
+import useFetch from '../../Utilities/useFetch';
 import HandleToast from '../../Utilities/HandleToast'
+import { useHistory } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 
@@ -49,59 +50,54 @@ const LightBlueTextTypography = withStyles({
 })
 
 function ViewCompany() {
+    const history = useHistory()
     const classes = useStyles();
-
-
-    // const { data, loading } = useFetch("/annoucement/getAllAnnoucements/", "GET", toast, true)
-    // const params = {
-    //     data: data,
-    //     HandleToast: {
-    //         toast: toast,
-    //         customMessage: "Hey Hi from handler",
-    //         flag: false,
-    //     }
-    // }
-
-    // if (!loading) {
-    //     console.log(data)
-    //     responsePipelineHandler(params, 0)
-    // }
-
-    // function setData() {
-        
-    // }
-
-
-
+    const { required_data, loading } = useFetch("/company/getCompany", "GET")
     return (
         <>
             {/* /**{ (setData(data)).map((e) => {return e})} */}
             <MainCard title="View Company">
                 <Grid container rowSpacing={4} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
-                    <Grid item xs={12} md={12}>
-                        <SubCard title="Amazon">
-                            <Typography variant="h5">Description</Typography>
-                            <List dense={true}>
-                                <ListItem>
-                                    ABOUT : Amazon.com, Inc. is an American multinational technology company 
-                                    which focuses on e-commerce, cloud computing, digital streaming, and artificial intelligence.
-                                </ListItem>
-                            </List>
+                    {
+                        loading ? "" : required_data["data"].map((e) => {
+                            return <><Grid item xs={12} md={12}>
+                                <SubCard title={e["Company_name"]}>
+                                    <List dense={false}>
+                                        <ListItem>
+                                            <Typography variant="h5">Roles :</Typography>
+                                            {e["Company_offer_type"]}
+                                        </ListItem>
+                                        <ListItem>
+                                            <Typography variant="h5">Address :</Typography>
+                                            {e["Company_address"]}
+                                        </ListItem>
+                                        <ListItem>
+                                            <Typography variant="h5">City :</Typography>
+                                            {e["City"] + " " + e["State"]}
+                                        </ListItem>
 
-                            {/* <Button size='large' fullWidth className={classes.applyBtn}>View Details</Button> */}
-                        </SubCard>
-                    </Grid>
-                    <Grid item xs={12} md={12}>
+                                    </List>
+
+                                    <Button size='large' onClick={() => {
+                                        history.push("/company/view_company/" + e["Company_ID"])
+                                    }} fullWidth className={classes.applyBtn}>View Details</Button>
+                                </SubCard>
+                            </Grid>
+                            </>
+
+                        })
+                    }
+                    {/* <Grid item xs={12} md={12}>
                         <SubCard title="Infosys">
                             <Typography variant="h5">Description</Typography>
                             <List dense={true}>
                                 <ListItem>
-                                    ABOUT : Infosys Limited is an Indian multinational information technology company 
+                                    ABOUT : Infosys Limited is an Indian multinational information technology company
                                     that provides business consulting, information technology and outsourcing services
                                 </ListItem>
                             </List>
 
-                            {/* <Button size='large' fullWidth className={classes.applyBtn}>View Details</Button> */}
+                           
                         </SubCard>
                     </Grid>
                     <Grid item xs={12} md={12}>
@@ -109,12 +105,12 @@ function ViewCompany() {
                             <Typography variant="h5">Description</Typography>
                             <List dense={true}>
                                 <ListItem>
-                                    ABOUT : Tata Consultancy Services is an Indian multinational information technology services and 
+                                    ABOUT : Tata Consultancy Services is an Indian multinational information technology services and
                                     consulting company headquartered in Mumbai, Maharashtra, India with its largest campus located in Chennai, Tamil Nadu, India.
                                 </ListItem>
                             </List>
 
-                            {/* <Button size='large' fullWidth className={classes.applyBtn}>View Details</Button> */}
+                          
                         </SubCard>
                     </Grid>
                     <Grid item xs={12} md={12}>
@@ -122,14 +118,14 @@ function ViewCompany() {
                             <Typography variant="h5">Description</Typography>
                             <List dense={true}>
                                 <ListItem>
-                                    ABOUT : Jio Platforms is an Indian technology company and a subsidiary of 
+                                    ABOUT : Jio Platforms is an Indian technology company and a subsidiary of
                                     Reliance Industries, headquartered in Mumbai, India.
                                 </ListItem>
                             </List>
 
-                            {/* <Button size='large' fullWidth className={classes.applyBtn}>View Details</Button> */}
+                           
                         </SubCard>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
             </MainCard>
         </>

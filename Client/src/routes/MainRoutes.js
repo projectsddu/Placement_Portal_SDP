@@ -30,6 +30,7 @@ const AddCompany = Loadable(lazy(() => import('../views/Company/AddCompany')));
 
 const ViewCompany = Loadable(lazy(() => import('../views/Company/ViewCompany')));
 const ViewStudent = Loadable(lazy(() => import('../views/Student/ViewStudent')));
+const ViewSingleCompany = Loadable(lazy(() => import('../views/Company/ViewSingleCompany')));
 
 
 // sample page routing
@@ -71,6 +72,7 @@ const MainRoutes = () => {
 
 
                 '/company/view_company',
+                '/company/view_company/:id',
 
                 // Student Routes
                 '/student/view_student',
@@ -99,9 +101,10 @@ const MainRoutes = () => {
                     <Route path="/announcement/edit_announcement/:annoucement_id" component={EditAnnouncement} />
                     <Route path="/announcement/view_annoucement/:annoucement_id" component={ViewSingleAnnoucement} />
                     <Route path="/announcement/view_annoucement" component={ViewAnnouncement} />
-                    
+
 
                     {/* Company Routes */}
+                    <Route path="/company/view_company/:id" component={ViewSingleCompany} />
                     <Route path="/company/view_company" component={ViewCompany} />
                     <Route path="/company/add_company" component={AddCompany} />
 

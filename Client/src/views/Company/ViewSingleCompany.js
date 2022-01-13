@@ -1,0 +1,73 @@
+import React from 'react'
+import MainCard from '../../ui-component/cards/MainCard'
+import { useLocation } from 'react-router'
+import useFetch from '../../Utilities/useFetch'
+import { Button, Typography } from '@material-ui/core'
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+export default function ViewSingleCompany() {
+    function createData(key, value) {
+        if (value == undefined) {
+            value = "Not Defined!"
+        }
+        return { key, value };
+    }
+
+    const companyId = useLocation().pathname.split("/")[3]
+    console.log(companyId)
+    const { required_data, loading } = useFetch("/company/getCompany/" + companyId, "GET")
+    var rows = [];
+    if (!loading) {
+        rows = [
+            createData("Company Name", required_data["data"]["Company_name"]),
+            createData("Offer Type", required_data["data"]["Company_offer_type"]),
+            createData("Person 1 Name", required_data["data"]["Contact_person_1_designation"] + " " + required_data["data"]["Contact_person_1_name"]),
+            createData("Person 1 Contact (Phone/Email)", required_data["data"]["Contact_person_1_Mobile"] + " / " + required_data["data"]["Contact_person_1_email_ID"]),
+
+
+            createData("Person 2 Name", required_data["data"]["Contact_person_2_designation"] + " " + required_data["data"]["Contact_person_2_name"]),
+            createData("Person 2 Contact (Phone/Email)", required_data["data"]["Contact_person_2_Mobile"] + " / " + required_data["data"]["Contact_person_2_email_ID"]),
+
+
+            createData("Person 3 Name", required_data["data"]["Contact_person_3_designation"] + " " + required_data["data"]["Contact_person_3_name"]),
+            createData("Person 3 Contact (Phone/Email)", required_data["data"]["Contact_person_3_Mobile"] + " / " + required_data["data"]["Contact_person_3_email_ID"]),
+
+            createData("Website", required_data["data"]["Company_web_site"]),
+            createData("City", required_data["data"]["City"]),
+            createData("State", required_data["data"]["State"]),
+            createData("Address", required_data["data"]["Company_address"]),
+            createData("Remarks", required_data["data"]["Remarks    "]),
+        ]
+    }
+    return (
+        <MainCard title={loading ? "" : required_data["data"]["Company_name"]}>
+            <Button variant="contained" size="large" color="primary">
+                Edit Company Details
+            </Button><br /><br />
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 150 }} aria-label="simple table">
+                    <TableBody>
+                        {rows.map((row) => (
+                            <TableRow
+                                key={row.name}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell component="th" scope="row">
+                                    <Typography variant="h5">
+                                        {row.key}
+                                    </Typography>
+                                </TableCell>
+                                <TableCell align="right">{row.value}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </MainCard>
+    )
+}
