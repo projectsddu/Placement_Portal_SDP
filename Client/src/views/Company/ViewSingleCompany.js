@@ -1,6 +1,6 @@
 import React from 'react'
 import MainCard from '../../ui-component/cards/MainCard'
-import { useLocation } from 'react-router'
+import { useHistory, useLocation } from 'react-router'
 import useFetch from '../../Utilities/useFetch'
 import { Button, Typography } from '@material-ui/core'
 import Table from '@mui/material/Table';
@@ -12,7 +12,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 export default function ViewSingleCompany() {
     function createData(key, value) {
-        if (value == undefined) {
+        if (value === undefined) {
             value = "Not Defined!"
         }
         return { key, value };
@@ -41,12 +41,16 @@ export default function ViewSingleCompany() {
             createData("City", required_data["data"]["City"]),
             createData("State", required_data["data"]["State"]),
             createData("Address", required_data["data"]["Company_address"]),
-            createData("Remarks", required_data["data"]["Remarks    "]),
+            createData("Remarks", required_data["data"]["Remarks"]),
         ]
+    }
+    const History = useHistory()
+    function handleRedirect(id) {
+        History.push("/company/edit_company/" + id)
     }
     return (
         <MainCard title={loading ? "" : required_data["data"]["Company_name"]}>
-            <Button variant="contained" size="large" color="primary">
+            <Button variant="contained" onClick={() => handleRedirect(required_data["data"]["Company_ID"])} size="large" color="primary">
                 Edit Company Details
             </Button><br /><br />
             <TableContainer component={Paper}>
