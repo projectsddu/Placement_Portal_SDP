@@ -32,7 +32,7 @@ app.listen(port, () => {
 })
 
 //routers
-
+app.use("/public", express.static(__dirname + "/public"));
 app.use("/student", StudentRouter)
 app.use("/annoucement", AnnoucementRouter)
 app.use("/company", CompanyRouter)

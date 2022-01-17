@@ -20,7 +20,7 @@ const createdAnnoucement = async (announcementData, job_description_file) => {
         const dat = Date.parse(announcementData["Date_of_Visit"])
         const fileName = "./public/" + announcementData["Company_Name"] + "-" + dat.toString() + ".pdf"
         announcementData["Job_Description_File"] = fileName
-        announcementData["Company_ID"] = 3 // Temporary static
+        // announcementData["Company_ID"] = 3 // Temporary static
         announcementData["IsOpen"] = true // Temporary static
 
         await Announcement.create(announcementData)
