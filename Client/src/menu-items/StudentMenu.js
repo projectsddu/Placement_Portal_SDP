@@ -1,10 +1,12 @@
 // assets
-import { IconDashboard, IconDeviceAnalytics, IconUsers } from '@tabler/icons';
+import { IconDashboard, IconDeviceAnalytics, IconUsers, IconEye, IconCirclePlus } from '@tabler/icons';
 
 // constant
 const icons = {
     IconDashboard: IconDashboard,
     IconDeviceAnalytics,
+    IconEye,
+    IconCirclePlus,
     IconUsers
 };
 
@@ -15,6 +17,14 @@ export const StudentMenu = {
     title: 'Student',
     type: 'group',
     children: [
+        {
+            id: 'AddStudent',
+            title: 'Add Student',
+            type: 'item',
+            url: '/student/add_student',
+            icon: icons['IconCirclePlus'],
+            breadcrumbs: false
+        },
         {
             id: 'StudentDetails',
             title: 'Student Details',
@@ -28,7 +38,7 @@ export const StudentMenu = {
             title: 'View Student',
             type: 'item',
             url: '/student/view_student',
-            icon: icons['IconUsers'],
+            icon: icons['IconEye'],
             breadcrumbs: false
         }
     ]
