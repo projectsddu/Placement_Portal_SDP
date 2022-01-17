@@ -5,6 +5,7 @@ const log = new logger(true)
 const Announcement = db.announcements
 const AnnouncementService = require("../Services/AnnouncementService");
 const CompanyService = require("../Services/CompanyService");
+const CommentService = require("../Services/CommentService");
 const { request } = require("express");
 const { companies } = require("../Models");
 
@@ -87,7 +88,7 @@ const getAnnoucement = async (req, res) => {
     try {
         const id = req.params.annoucementId
         let announcement = await AnnouncementService.getAnnoucement(id)
-        
+
         if (announcement) {
             var announcement_data = JSON.parse(JSON.stringify(announcement))
             console.log(announcement_data[0]["Company_ID"]);
@@ -144,11 +145,38 @@ const deleteAnnoucement = async (req, res) => {
 }
 
 const requiredAnnoucementDetails = async (req, res) => {
-    try{
+    try {
         let companies = await CompanyService.getAllCompany();
         return res.json({ status: true, data: companies })
-    }   
-    catch(e) {
+    }
+    catch (e) {
+        console.log(e.toString());
+        res.json({ status: false, data: e.toString() })
+    }
+}
+
+const addComment = async (req, res) => {
+    try {
+        const {Comment_text} = req.body;
+
+        const Announcement_ID = req.params.annoucementId
+        let Comment_Date = new Date()
+        
+        let comment = {
+            Announcement_ID: Announcement_ID,
+            Comment_text: Comment_text,
+            Comment_Date: Comment_Date
+        }
+
+        const commentStatus = await CommentService.createComment(comment);
+        if (commentStatus) {
+            return res.json({ data: "Comment Created", status: true })
+        }
+        else {
+            throw "Error from createdAnnoucement controller (Add Comment method)"
+        }
+    }
+    catch (e) {
         console.log(e.toString());
         res.json({ status: false, data: e.toString() })
     }
@@ -160,5 +188,6 @@ module.exports = {
     getAnnoucement,
     updateAnnoucement,
     deleteAnnoucement,
-    requiredAnnoucementDetails
+    requiredAnnoucementDetails,
+    addComment
 }
