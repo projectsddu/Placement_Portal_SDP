@@ -28,7 +28,9 @@ router.post("/deleteAnnoucement/:annoucementId", AnnouncementController.deleteAn
 router.post("/addComment/:annoucementId", AnnouncementController.addComment)
 router.get("/getAllAnnoucements", AnnouncementController.getAllAnnoucements)
 router.get("/getAnnoucement/:annoucementId", AnnouncementController.getAnnoucement)
-router.post("/updateAnnoucement/:annoucementId", AnnouncementController.updateAnnoucement)
+router.post("/updateAnnoucement/:annoucementId", [EmptyFieldCheck, SalaryVerifier, DateValidator], AnnouncementController.updateAnnoucement)
+router.post("/deleteAnnoucement/:annoucementId", AnnouncementController.deleteAnnoucement)
+
 router.get("/requiredAnnoucementDetails", AnnouncementController.requiredAnnoucementDetails)
 
 

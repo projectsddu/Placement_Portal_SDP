@@ -46,6 +46,7 @@ function ViewSingleAnnoucement() {
     if (!loading) {
 
         announcement_details = required_data["data"][0];
+        console.log(announcement_details)
         rows = [
             // createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
             createData("Date of Announcement", ParseDate.ParseDate(announcement_details["Date_of_announcement"])),
@@ -94,11 +95,11 @@ function ViewSingleAnnoucement() {
                 ) : (
                     <>
 
-                        <Button onClick={() => handleEdit(announcement_details["Announcement_ID"])} variant="contained"      size="large"     color="primary">
+                        <Button onClick={() => handleEdit(announcement_details["Announcement_ID"])} variant="contained" size="large" color="primary">
                             Edit Annoucement
                         </Button>
-                        <br/>
-                        <br/>
+                        <br />
+                        <br />
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 200 }} aria-label="simple table">
                                 {/* <TableHead>
@@ -119,6 +120,7 @@ function ViewSingleAnnoucement() {
                                             <TableCell align="right">{row.value}</TableCell>
                                         </TableRow>
                                     ))}
+
                                 </TableBody>
                             </Table>
                         </TableContainer>
