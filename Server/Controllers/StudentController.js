@@ -6,7 +6,7 @@ const Student = db.students
 const Announcement = db.announcements
 // require csvtojson module
 const CSVToJSON = require('csvtojson');
-
+const fs = require("fs")
 // to add a new student
 const addStudent = async (req, res) => {
     try {
@@ -57,28 +57,19 @@ const addStudent = async (req, res) => {
         // })
         // Student.create(req.body)
 
-        // const studentDetails = await CSVToJSON().fromFile('../public/student_details/DDU.csv')
+
 
         // convert students.csv file to JSON array
-        // Server\public\student_details
-        
-        // setTimeout(() => {
-            // console.log('..\\public\\student_details\\DDU.csv')
-            CSVToJSON().fromFile('..\\public\\student_details\\DDU.csv')
-            .then(students => {
+        const path = "./public/student_details/DDU.csv"
+        const studentData = await CSVToJSON().fromFile(path)
+        console.log(studentData[0]["First Name"])
+        /////////////////////////////////////////////////////////
 
-                // students is a JSON array
-                // log the JSON array
-                console.log(students);
-            }).catch(err => {
-                // log error if any
-                console.log(err);
-            });
-        // }, 3000);
 
-        // const studentStatus = await StudentService.createStudent(req.body)
+        // START FROM HERE BY MAKING STUDENT OBJECTS
+
+        ////////////////////////////////////////////////////////
         let studentStatus = true;
-        console.log(studentDetails);
         if (studentStatus) {
             return res.json({ status: true, data: "Student Added" })
         }
