@@ -27,7 +27,7 @@ router.post("/addAnnoucement", [upload.single("Job_Description_File"), EmptyFiel
 
 router.get("/getAllAnnoucements", AnnouncementController.getAllAnnoucements)
 router.get("/getAnnoucement/:annoucementId", AnnouncementController.getAnnoucement)
-router.post("/updateAnnoucement/:annoucementId", AnnouncementController.updateAnnoucement)
+router.post("/updateAnnoucement/:annoucementId", [EmptyFieldCheck, SalaryVerifier, DateValidator], AnnouncementController.updateAnnoucement)
 router.post("/deleteAnnoucement/:annoucementId", AnnouncementController.deleteAnnoucement)
 router.get("/requiredAnnoucementDetails", AnnouncementController.requiredAnnoucementDetails)
 

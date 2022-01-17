@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import MainCard from '../../ui-component/cards/MainCard';
+import UsePost from '../../Utilities/UsePost';
 import { makeStyles } from '@material-ui/styles';
 import { styled } from '@mui/material/styles';
 import {
@@ -77,76 +78,25 @@ const Input = styled('input')({
 
 function AddAnnoucement() {
 
+    const [data, setData] = useState(undefined)
+    const id = useLocation().pathname.split("/")[3]
+    useEffect(async () => {
+        const response = await fetch("/annoucement/getAnnoucement/" + id, { method: "GET" });
+        let data1 = await response.json();
+        data1 = data1["data"][0]
+
+        // console.log(data1)
+        setData(data1)
+
+    }, [])
+
     const [selectedFile, setSelectedFile] = useState();
     const [isFilePicked, setIsFilePicked] = useState(false);
-
-    const [data, setData] = useState({
-        Company_ID: '',
-        Date_of_announcement: null,
-        Date_of_Visit: null,
-        Eligible_Branches: '',
-        Passed_out_year: null,
-        Job_Role: '',
-        Salary: '',
-        Job_Location: '',
-        Bond_Details: '',
-        Other_Details: '',
-        Registration_Deadline: null,
-        Eligibility: ''
-    });
-
-    const location = useLocation().pathname;
-    const id = location.split("/")[3]
-
-    const { required_data, loading } = useFetch("/annoucement/getAnnoucement/" + id, "GET")
-
-    let announcement_details;
-    let count = 0;
-    
-    if (!loading) {
-        announcement_details = required_data["data"][0];
-        console.log("here: ",announcement_details);
-        
-        // if(count === 0) {
-        //     setData(setting_data);
-        //     count++;
-        // }
-    }
-    // function setSettingData(announcement_details)
-    // {
-    //     var setting_data;
-    //     setting_data= {
-    //             Company_ID: announcement_details["Company_ID"],
-    //             Date_of_announcement: announcement_details["Date_of_announcement"],
-    //             Date_of_Visit: announcement_details["Date_of_Visit"],
-    //             Eligible_Branches: announcement_details["Eligible_Branches"],
-    //             Passed_out_year: announcement_details["Passed_out_year"],
-    //             Job_Role: announcement_details["Job_Role"],
-    //             Salary: announcement_details["Salary"],
-    //             Job_Location: announcement_details["Job_Location"],
-    //             Bond_Details: announcement_details["Bond_Details"],
-    //             Other_Details: announcement_details["Other_Details"],
-    //             Registration_Deadline: announcement_details["Registration_Deadline"],
-    //             Eligibility: announcement_details["Eligibility"]
-    //         }
-    //         setData(setting_data);
-    // }
-
-    // if(!loading && count==0)
-    // { 
-    //     setSettingData(announcement_details);
-    //     count=1
-    // }
-    // useEffect(async function() {
-    //     if (!loading) {
-            
-    //     }
-    // }, []);
 
 
 
     const changeHandler = (event) => {
-        console.log(event.target.files[0])
+        // console.log(event.target.files[0])
         const file_data = event.target.files[0]
         let temp = data
         temp["Job_Description_File"] = file_data
@@ -154,92 +104,43 @@ function AddAnnoucement() {
     };
 
     async function handleSubmit() {
-
-        const res = await UsePostFile("/annoucement/addAnnoucement", data, "POST")
+        const temp = data
+        delete temp["Company_Details"]
+        const response = await UsePost("/annoucement/updateAnnoucement/" + id, data, "POST")
+        // console.log(response)
         const params1 = {
-            data: res,
+            data: response,
             HandleToast: {
                 toast: toast,
                 flag: false,
             }
         }
-        console.log(res);
+        // console.log(res);
         responsePipelineHandler(params1, 1)
-        // END OF POSTING DATA EXAMPLE
+        // if(response.)
     }
 
-    // const saveData = async function() {
-    //     // console.log("hello from save data");
-    //     const { res, waiting } = usePost("/annoucement/addAnnoucement", data, "POST")
-    //     const params1 = {
-    //         data: res,
-    //         HandleToast: {
-    //             toast: toast,
-    //             flag: false,
-    //         }
-    //     }
-    // }
 
     return (
-        <MainCard title="Edit Annoucement" >
-            <form enctype="multipart/form-data">
-                {/* <TextField
-                    fullWidth
-                    label="Company Name"
-                    id="fullWidth"
-                    helperText="Enter Comapny Name"
-                    value={data['Company_Name']}
-                    onChange={(e) => {
-                        setData({ ...data, Company_Name: e.target.value });
-                    }}
-                /> */}
-                {loading?console.log("Hereing"):()=>{
 
-                    setData({
-                        Company_ID: announcement_details["Company_ID"],
-                        Date_of_announcement: announcement_details["Date_of_announcement"],
-                        Date_of_Visit: announcement_details["Date_of_Visit"],
-                        Eligible_Branches: announcement_details["Eligible_Branches"],
-                        Passed_out_year: announcement_details["Passed_out_year"],
-                        Job_Role: announcement_details["Job_Role"],
-                        Salary: announcement_details["Salary"],
-                        Job_Location: announcement_details["Job_Location"],
-                        Bond_Details: announcement_details["Bond_Details"],
-                        Other_Details: announcement_details["Other_Details"],
-                        Registration_Deadline: announcement_details["Registration_Deadline"],
-                        Eligibility: announcement_details["Eligibility"]
-                    })
-                    console.log(data)
-                }
-                }
+        <MainCard title="Edit Annoucement" >
+            {data === undefined ? "" : console.log(data)}
+            <form enctype="multipart/form-data">
+
+
                 <TextField
                     fullWidth
                     required
-                    label="Job Role"
+                    disabled
+                    label="Company Name"
                     id="companies"
-                    helperText="Enter Job Role"
-                    value={loading ? "" : announcement_details["Company_Details"]['Company_name']}
+                    // helperText="Enter Job Role"
+                    value={data === undefined ? "" : data["Company_Details"]['Company_name']}
                     onChange={(e) => {
                         setData({ ...data, Job_Role: e.target.value });
                     }}
                 />
-                {/* <TextField
-                    fullWidth
-                    id="companies"
-                    select
-                    required
-                    label="Select Company"
-                    value={loading ? "" : announcement_details["Company_Details"]['Company_name']}
-                    onChange={(e) => {
-                        setData({ ...data, Company_ID: e.target.value });
-                    }}
-                > */}
-                    {/* {companies.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                        </MenuItem>
-                    ))} */}
-                {/* </TextField> */}
+
                 <br />
                 <br />
                 <Grid container spacing={2}>
@@ -248,7 +149,7 @@ function AddAnnoucement() {
                             <DatePicker
                                 label="Date of Visit"
                                 required
-                                value={data['Date_of_Visit']}
+                                value={data === undefined ? "" : data['Date_of_Visit']}
                                 onChange={(e) => {
                                     setData({ ...data, Date_of_Visit: e });
                                 }}
@@ -261,7 +162,7 @@ function AddAnnoucement() {
                             <DatePicker
                                 label="Date of Annoucement"
                                 required
-                                value={data['Date_of_announcement']}
+                                value={data === undefined ? "" : data['Date_of_announcement']}
                                 onChange={(e) => {
                                     setData({ ...data, Date_of_announcement: e });
                                 }}
@@ -275,7 +176,7 @@ function AddAnnoucement() {
                                 views={['year']}
                                 label="Passed Out Year"
                                 required
-                                value={data['Passed_out_year']}
+                                value={data === undefined ? "" : data['Passed_out_year']}
                                 onChange={(e) => {
                                     setData({ ...data, Passed_out_year: e });
                                 }}
@@ -293,7 +194,7 @@ function AddAnnoucement() {
                     select
                     required
                     label="Select Branch"
-                    value={data['Eligible_Branches']}
+                    value={data === undefined ? "" : data['Eligible_Branches']}
                     onChange={(e) => {
                         setData({ ...data, Eligible_Branches: e.target.value });
                     }}
@@ -312,7 +213,7 @@ function AddAnnoucement() {
                     label="Job Role"
                     id="fullWidth"
                     helperText="Enter Job Role"
-                    value={data['Job_Role']}
+                    value={data === undefined ? "" : data['Job_Role']}
                     onChange={(e) => {
                         setData({ ...data, Job_Role: e.target.value });
                     }}
@@ -325,7 +226,7 @@ function AddAnnoucement() {
                     label="Salary"
                     id="fullWidth"
                     helperText="Enter Salary"
-                    value={data['Salary']}
+                    value={data === undefined ? "" : data['Salary']}
                     onChange={(e) => {
                         setData({ ...data, Salary: e.target.value });
                     }}
@@ -338,7 +239,7 @@ function AddAnnoucement() {
                     label="Job Location"
                     id="fullWidth"
                     helperText="Enter Job Location"
-                    value={data['Job_Location']}
+                    value={data === undefined ? "" : data['Job_Location']}
                     onChange={(e) => {
                         setData({ ...data, Job_Location: e.target.value });
                     }}
@@ -351,7 +252,7 @@ function AddAnnoucement() {
                     label="Bond Details"
                     id="fullWidth"
                     helperText="Enter Bond Details"
-                    value={data['Bond_Details']}
+                    value={data === undefined ? "" : data['Bond_Details']}
                     onChange={(e) => {
                         setData({ ...data, Bond_Details: e.target.value });
                     }}
@@ -364,7 +265,7 @@ function AddAnnoucement() {
                     label="Other Details"
                     id="fullWidth"
                     helperText="Enter Other Details"
-                    value={data['Other_Details']}
+                    value={data === undefined ? "" : data['Other_Details']}
                     onChange={(e) => {
                         setData({ ...data, Other_Details: e.target.value });
                     }}
@@ -389,7 +290,7 @@ function AddAnnoucement() {
                             <DatePicker
                                 label="Registration Deadline"
                                 required
-                                value={data['Registration_Deadline']}
+                                value={data === undefined ? "" : data['Registration_Deadline']}
                                 onChange={(e) => {
                                     setData({ ...data, Registration_Deadline: e });
                                 }}
@@ -414,13 +315,14 @@ function AddAnnoucement() {
                 </Grid>
                 <br />
                 <br />
+
                 <TextField
                     fullWidth
                     required
                     label="Eligibility"
                     id="fullWidth"
                     helperText="Eligibility"
-                    value={data['Eligibility']}
+                    value={data === undefined ? "" : data['Eligibility']}
                     onChange={(e) => {
                         setData({ ...data, Eligibility: e.target.value });
                     }}

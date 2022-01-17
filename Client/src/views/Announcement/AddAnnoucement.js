@@ -115,7 +115,8 @@ function AddAnnoucement() {
     }
 
     const changeHandler = (event) => {
-        console.log(event.target.files[0])
+        console.log(event.target.files[0]["name"])
+        document.getElementById("fileUploadName").innerText = " " + event.target.files[0]["name"]
         const file_data = event.target.files[0]
         let temp = data
         temp["Job_Description_File"] = file_data
@@ -321,8 +322,10 @@ function AddAnnoucement() {
                             <Button variant="outlined" component="span">
                                 Upload Job Description File
                             </Button>
+                            <label id="fileUploadName"> </label>
                         </label>
                     </Grid>
+
                     <Grid item xs={4}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
