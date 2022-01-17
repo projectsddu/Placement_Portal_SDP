@@ -3,7 +3,7 @@ function getTime(date) {
 }
 
 const ParseDate = function (date, time_required = false) {
-    console.log(date)
+    // console.log(date)
     try {
         var return_date = ""
         var parse_date = date.split("T");
