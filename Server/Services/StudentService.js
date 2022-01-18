@@ -5,7 +5,7 @@ const db = require("../Models/index")
 const Student = db.students
 
 async function checkExists(id) {
-    const students = await Student.findAll({ where: { id } })
+    const students = await Student.findAll({ where: { Student_ID: id } })
     if (students.length == 0) {
         return false
     }
@@ -40,7 +40,7 @@ const getAllStudents = async () => {
 const getOneStudent = async (id) => {
     try {
         let student = await Student.findOne({
-            where: { id }
+            where: { Student_ID: id }
         })
         return student
     }
@@ -53,7 +53,8 @@ const getOneStudent = async (id) => {
 const updateStudent = async (data, id) => {
     try {
         if (await checkExists(id)) {
-            const student = await Student.update(data, { where: { id } })
+            const student = await Student.update(data, { where: { Student_ID: id } })
+            console.log(id)
             return student
         }
         else {
@@ -74,7 +75,7 @@ const deleteStudent = async (id) => {
             throw "Error deleting student"
         }
         else {
-            await Student.destroy({ where: { id } })
+            await Student.destroy({ where: { Student_ID: id } })
             return true
         }
     }

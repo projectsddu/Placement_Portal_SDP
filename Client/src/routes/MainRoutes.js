@@ -33,6 +33,9 @@ const ViewStudent = Loadable(lazy(() => import('../views/Student/ViewStudent')))
 const ViewSingleCompany = Loadable(lazy(() => import('../views/Company/ViewSingleCompany')));
 const EditCompany = Loadable(lazy(() => import('../views/Company/EditCompanyDetails')));
 
+const AddStudent = Loadable(lazy(() => import('../views/Student/AddStudent')));
+const UpdateStudent = Loadable(lazy(() => import('../views/Student/UpdateStudent')));
+
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('../views/sample-page')));
@@ -78,6 +81,8 @@ const MainRoutes = () => {
 
                 // Student Routes
                 '/student/view_student',
+                '/student/add_student',
+                '/student/update_student',
 
             ]}
         >
@@ -113,6 +118,8 @@ const MainRoutes = () => {
 
                     {/* Student Routes */}
                     <Route path="/student/view_student" component={ViewStudent} />
+                    <Route path="/student/add_student" component={AddStudent} />
+                    <Route path="/student/update_student" component={UpdateStudent} />
 
                     {/* </AuthGuard> */}
                 </Switch>

@@ -8,6 +8,7 @@ const icons = {
     IconEye,
     IconSpeakerphone,
     IconLayoutGridAdd,
+    IconEye,
     IconCirclePlus
 };
 
