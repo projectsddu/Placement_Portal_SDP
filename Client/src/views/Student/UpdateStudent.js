@@ -22,7 +22,7 @@ const Input = styled('input')({
 
 
 
-export default function AddStudent() {
+export default function UpdateStudent() {
 
     const [data, setData] = useState({
     });
@@ -38,7 +38,7 @@ export default function AddStudent() {
     
     async function handleSubmit() {
     
-        const res = await UsePostFile("/student/", data, "POST")
+        const res = await UsePostFile("/student/updateStudent/", data, "POST")
         const params1 = {
             data: res,
             HandleToast: {
@@ -52,7 +52,7 @@ export default function AddStudent() {
     }
 
     return (
-        <MainCard title="Add Student Details">
+        <MainCard title="Update Student Details">
             <form enctype="multipart/form-data">
                 <label htmlFor="contained-button-file">
                     <Input
@@ -71,7 +71,7 @@ export default function AddStudent() {
                 <br/>
                 <br/>
                 <Button onClick={handleSubmit} variant="contained" size="large" color="primary">
-                        Add Student
+                        Update Student
                 </Button>
             </form>
         </MainCard>

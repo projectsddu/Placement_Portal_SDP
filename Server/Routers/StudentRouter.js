@@ -22,7 +22,7 @@ const upload = multer({ storage: fileStorage })
 router.post("/", [upload.single("Student_Details_File")], EmptyFieldCheck, StudentController.addStudent)
 router.get("/getAllStudents", StudentController.getAllStudents)
 router.get("/getOneStudent/:id", StudentController.getOneStudent)
-router.post("/updateStudent/:id", StudentController.updateStudent)
+router.post("/updateStudent/", [upload.single("Student_Details_File")], StudentController.updateStudent)
 router.post("/deleteStudent/:id", StudentController.deleteStudent)
 
 module.exports = router
