@@ -1,5 +1,5 @@
 // assets
-import { IconDashboard, IconDeviceAnalytics, IconSpeakerphone, IconLayoutGridAdd, IconCirclePlus, IconEye } from '@tabler/icons';
+import { IconDashboard, IconDeviceAnalytics, IconSpeakerphone, IconLayoutGridAdd, IconUser, IconCirclePlus, IconEye, IconMan, IconBrandGravatar } from '@tabler/icons';
 
 // constant
 const icons = {
@@ -8,25 +8,33 @@ const icons = {
     IconEye,
     IconSpeakerphone,
     IconLayoutGridAdd,
-    IconCirclePlus
+    IconCirclePlus, IconMan, IconBrandGravatar, IconUser
+
 };
 
 //-----------------------|| ANNOUNCEMENT DASHBOARD MENU ITEMS ||-----------------------//
 
 export const TempMenu = {
     id: 'Temp',
-    title: 'Temp',
+    title: 'Dashboard',
     type: 'group',
     children: [
         {
             id: 'Temp1',
-            title: 'Add Temp',
+            title: 'Dashboard',
             type: 'item',
             url: '/_student/Dashboard/',
-            icon: icons['IconCirclePlus'],
+            icon: icons['IconDashboard'],
             breadcrumbs: false
         },
-
+        {
+            id: 'profile',
+            title: 'Profile',
+            type: 'item',
+            url: '/_student/Dashboard/profile',
+            icon: icons['IconUser'],
+            breadcrumbs: false
+        },
 
     ]
 };

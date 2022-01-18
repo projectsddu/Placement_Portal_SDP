@@ -219,7 +219,7 @@ const NotificationList = () => {
                         <Grid container justifyContent="flex-end">
                             <Grid item xs={12}>
                                 <Typography variant="caption" display="block" gutterBottom className={classes.actionColor}>
-                                    2 min ago
+                                    2 min
                                 </Typography>
                             </Grid>
                         </Grid>
