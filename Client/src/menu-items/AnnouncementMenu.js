@@ -1,11 +1,12 @@
 // assets
-import { IconDashboard, IconDeviceAnalytics, IconSpeakerphone, IconLayoutGridAdd, IconCirclePlus } from '@tabler/icons';
+import { IconDashboard, IconDeviceAnalytics, IconSpeakerphone, IconLayoutGridAdd, IconCirclePlus, IconEye } from '@tabler/icons';
 
 // constant
 const icons = {
     IconDashboard: IconDashboard,
     IconDeviceAnalytics,
-    IconSpeakerphone, 
+    IconEye,
+    IconSpeakerphone,
     IconLayoutGridAdd,
     IconCirclePlus
 };
@@ -30,7 +31,7 @@ export const AnnouncementMenu = {
             title: 'View Annoucements',
             type: 'item',
             url: '/announcement/view_annoucement',
-            icon: icons['IconCirclePlus'],
+            icon: icons['IconEye'],
             breadcrumbs: false
         },
         {
@@ -41,7 +42,7 @@ export const AnnouncementMenu = {
             icon: icons['IconSpeakerphone'],
             breadcrumbs: false
         },
-        
+
 
     ]
 };

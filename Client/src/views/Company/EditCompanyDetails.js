@@ -85,7 +85,7 @@ function EditCompany() {
                     <TextField
                         required
                         fullWidth
-                        disabled
+
                         label="Company Name"
                         id="fullWidth"
                         value={data['Company_name']}
