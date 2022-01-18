@@ -42,7 +42,7 @@ function ViewSingleAnnoucement() {
 
     const { required_data, loading } = useFetch("/annoucement/getAnnoucement/" + id, "GET")
 
-    let announcement_details, rows;
+    let announcement_details = undefined, rows;
     if (!loading) {
 
         announcement_details = required_data["data"][0];
@@ -120,36 +120,57 @@ function ViewSingleAnnoucement() {
                                             <TableCell align="right">{row.value}</TableCell>
                                         </TableRow>
                                     ))}
+                                    <TableRow
+                                        key="Job_Description_File"
+                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                    >
+                                        <TableCell component="th" scope="row">
+                                            Job description file
+                                        </TableCell>
+                                        <TableCell align="right">
 
+                                            {announcement_details === undefined ? "Wait Loading..." : <>
+                                                {
+                                                    console.log()
+                                                }
+                                                <a target='blank' href={
+                                                    "http://localhost:8000" + announcement_details["Job_Description_File"].split(".")[1] + "." + announcement_details["Job_Description_File"].split(".")[2]}><Button>
+                                                        View Job Description File
+                                                    </Button></a>
+                                            </>}
+
+                                        </TableCell>
+                                    </TableRow>
                                 </TableBody>
                             </Table>
                         </TableContainer>
                     </>
                 )}
+
             </MainCard>
-            <br/>
+            <br />
             <MainCard title="Add New Comment">
                 <form>
                     <TextField
-                    id="comments"
-                    label="Enter the comment"
-                    multiline
-                    fullWidth
-                    maxRows={7}
-                    value={commentData['Comment_text']}
-                    onChange={(e) => {
-                        setcommentData({ ...commentData, Comment_text: e.target.value });
-                    }}
+                        id="comments"
+                        label="Enter the comment"
+                        multiline
+                        fullWidth
+                        maxRows={7}
+                        value={commentData['Comment_text']}
+                        onChange={(e) => {
+                            setcommentData({ ...commentData, Comment_text: e.target.value });
+                        }}
                     />
-                    <br/><br/>
-                    <Button onClick={() => handleComment(announcement_details["Announcement_ID"])} variant="contained" fullWidth     size="large"     color="primary">
-                    Post Comment
+                    <br /><br />
+                    <Button onClick={() => handleComment(announcement_details["Announcement_ID"])} variant="contained" fullWidth size="large" color="primary">
+                        Post Comment
                     </Button>
                     {/* <Button onClick={handleComment} fullWidth variant='contained' size='large' color="primary">Post Comment</Button> */}
                 </form>
-                
+
             </MainCard>
-            <br/>
+            <br />
             <MainCard title="See Comments">
                 <h1>See comments</h1>
             </MainCard>
