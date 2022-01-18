@@ -18,7 +18,7 @@ const createdAnnoucement = async (announcementData, job_description_file) => {
     try {
         console.log(announcementData)
         const dat = Date.parse(announcementData["Date_of_Visit"])
-        const fileName = "./public/" + announcementData["Company_Name"] + "-" + dat.toString() + ".pdf"
+        const fileName = "./public/" + announcementData["Company_ID"] + "-" + dat.toString() + ".pdf"
         announcementData["Job_Description_File"] = fileName
         // announcementData["Company_ID"] = 3 // Temporary static
         announcementData["IsOpen"] = true // Temporary static

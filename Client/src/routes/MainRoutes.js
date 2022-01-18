@@ -32,6 +32,7 @@ const ViewCompany = Loadable(lazy(() => import('../views/Company/ViewCompany')))
 const ViewStudent = Loadable(lazy(() => import('../views/Student/ViewStudent')));
 const ViewSingleCompany = Loadable(lazy(() => import('../views/Company/ViewSingleCompany')));
 const EditCompany = Loadable(lazy(() => import('../views/Company/EditCompanyDetails')));
+const Temp = Loadable(lazy(() => import('../views/Student_Views/Dashboard/index')));
 
 const AddStudent = Loadable(lazy(() => import('../views/Student/AddStudent')));
 const UpdateStudent = Loadable(lazy(() => import('../views/Student/UpdateStudent')));
@@ -84,6 +85,8 @@ const MainRoutes = () => {
                 '/student/add_student',
                 '/student/update_student',
 
+                '/_student/Dashboard'
+
             ]}
         >
             <MainLayout>
@@ -99,6 +102,7 @@ const MainRoutes = () => {
                     <Route path="/icons/form_elements" component={form_elements} />
                     <Route path="/icons/cards" component={cards} />
                     <Route path="/own/keval" component={SReg} />
+                    <Route path="/_student/Dashboard/" component={Temp} />
 
 
 

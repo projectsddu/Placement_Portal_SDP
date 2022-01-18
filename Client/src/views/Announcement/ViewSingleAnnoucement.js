@@ -1,5 +1,24 @@
 import React from 'react'
 import { Button } from '@material-ui/core';
+// assets
+import {
+    Avatar,
+
+    Card,
+    CardContent,
+    Chip,
+    Divider,
+    Grid,
+    List,
+    ListItem,
+    ListItemAvatar,
+    ListItemSecondaryAction,
+    ListItemText,
+    Stack,
+
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+import { IconBrandTelegram, IconBuildingStore, IconMailbox, IconPhoto } from '@tabler/icons';
 import MainCard from '../../ui-component/cards/MainCard'
 import { useState, useEffect } from 'react';
 import { Typography } from '@mui/material'
@@ -23,6 +42,85 @@ import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 
 function ViewSingleAnnoucement() {
 
+    const useStyles = makeStyles((theme) => ({
+        navContainer: {
+            width: '100%',
+            maxWidth: '330px',
+            paddingTop: 0,
+            paddingBottom: 0,
+            borderRadius: '10px',
+            [theme.breakpoints.down('sm')]: {
+                maxWidth: '300px'
+            }
+        },
+        listAction: {
+            top: '22px'
+        },
+        actionColor: {
+            color: theme.palette.grey[500]
+        },
+
+        listItem: {
+            padding: 0
+        },
+        sendIcon: {
+            marginLeft: '8px',
+            marginTop: '-3px'
+        },
+        listDivider: {
+            marginTop: 0,
+            marginBottom: 0
+        },
+        listChipError: {
+            color: theme.palette.orange.dark,
+            backgroundColor: theme.palette.orange.light,
+            height: '24px',
+            padding: '0 6px',
+            marginRight: '5px'
+        },
+        listChipWarning: {
+            color: theme.palette.warning.dark,
+            backgroundColor: theme.palette.warning.light,
+            height: '24px',
+            padding: '0 6px'
+        },
+        listChipSuccess: {
+            color: theme.palette.success.dark,
+            backgroundColor: theme.palette.success.light,
+            height: '24px',
+            padding: '0 6px'
+        },
+        listAvatarSuccess: {
+            color: theme.palette.success.dark,
+            backgroundColor: theme.palette.success.light,
+            border: 'none',
+            borderColor: theme.palette.success.main
+        },
+        listAvatarPrimary: {
+            color: theme.palette.primary.dark,
+            backgroundColor: theme.palette.primary.light,
+            border: 'none',
+            borderColor: theme.palette.primary.main
+        },
+        listContainer: {
+            paddingLeft: '56px'
+        },
+        uploadCard: {
+            backgroundColor: theme.palette.secondary.light
+        },
+        paddingBottom: {
+            paddingBottom: '16px'
+        },
+        itemAction: {
+            cursor: 'pointer',
+            padding: '16px',
+            '&:hover': {
+                background: theme.palette.primary.light
+            }
+        }
+    }));
+    const classes = useStyles();
+
     function createData(key, value) {
         if (value == undefined) {
             value = "Not Defined!"
@@ -42,7 +140,7 @@ function ViewSingleAnnoucement() {
 
     const { required_data, loading } = useFetch("/annoucement/getAnnoucement/" + id, "GET")
 
-    let announcement_details, rows;
+    let announcement_details = undefined, rows;
     if (!loading) {
 
         announcement_details = required_data["data"][0];
@@ -120,36 +218,82 @@ function ViewSingleAnnoucement() {
                                             <TableCell align="right">{row.value}</TableCell>
                                         </TableRow>
                                     ))}
+                                    <TableRow
+                                        key="Job_Description_File"
+                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                    >
+                                        <TableCell component="th" scope="row">
+                                            Job description file
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {announcement_details === undefined ? "Wait Loading...." : <>
+                                                <a target='blank'
 
+                                                    href={
+                                                        "http://localhost:8000" + announcement_details["Job_Description_File"].split(".")[1] + "." + announcement_details["Job_Description_File"].split(".")[2]}>
+                                                    <Card className={classes.uploadCard}>
+                                                        <CardContent>
+                                                            <Grid container direction="column">
+                                                                <Grid item xs={6} >
+                                                                    <Stack direction="row" spacing={2}>
+                                                                        <IconPhoto stroke={1.0} size="0.8rem" />
+                                                                        <Typography variant="subtitle1">
+                                                                            {announcement_details === undefined ? "Wait Loading...." : <>
+
+                                                                                {"View Job Description File"}
+                                                                            </>
+                                                                            }
+                                                                        </Typography>
+                                                                    </Stack>
+                                                                </Grid>
+                                                            </Grid>
+                                                        </CardContent>
+                                                    </Card>
+                                                </a>
+                                            </>}
+
+                                            {/* {announcement_details === undefined ? "Wait Loading..." : <>
+                                                {
+                                                    console.log()
+                                                }
+                                                <a target='blank' href={
+                                                    "http://localhost:8000" + announcement_details["Job_Description_File"].split(".")[1] + "." + announcement_details["Job_Description_File"].split(".")[2]}><Button>
+                                                        View Job Description File
+                                                    </Button></a>
+                                            </>} */}
+
+                                        </TableCell>
+                                    </TableRow>
                                 </TableBody>
                             </Table>
                         </TableContainer>
                     </>
                 )}
+
             </MainCard>
-            <br/>
+            <br />
             <MainCard title="Add New Comment">
                 <form>
                     <TextField
-                    id="comments"
-                    label="Enter the comment"
-                    multiline
-                    fullWidth
-                    maxRows={7}
-                    value={commentData['Comment_text']}
-                    onChange={(e) => {
-                        setcommentData({ ...commentData, Comment_text: e.target.value });
-                    }}
+                        id="comments"
+                        label="Enter the comment"
+                        multiline
+                        fullWidth
+                        maxRows={7}
+                        value={commentData['Comment_text']}
+                        onChange={(e) => {
+                            setcommentData({ ...commentData, Comment_text: e.target.value });
+                        }}
                     />
-                    <br/><br/>
-                    <Button onClick={() => handleComment(announcement_details["Announcement_ID"])} variant="contained" fullWidth     size="large"     color="primary">
-                    Post Comment
+                    <br /><br />
+                    <Button onClick={() => handleComment(announcement_details["Announcement_ID"])} variant="contained" fullWidth size="large" color="primary">
+                        Post Comment
                     </Button>
                     {/* <Button onClick={handleComment} fullWidth variant='contained' size='large' color="primary">Post Comment</Button> */}
                 </form>
-                
+
             </MainCard>
-            <br/>
+            <br />
             <MainCard title="See Comments">
                 <h1>See comments</h1>
             </MainCard>
