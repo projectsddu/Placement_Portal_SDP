@@ -34,7 +34,7 @@ const chartData = {
         },
         xaxis: {
             type: 'category',
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            categories: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4', 'Sem 5', 'Sem 6', 'Sem 7', 'Sem 8']
         },
         legend: {
             show: true,
@@ -67,20 +67,20 @@ const chartData = {
     },
     series: [
         {
-            name: 'Investment',
-            data: [35, 125, 35, 35, 35, 80, 35, 20, 35, 45, 15, 75]
+            name: 'CPI',
+            data: [9.5, 9.1, 9.2, 9.0, 8.5, 9.1, 9.3]
         },
         {
-            name: 'Loss',
-            data: [35, 15, 15, 35, 65, 40, 80, 25, 15, 85, 25, 75]
+            // name: 'Loss',
+            // data: [35, 15, 15, 35, 65, 40, 80, 25, 15, 85, 25, 75]
         },
         {
-            name: 'Profit',
-            data: [35, 145, 35, 35, 20, 105, 100, 10, 65, 45, 30, 10]
+            // name: 'Profit',
+            // data: [35, 145, 35, 35, 20, 105, 100, 10, 65, 45, 30, 10]
         },
         {
-            name: 'Maintenance',
-            data: [0, 0, 75, 0, 0, 115, 0, 0, 0, 0, 150, 0]
+            // name: 'Maintenance',
+            // data: [0, 0, 75, 0, 0, 115, 0, 0, 0, 0, 150, 0]
         }
     ]
 };

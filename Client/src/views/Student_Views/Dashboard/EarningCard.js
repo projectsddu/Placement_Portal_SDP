@@ -123,12 +123,13 @@ const EarningCard = ({ isLoading }) => {
                         <Grid item>
                             <Grid container justifyContent="space-between">
                                 <Grid item>
-                                    <Avatar variant="rounded" className={classes.avatar}>
+                                    {/* <Avatar variant="rounded" className={classes.avatar}>
                                         <img src={EarningIcon} alt="Notification" />
-                                    </Avatar>
+                                    </Avatar> */}
+                                    <br/><br/><br/>
                                 </Grid>
                                 <Grid item>
-                                    <Avatar
+                                    {/* <Avatar
                                         variant="rounded"
                                         className={classes.avatarRight}
                                         aria-controls="menu-earning-card"
@@ -136,8 +137,8 @@ const EarningCard = ({ isLoading }) => {
                                         onClick={handleClick}
                                     >
                                         <MoreHorizIcon fontSize="inherit" />
-                                    </Avatar>
-                                    <Menu
+                                    </Avatar> */}
+                                    {/* <Menu
                                         id="menu-earning-card"
                                         anchorEl={anchorEl}
                                         keepMounted
@@ -152,10 +153,10 @@ const EarningCard = ({ isLoading }) => {
                                             vertical: 'top',
                                             horizontal: 'right'
                                         }}
-                                    >
-                                        <MenuItem onClick={handleClose}>
+                                    > */}
+                                        {/* <MenuItem onClick={handleClose}>
                                             <GetAppTwoToneIcon fontSize="inherit" className={classes.menuItem} /> Import Card
-                                        </MenuItem>
+                                        </MenuItem> */}
                                         {/* <MenuItem onClick={handleClose}>
                                             <FileCopyTwoToneIcon fontSize="inherit" className={classes.menuItem} /> Copy Data
                                         </MenuItem>
@@ -165,7 +166,7 @@ const EarningCard = ({ isLoading }) => {
                                         <MenuItem onClick={handleClose}>
                                             <ArchiveTwoToneIcon fontSize="inherit" className={classes.menuItem} /> Archive File
                                         </MenuItem> */}
-                                    </Menu>
+                                    {/* </Menu> */}
                                 </Grid>
                             </Grid>
                         </Grid>

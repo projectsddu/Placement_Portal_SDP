@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.primary.dark
     },
     secondary: {
-        color: theme.palette.grey[500],
+        color: theme.palette.grey[900],
         marginTop: '5px'
     },
     padding: {
@@ -81,10 +81,10 @@ const TotalIncomeLightCard = ({ isLoading }) => {
                                     mb: 0.45
                                 }}
                                 className={classes.padding}
-                                primary={<Typography variant="h4">$203k</Typography>}
+                                primary={<Typography variant="h4">2</Typography>}
                                 secondary={
                                     <Typography variant="subtitle2" className={classes.secondary}>
-                                        Total Income
+                                        Total Internships
                                     </Typography>
                                 }
                             />
