@@ -115,11 +115,13 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                         <Grid item>
                             <Grid container justifyContent="space-between">
                                 <Grid item>
-                                    <Avatar variant="rounded" className={classes.avatar}>
+                                    {/* <Avatar variant="rounded" className={classes.avatar}>
                                         <LocalMallOutlinedIcon fontSize="inherit" />
-                                    </Avatar>
+                                    </Avatar> */}
+                                    <br/>
+                                    <br/>
                                 </Grid>
-                                <Grid item>
+                                {/* <Grid item>
                                     <Button
                                         disableElevation
                                         variant={timeValue ? 'contained' : 'string'}
@@ -136,7 +138,7 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                                     >
                                         Year
                                     </Button>
-                                </Grid>
+                                </Grid> */}
                             </Grid>
                         </Grid>
                         <Grid item sx={{ mb: 0.75 }}>
@@ -145,24 +147,24 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                                     <Grid container alignItems="center">
                                         <Grid item>
                                             {timeValue ? (
-                                                <Typography className={classes.cardHeading}>$108</Typography>
+                                                <Typography className={classes.cardHeading}>20</Typography>
                                             ) : (
-                                                <Typography className={classes.cardHeading}>$961</Typography>
+                                                <Typography className={classes.cardHeading}>20</Typography>
                                             )}
                                         </Grid>
                                         <Grid item>
-                                            <Avatar className={classes.avatarCircle}>
+                                            {/* <Avatar className={classes.avatarCircle}>
                                                 <ArrowDownwardIcon fontSize="inherit" className={classes.circleIcon} />
-                                            </Avatar>
+                                            </Avatar> */}
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <Typography className={classes.subHeading}>Total Order</Typography>
+                                            <Typography className={classes.subHeading}>Total Subscriptions</Typography>
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                <Grid item xs={6}>
+                                {/* <Grid item xs={6}>
                                     {timeValue ? <Chart {...ChartDataMonth} /> : <Chart {...ChartDataYear} />}
-                                </Grid>
+                                </Grid> */}
                             </Grid>
                         </Grid>
                     </Grid>

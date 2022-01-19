@@ -3,7 +3,7 @@ import React from 'react';
 
 // material-ui
 import { makeStyles } from '@material-ui/styles';
-import { Avatar, Button, CardActions, CardContent, Divider, Grid, Menu, MenuItem, Typography } from '@material-ui/core';
+import { Chip, Avatar, Button, CardActions, CardContent, Divider, Grid, Menu, MenuItem, Typography } from '@material-ui/core';
 
 // project imports
 import BajajAreaChartCard from './BajajAreaChartCard';
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: '15px'
     },
     successDark: {
-        color: theme.palette.success.dark
+        color: theme.palette.primary[800]
     },
     avatarError: {
         width: '16px',
@@ -53,7 +53,26 @@ const useStyles = makeStyles((theme) => ({
     },
     errorDark: {
         color: theme.palette.orange.dark
-    }
+    },
+    listChipError: {
+        // color: theme.palette.orange.dark,
+        // backgroundColor: theme.palette.orange.light,
+        color : theme.palette.success.dark,
+        backgroundColor: theme.palette.success.light,
+        // color: theme.palette.success.light,
+        // backgroundColor : theme.palette.success.dark,
+        // color: theme.palette.primary.light,
+        // backgroundColor : theme.palette.primary[800],
+        height: '24px',
+        padding: '0 6px',
+        marginRight: '5px'
+    },
+    listChipWarning: {
+        color: theme.palette.warning.dark,
+        backgroundColor: theme.palette.warning.light,
+        height: '24px',
+        padding: '0 6px'
+    },
 }));
 
 //-----------------------|| DASHBOARD DEFAULT - POPULAR CARD ||-----------------------//
@@ -82,9 +101,9 @@ const PopularCard = ({ isLoading }) => {
                             <Grid item xs={12}>
                                 <Grid container alignContent="center" justifyContent="space-between">
                                     <Grid item>
-                                        <Typography variant="h4">Popular Stocks</Typography>
+                                        <Typography variant="h4">Offers</Typography>
                                     </Grid>
-                                    <Grid item>
+                                    {/* <Grid item>
                                         <MoreHorizOutlinedIcon
                                             fontSize="small"
                                             className={classes.primaryLight}
@@ -112,24 +131,24 @@ const PopularCard = ({ isLoading }) => {
                                             <MenuItem onClick={handleClose}> This Month</MenuItem>
                                             <MenuItem onClick={handleClose}> This Year </MenuItem>
                                         </Menu>
-                                    </Grid>
+                                    </Grid> */}
                                 </Grid>
                             </Grid>
-                            <Grid item xs={12} sx={{ pt: '16px !important' }}>
+                            {/* <Grid item xs={12} sx={{ pt: '16px !important' }}>
                                 <BajajAreaChartCard />
-                            </Grid>
+                            </Grid> */}
                             <Grid item xs={12}>
                                 <Grid container direction="column">
                                     <Grid item>
                                         <Grid container alignItems="center" justifyContent="space-between">
                                             <Grid item>
                                                 <Typography variant="subtitle1" color="inherit">
-                                                    Bajaj Finery
+                                                    TCS
                                                 </Typography>
                                             </Grid>
                                             <Grid item>
                                                 <Grid container alignItems="center" justifyContent="space-between">
-                                                    <Grid item>
+                                                    {/* <Grid item>
                                                         <Typography variant="subtitle1" color="inherit">
                                                             $1839.00
                                                         </Typography>
@@ -138,15 +157,19 @@ const PopularCard = ({ isLoading }) => {
                                                         <Avatar variant="rounded" className={classes.avatarSuccess}>
                                                             <KeyboardArrowUpOutlinedIcon fontSize="small" color="inherit" />
                                                         </Avatar>
-                                                    </Grid>
+                                                    </Grid> */}
+                                                    <Button variant="outlined" color="primary">View Offer</Button>
                                                 </Grid>
                                             </Grid>
                                         </Grid>
                                     </Grid>
                                     <Grid item>
-                                        <Typography variant="subtitle2" className={classes.successDark}>
-                                            10% Profit
-                                        </Typography>
+                                        {/* <Typography variant="subtitle2" className={classes.successDark}>
+                                            Internship
+                                        </Typography> */}
+                                        <Grid item>
+                                            <Chip label="Internship" className={classes.listChipWarning} />
+                                        </Grid>
                                     </Grid>
                                 </Grid>
                                 <Divider className={classes.divider} />
@@ -155,60 +178,33 @@ const PopularCard = ({ isLoading }) => {
                                         <Grid container alignItems="center" justifyContent="space-between">
                                             <Grid item>
                                                 <Typography variant="subtitle1" color="inherit">
-                                                    TTML
+                                                    Kiatech
                                                 </Typography>
                                             </Grid>
                                             <Grid item>
                                                 <Grid container alignItems="center" justifyContent="space-between">
-                                                    <Grid item>
+                                                    {/* <Grid item>
                                                         <Typography variant="subtitle1" color="inherit">
-                                                            $100.00
-                                                        </Typography>
-                                                    </Grid>
-                                                    <Grid item>
-                                                        <Avatar variant="rounded" className={classes.avatarError}>
-                                                            <KeyboardArrowDownOutlinedIcon fontSize="small" color="inherit" />
-                                                        </Avatar>
-                                                    </Grid>
-                                                </Grid>
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid item>
-                                        <Typography variant="subtitle2" className={classes.errorDark}>
-                                            10% loss
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-                                <Divider className={classes.divider} />
-                                <Grid container direction="column">
-                                    <Grid item>
-                                        <Grid container alignItems="center" justifyContent="space-between">
-                                            <Grid item>
-                                                <Typography variant="subtitle1" color="inherit">
-                                                    Reliance
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item>
-                                                <Grid container alignItems="center" justifyContent="space-between">
-                                                    <Grid item>
-                                                        <Typography variant="subtitle1" color="inherit">
-                                                            $200.00
+                                                            $1839.00
                                                         </Typography>
                                                     </Grid>
                                                     <Grid item>
                                                         <Avatar variant="rounded" className={classes.avatarSuccess}>
                                                             <KeyboardArrowUpOutlinedIcon fontSize="small" color="inherit" />
                                                         </Avatar>
-                                                    </Grid>
+                                                    </Grid> */}
+                                                    <Button variant="outlined" color="primary">View Offer</Button>
                                                 </Grid>
                                             </Grid>
                                         </Grid>
                                     </Grid>
                                     <Grid item>
-                                        <Typography variant="subtitle2" className={classes.successDark}>
-                                            10% Profit
-                                        </Typography>
+                                        {/* <Typography variant="subtitle2" className={classes.successDark}>
+                                            Internship
+                                        </Typography> */}
+                                        <Grid item>
+                                            <Chip label="Internship" className={classes.listChipWarning} />
+                                        </Grid>
                                     </Grid>
                                 </Grid>
                                 <Divider className={classes.divider} />
@@ -217,29 +213,33 @@ const PopularCard = ({ isLoading }) => {
                                         <Grid container alignItems="center" justifyContent="space-between">
                                             <Grid item>
                                                 <Typography variant="subtitle1" color="inherit">
-                                                    TTML
+                                                    Infosys
                                                 </Typography>
                                             </Grid>
                                             <Grid item>
                                                 <Grid container alignItems="center" justifyContent="space-between">
-                                                    <Grid item>
+                                                    {/* <Grid item>
                                                         <Typography variant="subtitle1" color="inherit">
-                                                            $189.00
+                                                            $1839.00
                                                         </Typography>
                                                     </Grid>
                                                     <Grid item>
-                                                        <Avatar variant="rounded" className={classes.avatarError}>
-                                                            <KeyboardArrowDownOutlinedIcon fontSize="small" color="inherit" />
+                                                        <Avatar variant="rounded" className={classes.avatarSuccess}>
+                                                            <KeyboardArrowUpOutlinedIcon fontSize="small" color="inherit" />
                                                         </Avatar>
-                                                    </Grid>
+                                                    </Grid> */}
+                                                    <Button variant="outlined" color="primary">View Offer</Button>
                                                 </Grid>
                                             </Grid>
                                         </Grid>
                                     </Grid>
                                     <Grid item>
-                                        <Typography variant="subtitle2" className={classes.errorDark}>
-                                            10% loss
-                                        </Typography>
+                                        {/* <Typography variant="subtitle2" className={classes.successDark}>
+                                            Internship
+                                        </Typography> */}
+                                        <Grid item>
+                                            <Chip label="Placement" className={classes.listChipError} />
+                                        </Grid>
                                     </Grid>
                                 </Grid>
                                 <Divider className={classes.divider} />
@@ -248,29 +248,33 @@ const PopularCard = ({ isLoading }) => {
                                         <Grid container alignItems="center" justifyContent="space-between">
                                             <Grid item>
                                                 <Typography variant="subtitle1" color="inherit">
-                                                    Stolon
+                                                    Synnotech
                                                 </Typography>
                                             </Grid>
                                             <Grid item>
                                                 <Grid container alignItems="center" justifyContent="space-between">
-                                                    <Grid item>
+                                                    {/* <Grid item>
                                                         <Typography variant="subtitle1" color="inherit">
-                                                            $189.00
+                                                            $1839.00
                                                         </Typography>
                                                     </Grid>
                                                     <Grid item>
-                                                        <Avatar variant="rounded" className={classes.avatarError}>
-                                                            <KeyboardArrowDownOutlinedIcon fontSize="small" color="inherit" />
+                                                        <Avatar variant="rounded" className={classes.avatarSuccess}>
+                                                            <KeyboardArrowUpOutlinedIcon fontSize="small" color="inherit" />
                                                         </Avatar>
-                                                    </Grid>
+                                                    </Grid> */}
+                                                    <Button variant="outlined" color="primary">View Offer</Button>
                                                 </Grid>
                                             </Grid>
                                         </Grid>
                                     </Grid>
                                     <Grid item>
-                                        <Typography variant="subtitle2" className={classes.errorDark}>
-                                            10% loss
-                                        </Typography>
+                                        {/* <Typography variant="subtitle2" className={classes.successDark}>
+                                            Internship
+                                        </Typography> */}
+                                        <Grid item>
+                                            <Chip label="Placement" className={classes.listChipError} />
+                                        </Grid>
                                     </Grid>
                                 </Grid>
                             </Grid>
