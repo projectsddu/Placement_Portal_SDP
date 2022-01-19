@@ -1,22 +1,22 @@
 import React, { useState } from 'react'
 import { Paper, Typography, Box, Grid, Button, ListItem, List } from "@material-ui/core"
 import { useTheme } from '@material-ui/styles';
-import MainCard from './../../ui-component/cards/MainCard';
-import SubCard from './../../ui-component/cards/SubCard';
+import MainCard from '../../../ui-component/cards/MainCard';
+import SubCard from '../../../ui-component/cards/SubCard';
 import { makeStyles } from '@material-ui/styles';
 import { withStyles } from '@material-ui/styles';
 import { color } from '@material-ui/system';
 import { ClassNames } from '@emotion/react';
 import { TextField } from '@material-ui/core';
 import $ from "jquery"
-import usePost from '../../Utilities/UsePost';
-import ParseDate from "../../Utilities/ParseDate"
-import HandleToast from '../../Utilities/HandleToast'
+import usePost from '../../../Utilities/UsePost';
+import ParseDate from "../../../Utilities/ParseDate"
+import HandleToast from '../../../Utilities/HandleToast'
 import { ToastContainer, toast } from 'react-toastify';
-import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
-import useFetch from '../../Utilities/useFetch';
+import responsePipelineHandler from '../../../Utilities/ResponsePipelineHandler';
+import useFetch from '../../../Utilities/useFetch';
 import { useHistory } from "react-router-dom";
-import SearchSection from '../../layout/MainLayout/Header/SearchSection';
+import SearchSection from '../../../layout/MainLayout/Header/SearchSection';
 
 const useStyles = makeStyles((theme) => ({
     applyBtn: {
@@ -53,7 +53,7 @@ const LightBlueTextTypography = withStyles({
     }
 })
 
-function ViewAnnoucements() {
+function S_ViewAnnoucements() {
     const classes = useStyles();
 
     const [search, setSearch] = useState("")
@@ -69,7 +69,7 @@ function ViewAnnoucements() {
     let history = useHistory();
 
     function handleRedirect(id) {
-        history.push('/announcement/view_annoucement/' + id)
+        history.push('/_student/announcement/view_announcement/' + id)
     }
 
     function handleSearch(e) {
@@ -124,4 +124,4 @@ function ViewAnnoucements() {
     )
 }
 
-export default ViewAnnoucements
+export default S_ViewAnnoucements

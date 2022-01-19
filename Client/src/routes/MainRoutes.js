@@ -36,6 +36,8 @@ const Temp = Loadable(lazy(() => import('../views/Student_Views/Dashboard/index'
 
 const AddStudent = Loadable(lazy(() => import('../views/Student/AddStudent')));
 const UpdateStudent = Loadable(lazy(() => import('../views/Student/UpdateStudent')));
+const S_ViewAnnouncements = Loadable(lazy(() => import('../views/Student_Views/Announcements/S_ViewAnnouncements')));
+const S_ViewSingleAnnouncement = Loadable(lazy(() => import('../views/Student_Views/Announcements/S_ViewSingleAnnouncement')));
 
 
 // sample page routing
@@ -85,13 +87,17 @@ const MainRoutes = () => {
                 '/student/add_student',
                 '/student/update_student',
 
-                '/_student/Dashboard'
+                '/_student/Dashboard',
+                "/_student/announcement/view_announcement/:idx",
+                "/_student/announcement/view_announcement"
 
             ]}
         >
             <MainLayout>
                 <Switch location={location} key={location.pathname}>
                     {/* <AuthGuard> */}
+                    <Route path="/_student/announcement/view_announcement/:idx" component={S_ViewSingleAnnouncement} />
+                    <Route path="/_student/announcement/view_announcement" component={S_ViewAnnouncements} />
                     <Route path="/dashboard/default" component={DashboardDefault} />
 
                     <Route path="/utils/util-typography" component={UtilsTypography} />
@@ -126,6 +132,11 @@ const MainRoutes = () => {
                     <Route path="/student/update_student" component={UpdateStudent} />
 
                     {/* </AuthGuard> */}
+
+                    {/* Student View Routes */}
+
+
+
                 </Switch>
             </MainLayout>
         </Route>
