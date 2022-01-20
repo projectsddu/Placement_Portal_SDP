@@ -17,6 +17,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import responsePipelineHandler from '../../../Utilities/ResponsePipelineHandler';
 import usePost from '../../../Utilities/UsePost';
+import UploadCVCard from './UploadCVCard';
+
 //-----------------------|| DEFAULT DASHBOARD ||-----------------------//
 
 const Dashboard = () => {
@@ -51,6 +53,10 @@ const Dashboard = () => {
             </Grid>
             <Grid item xs={12}>
                 <Grid container spacing={gridSpacing}>
+                    <Grid item xs={12} md={12}>
+                        <UploadCVCard />
+                        {/* Rikin here */}
+                    </Grid>
                     <Grid item xs={12} md={8}>
                         <TotalGrowthBarChart isLoading={isLoading} />
                     </Grid>

@@ -67,6 +67,22 @@ const updateStudent = async (data, id) => {
     }
 }
 
+const CV_Upload = async (data, id) => {
+    try {
+        if (await checkExists(id)) {
+            const student = await Student.update( {CV_Upload : data}, { where: { Student_ID: id } })
+            // console.log(id)
+            return student
+        }
+        else {
+            return false
+        }
+    }
+    catch (err) {
+        log.error(err.toString())
+        return false
+    }
+}
 
 const deleteStudent = async (id) => {
     try {
@@ -90,5 +106,6 @@ module.exports = {
     getOneStudent,
     getAllStudents,
     updateStudent,
+    CV_Upload,
     deleteStudent
 }

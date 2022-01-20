@@ -187,6 +187,24 @@ const updateStudent = async (req, res) => {
     }
 }
 
+const CV_Upload = async(req, res) => {
+    try {
+        let id = "19CEUOS003"
+        const studentData = await StudentService.CV_Upload("./public/student_details/CV/19CEUOS003.pdf", id)
+        if(studentData)
+        {
+            return res.json({status: true, data: "Student CV uploaded"})
+        }
+        else
+        {
+            throw "Error uploading student CV"
+        }
+
+    } catch (error) {
+        log.error(err.toString())
+        return res.json({ status: false, data: "Error updating Student CV !!!" })
+    }
+}
 
 
 
@@ -213,5 +231,6 @@ module.exports = {
     getAllStudents,
     getOneStudent,
     updateStudent,
+    CV_Upload,
     deleteStudent
 }
