@@ -8,6 +8,7 @@ const AnnoucementRouter = require("./Routers/AnnoucementRouter")
 const CompanyRouter = require("./Routers/CompanyRouter")
 const StudentPlacementRouter = require("./Routers/StudentPlacementRouter")
 const StudentInternshipRouter = require("./Routers/StudentInternshipRouter")
+const AnnouncementSubscibeRouter = require("./Routers/AnnouncementSubscribeRouter")
 
 // Middlewares
 
@@ -38,3 +39,4 @@ app.use("/annoucement", AnnoucementRouter)
 app.use("/company", CompanyRouter)
 app.use("/studentplacement", StudentPlacementRouter)
 app.use("/studentinternship", StudentInternshipRouter)
+app.use("/subscribeannouncement", AnnouncementSubscibeRouter)
