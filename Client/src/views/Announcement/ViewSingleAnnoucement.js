@@ -39,6 +39,7 @@ import UsePost from '../../Utilities/UsePost'
 import HandleToast from '../../Utilities/HandleToast'
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
+import AddComment from '../Comment/AddComment';
 
 function ViewSingleAnnoucement() {
 
@@ -144,7 +145,7 @@ function ViewSingleAnnoucement() {
     if (!loading) {
 
         announcement_details = required_data["data"][0];
-        console.log(announcement_details)
+        // console.log(announcement_details)
         rows = [
             // createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
             createData("Date of Announcement", ParseDate.ParseDate(announcement_details["Date_of_announcement"])),
@@ -164,24 +165,24 @@ function ViewSingleAnnoucement() {
 
     // const name = new URLSearchParams(search).get('id');
 
-    const [commentData, setcommentData] = useState({
-        Comment_text: ''
-    })
-    useEffect(() => { }, [commentData]);
+    // const [commentData, setcommentData] = useState({
+    //     Comment_text: ''
+    // })
+    // useEffect(() => { }, [commentData]);
 
-    async function handleComment(id) {
-        // console.log("clicked " + id);
-        const res = await UsePost("/annoucement/addComment/" + id, commentData, "POST")
-        const params1 = {
-            data: res,
-            HandleToast: {
-                toast: toast,
-                flag: false,
-            }
-        }
-        console.log(res);
-        responsePipelineHandler(params1, 1)
-    }
+    // async function handleComment(id) {
+    //     // console.log("clicked " + id);
+    //     const res = await UsePost("/annoucement/addComment/" + id, commentData, "POST")
+    //     const params1 = {
+    //         data: res,
+    //         HandleToast: {
+    //             toast: toast,
+    //             flag: false,
+    //         }
+    //     }
+    //     console.log(res);
+    //     responsePipelineHandler(params1, 1)
+    // }
 
 
     return (
@@ -255,31 +256,10 @@ function ViewSingleAnnoucement() {
 
             </MainCard>
             <br />
-            <MainCard title="Add New Comment">
-                <form>
-                    <TextField
-                        id="comments"
-                        label="Enter the comment"
-                        multiline
-                        fullWidth
-                        maxRows={7}
-                        value={commentData['Comment_text']}
-                        onChange={(e) => {
-                            setcommentData({ ...commentData, Comment_text: e.target.value });
-                        }}
-                    />
-                    <br /><br />
-                    <Button onClick={() => handleComment(announcement_details["Announcement_ID"])} variant="contained" fullWidth size="large" color="primary">
-                        Post Comment
-                    </Button>
-                    {/* <Button onClick={handleComment} fullWidth variant='contained' size='large' color="primary">Post Comment</Button> */}
-                </form>
-
-            </MainCard>
-            <br />
-            <MainCard title="See Comments">
+            {announcement_details === undefined ? "" : <AddComment id={id}/>}
+            {/* <MainCard title="See Comments">
                 <h1>See comments</h1>
-            </MainCard>
+            </MainCard> */}
         </>
     );
 }

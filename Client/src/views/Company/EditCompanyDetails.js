@@ -333,7 +333,7 @@ function EditCompany() {
 
                     <br />
                     <Button onClick={handleSubmit} variant="contained" size="large" color="primary">
-                        Add Company
+                        Edit Company
                     </Button>
 
                 </form>
