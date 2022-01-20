@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 
 // material-ui
 import { Typography } from '@material-ui/core';
@@ -6,7 +6,7 @@ import { Typography } from '@material-ui/core';
 // project imports
 import MainCard from '../../ui-component/cards/MainCard';
 
-import {Button} from '@material-ui/core'
+import { Button } from '@material-ui/core'
 
 import { styled } from '@mui/material/styles';
 
@@ -30,14 +30,16 @@ export default function AddStudent() {
 
     const changeHandler = (event) => {
         // console.log(event.target.files[0])
+        document.getElementById("fileUploadDetails").innerText = event.target.files[0].name
         const file_data = event.target.files[0]
+        console.log(file_data);
         let temp = data
         temp["Student_Details_File"] = file_data
         setData(temp)
     };
-    
+
     async function handleSubmit() {
-    
+
         const res = await UsePostFile("/student/", data, "POST")
         const params1 = {
             data: res,
@@ -56,22 +58,22 @@ export default function AddStudent() {
             <form enctype="multipart/form-data">
                 <label htmlFor="contained-button-file">
                     <Input
-                        onChange = {(e)=>changeHandler(e)}
-                        required 
-                        accept=".xlsx, .xls, .csv" 
-                        id="contained-button-file" 
-                        multiple type="file" 
+                        onChange={(e) => changeHandler(e)}
+                        required
+                        accept=".xlsx, .xls, .csv"
+                        id="contained-button-file"
+                        multiple type="file"
                     />
                     <Button variant="contained" component="span">
                         Upload Student Details
-                    </Button>
+                    </Button> <label id="fileUploadDetails" />
                 </label>
                 <br />
-                <br/>
-                <br/>
-                <br/>
+                <br />
+                <br />
+                <br />
                 <Button onClick={handleSubmit} variant="contained" size="large" color="primary">
-                        Add Student
+                    Add Student
                 </Button>
             </form>
         </MainCard>

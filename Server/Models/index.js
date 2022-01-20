@@ -24,6 +24,7 @@ db.student_placements = require("./StudentPlacementModel")(sequelize, DataTypes)
 db.student_internships = require("./StudentInternshipModel")(sequelize, DataTypes)
 db.branches = require("./BranchModel")(sequelize, DataTypes)
 db.comments = require("./CommentModel")(sequelize, DataTypes)
+db.subscribes = require("./AnnouncementSubscribe")(sequelize, DataTypes)
 
 db.sequelize.sync({ force: false }).then(() => {
     console.log("Resyncing Done.....")

@@ -34,14 +34,14 @@ export const StudentMenu = {
             icon: icons['IconEdit'],
             breadcrumbs: false
         },
-        {
-            id: 'StudentDetails',
-            title: 'Student Details',
-            type: 'item',
-            url: '/icons/form_elements',
-            icon: icons['IconUsers'],
-            breadcrumbs: false
-        },
+        // {
+        //     id: 'StudentDetails',
+        //     title: 'Student Details',
+        //     type: 'item',
+        //     url: '/icons/form_elements',
+        //     icon: icons['IconUsers'],
+        //     breadcrumbs: false
+        // },
         {
             id: 'ViewStudent',
             title: 'View Student',
