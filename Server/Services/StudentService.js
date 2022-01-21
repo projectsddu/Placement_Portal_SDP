@@ -17,7 +17,7 @@ async function checkExists(id) {
 const createStudent = async (studentData) => {
     try {
         const student = await Student.create(studentData)
-        await UserLoginService.createUserLogin(student.id)
+        await UserLoginService.createUserLogin(student.Student_ID, student.DOB.toString())
     }
     catch (err) {
         log.error(err.toString())
@@ -70,7 +70,7 @@ const updateStudent = async (data, id) => {
 const CV_Upload = async (data, id) => {
     try {
         if (await checkExists(id)) {
-            const student = await Student.update( {CV_Upload : data}, { where: { Student_ID: id } })
+            const student = await Student.update({ CV_Upload: data }, { where: { Student_ID: id } })
             // console.log(id)
             return student
         }

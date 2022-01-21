@@ -9,13 +9,15 @@ const CompanyRouter = require("./Routers/CompanyRouter")
 const StudentPlacementRouter = require("./Routers/StudentPlacementRouter")
 const StudentInternshipRouter = require("./Routers/StudentInternshipRouter")
 const AnnouncementSubscibeRouter = require("./Routers/AnnouncementSubscribeRouter")
+const StudentLoginRouter = require("./Routers/StudentLoginRouter")
+const cookieParser = require('cookie-parser');
 
 // Middlewares
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(__dirname + '/public'));
-
+app.use(cookieParser());
 
 
 // Testing API
@@ -35,6 +37,7 @@ app.listen(port, () => {
 //routers
 app.use("/public", express.static(__dirname + "/public"));
 app.use("/student", StudentRouter)
+app.use("/studentLogin", StudentLoginRouter)
 app.use("/annoucement", AnnoucementRouter)
 app.use("/company", CompanyRouter)
 app.use("/studentplacement", StudentPlacementRouter)

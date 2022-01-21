@@ -3,7 +3,11 @@ const log = new logger(true)
 const db = require("../Models/index")
 const UserLogin = db.userLogin
 const SHA256 = require("crypto-js/sha256")
-
+const LoginTokenService = require("./LoginTokensService")
+const StudentService = require("./StudentService")
+const jwt = require("jsonwebtoken")
+const Student = db.students
+// const { where } = require("sequelize/dist")
 
 const getUserLoginObj = async (studentId) => {
     try {
@@ -15,9 +19,11 @@ const getUserLoginObj = async (studentId) => {
     }
 }
 
-const createUserLogin = async (studentId) => {
+const createUserLogin = async (studentId, DOB) => {
     try {
-        await UserLogin.create({ Password: "notassigned", studentId })
+        const userDob = new Date(DOB)
+        const userPassword = userDob.getDate() + "/" + userDob.getMonth() + "/" + userDob.getFullYear()
+        await UserLogin.create({ Password: SHA256(userPassword).toString(), LoginId: studentId, IsFirstTime: true })
     }
     catch (err) {
         log.error("Error creating user login!", err.toString())
@@ -77,8 +83,55 @@ const changePassword = async (studentId, oldPassword, newPassword) => {
     }
 }
 
+
+const loginUser = async (loginId, password) => {
+    try {
+        const loginObj = await UserLogin.findAll({ where: { LoginId: loginId, Password: SHA256(password).toString() } })
+
+        if (loginObj.length == 0) {
+            return false
+        }
+        else {
+            const token = await LoginTokenService.addToken(loginId);
+            if (token) {
+                return token
+            }
+            else {
+                return false
+            }
+        }
+    }
+    catch (err) {
+        return false
+    }
+}
+
+const verifyUser = async (token, userId) => {
+    try {
+        // console.log(token);
+        const uid = jwt.verify(token, "SECRETKEY")
+        // console.log(userId);
+        // console.log(uid.id);
+        if (userId.toString() == uid.id.toString()) {
+            // console.log("here");
+            let student = await Student.findOne({
+                where: { Student_ID: userId.toString() }
+            })
+            return student
+        }
+        else {
+            // console.log("false");
+            return false;
+        }
+    }
+    catch (err) {
+        return false
+    }
+}
 module.exports = {
     addFreshPassword,
     changePassword,
-    createUserLogin
+    createUserLogin,
+    loginUser,
+    verifyUser
 }

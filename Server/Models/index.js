@@ -3,6 +3,7 @@ const { Sequelize, DataTypes } = require("sequelize")
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     host: dbConfig.HOST,
     dialect: dbConfig.DIALECT,
+    logging: false
 })
 sequelize.authenticate()
     .then(() => {
@@ -25,6 +26,7 @@ db.student_internships = require("./StudentInternshipModel")(sequelize, DataType
 db.branches = require("./BranchModel")(sequelize, DataTypes)
 db.comments = require("./CommentModel")(sequelize, DataTypes)
 db.subscribes = require("./AnnouncementSubscribe")(sequelize, DataTypes)
+db.LoginTokens = require("./LoginTokensModel")(sequelize, DataTypes)
 
 db.sequelize.sync({ force: false }).then(() => {
     console.log("Resyncing Done.....")

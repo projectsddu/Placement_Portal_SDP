@@ -2,6 +2,7 @@ const multer = require('multer');
 const StudentController = require('../controllers/StudentController.js')
 const EmptyFieldCheck = require('../Middlewares/General/EmptyFieldCheck')
 const router = require('express').Router()
+const Authenticate = require("../Middlewares/StudentLogin/Authenticate")
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -35,7 +36,9 @@ const fileStorage1 = multer.diskStorage({
 const upload1 = multer({ storage: fileStorage1 })
 
 router.post("/", [upload.single("Student_Details_File")], EmptyFieldCheck, StudentController.addStudent)
-router.get("/getAllStudents", StudentController.getAllStudents)
+router.get("/getAllStudents",
+    //  [Authenticate],
+    StudentController.getAllStudents)
 router.get("/getOneStudent/:id", StudentController.getOneStudent)
 router.post("/addCV", [upload1.single("Student_CV_File")], StudentController.CV_Upload)
 router.post("/updateStudent/", [upload.single("Student_Details_File")], StudentController.updateStudent)
