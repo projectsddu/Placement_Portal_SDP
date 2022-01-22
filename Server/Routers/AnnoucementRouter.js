@@ -25,14 +25,15 @@ const upload = multer({ storage: fileStorage })
 
 router.post("/addAnnoucement", [upload.single("Job_Description_File"), EmptyFieldCheck, SalaryVerifier], AnnouncementController.addAnnoucement)
 router.post("/deleteAnnoucement/:annoucementId", AnnouncementController.deleteAnnoucement)
-router.post("/addComment/:annoucementId", AnnouncementController.addComment)
 router.get("/getAllAnnoucements", AnnouncementController.getAllAnnoucements)
 router.get("/getAnnoucement/:annoucementId", AnnouncementController.getAnnoucement)
 router.post("/updateAnnoucement/:annoucementId", [EmptyFieldCheck, SalaryVerifier, DateValidator], AnnouncementController.updateAnnoucement)
 router.post("/deleteAnnoucement/:annoucementId", AnnouncementController.deleteAnnoucement)
-
 router.get("/requiredAnnoucementDetails", AnnouncementController.requiredAnnoucementDetails)
 
+// related to comments
+router.post("/addComment/:annoucementId", AnnouncementController.addComment)
+router.get("/getAllComments/:annoucementId", AnnouncementController.getAllComments)
 
 
 module.exports = router

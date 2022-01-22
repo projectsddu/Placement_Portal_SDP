@@ -27,13 +27,21 @@ export const StudentMenu = {
             breadcrumbs: false
         },
         {
+            id: 'ViewStudent',
+            title: 'View / Update Student',
+            type: 'item',
+            url: '/student/view_student',
+            icon: icons['IconEye'],
+            breadcrumbs: false
+        },
+        {
             id: 'UpdateStudent',
-            title: 'Update Student',
+            title: 'Batch Update',
             type: 'item',
             url: '/student/update_student',
             icon: icons['IconEdit'],
             breadcrumbs: false
-        },
+        }
         // {
         //     id: 'StudentDetails',
         //     title: 'Student Details',
@@ -42,13 +50,6 @@ export const StudentMenu = {
         //     icon: icons['IconUsers'],
         //     breadcrumbs: false
         // },
-        {
-            id: 'ViewStudent',
-            title: 'View Student',
-            type: 'item',
-            url: '/student/view_student',
-            icon: icons['IconEye'],
-            breadcrumbs: false
-        }
+        
     ]
 };

@@ -4,14 +4,37 @@ import MainCard from '../../ui-component/cards/MainCard';
 import SubCard from '../../ui-component/cards/SubCard';
 import { Chip } from '@mui/material';
 import { Avatar } from '@material-ui/core';
+import useFetch from '../../Utilities/useFetch';
 import SingleComment from './SingleComment';
+import { useLocation } from "react-router-dom";
 
 
-function ViewComment() {
+
+function ViewComment(props) {
+
+  // const location = useLocation().pathname;
+  //   const id = location.split("/")[3]
+
+  // const { required_data, loading } = useFetch("/annoucement/getAllComments/" + id, "GET")
+
+  // let comments;
+
+  // if (!loading) {
+  //   comments = required_data["data"];
+  //   comments.sort(function (a, b) {
+  //     return new Date(b.Comment_Date) - new Date(a.Comment_Date);
+  //   })
+  //   // console.log("comments: ", comments);
+  // }
+
+  let comments = props.data;
+
   return (
-      <>
-        <SingleComment name="Admin" date="21/1/22" comment_msg="Yooooo"/>
-      </>
+    <>
+      {comments.map((e) => (
+        <SingleComment name="Admin" date={e.Comment_Date} comment_msg={e.Comment_text} />
+      ))}
+    </>
   );
 }
 

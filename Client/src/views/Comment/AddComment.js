@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button } from '@material-ui/core';
+import $ from 'jquery'
 // assets
 import {
     Avatar,
@@ -49,6 +50,39 @@ function AddComment(props) {
     useEffect(() => { }, [commentData]);
 
 
+    const location = useLocation().pathname;
+    const id = location.split("/")[3];
+
+    const [allComments, setallComments] = useState(undefined);
+    useEffect(async () => {
+        const response = await fetch("/annoucement/getAllComments/" + id, { method: "GET" });
+        let data1 = await response.json();
+        data1 = data1["data"]
+        data1.sort(function (a, b) {
+            return new Date(b.Comment_Date) - new Date(a.Comment_Date);
+        })
+
+        // console.log(data1)
+        setallComments(data1)
+
+    }, [])
+    // useEffect
+
+    // const { required_data, loading } = useFetch("/annoucement/getAllComments/" + id, "GET")
+
+    // let comments;
+
+    // if (!loading) {
+    //     comments = required_data["data"];
+    //     comments.sort(function (a, b) {
+    //         return new Date(b.Comment_Date) - new Date(a.Comment_Date);
+    //     })
+    //     // setcommentData(comments)
+    //     // console.log("comments: ", comments);
+    // }
+
+
+
     async function handleComment(id) {
         // console.log("clicked " + id);
         const res = await UsePost("/annoucement/addComment/" + id, commentData, "POST")
@@ -59,19 +93,40 @@ function AddComment(props) {
                 flag: false,
             }
         }
-        console.log(res);
+        // console.log(res);
         responsePipelineHandler(params1, 1)
+
+        setcommentData({Comment_text: ""})
+
+        // ajax call
+        $.ajax({
+            url: 'http://localhost:8000/annoucement/getAllComments/' + id,
+            type: "GET",
+            success: function (data) {
+                console.log(data)
+
+                let data1 = data["data"]
+
+                data1.sort(function (a, b) {
+                    return new Date(b.Comment_Date) - new Date(a.Comment_Date);
+                })
+
+                setallComments(data1)
+                // const redirect_url = "http://localhost:3000/announcement/view_annoucement/" + id;
+                // $.post(redirect_url, data)
+            }
+        })
     }
 
 
-  return ( 
-    <>
-         <MainCard title="Comments">
+    return (
+        <>
+            <MainCard title="Comments">
                 <form>
                     <Grid container direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
                         <Grid item xs={9} md={11}>
                             <TextField
-                                id="comments"
+                                id="comment_text"
                                 label="Enter the comment"
                                 multiline
                                 fullWidth
@@ -93,14 +148,14 @@ function AddComment(props) {
 
                     {/* <Button onClick={handleComment} fullWidth variant='contained' size='large' color="primary">Post Comment</Button> */}
                 </form>
-            <br/><br/>
-            {/* // comments */}
-            <ViewComment/>
+                <br /><br />
+                {/* // comments */}
+                {allComments === undefined ? "" : <ViewComment data={allComments} />}
             </MainCard>
 
-  
-    </>
-  );
+
+        </>
+    );
 }
 
 export default AddComment;

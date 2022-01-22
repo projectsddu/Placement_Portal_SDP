@@ -6,7 +6,7 @@ const Comment = db.comments
 
 const createComment = async (commentData) => {
     try {
-        console.log("Comment data: ", commentData)
+        // console.log("Comment data: ", commentData)
 
         await Comment.create(commentData)
         return true
@@ -18,6 +18,21 @@ const createComment = async (commentData) => {
     }
 }
 
+const getAllComments = async (id) => {
+
+    try {
+        let comments = await Comment.findAll({
+            where: {Announcement_ID: id}
+        })
+        return comments
+    }
+    catch (err) {
+        log.error(err.toString())
+        return false
+    }
+}
+
 module.exports = {
-    createComment
+    createComment,
+    getAllComments
 }
