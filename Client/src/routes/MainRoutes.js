@@ -89,7 +89,8 @@ const MainRoutes = () => {
 
                 '/_student/Dashboard',
                 "/_student/announcement/view_announcement/:idx",
-                "/_student/announcement/view_announcement"
+                "/_student/announcement/view_announcement",
+
 
             ]}
         >
@@ -134,8 +135,7 @@ const MainRoutes = () => {
                     {/* </AuthGuard> */}
 
                     {/* Student View Routes */}
-
-
+                    
 
                 </Switch>
             </MainLayout>
