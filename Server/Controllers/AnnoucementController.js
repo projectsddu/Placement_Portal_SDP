@@ -182,6 +182,23 @@ const addComment = async (req, res) => {
     }
 }
 
+const getAllComments = async (req, res) => {
+    try {
+        let id = req.params.annoucementId;
+        let comments = await CommentService.getAllComments(id);
+        if (comments) {
+            return res.json({ status: comments.length == 0 ? false : true, data: comments.length == 0 ? "No Comment data!" : comments })
+        }
+        else {
+            throw "Error in getAllComments";
+        }
+    }
+    catch (e) {
+        console.log(e.toString());
+        res.json({ status: false, data: e.toString() })
+    }
+}
+
 module.exports = {
     addAnnoucement,
     getAllAnnoucements,
@@ -189,5 +206,6 @@ module.exports = {
     updateAnnoucement,
     deleteAnnoucement,
     requiredAnnoucementDetails,
-    addComment
+    addComment,
+    getAllComments
 }

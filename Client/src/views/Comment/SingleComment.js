@@ -6,7 +6,20 @@ import { Chip } from '@mui/material';
 import { Avatar } from '@material-ui/core';
 
 
+
+
+
 function SingleComment(props) {
+
+
+    function formatDate(date) {
+        var new_date = new Date(date);
+        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        return new_date.toLocaleDateString("en-US", options);
+        
+    }
+
+
   return(
       <>
         <SubCard>
@@ -21,7 +34,7 @@ function SingleComment(props) {
                         <Typography variant='h4'>{props.name}</Typography>
                     </Grid>
                     <Grid item xs={6} md={4}>
-                        {props.date}
+                        {formatDate(props.date)}
                     </Grid>
                 </Grid>
                 

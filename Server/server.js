@@ -10,6 +10,7 @@ const StudentPlacementRouter = require("./Routers/StudentPlacementRouter")
 const StudentInternshipRouter = require("./Routers/StudentInternshipRouter")
 const AnnouncementSubscibeRouter = require("./Routers/AnnouncementSubscribeRouter")
 const StudentLoginRouter = require("./Routers/StudentLoginRouter")
+const CommentRouter = require("./Routers/CommentRouter")
 const cookieParser = require('cookie-parser');
 
 // Middlewares
@@ -43,3 +44,4 @@ app.use("/company", CompanyRouter)
 app.use("/studentplacement", StudentPlacementRouter)
 app.use("/studentinternship", StudentInternshipRouter)
 app.use("/subscribeannouncement", AnnouncementSubscibeRouter)
+app.use("/comment", CommentRouter)
