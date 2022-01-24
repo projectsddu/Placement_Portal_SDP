@@ -1,2 +1,9 @@
 Student_ID,FirstName,MiddleName,LastName,Admission_type,Cast_category,Gender,DOB,SSC_Percentage,SSC_Percentile,SSC_Board,SSC_School,HSC_Percentage,HSC_Percentile,HSC_Board,HSC_School,IsD2D,Diploma_Result_CPI,Diploma_Result_Percentage,Diploma_College_Name,Diploma_University,Sem_1_SPI,Sem_2_SPI,Sem_3_SPI,Sem_4_SPI,Sem_5_SPI,Sem_6_SPI,Sem_7_SPI,Sem_8_SPI,Current_CPI,Enrollment_year,Passed_out_year,Email_ID,Contact_No_1,Contact_No_2,Address,City,Pin_Code,Current_semester,Career_Preference,CV_Upload,Student_Photo,Branch_Id
+
 19CEUOS0,king,Dipakkumar,Chauhan,Normal,General,Male,2001-02-29,85.59,95.97,GSEB,GTG,80.59,95.97,GSEB,GTG,FALSE,0,0,NOT APPLICABLE,NOT APPLICABLE,9.5,9.2,9.1,9.1,9.2,9.1,9,9.5,9.5,2019,2023,abc@gmail.com,1234567890,987654321,gujarat,vadodara,390021,6,Placement,image.png,image1.png,CE
+
+19CEUOS001,Rikin,Dipakkumar,Chauhan,Normal,General,Male,2001-02-29,85.59,95.97,GSEB,GTG,80.59,95.97,GSEB,GTG,FALSE,0,0,NOT APPLICABLE,NOT APPLICABLE,9.5,9.2,9.1,9.1,9.2,9.1,9,9.5,9.5,2019,2023,abc@gmail.com,1234567890,987654321,gujarat,vadodara,390021,6,Placement,image.png,image1.png,CE
+19CEUOS002,Manan,Dipakkumar,Chauhan,Normal,General,Male,2001-02-29,85.59,95.97,GSEB,GTG,80.59,95.97,GSEB,GTG,FALSE,0,0,NOT APPLICABLE,NOT APPLICABLE,9.5,9.2,9.1,9.1,9.2,9.1,9,9.5,9.5,2019,2023,abc@gmail.com,1234567890,987654321,gujarat,vadodara,390021,6,Placement,image.png,image1.png,CE
+19CEUOS003,Jenil,j,Gandhi,Normal,General,Male,2001-02-29,85.59,95.97,GSEB,GTG,80.59,95.97,GSEB,GTG,FALSE,0,0,NOT APPLICABLE,NOT APPLICABLE,9.5,9.2,9.1,9.1,9.2,9.1,9,9.5,9.5,2019,2023,abc@gmail.com,1234567890,987654321,gujarat,vadodara,390021,6,Placement,image.png,image1.png,CE
+19CEUOS004,Keval,k,Gandevia,Normal,General,Male,2001-02-29,85.59,95.97,GSEB,GTG,80.59,95.97,GSEB,GTG,FALSE,0,0,NOT APPLICABLE,NOT APPLICABLE,9.5,9.2,9.1,9.1,9.2,9.1,9,9.5,9.5,2019,2023,abc@gmail.com,1234567890,987654321,gujarat,vadodara,390021,6,Placement,image.png,image1.png,CE
+

@@ -100,7 +100,7 @@ function AddComment(props) {
 
         // ajax call
         $.ajax({
-            url: 'http://localhost:8000/annoucement/getAllComments/' + id,
+            url: '/annoucement/getAllComments/' + id,
             type: "GET",
             success: function (data) {
                 console.log(data)
