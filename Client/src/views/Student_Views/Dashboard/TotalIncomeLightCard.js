@@ -3,7 +3,7 @@ import React from 'react';
 
 // material-ui
 import { makeStyles } from '@material-ui/styles';
-import { Avatar, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@material-ui/core';
+import { Avatar, List, ListItem, ListItemAvatar, ListItemText, Typography, Grid } from '@material-ui/core';
 
 // project imports
 import MainCard from './../../../ui-component/cards/MainCard';
@@ -68,28 +68,30 @@ const TotalIncomeLightCard = ({ isLoading }) => {
                 <TotalIncomeCard />
             ) : (
                 <MainCard className={classes.card} contentClass={classes.content}>
-                    <List className={classes.padding}>
-                        <ListItem alignItems="center" disableGutters className={classes.padding}>
-                            <ListItemAvatar>
-                                <Avatar variant="rounded" className={classes.avatar}>
-                                    <StorefrontTwoToneIcon fontSize="inherit" />
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText
-                                sx={{
-                                    mt: 0.45,
-                                    mb: 0.45
-                                }}
-                                className={classes.padding}
-                                primary={<Typography variant="h4">2</Typography>}
-                                secondary={
-                                    <Typography variant="subtitle2" className={classes.secondary}>
-                                        Total Internships
-                                    </Typography>
-                                }
-                            />
-                        </ListItem>
-                    </List>
+                    <Grid container minHeight="8vh">
+                        <List className={classes.padding}>
+                            <ListItem alignItems="center" disableGutters className={classes.padding}>
+                                <ListItemAvatar>
+                                    <Avatar variant="rounded" className={classes.avatar}>
+                                        <StorefrontTwoToneIcon fontSize="inherit" />
+                                    </Avatar>
+                                </ListItemAvatar>
+                                <ListItemText
+                                    sx={{
+                                        mt: 0.45,
+                                        mb: 0.45
+                                    }}
+                                    className={classes.padding}
+                                    primary={<Typography variant="h4">2</Typography>}
+                                    secondary={
+                                        <Typography variant="subtitle2" className={classes.secondary}>
+                                            Total Internships
+                                        </Typography>
+                                    }
+                                />
+                            </ListItem>
+                        </List>
+                    </Grid>
                 </MainCard>
             )}
         </React.Fragment>

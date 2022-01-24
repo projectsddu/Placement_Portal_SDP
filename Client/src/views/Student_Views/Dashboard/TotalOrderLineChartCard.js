@@ -30,37 +30,37 @@ const useStyles = makeStyles((theme) => ({
             position: 'relative',
             zIndex: 5
         },
-        '&:after': {
-            content: '""',
-            position: 'absolute',
-            width: '210px',
-            height: '210px',
-            background: theme.palette.primary[800],
-            borderRadius: '50%',
-            zIndex: 1,
-            top: '-85px',
-            right: '-95px',
-            [theme.breakpoints.down('xs')]: {
-                top: '-105px',
-                right: '-140px'
-            }
-        },
-        '&:before': {
-            content: '""',
-            position: 'absolute',
-            zIndex: 1,
-            width: '210px',
-            height: '210px',
-            background: theme.palette.primary[800],
-            borderRadius: '50%',
-            top: '-125px',
-            right: '-15px',
-            opacity: 0.5,
-            [theme.breakpoints.down('xs')]: {
-                top: '-155px',
-                right: '-70px'
-            }
-        }
+        // '&:after': {
+        //     content: '""',
+        //     position: 'absolute',
+        //     width: '210px',
+        //     height: '210px',
+        //     background: theme.palette.primary[800],
+        //     borderRadius: '50%',
+        //     zIndex: 1,
+        //     top: '-85px',
+        //     right: '-95px',
+        //     [theme.breakpoints.down('xs')]: {
+        //         top: '-105px',
+        //         right: '-140px'
+        //     }
+        // },
+        // '&:before': {
+        //     content: '""',
+        //     position: 'absolute',
+        //     zIndex: 1,
+        //     width: '210px',
+        //     height: '210px',
+        //     background: theme.palette.primary[800],
+        //     borderRadius: '50%',
+        //     top: '-125px',
+        //     right: '-15px',
+        //     opacity: 0.5,
+        //     [theme.breakpoints.down('xs')]: {
+        //         top: '-155px',
+        //         right: '-70px'
+        //     }
+        // }
     },
     content: {
         padding: '20px !important'
@@ -118,8 +118,6 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                                     {/* <Avatar variant="rounded" className={classes.avatar}>
                                         <LocalMallOutlinedIcon fontSize="inherit" />
                                     </Avatar> */}
-                                    <br/>
-                                    <br/>
                                 </Grid>
                                 {/* <Grid item>
                                     <Button
@@ -144,7 +142,7 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                         <Grid item sx={{ mb: 0.75 }}>
                             <Grid container alignItems="center">
                                 <Grid item xs={6}>
-                                    <Grid container alignItems="center">
+                                    <Grid container alignItems="center" minHeight="22vh" minWidth="10000vw">
                                         <Grid item>
                                             {timeValue ? (
                                                 <Typography className={classes.cardHeading}>20</Typography>

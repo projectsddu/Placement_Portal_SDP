@@ -15,6 +15,7 @@ const authenticate = async (req, res, next) => {
             // console.log(userObj);
             req.username = userObj["FirstName"] + " " + userObj["MiddleName"][0] + " " + userObj["LastName"]
             req.userId = userObj["Student_ID"]
+            req.userObj = userObj;
             // console.log(req.username);
             // console.log(req.userId);
 

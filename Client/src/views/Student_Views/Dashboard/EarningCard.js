@@ -18,6 +18,9 @@ import FileCopyTwoToneIcon from '@material-ui/icons/FileCopyOutlined';
 import PictureAsPdfTwoToneIcon from '@material-ui/icons/PictureAsPdfOutlined';
 import ArchiveTwoToneIcon from '@material-ui/icons/ArchiveOutlined';
 
+import useFetch from '../../../Utilities/useFetch';
+import { useLocation } from "react-router-dom";
+
 // style constant
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -25,52 +28,52 @@ const useStyles = makeStyles((theme) => ({
         color: '#fff',
         overflow: 'hidden',
         position: 'relative',
-        '&:after': {
-            content: '""',
-            position: 'absolute',
-            width: '210px',
-            height: '210px',
-            background: theme.palette.secondary[800],
-            borderRadius: '50%',
-            top: '-85px',
-            right: '-95px',
-            [theme.breakpoints.down('xs')]: {
-                top: '-105px',
-                right: '-140px'
-            }
-        },
-        '&:before': {
-            content: '""',
-            position: 'absolute',
-            width: '210px',
-            height: '210px',
-            background: theme.palette.secondary[800],
-            borderRadius: '50%',
-            top: '-125px',
-            right: '-15px',
-            opacity: 0.5,
-            [theme.breakpoints.down('xs')]: {
-                top: '-155px',
-                right: '-70px'
-            }
-        }
+        // '&:after': {
+        //     content: '""',
+        //     position: 'absolute',
+        //     width: '210px',
+        //     height: '210px',
+        //     background: theme.palette.secondary[800],
+        //     borderRadius: '50%',
+        //     top: '-85px',
+        //     right: '-95px',
+        //     [theme.breakpoints.down('xs')]: {
+        //         top: '-105px',
+        //         right: '-140px'
+        //     }
+        // },
+        // '&:before': {
+        //     content: '""',
+        //     position: 'absolute',
+        //     width: '210px',
+        //     height: '210px',
+        //     background: theme.palette.secondary[800],
+        //     borderRadius: '50%',
+        //     top: '-125px',
+        //     right: '-15px',
+        //     opacity: 0.5,
+        //     [theme.breakpoints.down('xs')]: {
+        //         top: '-155px',
+        //         right: '-70px'
+        //     }
+        // }
     },
     content: {
         padding: '20px !important'
     },
-    avatar: {
-        ...theme.typography.commonAvatar,
-        ...theme.typography.largeAvatar,
-        backgroundColor: theme.palette.secondary[800],
-        marginTop: '8px'
-    },
-    avatarRight: {
-        ...theme.typography.commonAvatar,
-        ...theme.typography.mediumAvatar,
-        backgroundColor: theme.palette.secondary.dark,
-        color: theme.palette.secondary[200],
-        zIndex: 1
-    },
+    // avatar: {
+    //     ...theme.typography.commonAvatar,
+    //     ...theme.typography.largeAvatar,
+    //     backgroundColor: theme.palette.secondary[800],
+    //     marginTop: '8px'
+    // },
+    // avatarRight: {
+    //     ...theme.typography.commonAvatar,
+    //     ...theme.typography.mediumAvatar,
+    //     backgroundColor: theme.palette.secondary.dark,
+    //     color: theme.palette.secondary[200],
+    //     zIndex: 1
+    // },
     cardHeading: {
         fontSize: '2.125rem',
         fontWeight: 500,
@@ -83,15 +86,15 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 500,
         color: theme.palette.secondary[200]
     },
-    avatarCircle: {
-        cursor: 'pointer',
-        ...theme.typography.smallAvatar,
-        backgroundColor: theme.palette.secondary[200],
-        color: theme.palette.secondary.dark
-    },
-    circleIcon: {
-        transform: 'rotate3d(1, 1, 1, 45deg)'
-    },
+    // avatarCircle: {
+    //     cursor: 'pointer',
+    //     ...theme.typography.smallAvatar,
+    //     backgroundColor: theme.palette.secondary[200],
+    //     color: theme.palette.secondary.dark
+    // },
+    // circleIcon: {
+    //     transform: 'rotate3d(1, 1, 1, 45deg)'
+    // },
     menuItem: {
         marginRight: '14px',
         fontSize: '1.25rem'
@@ -100,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
 
 //===========================|| DASHBOARD DEFAULT - EARNING CARD ||===========================//
 
-const EarningCard = ({ isLoading }) => {
+const EarningCard = ({ isLoading, FirstName, MiddleName, LastName, Email_ID }) => {
     const classes = useStyles();
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -112,6 +115,21 @@ const EarningCard = ({ isLoading }) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    // const id = useLocation().pathname.split("/")[3]
+    // console.log("id: "+id)
+    // const { required_data, loading } = useFetch("/student/getOneStudent/", "GET")
+    // let Student_ID, FirstName, MiddleName, LastName, Email_ID;
+    // if(!loading)
+    // {
+    //     // console.log(required_data["data"]);
+    //     Student_ID = required_data["data"]["Student_ID"];
+    //     FirstName = required_data["data"]["FirstName"];
+    //     MiddleName = required_data["data"]["MiddleName"];
+    //     LastName = required_data["data"]["LastName"];
+    //     Email_ID = required_data["data"]["Email_ID"];
+    // }
+
 
     return (
         <React.Fragment>
@@ -126,7 +144,6 @@ const EarningCard = ({ isLoading }) => {
                                     {/* <Avatar variant="rounded" className={classes.avatar}>
                                         <img src={EarningIcon} alt="Notification" />
                                     </Avatar> */}
-                                    <br/><br/><br/>
                                 </Grid>
                                 <Grid item>
                                     {/* <Avatar
@@ -171,15 +188,14 @@ const EarningCard = ({ isLoading }) => {
                             </Grid>
                         </Grid>
                         <Grid item>
-                            <Grid container alignItems="center">
+                            <Grid container alignItems="center" minHeight="18vh" minWidth="10000vw">
                                 <Grid item>
-                                    <Typography className={classes.cardHeading}>Jenil J Gandhi</Typography>
+                                    <Typography className={classes.cardHeading}>{FirstName} {MiddleName} {LastName}</Typography>
                                 </Grid>
-
                             </Grid>
                         </Grid>
                         <Grid item sx={{ mb: 1.25 }}>
-                            <Typography className={classes.subHeading}>19ceuon133@ddu.ac.in</Typography>
+                            <Typography className={classes.subHeading}>{Email_ID}</Typography>
                         </Grid>
                     </Grid>
                 </MainCard>
