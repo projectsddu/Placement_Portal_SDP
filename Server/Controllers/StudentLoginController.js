@@ -8,7 +8,7 @@ const loginUser = async (req, res) => {
         const username = req.body.username
         const password = new Date(req.body.password)
         const userPassword = password.getDate() + "/" + password.getMonth() + "/" + password.getFullYear()
-        // console.log(username, userPassword);
+        console.log(username, userPassword);
         // console.log(password);
         // console.log(username, userPassword);
         const token = await UserLoginService.loginUser(username, userPassword)
