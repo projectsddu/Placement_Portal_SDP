@@ -1,9 +1,17 @@
 import React, { useState } from 'react'
+import {
+    useGridApiRef,
+    DataGridPro,
+    // GridToolbarContainer,
+    GridActionsCellItem,
+} from '@mui/x-data-grid-pro';
 import MainCard from '../../ui-component/cards/MainCard'
 import {
     DataGrid, RowsProp, ColDef, GridToolbarContainer,
     GridToolbarExport
 } from "@material-ui/data-grid";
+import EditIcon from "@material-ui/icons/Edit";
+import { Button } from '@material-ui/core'
 import { IconDashboard, IconDeviceAnalytics, IconSpeakerphone } from '@tabler/icons';
 import useFetch from '../../Utilities/useFetch';
 
@@ -24,6 +32,9 @@ export default function ViewStudent() {
     const { required_data, loading } = useFetch("/student/getAllStudents", "GET")
 
     let students_list = [];
+    function handleClick(idx) {
+        console.log(idx);
+    }
     if (!loading) {
         // console.log(required_data);
         for (let i = 0; i < required_data["data"].length; i++) {
@@ -36,28 +47,60 @@ export default function ViewStudent() {
     }
 
     const rows = [];
+    const [columns, setcolumns] = useState(
+        [
+            {
+                field: "edit",
+                headerName: "Edit",
+                sortable: false,
+                width: 130,
+                disableClickEventBubbling: true,
+                renderCell: (id) => {
+                    return (
+                        <Button variant="contained" onClick={() => handleClick(id.id)} color="primary" startIcon={<EditIcon />}>
+                            Edit
+                        </Button>
+                    );
+                }
+            },
 
-    const columns = [
-        { field: "id", headerName: "ID", hide: true },
-        { field: "Student_ID", headerName: "Student_ID", width: 200 },
-        { field: "FirstName", headerName: "First Name", width: 200, editable: true },
-        { field: "MiddleName", headerName: "Middle Name", width: 200, editable: true },
-        { field: "LastName", headerName: "Last Name", width: 200, editable: true },
-        { field: "Sem_5_SPI", headerName: "Sem 5 SPI", type: 'number', width: 200, editable: true },
-        { field: "Sem_6_SPI", headerName: "Sem 6 SPI", type: 'number', width: 200, editable: true },
-        { field: "Sem_7_SPI", headerName: "Sem 7 SPI", type: 'number', width: 200, editable: true },
-    ];
+            { field: "id", headerName: "ID", hide: true },
+            { field: "Student_ID", headerName: "Student_ID", width: 200, editable: true },
+            { field: "FirstName", headerName: "First Name", width: 200, editable: false },
+            { field: "MiddleName", headerName: "Middle Name", width: 200, editable: false },
+            { field: "LastName", headerName: "Last Name", width: 200, editable: false },
+            { field: "Sem_5_SPI", headerName: "Sem 5 SPI", type: 'number', width: 200, editable: false },
+            { field: "Sem_6_SPI", headerName: "Sem 6 SPI", type: 'number', width: 200, editable: false },
+            { field: "Sem_7_SPI", headerName: "Sem 7 SPI", type: 'number', width: 200, editable: false },
+        ]
+    );
     const [editRowsModel, setEditRowsModel] = React.useState({});
+
     const handleEditRowsModelChange = React.useCallback((model) => {
+        console.log(model);
         setEditRowsModel(model);
     }, []);
+
+
+    function handleCellClick(params) {
+        console.log(params);
+    }
+
+
     return (
         <MainCard title="View Student">
             {/* <code>Editing: {JSON.stringify(editRowsModel)}</code> */}
             <div style={{ height: 400, width: "100%" }}>
-                <DataGrid checkboxSelection rows={students_list} columns={columns} components={{
-                    Toolbar: CustomToolbar,
-                }}
+                <DataGrid
+                    editMode='row'
+                    onEditCellChange={handleEditRowsModelChange}
+                    onCellClick={handleCellClick}
+                    checkboxSelection
+                    rows={students_list} columns={columns} components={{
+                        Toolbar: CustomToolbar,
+                    }}
+                    editRowsModel={editRowsModel}
+                    onEditRowsModelChange={handleEditRowsModelChange}
                 />
 
             </div>
