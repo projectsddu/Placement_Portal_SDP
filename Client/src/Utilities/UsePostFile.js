@@ -4,11 +4,11 @@ const UsePostFile = async (url, data, method = "POST") => {
         const formData = new FormData();
         let all_keys = Object.keys(data)
         for(let key in all_keys) {
-            console.log(all_keys[key])
+            // console.log(all_keys[key])
             // formData[all_keys[key]] = data[all_keys[key]]
             formData.append(all_keys[key], data[all_keys[key]])
         }
-        console.log(formData)
+        // console.log(formData)
         // formData.append('File', selectedFile);
         let response = await fetch(
             url,
