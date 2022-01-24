@@ -23,7 +23,7 @@ const fileStorage = multer.diskStorage({
 
 const upload = multer({ storage: fileStorage })
 
-router.post("/addAnnoucement", [upload.single("Job_Description_File"), EmptyFieldCheck, SalaryVerifier], AnnouncementController.addAnnoucement)
+router.post("/addAnnoucement", [upload.single("Job_Description_File"), EmptyFieldCheck, SalaryVerifier, DateValidator], AnnouncementController.addAnnoucement)
 router.post("/deleteAnnoucement/:annoucementId", AnnouncementController.deleteAnnoucement)
 router.get("/getAllAnnoucements", AnnouncementController.getAllAnnoucements)
 router.get("/getAnnoucement/:annoucementId", AnnouncementController.getAnnoucement)

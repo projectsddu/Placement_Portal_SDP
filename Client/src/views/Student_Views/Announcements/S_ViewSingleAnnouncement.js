@@ -44,6 +44,7 @@ import UsePost from '../../../Utilities/UsePost'
 import HandleToast from '../../../Utilities/HandleToast'
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../../Utilities/ResponsePipelineHandler';
+import AddComment from '../Comment/S_AddComment';
 
 export default function S_ViewSingleAnnouncement() {
     const useStyles = makeStyles((theme) => ({
@@ -250,6 +251,8 @@ export default function S_ViewSingleAnnouncement() {
                 )}
 
             </MainCard>
+            <br />
+            {announcement_details === undefined ? "" : <AddComment id={id}/>}
         </>
     );
 }

@@ -45,7 +45,7 @@ const addAnnoucement = async (req, res) => {
                 Eligibility: Eligibility,
                 IsOpen: IsOpen
             }
-            console.log(annoucement);
+            // console.log(annoucement);
             // console.log("Req.file: ", req);
             // const job_description_file = req.file
 
