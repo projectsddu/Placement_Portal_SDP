@@ -39,7 +39,7 @@ router.post("/", [upload.single("Student_Details_File")], EmptyFieldCheck, Stude
 router.get("/getAllStudents",
     //  [Authenticate],
     StudentController.getAllStudents)
-router.get("/getOneStudent/:id", StudentController.getOneStudent)
+router.get("/getOneStudent", [Authenticate], StudentController.getOneStudent)
 router.post("/addCV", [upload1.single("Student_CV_File")], StudentController.CV_Upload)
 router.post("/updateStudent/", [upload.single("Student_Details_File")], StudentController.updateStudent)
 router.post("/deleteStudent/:id", StudentController.deleteStudent)

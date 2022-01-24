@@ -28,13 +28,25 @@ const Dashboard = () => {
 
     }, []);
 
+    const { required_data, loading } = useFetch("/student/getOneStudent/", "GET")
+    let Student_ID, FirstName, MiddleName, LastName, Email_ID;
+    if(!loading)
+    {
+        // console.log(required_data["data"]);
+        Student_ID = required_data["data"]["Student_ID"];
+        FirstName = required_data["data"]["FirstName"];
+        MiddleName = required_data["data"]["MiddleName"];
+        LastName = required_data["data"]["LastName"];
+        Email_ID = required_data["data"]["Email_ID"];
+    }
+
     return (
 
         <Grid container spacing={gridSpacing}>
             <Grid item xs={12}>
                 <Grid container spacing={gridSpacing}>
                     <Grid item lg={4} md={6} sm={6} xs={12}>
-                        <EarningCard isLoading={isLoading} />
+                        <EarningCard FirstName={FirstName} MiddleName={MiddleName} LastName={LastName} Email_ID={Email_ID} isLoading={isLoading} />
                     </Grid>
                     <Grid item lg={4} md={6} sm={6} xs={12}>
                         <TotalOrderLineChartCard isLoading={isLoading} />

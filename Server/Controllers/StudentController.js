@@ -119,7 +119,7 @@ const getAllStudents = async (req, res) => {
 // get particular student info
 const getOneStudent = async (req, res) => {
     try {
-        let id = req.params.id
+        let id = req.userId
         let student = await StudentService.getOneStudent(id)
         if (student) {
 
