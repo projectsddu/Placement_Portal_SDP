@@ -150,7 +150,7 @@ function S_AddComment(props) {
                 </form>
                 <br /><br />
                 {/* // comments */}
-                {allComments === undefined ? <h1>undefined</h1> : <ViewComment data={allComments} />}
+                {allComments === undefined ? <h1>No Comments yet!!!</h1> : <ViewComment data={allComments} />}
             </MainCard>
 
 

@@ -45,6 +45,7 @@ import HandleToast from '../../../Utilities/HandleToast'
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../../Utilities/ResponsePipelineHandler';
 import AddComment from '../Comment/S_AddComment';
+// import Fetch
 
 export default function S_ViewSingleAnnouncement() {
     const useStyles = makeStyles((theme) => ({
@@ -169,7 +170,64 @@ export default function S_ViewSingleAnnouncement() {
         Comment_text: ''
     })
     useEffect(() => { }, [commentData]);
+    
+    
+    const [subscribeStatus, setsubscribeStatus] = useState(undefined);
+    
+    // const subscribedata = fetch("/subscribeannouncement/getSubscribedStatus/" + id, "GET")
+    
+    
+    useEffect( async () => {
+        
+        const subscribedata = await fetch("/subscribeannouncement/getSubscribedStatus/" + id, { method: "GET" });
 
+        let data1 = await subscribedata.json();
+        data1 = data1["status"]
+        console.log(data1)
+
+        if(data1) {
+            setsubscribeStatus(true)
+        }
+        else {
+            setsubscribeStatus(false)
+        }
+
+     }, []);
+
+
+    // if (!subscribedata["loading"]) {
+    //     setsubscribeStatus(subscribedata["required_data"]["status"])
+    // }
+
+
+    async function handleSubscribe() {
+        const res = await UsePost("/subscribeannouncement/subscribe/" + id, {}, "POST")
+        setsubscribeStatus(true)
+        const params1 = {
+            data: res,
+            HandleToast: {
+                toast: toast,
+                flag: false,
+            }
+        }
+        console.log(res);
+        responsePipelineHandler(params1, 1)
+    }
+
+    async function handleUnsubscribe() {
+        const res = await UsePost("/subscribeannouncement/unsubscribe/" + id, {}, "POST")
+        setsubscribeStatus(false)
+        const params1 = {
+            data: res,
+            HandleToast: {
+                toast: toast,
+                flag: true,
+                customMessage: "Unsubscribed successfully!!!"
+            }
+        }
+        console.log(res);
+        responsePipelineHandler(params1, 1)
+    }
 
     return (
         <>
@@ -178,7 +236,13 @@ export default function S_ViewSingleAnnouncement() {
                     justify="space-between"
                 >
                     <Grid item>
-                        <Button variant="contained" color="error">Subsribe Announcement</Button>
+                        {subscribeStatus === undefined ? "Loading" : subscribeStatus == true ? <>
+                            <Button onClick={handleUnsubscribe} variant="contained" color="error"> Unsubsribe Announcement</Button>
+                        </> : 
+                            <>
+                            <Button onClick={handleSubscribe} variant="contained" color="error"> Subsribe Announcement</Button>
+                            </>
+                        }
                         <Tooltip title="Keep recieving constant updates" style={{ "margin-left": "10px" }}>
                             <IconButton>
                                 <IconInfoCircle />
@@ -252,7 +316,7 @@ export default function S_ViewSingleAnnouncement() {
 
             </MainCard>
             <br />
-            {announcement_details === undefined ? "" : <AddComment id={id}/>}
+            {announcement_details === undefined ? "" : <AddComment id={id} />}
         </>
     );
 }

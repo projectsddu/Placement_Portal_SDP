@@ -27,7 +27,7 @@ const authenticate = async (req, res, next) => {
     }
     catch (err) {
         log.error("Error in authenticate student middleware!" + err.toString())
-        return res.send({ status: false, redirect: true, redirectUrl: "/_student/login" })
+        return res.json({ status: false, redirect: true, redirectUrl: "/_student/login" })
     }
     next()
 }

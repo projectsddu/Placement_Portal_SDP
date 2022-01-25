@@ -4,9 +4,8 @@ const log = new logger(true)
 
 const addStudentToAnnouncement = async (req, res) => {
     try {
-        // studentID would be added in a middleware later on....
-        const studentId = "19CEUOS003"
-        const status = Subscibe.addSubsriberToAnnouncement(studentId, req.body.announcement_id)
+        const studentId = req.userId
+        const status = Subscibe.addSubsriberToAnnouncement(studentId, req.params.announcementId)
         if (status) {
             return res.json({ status: true, data: "Subscribed Successfully!" })
         }
@@ -18,6 +17,46 @@ const addStudentToAnnouncement = async (req, res) => {
         console.log(err.toString());
         log.error(err.toString())
         return res.json({ status: false, data: "Error subscribing to announcement!" })
+    }
+}
+
+
+const getSubscribedStatus = async (req, res) => {
+    try {
+        const studentId = req.userId
+        const status = await Subscibe.getSubscribedStatus(studentId, req.params.announcementId)
+
+        if(status) {
+            return res.json({ status: true})
+        }
+        else {
+            return res.json({ status: false})
+        }
+    }
+    catch (err) {
+        console.log(err.toString());
+        log.error(err.toString())
+        return res.json({ status: false, data: "Error Fetching status!" })
+    }
+}
+
+
+const removeStudentToAnnouncement = async (req, res) => {
+    try {
+        const studentId = req.userId
+        const status = await Subscibe.removeSubscribedStatus(studentId, req.params.announcementId)
+
+        if(status) {
+            return res.json({ status: true})
+        }
+        else {
+            return res.json({ status: false})
+        }
+    }
+    catch (err) {
+        console.log(err.toString());
+        log.error(err.toString())
+        return res.json({ status: false, data: "Error Fetching status!" })
     }
 }
 
@@ -37,5 +76,7 @@ const getSubscribedAnnouncements = async (req, res) => {
 }
 module.exports = {
     addStudentToAnnouncement,
-    getSubscribedAnnouncements
+    getSubscribedAnnouncements,
+    getSubscribedStatus,
+    removeStudentToAnnouncement
 }
