@@ -29,7 +29,7 @@ const Dashboard = () => {
     }, []);
 
     const { required_data, loading } = useFetch("/student/getOneStudent/", "GET")
-    let Student_ID, FirstName, MiddleName, LastName, Email_ID;
+    let Student_ID, FirstName, MiddleName, LastName, Email_ID, CV_Upload;
     if(!loading)
     {
         // console.log(required_data["data"]);
@@ -38,6 +38,9 @@ const Dashboard = () => {
         MiddleName = required_data["data"]["MiddleName"];
         LastName = required_data["data"]["LastName"];
         Email_ID = required_data["data"]["Email_ID"];
+        CV_Upload = "http://localhost:8000" + required_data["data"]["CV_Upload"].split(".")[1] + ".pdf";
+
+        // console.log(CV_Upload);
     }
 
     return (
@@ -66,7 +69,7 @@ const Dashboard = () => {
             <Grid item xs={12}>
                 <Grid container spacing={gridSpacing}>
                     <Grid item xs={12} md={12}>
-                        <UploadCVCard />
+                        <UploadCVCard CV_Upload={CV_Upload} />
                         {/* Rikin here */}
                     </Grid>
                     <Grid item xs={12} md={8}>
