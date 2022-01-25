@@ -20,6 +20,47 @@ const addSubsriberToAnnouncement = async (student_id, announcement_id) => {
     }
 }
 
+const getSubscribedStatus = async (student_id, announcement_id) => {
+    try {
+        let data = await Subscribers.findAll({
+            where: { Student_ID: student_id, Announcement_ID: announcement_id }
+        })
+
+        if(data) {
+            console.log(data)
+            if(data.length > 0) {
+                return true
+            }
+        }
+        return false
+    }
+    catch (err) {
+        console.log(err.toString());
+        log.error(err.toString())
+        return false;
+    }
+}
+
+
+const removeSubscribedStatus = async (student_id, announcement_id) => {
+    try {
+        let data = await Subscribers.destroy({
+            where: { Student_ID: student_id, Announcement_ID: announcement_id }
+        })
+
+        if(data) {
+            return true
+        }
+        return false
+    }
+    catch (err) {
+        console.log(err.toString());
+        log.error(err.toString())
+        return false;
+    }
+}
+
+
 const getSubscribedAnnouncements = async (student_id) => {
     try {
         let data = await Subscribers.findAll({
@@ -56,5 +97,7 @@ const getSubscribedAnnouncements = async (student_id) => {
 
 module.exports = {
     addSubsriberToAnnouncement,
-    getSubscribedAnnouncements
+    getSubscribedAnnouncements,
+    getSubscribedStatus,
+    removeSubscribedStatus
 }

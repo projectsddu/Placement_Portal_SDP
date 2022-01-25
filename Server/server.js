@@ -12,6 +12,7 @@ const AnnouncementSubscibeRouter = require("./Routers/AnnouncementSubscribeRoute
 const StudentLoginRouter = require("./Routers/StudentLoginRouter")
 const CommentRouter = require("./Routers/CommentRouter")
 const cookieParser = require('cookie-parser');
+const MailerService = require("./Services/MailerService")
 
 // Middlewares
 
@@ -23,7 +24,12 @@ app.use(cookieParser());
 
 // Testing API
 app.get("/", (req, res) => {
-    res.send("Workig all right!")
+    res.send("Working all right!")
+})
+app.get("/dummyMail", async (req, res) => {
+    let status = await MailerService.notificationMail("keval sleeping", "jenilgandhi2111@gmail.com")
+    console.log(status)
+    res.send(status)
 })
 app.post("/postTest", (req, res) => {
     res.send(req.body)

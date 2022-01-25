@@ -157,16 +157,21 @@ const requiredAnnoucementDetails = async (req, res) => {
 
 const addComment = async (req, res) => {
     try {
+        console.log("here in add comment")
         const {Comment_text} = req.body;
 
         const Announcement_ID = req.params.annoucementId
         let Comment_Date = new Date()
+        const username = req.username;
         
         let comment = {
             Announcement_ID: Announcement_ID,
             Comment_text: Comment_text,
-            Comment_Date: Comment_Date
+            Comment_Date: Comment_Date,
+            Comment_Publisher: username == undefined ? "Admin" : username
         }
+
+        console.log(comment)
 
         const commentStatus = await CommentService.createComment(comment);
         if (commentStatus) {

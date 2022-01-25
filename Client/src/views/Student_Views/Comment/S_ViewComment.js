@@ -32,7 +32,7 @@ function S_ViewComment(props) {
   return (
     <>
       {comments.map((e) => (
-        <SingleComment name="Admin" date={e.Comment_Date} comment_msg={e.Comment_text} />
+        <SingleComment name={e.Comment_Publisher} date={e.Comment_Date} comment_msg={e.Comment_text} />
       ))}
     </>
   );

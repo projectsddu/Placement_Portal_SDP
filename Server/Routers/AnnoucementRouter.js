@@ -6,6 +6,7 @@ const router = require('express').Router()
 const EmptyFieldCheck = require("../Middlewares/Annoucement/EmptyFieldCheck");
 const SalaryVerifier = require("../Middlewares/Annoucement/SalaryVerifier");
 const DateValidator = require("../Middlewares/Annoucement/DateValidator");
+const StudentAuthenticate = require("../Middlewares/StudentLogin/Authenticate")
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -32,7 +33,7 @@ router.post("/deleteAnnoucement/:annoucementId", AnnouncementController.deleteAn
 router.get("/requiredAnnoucementDetails", AnnouncementController.requiredAnnoucementDetails)
 
 // related to comments
-router.post("/addComment/:annoucementId", AnnouncementController.addComment)
+router.post("/addComment/:annoucementId",[StudentAuthenticate], AnnouncementController.addComment)
 router.get("/getAllComments/:annoucementId", AnnouncementController.getAllComments)
 
 

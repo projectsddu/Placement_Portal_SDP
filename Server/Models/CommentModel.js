@@ -20,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.DATE,
             allowNull: false,
             defaultValue: DataTypes.NOW
+        },
+
+        Comment_Publisher: {
+            type: DataTypes.STRING,
+            allowNull: false
         }
     },
     {
