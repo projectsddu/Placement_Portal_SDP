@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 
 // material-ui
 import { Grid, Typography } from '@material-ui/core';
@@ -6,7 +6,7 @@ import { Grid, Typography } from '@material-ui/core';
 // project imports
 import MainCard from '../../../ui-component/cards/MainCard';
 
-import {Button, Chip} from '@material-ui/core'
+import { Button, Chip } from '@material-ui/core'
 
 import { styled } from '@mui/material/styles';
 
@@ -24,7 +24,7 @@ const Input = styled('input')({
 
 
 
-export default function UploadResumeCard() {
+export default function UploadResumeCard({ CV_Upload }) {
 
     const [data, setData] = useState({
     });
@@ -39,10 +39,11 @@ export default function UploadResumeCard() {
         temp["Student_CV_File"] = file_data
         setData(temp)
     };
-    
+
     async function handleSubmit() {
-    
+
         const res = await UsePostFile("/student/addCV", data, "POST")
+        // console.log(res);
         const params1 = {
             data: res,
             HandleToast: {
@@ -62,28 +63,25 @@ export default function UploadResumeCard() {
                     <form enctype="multipart/form-data">
                         <label htmlFor="contained-button-file">
                             <Input
-                                onChange = {(e)=>changeHandler(e)}
-                                required 
-                                accept=".pdf" 
-                                id="contained-button-file" 
-                                multiple type="file" 
+                                onChange={(e) => changeHandler(e)}
+                                required
+                                accept=".pdf"
+                                id="contained-button-file"
+                                multiple type="file"
                             />
-                            {/* <h3>
-                                {file_name}
-                            </h3> */}
                             <Button variant="outlined" size="large" component="span">
                                 Upload CV
                             </Button>
                             <b><label id="fileUploadName"> </label></b>
                         </label>
-                        <br/>
-                        <br/>
+                        <br />
+                        <br />
                     </form>
                 </Grid>
-            
+
                 <Grid item>
                     <Button onClick={handleSubmit} variant="contained" size="large" color="primary">
-                            Add CV
+                        Add CV
                     </Button>
                 </Grid>
 
@@ -91,9 +89,24 @@ export default function UploadResumeCard() {
 
                     {/* <Chip label={"View Student CV"} /> */}
 
-                    <Button variant="contained" size="large" color="primary">
-                            View CV
-                    </Button>
+
+
+                    <a target='blank'
+                        style={{ "text-decoration": "none", "cursor": "pointer" }}
+                        href={
+                            CV_Upload}
+                    >
+
+                        {CV_Upload === undefined ? "Wait Loading...." : <>
+                            {/* <Chip label={"View CV"} /> */}
+                            <Button variant="contained" size="large" color="primary">
+                                View CV
+                            </Button>
+
+                        </>
+                        }
+
+                    </a>
                 </Grid>
 
 

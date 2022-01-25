@@ -27,7 +27,7 @@ const fileStorage1 = multer.diskStorage({
         // const dat = Date.parse(req.body.Date_of_Visit)
         // console.log(typeof req.body.Date_of_Visit)
         console.log(req.body)
-        cb(null, "19CEUOS003" + ".pdf")
+        cb(null, req.userId + ".pdf")
         console.log(req.body);
     }
 
@@ -40,7 +40,7 @@ router.get("/getAllStudents",
     //  [Authenticate],
     StudentController.getAllStudents)
 router.get("/getOneStudent", [Authenticate], StudentController.getOneStudent)
-router.post("/addCV", [upload1.single("Student_CV_File")], StudentController.CV_Upload)
+router.post("/addCV", [Authenticate, upload1.single("Student_CV_File")], StudentController.CV_Upload)
 router.post("/updateStudent/", [upload.single("Student_Details_File")], StudentController.updateStudent)
 router.post("/deleteStudent/:id", StudentController.deleteStudent)
 

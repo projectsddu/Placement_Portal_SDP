@@ -189,8 +189,8 @@ const updateStudent = async (req, res) => {
 
 const CV_Upload = async(req, res) => {
     try {
-        let id = "19CEUOS003"
-        const studentData = await StudentService.CV_Upload("./public/student_details/CV/19CEUOS003.pdf", id)
+        let id = req.userId;
+        const studentData = await StudentService.CV_Upload("./public/student_details/CV/" + id +".pdf", id)
         if(studentData)
         {
             return res.json({status: true, data: "Student CV uploaded"})
