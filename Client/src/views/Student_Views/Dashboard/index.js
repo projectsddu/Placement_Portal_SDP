@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 
 // project imports
-import EarningCard from './EarningCard';
+import NameCard from './NameCard';
 import PopularCard from './PopularCard';
 import TotalSubscriptionsCard from './TotalSubscriptionsCard';
 import TotalIncomeDarkCard from './TotalIncomeDarkCard';
@@ -31,6 +31,7 @@ const Dashboard = () => {
     let Student_ID, FirstName, MiddleName, LastName, Email_ID, CV_Upload, Sem_1_SPI, Sem_2_SPI, Sem_3_SPI, Sem_4_SPI, Sem_5_SPI, Sem_6_SPI, Sem_7_SPI, Sem_8_SPI;
 
     const [student_spi, setStudent_spi] = useState(undefined);
+
 
     const [studentDetails, setStudentDetails] = useState(undefined);
 
@@ -152,6 +153,7 @@ const Dashboard = () => {
                                 <Grid item sm={6} xs={12} md={6} lg={12}>
                                     <TotalIncomeLightCard isLoading={isLoading} />
                                 </Grid>
+
                             </Grid>
                         </Grid>
                     </Grid>

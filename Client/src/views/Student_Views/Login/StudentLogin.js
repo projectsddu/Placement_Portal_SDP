@@ -3,7 +3,7 @@
 // export default function StudentLogin() {
 //     return <div></div>;
 // }
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 
 import Avatar from '@mui/material/Avatar';
@@ -24,6 +24,9 @@ import HandleToast from '../../../Utilities/HandleToast'
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../../Utilities/ResponsePipelineHandler';
 import UsePost from '../../../Utilities/UsePost';
+import LogoSection from '../../../layout/MainLayout/LogoSection/index';
+import Hidden from '@material-ui/core/Hidden';
+
 
 function Copyright(props) {
     return (
@@ -41,15 +44,15 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function StudentLogin() {
-    
+
     const [data, setData] = useState({
         username: "",
         password: ""
     });
-    
+
     const history = useHistory()
 
-    async function handleSubmit (event) {
+    async function handleSubmit(event) {
 
         event.preventDefault();
         console.log(data);
@@ -61,10 +64,8 @@ export default function StudentLogin() {
                 flag: false,
             }
         }
-        if(res)
-        {
-            if(res.status)
-            {
+        if (res) {
+            if (res.status) {
                 history.push("/_student/Dashboard")
             }
             console.log(res);
@@ -72,17 +73,19 @@ export default function StudentLogin() {
         }
 
 
-      };
-        return (
+    };
+    return (
+        <>
+
             <Grid
-            container
-            spacing={0}
-            direction="column"
-            alignItems="center"
-            justifyContent="center"
-            marginTop='3%'
+                container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
+                marginTop='3%'
             // style={{ minHeight: '100vh' }}
-        >
+            >
                 <Box
                     sx={{
                         width: '50%',
@@ -101,13 +104,59 @@ export default function StudentLogin() {
                         boxShadow: 3,
                         minWidth: 300,
                     }}
-                >
+                ><br /><br />
+                    <Grid container justifyContent='center'>
+                        <Hidden smDown>
+                            <Grid item
+                                xs={2}
+                                md={2}
+                            >
+                                <LogoSection />
+                            </Grid>
+                            <Grid item
+                                xs={8}
+                                md={8}
+                            >
+                                <Typography fontSize='2rem' fontWeight='bold'>
+                                    Dharmsinh Desai University
+                                </Typography>
+                            </Grid>
+                        </Hidden>
+                        <Hidden smUp>
+                        <Grid item
+                                xs={8}
+                                md={12}
+                            >
+                                <Typography fontSize='2rem' fontWeight='bold'>
+                                    Dharmsinh Desai University
+                                </Typography>
+                            </Grid>
+                        </Hidden>
+
+                    </Grid>
+                    {/* <Box 
+                        component="span" 
+                        sx={{ 
+                            display: { 
+                                xs: 'none', 
+                                md: 'block', 
+                                marginBottom: '1.6%' 
+                            }, 
+                            flexGrow: -1,
+                            marginTop: '5%'
+                        }}
+                    >
+                        <LogoSection/>
+                    </Box> */}
+                    {/* <Typography fontSize='2rem' fontWeight='bold' marginLeft='25%' marginTop='-5%'>
+                        Dharmsinh Desai University
+                    </Typography> */}
                     <ThemeProvider theme={theme}>
                         <Container component="main" maxWidth="xs">
                             <CssBaseline />
                             <Box
                                 sx={{
-                                    marginTop: 8,
+                                    marginTop: 5,
                                     display: 'flex',
                                     flexDirection: 'column',
                                     alignItems: 'center',
@@ -146,7 +195,7 @@ export default function StudentLogin() {
                                         onChange={(e) => {
                                             setData({ ...data, password: e.target.value });
                                         }}
-                                        // autoComplete="current-password"
+                                    // autoComplete="current-password"
                                     />
                                     {/* <FormControlLabel
                                         control={<Checkbox value="remember" color="primary" />}
@@ -180,8 +229,8 @@ export default function StudentLogin() {
                     </ThemeProvider>
                 </Box>
 
-        </Grid>
+            </Grid>
 
-
+        </>
     );
 }

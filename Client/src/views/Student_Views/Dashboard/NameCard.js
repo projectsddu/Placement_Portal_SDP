@@ -103,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
 
 //===========================|| DASHBOARD DEFAULT - EARNING CARD ||===========================//
 
-const EarningCard = ({ isLoading, FirstName, MiddleName, LastName, Email_ID }) => {
+const NameCard = ({ isLoading, FirstName, MiddleName, LastName, Email_ID }) => {
     const classes = useStyles();
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -204,8 +204,8 @@ const EarningCard = ({ isLoading, FirstName, MiddleName, LastName, Email_ID }) =
     );
 };
 
-EarningCard.propTypes = {
+NameCard.propTypes = {
     isLoading: PropTypes.bool
 };
 
-export default EarningCard;
+export default NameCard;
