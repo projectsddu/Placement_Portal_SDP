@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 
 // project imports
-import EarningCard from './EarningCard';
+import NameCard from './NameCard';
 import PopularCard from './PopularCard';
 import TotalOrderLineChartCard from './TotalOrderLineChartCard';
 import TotalIncomeDarkCard from './TotalIncomeDarkCard';
@@ -49,7 +49,7 @@ const Dashboard = () => {
             <Grid item xs={12}>
                 <Grid container spacing={gridSpacing}>
                     <Grid item lg={4} md={6} sm={6} xs={12}>
-                        <EarningCard FirstName={FirstName} MiddleName={MiddleName} LastName={LastName} Email_ID={Email_ID} isLoading={isLoading} />
+                        <NameCard FirstName={FirstName} MiddleName={MiddleName} LastName={LastName} Email_ID={Email_ID} isLoading={isLoading} />
                     </Grid>
                     <Grid item lg={4} md={6} sm={6} xs={12}>
                         <TotalOrderLineChartCard isLoading={isLoading} />
