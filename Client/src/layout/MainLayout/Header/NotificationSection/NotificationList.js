@@ -2,6 +2,7 @@ import React from 'react';
 
 // material-ui
 import { makeStyles } from '@material-ui/styles';
+import useFetch from "../../../../Utilities/useFetch"
 import {
     Avatar,
     Button,
@@ -104,45 +105,61 @@ const useStyles = makeStyles((theme) => ({
 
 //-----------------------|| NOTIFICATION LIST ITEM ||-----------------------//
 
-const NotificationList = () => {
+
+const NotificationList = (props) => {
+
     const classes = useStyles();
+    console.log(props.data);
 
     return (
         <List className={classes.navContainer}>
-            <div className={classes.itemAction}>
-                <ListItem alignItems="center" className={classes.listItem}>
-                    <ListItemAvatar>
-                        <Avatar alt="John Doe" src={User1} />
-                    </ListItemAvatar>
-                    <ListItemText primary={<Typography variant="subtitle1">John Doe</Typography>} />
-                    <ListItemSecondaryAction className={classes.listAction}>
-                        <Grid container justifyContent="flex-end">
-                            <Grid item xs={12}>
-                                <Typography variant="caption" display="block" gutterBottom className={classes.actionColor}>
-                                    2 min ago
-                                </Typography>
+            {props.data.map((elem) => {
+                return (
+                    <>
+                        <div className={classes.itemAction}>
+                            <ListItem alignItems="center" className={classes.listItem}>
+                                <ListItemAvatar>
+                                    <Avatar>A</Avatar>
+                                </ListItemAvatar>
+                                <ListItemText primary={<Typography variant="subtitle1">Admin</Typography>} />
+                                <ListItemSecondaryAction className={classes.listAction}>
+                                    <Grid container justifyContent="flex-end">
+                                        <Grid item xs={12}>
+                                            <Typography variant="caption" display="block" gutterBottom className={classes.actionColor}>
+                                                2 min ago
+                                            </Typography>
+                                        </Grid>
+                                    </Grid>
+                                </ListItemSecondaryAction>
+                            </ListItem>
+                            <Grid container direction="column" className={classes.listContainer}>
+                                <Grid item xs={12} className={classes.paddingBottom}>
+                                    <Typography variant="subtitle2">{elem.message}</Typography>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Grid container>
+                                        {elem.isSeen ? <>
+                                            <Grid item>
+                                                <Chip label="Read" className={classes.listChipSuccess} />
+                                            </Grid>
+                                        </> : <><Grid item>
+                                            <Chip label="Unread" className={classes.listChipError} />
+                                        </Grid>
+                                            <Grid item>
+                                                <Chip label="New" className={classes.listChipWarning} />
+                                            </Grid></>}
+
+                                    </Grid>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </ListItemSecondaryAction>
-                </ListItem>
-                <Grid container direction="column" className={classes.listContainer}>
-                    <Grid item xs={12} className={classes.paddingBottom}>
-                        <Typography variant="subtitle2">It is a long established fact that a reader will be distracted</Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Grid container>
-                            <Grid item>
-                                <Chip label="Unread" className={classes.listChipError} />
-                            </Grid>
-                            <Grid item>
-                                <Chip label="New" className={classes.listChipWarning} />
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </div>
-            <Divider className={classes.listDivider} />
-            <div className={classes.itemAction}>
+                        </div>
+                        <Divider className={classes.listDivider} />
+
+                    </>
+                )
+            })}
+
+            {/* <div className={classes.itemAction}>
                 <ListItem alignItems="center" className={classes.listItem}>
                     <ListItemAvatar>
                         <Avatar className={classes.listAvatarSuccess}>
@@ -282,8 +299,8 @@ const NotificationList = () => {
                             </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-            </div>
+                </Grid> */}
+            {/* </div> */}
         </List>
     );
 };

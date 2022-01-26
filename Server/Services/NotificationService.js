@@ -1,0 +1,119 @@
+const logger = require("serverloggerjs/logger")
+const log = new logger(true)
+const db = require("../Models/index")
+const Notifications = db.notifications
+const Mailer = require("./MailerService")
+
+const adminToSingleUserNotification = async (userId, message, sendMail = false) => {
+    try {
+        const payLoad = {
+            userId: userId,
+            message: message,
+            dateAdded: Date.now(),
+            isSeen: false
+        }
+        const status = await Notifications.create(payLoad)
+        if (status) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    catch (err) {
+        log.error("Error adding tokens!" + err.toString())
+        console.log(err.toString());
+        return false
+    }
+}
+
+const adminToBatchNotification = async (student_list, message, sendMail = false) => {
+    try {
+        let results = 0
+        for (let i = 0; i < student_list.length; i++) {
+            const status = await adminToSingleUserNotification(student_list[i], message, sendMail)
+            if (status) {
+                results += 1
+            }
+        }
+        if (results == student_list.length) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    catch (err) {
+        log.error("Error adminToBatchNotification!" + err.toString())
+        console.log(err.toString());
+        return false
+    }
+}
+
+const adminToBatchDifferentNotification = async (studentMsgMap) => {
+    try {
+        let res = 0
+        for (let i = 0; i < studentMsgMap; i++) {
+            const msgObj = studentMsgMap[i]
+
+            const status = adminToSingleUserNotification(msgObj.studentId, msgObj.message, msgObj.sendMail)
+
+            if (status) {
+                res++
+            }
+        }
+        if (res == studentMsgMap.length) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    catch (err) {
+        log.error("Error in adminToBatchDifferentNotification" + err.toString())
+        console.log(err.toString());
+        return false
+    }
+}
+
+
+const getUserNotifications = async (student_id) => {
+    try {
+        const allNotifications = await Notifications.findAll({
+            where: { userId: student_id }, order: [
+                ['dateAdded', 'DESC'],
+            ],
+        })
+
+        if (allNotifications) {
+            const notifsCopy = allNotifications
+            for (let i = 0; i < notifsCopy.length; i++) {
+                notifsCopy.isSeen = true
+            }
+            const status = await Notifications.update(notifsCopy, { where: { userId: student_id } })
+            if (status) {
+                return allNotifications
+            }
+            else {
+                return false
+            }
+
+        }
+        else {
+            return false
+        }
+    }
+    catch (err) {
+        log.error("Error in getUserNotifications" + err.toString())
+        console.log(err.toString());
+        return false
+    }
+}
+
+
+module.exports = {
+    adminToBatchDifferentNotification,
+    adminToBatchNotification,
+    adminToSingleUserNotification,
+    getUserNotifications
+}
