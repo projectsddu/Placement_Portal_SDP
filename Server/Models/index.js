@@ -27,6 +27,8 @@ db.branches = require("./BranchModel")(sequelize, DataTypes)
 db.comments = require("./CommentModel")(sequelize, DataTypes)
 db.subscribes = require("./AnnouncementSubscribe")(sequelize, DataTypes)
 db.LoginTokens = require("./LoginTokensModel")(sequelize, DataTypes)
+db.notifications = require("./NotificationModel")(sequelize, DataTypes)
+
 
 db.sequelize.sync({ force: false }).then(() => {
     console.log("Resyncing Done.....")
