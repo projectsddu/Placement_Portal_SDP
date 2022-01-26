@@ -139,7 +139,7 @@ const Dashboard = () => {
                 <Grid item xs={12}>
                     <Grid container spacing={gridSpacing}>
                         <Grid item lg={4} md={6} sm={6} xs={12}>
-                            {studentDetails === undefined ?  "" :  <EarningCard FirstName={studentDetails.FirstName} MiddleName={studentDetails.MiddleName} LastName={studentDetails.LastName} Email_ID={studentDetails.Email_ID} isLoading={isLoading} />
+                            {studentDetails === undefined ?  "" :  <NameCard FirstName={studentDetails.FirstName} MiddleName={studentDetails.MiddleName} LastName={studentDetails.LastName} Email_ID={studentDetails.Email_ID} isLoading={isLoading} />
                             }
                         </Grid>
                         <Grid item lg={4} md={6} sm={6} xs={12}>
