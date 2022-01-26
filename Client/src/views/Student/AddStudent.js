@@ -40,7 +40,7 @@ export default function AddStudent() {
 
     async function handleSubmit() {
 
-        const res = await UsePostFile("/student/", data, "POST")
+        const res = await UsePostFile("/student/addStudent", data, "POST")
         const params1 = {
             data: res,
             HandleToast: {
