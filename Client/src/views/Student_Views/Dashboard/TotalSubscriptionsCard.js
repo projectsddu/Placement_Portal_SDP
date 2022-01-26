@@ -9,8 +9,8 @@ import { Avatar, Button, Grid, Typography } from '@material-ui/core';
 import Chart from 'react-apexcharts';
 
 // project imports
-import MainCard from './../../../ui-component/cards/MainCard';
-import SkeletonTotalOrderCard from './../../../ui-component/cards/Skeleton/EarningCard';
+import MainCard from '../../../ui-component/cards/MainCard';
+import SkeletonTotalOrderCard from '../../../ui-component/cards/Skeleton/EarningCard';
 
 import ChartDataMonth from './chart-data/total-order-month-line-chart';
 import ChartDataYear from './chart-data/total-order-year-line-chart';
@@ -18,6 +18,8 @@ import ChartDataYear from './chart-data/total-order-year-line-chart';
 // assets
 import LocalMallOutlinedIcon from '@material-ui/icons/LocalMallOutlined';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+
+import useFetch from '../../../Utilities/useFetch';
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -97,13 +99,24 @@ const useStyles = makeStyles((theme) => ({
 
 //-----------------------|| DASHBOARD - TOTAL ORDER LINE CHART CARD ||-----------------------//
 
-const TotalOrderLineChartCard = ({ isLoading }) => {
+const TotalSubscriptionsCard = ({ isLoading }) => {
     const classes = useStyles();
 
     const [timeValue, setTimeValue] = React.useState(false);
     const handleChangeTime = (event, newValue) => {
         setTimeValue(newValue);
     };
+
+    const { required_data, loading } = useFetch("/subscribeannouncement/getSubscribedAnnouncements/", "GET")
+
+    let no_of_subscriptions;
+
+    if(!loading) {
+        // console.log(required_data["data"].length)
+
+        no_of_subscriptions = required_data["data"].length
+        
+    }
 
     return (
         <React.Fragment>
@@ -145,9 +158,9 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                                     <Grid container alignItems="center" minHeight="22vh" minWidth="10000vw">
                                         <Grid item>
                                             {timeValue ? (
-                                                <Typography className={classes.cardHeading}>20</Typography>
+                                                <Typography className={classes.cardHeading}>25</Typography>
                                             ) : (
-                                                <Typography className={classes.cardHeading}>20</Typography>
+                                                <Typography className={classes.cardHeading}>{loading ? "" :no_of_subscriptions}</Typography>
                                             )}
                                         </Grid>
                                         <Grid item>
@@ -172,8 +185,8 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
     );
 };
 
-TotalOrderLineChartCard.propTypes = {
+TotalSubscriptionsCard.propTypes = {
     isLoading: PropTypes.bool
 };
 
-export default TotalOrderLineChartCard;
+export default TotalSubscriptionsCard;

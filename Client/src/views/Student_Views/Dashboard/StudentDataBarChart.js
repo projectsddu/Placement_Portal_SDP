@@ -9,12 +9,13 @@ import ApexCharts from 'apexcharts';
 import Chart from 'react-apexcharts';
 
 // project imports
-import SkeletonTotalGrowthBarChart from './../../../ui-component/cards/Skeleton/TotalGrowthBarChart';
-import MainCard from './../../../ui-component/cards/MainCard';
-import { gridSpacing } from './../../../store/constant';
+import SkeletonTotalGrowthBarChart from '../../../ui-component/cards/Skeleton/TotalGrowthBarChart';
+import MainCard from '../../../ui-component/cards/MainCard';
+import { gridSpacing } from '../../../store/constant';
 
 // chart data
-import chartData from './chart-data/total-growth-bar-chart';
+// import chartData from './chart-data/StudentSemCPIBar';
+
 
 const status = [
     {
@@ -31,9 +32,99 @@ const status = [
     }
 ];
 
+//-----------------------|| DASHBOARD - TOTAL GROWTH BAR CHART ||-----------------------//
+
+
+
+
+
+
+
+
+// export default chartData;
+
+
 //-----------------------|| DASHBOARD DEFAULT - TOTAL GROWTH BAR CHART ||-----------------------//
 
-const TotalGrowthBarChart = ({ isLoading }) => {
+const StudentDataBarChart = ({ isLoading, student_spi_list }) => {
+    const chartData = {
+        height: 480,
+        type: 'bar',
+        options: {
+            chart: {
+                id: 'bar-chart',
+                stacked: true,
+                toolbar: {
+                    show: true
+                },
+                zoom: {
+                    enabled: true
+                }
+            },
+            responsive: [
+                {
+                    breakpoint: 480,
+                    options: {
+                        legend: {
+                            position: 'bottom',
+                            offsetX: -10,
+                            offsetY: 0
+                        }
+                    }
+                }
+            ],
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '50%'
+                }
+            },
+            xaxis: {
+                type: 'category',
+                categories: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4', 'Sem 5', 'Sem 6', 'Sem 7', 'Sem 8']
+            },
+            legend: {
+                show: true,
+                fontSize: '14px',
+                fontFamily: `'Roboto', sans-serif`,
+                position: 'bottom',
+                offsetX: 20,
+                labels: {
+                    useSeriesColors: false
+                },
+                markers: {
+                    width: 16,
+                    height: 16,
+                    radius: 5
+                },
+                itemMargin: {
+                    horizontal: 15,
+                    vertical: 8
+                }
+            },
+            fill: {
+                type: 'solid'
+            },
+            dataLabels: {
+                enabled: false
+            },
+            grid: {
+                show: true
+            }
+        },
+        series: [
+            {
+                name: 'SPI',
+                data: []
+            }
+        ]
+    };
+
+
+
+
+
+
     const [value, setValue] = React.useState('today');
     const theme = useTheme();
 
@@ -45,6 +136,14 @@ const TotalGrowthBarChart = ({ isLoading }) => {
     const secondaryMain = theme.palette.secondary.main;
     const secondaryLight = theme.palette.secondary.light;
     const grey500 = theme.palette.grey[500];
+
+    // add spi into chart data
+    for (let i = 0; i < student_spi_list.length; i++) {
+        chartData["series"][0]["data"][i] = (student_spi_list[i])
+
+    }
+
+    console.log(chartData["series"])
 
     React.useEffect(() => {
         const newChartData = {
@@ -128,8 +227,8 @@ const TotalGrowthBarChart = ({ isLoading }) => {
     );
 };
 
-TotalGrowthBarChart.propTypes = {
+StudentDataBarChart.propTypes = {
     isLoading: PropTypes.bool
 };
 
-export default TotalGrowthBarChart;
+export default StudentDataBarChart;

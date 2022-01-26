@@ -1,5 +1,9 @@
 //-----------------------|| DASHBOARD - TOTAL GROWTH BAR CHART ||-----------------------//
 
+
+
+
+
 const chartData = {
     height: 480,
     type: 'bar',
@@ -68,7 +72,7 @@ const chartData = {
     series: [
         {
             name: 'CPI',
-            data: [9.5, 9.1, 9.2, 9.0, 8.5, 9.1, 9.3]
+            data: [9.5, 9.1, 9.2, 9.0, 8.5, 9.1, 9.0]
         },
         {
             // name: 'Loss',
@@ -84,4 +88,7 @@ const chartData = {
         }
     ]
 };
+
+
+
 export default chartData;
