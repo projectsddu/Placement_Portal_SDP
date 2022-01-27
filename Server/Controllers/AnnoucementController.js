@@ -4,6 +4,7 @@ const logger = require("serverloggerjs/logger")
 const log = new logger(true)
 const Announcement = db.announcements
 const AnnouncementService = require("../Services/AnnouncementService");
+const NotificationService = require("../Services/NotificationService")
 const CompanyService = require("../Services/CompanyService");
 const CommentService = require("../Services/CommentService");
 const { request } = require("express");
@@ -50,6 +51,9 @@ const addAnnoucement = async (req, res) => {
             // const job_description_file = req.file
 
             const annoucementStatus = await AnnouncementService.createdAnnoucement(req.body)
+            const company_name = await CompanyService.getCompany(Company_ID)
+            const status = await NotificationService.broadcastNotification(company_name.Company_name + " opened a new " + Job_Role + " position check out announcement in your dashboard!")
+            console.log(status);
             if (annoucementStatus) {
                 return res.json({ data: "Announcement Created", status: true })
             }
@@ -158,12 +162,12 @@ const requiredAnnoucementDetails = async (req, res) => {
 const addComment = async (req, res) => {
     try {
         console.log("here in add comment")
-        const {Comment_text} = req.body;
+        const { Comment_text } = req.body;
 
         const Announcement_ID = req.params.annoucementId
         let Comment_Date = new Date()
         const username = req.username;
-        
+
         let comment = {
             Announcement_ID: Announcement_ID,
             Comment_text: Comment_text,

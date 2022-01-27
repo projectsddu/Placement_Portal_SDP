@@ -20,25 +20,43 @@ const UtilsTablerIcons = Loadable(lazy(() => import('../views/utilities/TablerIc
 const cards = Loadable(lazy(() => import('../views/utilities/cards')));
 const keval = Loadable(lazy(() => import('../views/Own/keval')));
 const SReg = Loadable(lazy(() => import('../views/utilities/StudentRegisterExample')));
+
+// announcement starts
 const Announcement = Loadable(lazy(() => import('../views/Announcement/index')));
 const AddAnnouncement = Loadable(lazy(() => import('../views/Announcement/AddAnnoucement')));
 const ViewAnnouncement = Loadable(lazy(() => import('../views/Announcement/ViewAnnoucements')));
 const ViewSingleAnnoucement = Loadable(lazy(() => import('../views/Announcement/ViewSingleAnnoucement')));
 const EditAnnouncement = Loadable(lazy(() => import('../views/Announcement/EditAnnouncement')));
+const ViewSubscribedStudents = Loadable(lazy(() => import('../views/Announcement/ViewSubscribedStudents')));
 
+// announcement ends
+
+
+// company starts
 const AddCompany = Loadable(lazy(() => import('../views/Company/AddCompany')));
 
 const ViewCompany = Loadable(lazy(() => import('../views/Company/ViewCompany')));
 const ViewStudent = Loadable(lazy(() => import('../views/Student/ViewStudent')));
 const ViewSingleCompany = Loadable(lazy(() => import('../views/Company/ViewSingleCompany')));
 const EditCompany = Loadable(lazy(() => import('../views/Company/EditCompanyDetails')));
+
+// company ends
+
 const Temp = Loadable(lazy(() => import('../views/Student_Views/Dashboard/index')));
 
+
+// student starts
 const AddStudent = Loadable(lazy(() => import('../views/Student/AddStudent')));
 const UpdateStudent = Loadable(lazy(() => import('../views/Student/UpdateStudent')));
 const S_ViewAnnouncements = Loadable(lazy(() => import('../views/Student_Views/Announcements/S_ViewAnnouncements')));
 const S_ViewSingleAnnouncement = Loadable(lazy(() => import('../views/Student_Views/Announcements/S_ViewSingleAnnouncement')));
+
 const S_ViewSubscribedAnnouncements = Loadable(lazy(() => import('../views/Student_Views/Announcements/S_ViewSubscribedAnnouncement')));
+
+const S_AllNotifications = Loadable(lazy(() => import('../views/Student_Views/Notifications/AllNotifications')));
+
+// student ends
+
 
 
 // sample page routing
@@ -71,6 +89,7 @@ const MainRoutes = () => {
                 "/announcement/view_annoucement",
                 "/announcement/view_annoucement/:annoucement_id",
                 "/announcement/edit_announcement/:annoucement_id",
+                "/announcement/view_subscribed_announcement/:annoucement_id",
                 // annoucement routers finished
 
                 // Company Routes
@@ -91,7 +110,11 @@ const MainRoutes = () => {
                 '/_student/Dashboard',
                 "/_student/announcement/view_announcement/:idx",
                 "/_student/announcement/view_announcement",
+
                 "/_student/announcement/view_subscribed_announcement",
+
+                "/_student/notifications/all"
+
 
 
             ]}
@@ -99,7 +122,9 @@ const MainRoutes = () => {
             <MainLayout>
                 <Switch location={location} key={location.pathname}>
                     {/* <AuthGuard> */}
-                    
+
+                    <Route path="/_student/notifications/all" component={S_AllNotifications} />
+
                     <Route path="/dashboard/default" component={DashboardDefault} />
 
                     <Route path="/utils/util-typography" component={UtilsTypography} />
@@ -117,6 +142,7 @@ const MainRoutes = () => {
                     <Route path="/announcement/add_annoucement" component={AddAnnouncement} />
                     <Route path="/announcement/edit_announcement/:annoucement_id" component={EditAnnouncement} />
                     <Route path="/announcement/view_annoucement/:annoucement_id" component={ViewSingleAnnoucement} />
+                    <Route path="/announcement/view_subscribed_announcement/:annoucement_id" component={ViewSubscribedStudents} />
                     <Route path="/announcement/view_annoucement" component={ViewAnnouncement} />
 
 
@@ -134,6 +160,7 @@ const MainRoutes = () => {
                     {/* </AuthGuard> */}
 
                     {/* Student View Routes */}
+
                     <Route path="/_student/Dashboard/" component={Temp} />
                     <Route path="/_student/announcement/view_announcement/:idx" component={S_ViewSingleAnnouncement} />
                     <Route path="/_student/announcement/view_announcement" component={S_ViewAnnouncements} />

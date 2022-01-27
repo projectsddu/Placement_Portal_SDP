@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button } from '@material-ui/core';
+import { pink, red } from '@mui/material/colors';
 // assets
 import {
     Avatar,
@@ -136,6 +137,11 @@ function ViewSingleAnnoucement() {
         history.push('/announcement/edit_announcement/' + id)
     }
 
+    function handleSubscribedStudents(id) {
+        console.log(id);
+        history.push('/announcement/view_subscribed_announcement/' + id)
+    }
+
     const location = useLocation().pathname;
     const id = location.split("/")[3]
 
@@ -193,10 +199,21 @@ function ViewSingleAnnoucement() {
                     ''
                 ) : (
                     <>
+                        <Grid container spacing={2}>
+                            <Grid item xs={6} md={3}>
+                                <Button onClick={() => handleEdit(announcement_details["Announcement_ID"])} variant="contained" size="large" color="primary">
+                                    Edit Annoucement
+                                </Button>
 
-                        <Button onClick={() => handleEdit(announcement_details["Announcement_ID"])} variant="contained" size="large" color="primary">
-                            Edit Annoucement
-                        </Button>
+                            </Grid>
+                            <Grid item xs={6} md={9}>
+                                <Button onClick={() => handleSubscribedStudents(announcement_details["Announcement_ID"])} variant="contained" size="large" style={{"backgroundColor": red["A400"]}}>
+                                    See Subscribed Students
+                                </Button>
+                            </Grid>
+                            
+
+                        </Grid>
                         <br />
                         <br />
                         <TableContainer component={Paper}>

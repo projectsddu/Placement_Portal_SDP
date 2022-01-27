@@ -3,6 +3,7 @@ import React from 'react';
 // material-ui
 import { makeStyles } from '@material-ui/styles';
 import useFetch from "../../../../Utilities/useFetch"
+import ParseDate from "../../../../Utilities/ParseDate"
 import {
     Avatar,
     Button,
@@ -105,15 +106,20 @@ const useStyles = makeStyles((theme) => ({
 
 //-----------------------|| NOTIFICATION LIST ITEM ||-----------------------//
 
-
+let notifs = 0
 const NotificationList = (props) => {
 
     const classes = useStyles();
-    console.log(props.data);
+    // console.log(props.data);
+    let data = props.data.slice(0, 3)
+    console.log(data);
 
     return (
         <List className={classes.navContainer}>
-            {props.data.map((elem) => {
+
+            {data.map((elem) => {
+
+                console.log(elem.message);
                 return (
                     <>
                         <div className={classes.itemAction}>
@@ -126,7 +132,7 @@ const NotificationList = (props) => {
                                     <Grid container justifyContent="flex-end">
                                         <Grid item xs={12}>
                                             <Typography variant="caption" display="block" gutterBottom className={classes.actionColor}>
-                                                2 min ago
+                                                {ParseDate.ParseDate(elem.dateAdded, true)}
                                             </Typography>
                                         </Grid>
                                     </Grid>
@@ -134,7 +140,7 @@ const NotificationList = (props) => {
                             </ListItem>
                             <Grid container direction="column" className={classes.listContainer}>
                                 <Grid item xs={12} className={classes.paddingBottom}>
-                                    <Typography variant="subtitle2">{elem.message}</Typography>
+                                    <p style={{ "color": "#5c5c5c" }}>{elem.message}</p>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Grid container>

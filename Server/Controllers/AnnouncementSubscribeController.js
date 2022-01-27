@@ -75,9 +75,28 @@ const getSubscribedAnnouncements = async (req, res) => {
         return res.json({ status: false, data: "Error Fetching announcements!" })
     }
 }
+
+
+const getSubscribedStudentsOfAnnouncement = async (req, res) => {
+    try {
+        const announcement_id = req.params.announcementId
+        const data = await Subscibe.getSubscribedStudentsOfAnnouncement(announcement_id)
+        if (data) {
+            return res.json({ status: true, data: data })
+        }
+
+    }
+    catch (err) {
+        console.log(err.toString());
+        log.error(err.toString())
+        return res.json({ status: false, data: "Error Fetching announcements!" })
+    }
+}
+
 module.exports = {
     addStudentToAnnouncement,
     getSubscribedAnnouncements,
     getSubscribedStatus,
-    removeStudentToAnnouncement
+    removeStudentToAnnouncement,
+    getSubscribedStudentsOfAnnouncement
 }

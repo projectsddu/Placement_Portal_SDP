@@ -2,9 +2,12 @@ const logger = require("serverloggerjs/logger")
 const log = new logger(true)
 const db = require("../Models/index")
 const Notifications = db.notifications
+const StudentService = require("./StudentService")
 const Mailer = require("./MailerService")
 
+
 const adminToSingleUserNotification = async (userId, message, sendMail = false, mailData = {}) => {
+
     try {
         const payLoad = {
             userId: userId,
@@ -117,9 +120,34 @@ const getUserNotifications = async (student_id) => {
 }
 
 
+const broadcastNotification = async (message) => {
+    try {
+        const student_list = await StudentService.getAllStudents()
+        let sent = 0
+        for (let i = 0; i < student_list.length; i++) {
+            const status = await adminToSingleUserNotification(student_list[i]["Student_ID"], message)
+            if (status) {
+                sent++
+            }
+        }
+        if (sent == student_list.length) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    catch (err) {
+        log.error("Error in getUserNotifications" + err.toString())
+        console.log(err.toString());
+        return false
+    }
+}
+
 module.exports = {
     adminToBatchDifferentNotification,
     adminToBatchNotification,
     adminToSingleUserNotification,
-    getUserNotifications
+    getUserNotifications,
+    broadcastNotification
 }

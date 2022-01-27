@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useFetch from "../../../../Utilities/useFetch"
+import { useHistory } from 'react-router';
 // material-ui
 import { makeStyles, useTheme } from '@material-ui/styles';
 import {
@@ -107,6 +108,7 @@ const status = [
 //-----------------------|| NOTIFICATION ||-----------------------//
 
 const NotificationSection = () => {
+    const history = useHistory()
     const classes = useStyles();
     const theme = useTheme();
     const matchesXs = useMediaQuery(theme.breakpoints.down('sm'));
@@ -199,7 +201,7 @@ const NotificationSection = () => {
                                                         <Grid item>
                                                             <Stack direction="row" spacing={2}>
                                                                 <Typography variant="subtitle1">All Notification</Typography>
-                                                                {loading ? "" : <Chip size="small" label={required_data["data"].length} className={classes.notificationChip} />}
+                                                                {loading ? "" : <Chip size="small" label={required_data["data"].length >= 3 ? "3+" : required_data["data"].length} className={classes.notificationChip} />}
                                                             </Stack>
                                                         </Grid>
                                                         {/* <Grid item>
@@ -246,9 +248,11 @@ const NotificationSection = () => {
                                     </CardContent>
                                     <Divider />
                                     <CardActions className={classes.cardAction}>
-                                        <Button size="small" disableElevation>
+
+                                        <Button onClick={() => { history.push("/_student/notifications/all") }} size="small" disableElevation>
                                             View All
                                         </Button>
+
                                     </CardActions>
                                 </MainCard>
                             </ClickAwayListener>

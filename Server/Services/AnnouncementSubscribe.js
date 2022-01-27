@@ -2,7 +2,11 @@ const logger = require("serverloggerjs/logger")
 const log = new logger(true)
 const db = require("../Models/index")
 const AnnouncementService = require("./AnnouncementService")
+
 const { notificationMail } = require("./MailerService")
+
+const StudentService = require("./StudentService")
+
 const Subscribers = db.subscribes
 const NotificationService = require("./NotificationService")
 
@@ -73,6 +77,31 @@ const removeSubscribedStatus = async (student_id, announcement_id) => {
     }
 }
 
+const getSubscribedStudentsOfAnnouncement = async (announcement_id) => {
+    try {
+        let data = await Subscribers.findAll({
+            where: { Announcement_ID: announcement_id }
+        })
+
+        let students = []
+        
+        if(data) {
+            data = JSON.parse(JSON.stringify(data))
+            console.log(data)
+            for(let i = 0; i < data.length; i++)
+            {
+                students.push(await StudentService.getOneStudent(data[i]["Student_ID"]))
+            }
+            
+            return JSON.parse(JSON.stringify(students))
+        }
+    }
+    catch (err) {
+        console.log(err.toString());
+        log.error(err.toString())
+        return false;
+    }
+}
 
 const getSubscribedAnnouncements = async (student_id) => {
     try {
@@ -112,5 +141,6 @@ module.exports = {
     addSubsriberToAnnouncement,
     getSubscribedAnnouncements,
     getSubscribedStatus,
-    removeSubscribedStatus
+    removeSubscribedStatus,
+    getSubscribedStudentsOfAnnouncement
 }
