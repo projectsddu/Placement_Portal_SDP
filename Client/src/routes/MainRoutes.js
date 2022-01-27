@@ -38,6 +38,7 @@ const AddStudent = Loadable(lazy(() => import('../views/Student/AddStudent')));
 const UpdateStudent = Loadable(lazy(() => import('../views/Student/UpdateStudent')));
 const S_ViewAnnouncements = Loadable(lazy(() => import('../views/Student_Views/Announcements/S_ViewAnnouncements')));
 const S_ViewSingleAnnouncement = Loadable(lazy(() => import('../views/Student_Views/Announcements/S_ViewSingleAnnouncement')));
+const S_AllNotifications = Loadable(lazy(() => import('../views/Student_Views/Notifications/AllNotifications')));
 
 
 // sample page routing
@@ -90,6 +91,7 @@ const MainRoutes = () => {
                 '/_student/Dashboard',
                 "/_student/announcement/view_announcement/:idx",
                 "/_student/announcement/view_announcement",
+                "/_student/notifications/all"
 
 
             ]}
@@ -99,6 +101,7 @@ const MainRoutes = () => {
                     {/* <AuthGuard> */}
                     <Route path="/_student/announcement/view_announcement/:idx" component={S_ViewSingleAnnouncement} />
                     <Route path="/_student/announcement/view_announcement" component={S_ViewAnnouncements} />
+                    <Route path="/_student/notifications/all" component={S_AllNotifications} />
                     <Route path="/dashboard/default" component={DashboardDefault} />
 
                     <Route path="/utils/util-typography" component={UtilsTypography} />
@@ -135,7 +138,7 @@ const MainRoutes = () => {
                     {/* </AuthGuard> */}
 
                     {/* Student View Routes */}
-                    
+
 
                 </Switch>
             </MainLayout>

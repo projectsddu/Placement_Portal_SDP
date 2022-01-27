@@ -171,10 +171,10 @@ const NameCard = ({ isLoading, FirstName, MiddleName, LastName, Email_ID }) => {
                                             horizontal: 'right'
                                         }}
                                     > */}
-                                        {/* <MenuItem onClick={handleClose}>
+                                    {/* <MenuItem onClick={handleClose}>
                                             <GetAppTwoToneIcon fontSize="inherit" className={classes.menuItem} /> Import Card
                                         </MenuItem> */}
-                                        {/* <MenuItem onClick={handleClose}>
+                                    {/* <MenuItem onClick={handleClose}>
                                             <FileCopyTwoToneIcon fontSize="inherit" className={classes.menuItem} /> Copy Data
                                         </MenuItem>
                                         <MenuItem onClick={handleClose}>
@@ -190,7 +190,7 @@ const NameCard = ({ isLoading, FirstName, MiddleName, LastName, Email_ID }) => {
                         <Grid item>
                             <Grid container alignItems="center" minHeight="18vh" minWidth="10000vw">
                                 <Grid item>
-                                    <Typography className={classes.cardHeading}>{FirstName} {MiddleName} {LastName}</Typography>
+                                    <Typography style={{ "text-transform": "capitalize" }} className={classes.cardHeading}>{FirstName} {MiddleName} {LastName}</Typography>
                                 </Grid>
                             </Grid>
                         </Grid>

@@ -91,22 +91,27 @@ export default function UploadResumeCard({ CV_Upload }) {
 
 
 
-                    <a target='blank'
-                        style={{ "text-decoration": "none", "cursor": "pointer" }}
-                        href={
-                            CV_Upload}
-                    >
 
-                        {CV_Upload === undefined ? "Wait Loading...." : <>
-                            {/* <Chip label={"View CV"} /> */}
-                            <Button variant="contained" size="large" color="primary">
-                                View CV
-                            </Button>
 
-                        </>
+                    {CV_Upload === undefined ? "Wait Loading...." : <>
+                        {CV_Upload.includes("/public/student_details/CV") ?
+                            <a target='blank'
+                                style={{ "text-decoration": "none", "cursor": "pointer" }}
+                                href={
+                                    CV_Upload}
+                            >
+                                <Button variant="contained" size="large" color="primary">
+                                    View CV
+                                </Button>
+                            </a> :
+                            <>
+                                <Chip label="No CV Uploaded!" />
+                            </>
                         }
 
-                    </a>
+                    </>
+                    }
+
                 </Grid>
 
 
