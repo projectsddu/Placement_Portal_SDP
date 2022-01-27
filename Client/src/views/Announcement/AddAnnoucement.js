@@ -151,7 +151,7 @@ function AddAnnoucement() {
     // }
 
     return (
-        <MainCard title="Add Annoucement" >
+        <MainCard title="Add Announcement" >
             <form enctype="multipart/form-data">
                 {/* <TextField
                     fullWidth

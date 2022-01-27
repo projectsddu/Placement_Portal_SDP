@@ -2,8 +2,13 @@ const logger = require("serverloggerjs/logger")
 const log = new logger(true)
 const db = require("../Models/index")
 const AnnouncementService = require("./AnnouncementService")
+
+const { notificationMail } = require("./MailerService")
+
 const StudentService = require("./StudentService")
+
 const Subscribers = db.subscribes
+const NotificationService = require("./NotificationService")
 
 const addSubsriberToAnnouncement = async (student_id, announcement_id) => {
     try {
@@ -12,6 +17,17 @@ const addSubsriberToAnnouncement = async (student_id, announcement_id) => {
             Student_ID: student_id
         }
         await Subscribers.create(payLoad);
+        let announcementDetails = await AnnouncementService.getAnnoucement(announcement_id)
+        announcementDetails = JSON.parse(JSON.stringify(announcementDetails[0]))
+        console.log(announcementDetails);
+        
+        const mailData = {
+            "subject": "Regarding " + announcementDetails["Company_details"]["Company_name"] + ": " + announcementDetails["Job_Role"] + " Role Announcement Subscription" ,
+            "header": "Announcement Subscribed Successfully",
+            "body": "You will be updated regarding mentioned subscribed announcement for " + announcementDetails["Company_details"]["Company_name"] + " " + announcementDetails["Job_Role"] + " role",
+        }
+        // console.log(mailData.body);
+        await NotificationService.adminToSingleUserNotification(student_id, mailData.body, true, mailData)
         return true;
     }
     catch (err) {

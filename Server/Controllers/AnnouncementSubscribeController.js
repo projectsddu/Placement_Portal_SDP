@@ -62,7 +62,8 @@ const removeStudentToAnnouncement = async (req, res) => {
 
 const getSubscribedAnnouncements = async (req, res) => {
     try {
-        const student_id = "19CEUOS003"
+        // const student_id = "19CEUOS003"
+        const student_id = req.userId
         const data = await Subscibe.getSubscribedAnnouncements(student_id)
         if (data) {
             return res.json({ status: true, data: data })

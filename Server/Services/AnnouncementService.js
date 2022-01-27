@@ -62,7 +62,12 @@ const getAnnoucement = async (id) => {
             let announcement = await Announcement.findAll({
                 where: { Announcement_ID: id }
             })
+            announcement = JSON.parse(JSON.stringify(announcement))
 
+            // console.log(JSON.parse(JSON.stringify(announcement)));
+            let company = await CompanyService.getCompany(announcement[0].Company_ID)
+            announcement[0]["Company_details"] = company
+            // console.log(JSON.parse(JSON.stringify(announcement)));
             return announcement
         }
     } catch (error) {

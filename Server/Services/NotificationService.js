@@ -6,7 +6,8 @@ const StudentService = require("./StudentService")
 const Mailer = require("./MailerService")
 
 
-const adminToSingleUserNotification = async (userId, message, sendMail = false) => {
+const adminToSingleUserNotification = async (userId, message, sendMail = false, mailData = {}) => {
+
     try {
         const payLoad = {
             userId: userId,
@@ -14,8 +15,14 @@ const adminToSingleUserNotification = async (userId, message, sendMail = false) 
             dateAdded: Date.now(),
             isSeen: false
         }
+        
         const status = await Notifications.create(payLoad)
         if (status) {
+            console.log(message);
+            if(sendMail)
+            {
+                Mailer.notificationMail(mailData, userId+"@ddu.ac.in")
+            }
             return true
         }
         else {
