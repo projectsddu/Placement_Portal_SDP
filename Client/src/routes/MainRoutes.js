@@ -38,6 +38,7 @@ const AddStudent = Loadable(lazy(() => import('../views/Student/AddStudent')));
 const UpdateStudent = Loadable(lazy(() => import('../views/Student/UpdateStudent')));
 const S_ViewAnnouncements = Loadable(lazy(() => import('../views/Student_Views/Announcements/S_ViewAnnouncements')));
 const S_ViewSingleAnnouncement = Loadable(lazy(() => import('../views/Student_Views/Announcements/S_ViewSingleAnnouncement')));
+const S_ViewSubscribedAnnouncements = Loadable(lazy(() => import('../views/Student_Views/Announcements/S_ViewSubscribedAnnouncement')));
 
 
 // sample page routing
@@ -90,6 +91,7 @@ const MainRoutes = () => {
                 '/_student/Dashboard',
                 "/_student/announcement/view_announcement/:idx",
                 "/_student/announcement/view_announcement",
+                "/_student/announcement/view_subscribed_announcement",
 
 
             ]}
@@ -97,8 +99,7 @@ const MainRoutes = () => {
             <MainLayout>
                 <Switch location={location} key={location.pathname}>
                     {/* <AuthGuard> */}
-                    <Route path="/_student/announcement/view_announcement/:idx" component={S_ViewSingleAnnouncement} />
-                    <Route path="/_student/announcement/view_announcement" component={S_ViewAnnouncements} />
+                    
                     <Route path="/dashboard/default" component={DashboardDefault} />
 
                     <Route path="/utils/util-typography" component={UtilsTypography} />
@@ -109,8 +110,6 @@ const MainRoutes = () => {
                     <Route path="/icons/form_elements" component={form_elements} />
                     <Route path="/icons/cards" component={cards} />
                     <Route path="/own/keval" component={SReg} />
-                    <Route path="/_student/Dashboard/" component={Temp} />
-
 
 
                     {/* Announcement Routes */}
@@ -135,7 +134,12 @@ const MainRoutes = () => {
                     {/* </AuthGuard> */}
 
                     {/* Student View Routes */}
-                    
+                    <Route path="/_student/Dashboard/" component={Temp} />
+                    <Route path="/_student/announcement/view_announcement/:idx" component={S_ViewSingleAnnouncement} />
+                    <Route path="/_student/announcement/view_announcement" component={S_ViewAnnouncements} />
+                    <Route path="/_student/announcement/view_subscribed_announcement" component={S_ViewSubscribedAnnouncements} />
+
+
 
                 </Switch>
             </MainLayout>

@@ -240,7 +240,7 @@ export default function S_ViewSingleAnnouncement() {
                             <Button onClick={handleUnsubscribe} variant="contained" color="error"> Unsubsribe Announcement</Button>
                         </> : 
                             <>
-                            <Button onClick={handleSubscribe} variant="contained" color="error"> Subsribe Announcement</Button>
+                            <Button onClick={handleSubscribe} variant="contained" color="success"> Subsribe Announcement</Button>
                             </>
                         }
                         <Tooltip title="Keep recieving constant updates" style={{ "margin-left": "10px" }}>

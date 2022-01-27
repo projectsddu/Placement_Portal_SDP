@@ -32,7 +32,7 @@ export const AnnouncementStudentMenu = {
             id: 'subscribed_announcements',
             title: 'Subscribed Announcements',
             type: 'item',
-            url: '/_student/announcement/subscribed_announcements',
+            url: '/_student/announcement/view_subscribed_announcement',
             icon: icons['IconBellRinging'],
             breadcrumbs: false
         },
