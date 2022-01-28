@@ -1,5 +1,5 @@
-import React from 'react'
-import { Paper, Typography, Box, Grid, Button, ListItem, List } from "@material-ui/core"
+import React from 'react';
+import { Paper, Typography, Box, Grid, Button, ListItem, List } from '@material-ui/core';
 import { useTheme } from '@material-ui/styles';
 import MainCard from './../../ui-component/cards/MainCard';
 import SubCard from './../../ui-component/cards/SubCard';
@@ -9,7 +9,7 @@ import { color } from '@material-ui/system';
 import { ClassNames } from '@emotion/react';
 import usePost from '../../Utilities/UsePost';
 import useFetch from '../../Utilities/useFetch';
-import HandleToast from '../../Utilities/HandleToast'
+import HandleToast from '../../Utilities/HandleToast';
 import { useHistory } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
@@ -40,54 +40,65 @@ const useStyles = makeStyles((theme) => ({
 
 const WhiteTextTypography = withStyles({
     root: {
-        color: "#FFFFFF"
+        color: '#FFFFFF'
     }
 })(Typography);
 const LightBlueTextTypography = withStyles({
     root: {
-        color: "##e3f2fd"
+        color: '##e3f2fd'
     }
-})
+});
 
 function ViewCompany() {
-    const history = useHistory()
+    const history = useHistory();
     const classes = useStyles();
-    const { required_data, loading } = useFetch("/company/getCompany", "GET")
+    const { required_data, loading } = useFetch('/company/getCompany', 'GET');
+
+
     return (
         <>
             {/* /**{ (setData(data)).map((e) => {return e})} */}
             <MainCard title="View Company">
-                <Grid container rowSpacing={4} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
-                    {
-                        loading ? "" : required_data["data"].map((e) => {
-                            return <><Grid item xs={12} md={12}>
-                                <SubCard title={e["Company_name"]}>
-                                    <List dense={false}>
-                                        <ListItem>
-                                            <Typography variant="h5">Roles :</Typography>
-                                            {e["Company_offer_type"]}
-                                        </ListItem>
-                                        <ListItem>
-                                            <Typography variant="h5">Address :</Typography>
-                                            {e["Company_address"]}
-                                        </ListItem>
-                                        <ListItem>
-                                            <Typography variant="h5">City :</Typography>
-                                            {e["City"] + " " + e["State"]}
-                                        </ListItem>
+                {loading ? "" : required_data['data'].length == 0 ? <h1>No Companies Data</h1> : 
+                    <Grid container rowSpacing={4} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
+                        {loading
+                            ? ''
+                            : required_data['data'].map((e) => {
+                                  return (
+                                      <>
+                                          <Grid item xs={12} md={12}>
+                                              <SubCard title={e['Company_name']}>
+                                                  <List dense={false}>
+                                                      <ListItem>
+                                                          <Typography variant="h5">Roles :</Typography>
+                                                          {e['Company_offer_type']}
+                                                      </ListItem>
+                                                      <ListItem>
+                                                          <Typography variant="h5">Address :</Typography>
+                                                          {e['Company_address']}
+                                                      </ListItem>
+                                                      <ListItem>
+                                                          <Typography variant="h5">City :</Typography>
+                                                          {e['City'] + ' ' + e['State']}
+                                                      </ListItem>
+                                                  </List>
 
-                                    </List>
-
-                                    <Button size='large' onClick={() => {
-                                        history.push("/company/view_company/" + e["Company_ID"])
-                                    }} fullWidth className={classes.applyBtn}>View Details</Button>
-                                </SubCard>
-                            </Grid>
-                            </>
-
-                        })
-                    }
-                    {/* <Grid item xs={12} md={12}>
+                                                  <Button
+                                                      size="large"
+                                                      onClick={() => {
+                                                          history.push('/company/view_company/' + e['Company_ID']);
+                                                      }}
+                                                      fullWidth
+                                                      className={classes.applyBtn}
+                                                  >
+                                                      View Details
+                                                  </Button>
+                                              </SubCard>
+                                          </Grid>
+                                      </>
+                                  );
+                              })}
+                        {/* <Grid item xs={12} md={12}>
                         <SubCard title="Infosys">
                             <Typography variant="h5">Description</Typography>
                             <List dense={true}>
@@ -126,10 +137,11 @@ function ViewCompany() {
                            
                         </SubCard>
                     </Grid> */}
-                </Grid>
+                    </Grid>
+                }
             </MainCard>
         </>
-    )
+    );
 }
 
-export default ViewCompany
+export default ViewCompany;

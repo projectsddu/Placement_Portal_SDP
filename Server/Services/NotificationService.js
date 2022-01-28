@@ -36,11 +36,11 @@ const adminToSingleUserNotification = async (userId, message, sendMail = false, 
     }
 }
 
-const adminToBatchNotification = async (student_list, message, sendMail = false) => {
+const adminToBatchNotification = async (student_list, message, sendMail = false, mailData={}) => {
     try {
         let results = 0
         for (let i = 0; i < student_list.length; i++) {
-            const status = await adminToSingleUserNotification(student_list[i], message, sendMail)
+            const status = await adminToSingleUserNotification(student_list[i], message, sendMail, mailData)
             if (status) {
                 results += 1
             }

@@ -117,7 +117,7 @@ const getAnnoucement = async (req, res) => {
 const updateAnnoucement = async (req, res) => {
     try {
         const id = req.params.annoucementId
-        const annoucement = await AnnouncementService.updateAnnoucement(req.body, id)
+        const annoucement = await AnnouncementService.updateAnnoucement(req.body, id, true)
         if (annoucement) {
             return res.json({ status: true, data: "Announcement Updated!!" })
         }

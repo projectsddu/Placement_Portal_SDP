@@ -1,14 +1,49 @@
 const logger = require("serverloggerjs/logger")
 const log = new logger(true)
 const db = require("../Models/index")
-const AnnouncementService = require("./AnnouncementService")
+const Announcement = db.announcements
+// const AnnouncementService = require("./AnnouncementService")
 
 const { notificationMail } = require("./MailerService")
-
+// const AnnouncementHelper = require("./HelperServices/AnnouncementHelper")
+// import {getAnnoucement} from './AnnouncementService'
 const StudentService = require("./StudentService")
+const CompanyService = require("./CompanyService")
 
 const Subscribers = db.subscribes
 const NotificationService = require("./NotificationService")
+
+async function checkExists(id) {
+    const announcements = await Announcement.findAll({
+        where: { Announcement_ID: id }
+    })
+    return announcements.length > 0 ? true : false
+}
+
+const getAnnoucement = async (id) => {
+    try {
+        const status = await checkExists(id)
+        if (!status) {
+            throw "Error finding announcement detials"
+        }
+        else {
+            let announcement = await Announcement.findAll({
+                where: { Announcement_ID: id }
+            })
+            announcement = JSON.parse(JSON.stringify(announcement))
+
+            // console.log(JSON.parse(JSON.stringify(announcement)));
+            let company = await CompanyService.getCompany(announcement[0].Company_ID)
+            announcement[0]["Company_details"] = company
+            // console.log(JSON.parse(JSON.stringify(announcement)));
+            return announcement
+        }
+    } catch (error) {
+        log.error(error.toString() + id)
+        return false
+    }
+}
+
 
 const addSubsriberToAnnouncement = async (student_id, announcement_id) => {
     try {
@@ -17,7 +52,8 @@ const addSubsriberToAnnouncement = async (student_id, announcement_id) => {
             Student_ID: student_id
         }
         await Subscribers.create(payLoad);
-        let announcementDetails = await AnnouncementService.getAnnoucement(announcement_id)
+        // let announcementDetails = await AnnouncementHelper.AnnouncementService.getAnnoucement(announcement_id)
+        let announcementDetails = await getAnnoucement(announcement_id)
         announcementDetails = JSON.parse(JSON.stringify(announcementDetails[0]))
         console.log(announcementDetails);
         
@@ -77,6 +113,7 @@ const removeSubscribedStatus = async (student_id, announcement_id) => {
     }
 }
 
+// return students of particular announcements
 const getSubscribedStudentsOfAnnouncement = async (announcement_id) => {
     try {
         let data = await Subscribers.findAll({
@@ -117,9 +154,10 @@ const getSubscribedAnnouncements = async (student_id) => {
             console.log(data);
             for (let i = 0; i < data.length; i++) {
                 let elem = data[i]
-                let announcement_data = await AnnouncementService.getAnnoucement(elem["Announcement_ID"])
+                // let announcement_data = await AnnouncementHelper.AnnouncementService.getAnnoucement(elem["Announcement_ID"])
+                let announcement_data = await getAnnoucement(elem["Announcement_ID"])
                 if (announcement_data) {
-                    // console.log(JSON.parse(JSON.stringify(announcement_data)));
+                    console.log(JSON.parse(JSON.stringify(announcement_data)));
                     announcements.push(JSON.parse(JSON.stringify(announcement_data))[0])
                 }
             }
