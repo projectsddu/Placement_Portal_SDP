@@ -2,6 +2,7 @@ import React from 'react';
 import MainCard from '../../ui-component/cards/MainCard';
 import { DataGrid, RowsProp, ColDef, GridToolbarContainer, GridToolbarExport } from '@material-ui/data-grid';
 import { IconDashboard, IconDeviceAnalytics, IconSpeakerphone } from '@tabler/icons';
+import { useHistory } from 'react-router';
 import useFetch from '../../Utilities/useFetch';
 import { useLocation } from 'react-router-dom';
 import { Button } from '@mui/material';
@@ -60,17 +61,28 @@ function ViewSubscribedStudents() {
         setEditRowsModel(model);
     }, []);
 
+    const history = useHistory()
+
+
+
     return (
         <>
             <MainCard title="Subscribed Students">
-                <Button
-                    variant="contained"
-                    size="large"
-                    color="primary"
+                <a
+                    href={"http://localhost:8000/subscribeannouncement/downloadSubscribedStudentZip/" + id}
+                    style={{ "text-decoration": "none", }}
                 >
-                    Download All CVs
-                </Button>
-                <br/><br/>
+
+                    <Button
+                        variant="contained"
+                        size="large"
+                        color="primary"
+
+                    >
+                        Download All CVs
+                    </Button>
+                </a>
+                <br /><br />
                 <div style={{ height: 400, width: '100%' }}>
                     <DataGrid
                         checkboxSelection
