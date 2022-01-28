@@ -53,13 +53,17 @@ function ViewCompany() {
     const history = useHistory();
     const classes = useStyles();
     const { required_data, loading } = useFetch('/company/getCompany', 'GET');
+    if(!loading)
+    {
+        console.log(required_data["data"]);
 
+    }
 
     return (
         <>
             {/* /**{ (setData(data)).map((e) => {return e})} */}
             <MainCard title="View Company">
-                {loading ? "" : required_data['data'].length == 0 ? <h1>No Companies Data</h1> : 
+                {loading ? "" : required_data['data'] == "No Student data!" ? <h1>No Company Data</h1> : 
                     <Grid container rowSpacing={4} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
                         {loading
                             ? ''

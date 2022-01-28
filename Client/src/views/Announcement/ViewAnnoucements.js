@@ -59,13 +59,14 @@ function ViewAnnoucements() {
     const [search, setSearch] = useState('');
     const { required_data, loading } = useFetch('/annoucement/getAllAnnoucements/', 'GET');
 
-    var annoucements;
+    var annoucements = [];
 
     if (!loading) {
-        
-        annoucements = required_data['data'];
-
-
+        // console.log(required_data["data"])
+        if(required_data["data"] != "No Student data!")
+        {
+            annoucements = required_data['data'];
+        }
         console.log(annoucements);
     }
 
