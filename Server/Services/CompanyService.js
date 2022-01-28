@@ -39,7 +39,7 @@ const getCompany = async (id) => {
     try {
         const status = await checkExists(id)
 
-        console.log("Conapny service: ", id)
+        // console.log("Company service: ", id)
         // console.log("Status", status)
         if (!status) {
             throw "Error finding company detials"
