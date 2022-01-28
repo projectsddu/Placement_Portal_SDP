@@ -6,6 +6,7 @@ router.post("/subscribe/:announcementId", [StudentAuthenticate], AnnouncementSub
 router.post("/unsubscribe/:announcementId", [StudentAuthenticate], AnnouncementSubscribeController.removeStudentToAnnouncement)
 router.get("/getSubscribedAnnouncements", [StudentAuthenticate], AnnouncementSubscribeController.getSubscribedAnnouncements)
 router.get("/getSubscribedStatus/:announcementId", [StudentAuthenticate], AnnouncementSubscribeController.getSubscribedStatus)
+router.get("/downloadSubscribedStudentZip/:announcementId", AnnouncementSubscribeController.downloadSubscribedStudentZip)
 router.get("/getSubscribedStudentsOfAnnouncement/:announcementId", [StudentAuthenticate], AnnouncementSubscribeController.getSubscribedStudentsOfAnnouncement)
 
 module.exports = router
