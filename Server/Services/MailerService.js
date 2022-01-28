@@ -42,19 +42,38 @@ const notificationMail = async (notificationData, to) => {
             html: `<!DOCTYPE html>
             <html>
             <head>
-            <style> 
-            </style>
+            
+
             </head>
             <body>
-                <h1>
-                    ${notificationData.header}
-                </h1>
-                <p>
-                    ${notificationData.body}
-                </p>
+                <div style="width:800px; margin:0 auto; text-align: center; background: #F55734">
+                    <i>
+                        <h2 style="color: white; padding: 2%;">
+                            DHARMSINH DESAI UNIVERSITY
+                        </h2>
+                    </i>
+                </div>
+                <hr style="max-width:800px; margin:0 auto;">
+                <div style="max-width:800px; margin:0 auto; min-height: 500px; background: #e7e9eb">
+                    <h1 style="padding-left: 20px; padding-top: 20px;">
+                        ${notificationData.header}
+                    </h1>
+                    <p style="padding-left: 20px;">
+                        ${notificationData.body}
+                    </p>
+                </div>
+                <hr style="max-width:800px; margin:0 auto;">
+                <div style="width:800px; margin:0 auto; text-align: center; background: #706e6f">
+                    <i>
+                        <h2 style="color: white; padding: 2%;">
+                            &copy; DHARMSINH DESAI UNIVERSITY PLACEMENT PORTAL
+                        </h2>
+                    </i>
+                </div>
             </body>
             </html>
             `
+            
         };
 
         const status = await sendMail(mailDetails)
