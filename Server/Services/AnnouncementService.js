@@ -5,6 +5,10 @@ const { announcements } = require("../Models/index")
 const log = new logger(true)
 const db = require("../Models/index")
 const CompanyService = require("./CompanyService");
+const AnnouncementSubscribeService = require("./AnnouncementSubscribe");
+// const AnnouncementHelper = require('./HelperServices/AnnouncementHelper')
+const NotificationService = require("./NotificationService");
+// const AnnouncementSubscribe = require("../Models/AnnouncementSubscribe");
 const Announcement = db.announcements
 
 async function checkExists(id) {
@@ -76,7 +80,7 @@ const getAnnoucement = async (id) => {
     }
 }
 
-const updateAnnoucement = async (data, id) => {
+const updateAnnoucement = async (data, id, sendNotification = false) => {
     try {
         const status = await checkExists(id)
         if (!status) {
@@ -84,6 +88,39 @@ const updateAnnoucement = async (data, id) => {
         }
         else {
             const announcement = await Announcement.update(data, { where: { Announcement_ID: id } })
+
+            if(sendNotification)
+            {
+                let students = await AnnouncementSubscribeService.getSubscribedStudentsOfAnnouncement(id)
+                students = JSON.parse(JSON.stringify(students))
+                const student_list = []
+                for(let i = 0; i < students.length; i++)
+                {
+                    student_list.push(students[i].Student_ID)
+                }
+
+                // console.log(student_list)
+
+                const announcementDetails = await getAnnoucement(id)
+
+                const message = announcementDetails[0]["Company_details"]["Company_name"] + " " + announcementDetails[0]["Job_Role"] + " has been updated. Please check the updated announcement details!"
+
+                const mailData = {
+                    "subject": "DDU Placement Cell - " + announcementDetails[0]["Company_details"]["Company_name"] + " announcement has been updated!",
+                    "header": message,
+                    "body": "" 
+                }
+
+                const status = await NotificationService.adminToBatchNotification(student_list, message, true, mailData)
+
+                if(status) {
+                    return true
+                }
+                else {
+                    throw "Error in sending the notifications!!"
+                }
+            }
+
             return true
         }
     } catch (error) {
