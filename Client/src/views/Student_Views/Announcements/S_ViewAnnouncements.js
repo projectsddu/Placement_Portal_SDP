@@ -59,10 +59,14 @@ function S_ViewAnnoucements() {
     const [search, setSearch] = useState("")
     const { required_data, loading } = useFetch("/annoucement/getAllAnnoucements/", "GET")
 
-    var annoucements;
+    var annoucements = [];
 
     if (!loading) {
         annoucements = required_data["data"];
+        if(required_data["data"] != "No Student data!")
+        {
+            annoucements = required_data['data'];
+        }
         console.log(annoucements)
     }
 
@@ -91,6 +95,7 @@ function S_ViewAnnoucements() {
     }
 
     return (
+
         <>
             <MainCard title="View Annoucements">
                 <TextField
@@ -101,6 +106,7 @@ function S_ViewAnnoucements() {
                 >
                 </TextField>
                 <br /><br /><br />
+                { loading ? "" : required_data['data'] == "No Student data!" ? <h1>No Announcements Data</h1> :
                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
 
                     {loading ? "" : annoucements.map((e) => (
@@ -119,6 +125,7 @@ function S_ViewAnnoucements() {
                         </Grid>
                     ))}
                 </Grid>
+                }
             </MainCard>
         </>
     )
