@@ -29,6 +29,7 @@ db.comments = require("./CommentModel")(sequelize, DataTypes)
 db.subscribes = require("./AnnouncementSubscribe")(sequelize, DataTypes)
 db.LoginTokens = require("./LoginTokensModel")(sequelize, DataTypes)
 db.notifications = require("./NotificationModel")(sequelize, DataTypes)
+db.skills_and_achievements = require("./SkillsAndAchievementsModel")(sequelize, DataTypes)
 
 
 db.sequelize.sync({ force: false }).then(() => {
