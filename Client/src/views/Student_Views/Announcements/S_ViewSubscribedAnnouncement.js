@@ -106,7 +106,7 @@ function S_ViewSubscribedAnnouncement() {
                 <br /><br /><br />
                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
 
-                    {loading ? "" : announcements.map((e) => (
+                    {loading ? "" : announcements.length == 0 ? <h1>No Subscribed Announcements</h1> :announcements.map((e) => (
                         <Grid item xs={12} md={6} id={e.Announcement_ID}>
                             <SubCard title={e.Company_details["Company_name"] + "-" + e.Job_Role + " for " + ParseDate.getYear(e.Passed_out_year) + " Batch"}>
                                 <Typography variant="h5"></Typography>

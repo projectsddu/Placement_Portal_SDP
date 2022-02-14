@@ -43,18 +43,29 @@ function ViewSubscribedStudents() {
 
     const columns = [
         { field: 'id', headerName: 'ID', hide: true },
-        { field: 'Student_ID', headerName: 'Student_ID', width: 200, editable: false },
+        { field: 'Student_ID', headerName: 'Student_ID', width: 200, editable: true },
         { field: 'FirstName', headerName: 'First Name', width: 200, editable: false },
         { field: 'MiddleName', headerName: 'Middle Name', width: 200, editable: false },
         { field: 'LastName', headerName: 'Last Name', width: 200, editable: false },
-        { field: 'Sem_1_SPI', headerName: 'Sem 1 SPI', type: 'number', width: 200, editable: false },
-        { field: 'Sem_2_SPI', headerName: 'Sem 2 SPI', type: 'number', width: 200, editable: false },
-        { field: 'Sem_3_SPI', headerName: 'Sem 3 SPI', type: 'number', width: 200, editable: false },
-        { field: 'Sem_4_SPI', headerName: 'Sem 4 SPI', type: 'number', width: 200, editable: false },
-        { field: 'Sem_5_SPI', headerName: 'Sem 5 SPI', type: 'number', width: 200, editable: false },
-        { field: 'Sem_6_SPI', headerName: 'Sem 6 SPI', type: 'number', width: 200, editable: false },
-        { field: 'Sem_7_SPI', headerName: 'Sem 7 SPI', type: 'number', width: 200, editable: false },
-        { field: 'Sem_8_SPI', headerName: 'Sem 8 SPI', type: 'number', width: 200, editable: false }
+        { field: 'SSC_Percentage', headerName: 'SSC Percentage', width: 200, editable: false },
+        { field: 'HSC_Percentage', headerName: 'HSC Percentage', width: 200, editable: false },
+        { field: 'Current_CPI', headerName: 'Current CPI', width: 200, editable: false },
+        { field: 'Email_ID', headerName: 'Email ID', width: 200, editable: false },
+        { field: 'Contact_No_1', headerName: 'Contact No 1', width: 200, editable: false },
+        { field: 'Contact_No_2', headerName: 'Contact No 2', width: 200, editable: false },
+        // { field: 'id', headerName: 'ID', hide: true },
+        // { field: 'Student_ID', headerName: 'Student_ID', width: 200, editable: false },
+        // { field: 'FirstName', headerName: 'First Name', width: 200, editable: false },
+        // { field: 'MiddleName', headerName: 'Middle Name', width: 200, editable: false },
+        // { field: 'LastName', headerName: 'Last Name', width: 200, editable: false },
+        // { field: 'Sem_1_SPI', headerName: 'Sem 1 SPI', type: 'number', width: 200, editable: false },
+        // { field: 'Sem_2_SPI', headerName: 'Sem 2 SPI', type: 'number', width: 200, editable: false },
+        // { field: 'Sem_3_SPI', headerName: 'Sem 3 SPI', type: 'number', width: 200, editable: false },
+        // { field: 'Sem_4_SPI', headerName: 'Sem 4 SPI', type: 'number', width: 200, editable: false },
+        // { field: 'Sem_5_SPI', headerName: 'Sem 5 SPI', type: 'number', width: 200, editable: false },
+        // { field: 'Sem_6_SPI', headerName: 'Sem 6 SPI', type: 'number', width: 200, editable: false },
+        // { field: 'Sem_7_SPI', headerName: 'Sem 7 SPI', type: 'number', width: 200, editable: false },
+        // { field: 'Sem_8_SPI', headerName: 'Sem 8 SPI', type: 'number', width: 200, editable: false }
     ];
     const [editRowsModel, setEditRowsModel] = React.useState({});
     const handleEditRowsModelChange = React.useCallback((model) => {

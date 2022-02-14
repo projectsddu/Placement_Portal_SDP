@@ -83,7 +83,7 @@ function EditCompany() {
             {data === undefined ? "" :
                 <form enctype="multipart/form-data">
                     <TextField
-                        required
+                        // required
                         fullWidth
 
                         label="Company Name"
@@ -103,7 +103,7 @@ function EditCompany() {
                     <Grid container spacing={2}>
                         <Grid item xs={2}>
                             <TextField
-                                required
+                                // required
                                 fullWidth
                                 label="Designation"
                                 value={data['Contact_person_1_designation']}
@@ -114,7 +114,7 @@ function EditCompany() {
                         </Grid>
                         <Grid item xs={4}>
                             <TextField
-                                required
+                                // required
                                 fullWidth
                                 label="Name"
                                 value={data['Contact_person_1_name']}
@@ -125,7 +125,7 @@ function EditCompany() {
                         </Grid>
                         <Grid item xs={3}>
                             <TextField
-                                required
+                                // required
                                 fullWidth
                                 label="Email ID"
                                 value={data['Contact_person_1_email_ID']}
@@ -137,7 +137,7 @@ function EditCompany() {
 
                         <Grid item xs={3}>
                             <TextField
-                                required
+                                // required
                                 fullWidth
                                 label="Phone Number"
                                 value={data['Contact_person_1_Mobile']}
@@ -154,7 +154,7 @@ function EditCompany() {
                     <Grid container spacing={2}>
                         <Grid item xs={2}>
                             <TextField
-                                required
+                                // required
                                 fullWidth
                                 label="Designation"
                                 value={data['Contact_person_2_designation']}
@@ -165,7 +165,7 @@ function EditCompany() {
                         </Grid>
                         <Grid item xs={4}>
                             <TextField
-                                required
+                                // required
                                 fullWidth
                                 label="Name"
                                 value={data['Contact_person_2_name']}
@@ -176,7 +176,7 @@ function EditCompany() {
                         </Grid>
                         <Grid item xs={3}>
                             <TextField
-                                required
+                                // required
                                 fullWidth
                                 label="Email ID"
                                 value={data['Contact_person_2_email_ID']}
@@ -188,7 +188,7 @@ function EditCompany() {
 
                         <Grid item xs={3}>
                             <TextField
-                                required
+                                // required
                                 fullWidth
                                 label="Phone Number"
                                 value={data['Contact_person_2_Mobile']}
@@ -205,7 +205,7 @@ function EditCompany() {
                     <Grid container spacing={2}>
                         <Grid item xs={2}>
                             <TextField
-                                required
+                                // required
                                 fullWidth
                                 label="Designation"
                                 value={data['Contact_person_3_designation']}
@@ -216,7 +216,7 @@ function EditCompany() {
                         </Grid>
                         <Grid item xs={4}>
                             <TextField
-                                required
+                                // required
                                 fullWidth
                                 label="Name"
                                 value={data['Contact_person_3_name']}
@@ -227,7 +227,7 @@ function EditCompany() {
                         </Grid>
                         <Grid item xs={3}>
                             <TextField
-                                required
+                                // required
                                 fullWidth
                                 label="Email ID"
                                 value={data['Contact_person_3_email_ID']}
@@ -239,7 +239,7 @@ function EditCompany() {
 
                         <Grid item xs={3}>
                             <TextField
-                                required
+                                // required
                                 fullWidth
                                 label="Phone Number"
                                 value={data['Contact_person_3_Mobile']}
@@ -254,7 +254,7 @@ function EditCompany() {
                     <hr style={{ 'border-top': "2px solid #b8b8b8" }} />
                     <br />
                     <TextField
-                        required
+                        // required
                         fullWidth
                         label="Company Website"
                         id="fullWidth"
@@ -266,7 +266,7 @@ function EditCompany() {
                     <br />
                     <br />
                     <TextField
-                        required
+                        // required
                         fullWidth
                         label="Roles Offered"
                         id="fullWidth"
@@ -278,7 +278,7 @@ function EditCompany() {
                     <br />
                     <br />
                     <TextField
-                        required
+                        // required
                         fullWidth
                         label="Remarks"
                         id="fullWidth"
@@ -290,7 +290,7 @@ function EditCompany() {
                     <br />
                     <br />
                     <TextField
-                        required
+                        // required
                         fullWidth
                         label="City"
                         id="fullWidth"
@@ -302,7 +302,7 @@ function EditCompany() {
                     <br />
                     <br />
                     <TextField
-                        required
+                        // required
                         fullWidth
                         label="State"
                         id="fullWidth"
@@ -315,7 +315,7 @@ function EditCompany() {
                     <br />
                     <br />
                     <TextField
-                        required
+                        // required
                         fullWidth
                         label="Company Address"
                         id="fullWidth"

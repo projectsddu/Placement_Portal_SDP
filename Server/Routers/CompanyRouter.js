@@ -2,7 +2,7 @@ const CompanyController = require('../controllers/CompanyController.js')
 const EmptyFieldCheck = require('../Middlewares/Company/EmptyFieldCheck.js')
 const router = require('express').Router()
 
-router.post("/addCompany", [EmptyFieldCheck], CompanyController.addCompany)
+router.post("/addCompany", CompanyController.addCompany)
 router.get("/getCompany/:id", CompanyController.getCompany)
 router.get("/getCompany", CompanyController.getAllCompany)
 router.post("/updateCompany/:id", CompanyController.updateCompany)
