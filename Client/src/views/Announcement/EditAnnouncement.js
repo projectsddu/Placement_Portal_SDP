@@ -4,6 +4,7 @@ import MainCard from '../../ui-component/cards/MainCard';
 import UsePost from '../../Utilities/UsePost';
 import { makeStyles } from '@material-ui/styles';
 import { styled } from '@mui/material/styles';
+import DateTimePicker from '@mui/lab/DateTimePicker';
 import {
     Card,
     Box,
@@ -130,7 +131,7 @@ function AddAnnoucement() {
 
                 <TextField
                     fullWidth
-                    required
+                    // required
                     disabled
                     label="Company Name"
                     id="companies"
@@ -148,7 +149,7 @@ function AddAnnoucement() {
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                                 label="Date of Visit"
-                                required
+                                // required
                                 value={data === undefined ? "" : data['Date_of_Visit']}
                                 onChange={(e) => {
                                     setData({ ...data, Date_of_Visit: e });
@@ -161,7 +162,7 @@ function AddAnnoucement() {
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                                 label="Date of Annoucement"
-                                required
+                                // required
                                 value={data === undefined ? "" : data['Date_of_announcement']}
                                 onChange={(e) => {
                                     setData({ ...data, Date_of_announcement: e });
@@ -175,7 +176,7 @@ function AddAnnoucement() {
                             <DatePicker
                                 views={['year']}
                                 label="Passed Out Year"
-                                required
+                                // required
                                 value={data === undefined ? "" : data['Passed_out_year']}
                                 onChange={(e) => {
                                     setData({ ...data, Passed_out_year: e });
@@ -192,7 +193,7 @@ function AddAnnoucement() {
                     fullWidth
                     id="eligible-currencies"
                     select
-                    required
+                    // required
                     label="Select Branch"
                     value={data === undefined ? "" : data['Eligible_Branches']}
                     onChange={(e) => {
@@ -209,7 +210,7 @@ function AddAnnoucement() {
                 <br />
                 <TextField
                     fullWidth
-                    required
+                    // required
                     label="Job Role"
                     id="fullWidth"
                     helperText="Enter Job Role"
@@ -222,7 +223,7 @@ function AddAnnoucement() {
                 <br />
                 <TextField
                     fullWidth
-                    required
+                    // required
                     label="Salary"
                     id="fullWidth"
                     helperText="Enter Salary"
@@ -235,7 +236,7 @@ function AddAnnoucement() {
                 <br />
                 <TextField
                     fullWidth
-                    required
+                    // required
                     label="Job Location"
                     id="fullWidth"
                     helperText="Enter Job Location"
@@ -248,7 +249,7 @@ function AddAnnoucement() {
                 <br />
                 <TextField
                     fullWidth
-                    required
+                    // required
                     label="Bond Details"
                     id="fullWidth"
                     helperText="Enter Bond Details"
@@ -261,9 +262,12 @@ function AddAnnoucement() {
                 <br />
                 <TextField
                     fullWidth
-                    required
+                    // required
                     label="Other Details"
                     id="fullWidth"
+                    multiline
+                    rows={5}
+                    maxRows={4}
                     helperText="Enter Other Details"
                     value={data === undefined ? "" : data['Other_Details']}
                     onChange={(e) => {
@@ -277,7 +281,7 @@ function AddAnnoucement() {
                         <label htmlFor="contained-button-file">
                             {/* <label>Job Description File</label>    */}
                             <Input onChange={changeHandler}
-                                required
+                                // required
                                 // accept="image/*"
                                 id="contained-button-file" multiple type="file" />
                             <Button variant="outlined" component="span">
@@ -287,15 +291,24 @@ function AddAnnoucement() {
                     </Grid>
                     <Grid item xs={4}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
-                            <DatePicker
+                            {/* <DatePicker
                                 label="Registration Deadline"
-                                required
+                                // required
+                                value={data === undefined ? "" : data['Registration_Deadline']}
+                                onChange={(e) => {
+                                    setData({ ...data, Registration_Deadline: e });
+                                }}
+                                renderInput={(params) => <TextField {...params} />}
+                            /> */}
+                            <DateTimePicker
+                                label="Registration Deadline"
                                 value={data === undefined ? "" : data['Registration_Deadline']}
                                 onChange={(e) => {
                                     setData({ ...data, Registration_Deadline: e });
                                 }}
                                 renderInput={(params) => <TextField {...params} />}
                             />
+
                         </LocalizationProvider>
                     </Grid>
                     {/* <Grid item>
@@ -318,7 +331,7 @@ function AddAnnoucement() {
 
                 <TextField
                     fullWidth
-                    required
+                    // required
                     label="Eligibility"
                     id="fullWidth"
                     helperText="Eligibility"

@@ -67,9 +67,17 @@ export default function ViewStudent() {
         { field: 'FirstName', headerName: 'First Name', width: 200, editable: false },
         { field: 'MiddleName', headerName: 'Middle Name', width: 200, editable: false },
         { field: 'LastName', headerName: 'Last Name', width: 200, editable: false },
-        { field: 'Sem_5_SPI', headerName: 'Sem 5 SPI', type: 'number', width: 200, editable: false },
-        { field: 'Sem_6_SPI', headerName: 'Sem 6 SPI', type: 'number', width: 200, editable: false },
-        { field: 'Sem_7_SPI', headerName: 'Sem 7 SPI', type: 'number', width: 200, editable: false }
+        { field: 'SSC_Percentage', headerName: 'SSC Percentage', width: 200, editable: false },
+        { field: 'HSC_Percentage', headerName: 'HSC Percentage', width: 200, editable: false },
+        { field: 'Current_CPI', headerName: 'Current CPI', width: 200, editable: false },
+        { field: 'Email_ID', headerName: 'Email ID', width: 200, editable: false },
+        { field: 'Contact_No_1', headerName: 'Contact No 1', width: 200, editable: false },
+        { field: 'Contact_No_2', headerName: 'Contact No 2', width: 200, editable: false },
+        
+        
+        // { field: 'Sem_5_SPI', headerName: 'Sem 5 SPI', type: 'number', width: 200, editable: false },
+        // { field: 'Sem_6_SPI', headerName: 'Sem 6 SPI', type: 'number', width: 200, editable: false },
+        // { field: 'Sem_7_SPI', headerName: 'Sem 7 SPI', type: 'number', width: 200, editable: false }
     ]);
     const [editRowsModel, setEditRowsModel] = React.useState({});
 

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import MainCard from '../../ui-component/cards/MainCard';
 import { makeStyles } from '@material-ui/styles';
 import { styled } from '@mui/material/styles';
+import DateTimePicker from '@mui/lab/DateTimePicker';
 import {
     Card,
     Box,
@@ -25,8 +26,8 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import UsePostFile from '../../Utilities/UsePostFile'
-import HandleToast from '../../Utilities/HandleToast'
+import UsePostFile from '../../Utilities/UsePostFile';
+import HandleToast from '../../Utilities/HandleToast';
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import useFetch from '../../Utilities/useFetch';
@@ -40,11 +41,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-
 // getting required data
-
-
-
 
 // Eligible Branches
 
@@ -75,11 +72,8 @@ const Input = styled('input')({
 });
 
 function AddAnnoucement() {
-
     const [selectedFile, setSelectedFile] = useState();
     const [isFilePicked, setIsFilePicked] = useState(false);
-
-
 
     const [data, setData] = useState({
         Company_ID: '',
@@ -95,19 +89,18 @@ function AddAnnoucement() {
         Registration_Deadline: null,
         Eligibility: ''
     });
-    useEffect(() => { }, [data]);
+    useEffect(() => {}, [data]);
 
+    const { required_data, loading } = useFetch('/annoucement/requiredAnnoucementDetails', 'GET');
 
-    const { required_data, loading } = useFetch("/annoucement/requiredAnnoucementDetails", "GET")
-
-    let companies = []
+    let companies = [];
     if (!loading) {
         // console.log(required_data["data"].length);
-        for (let i = 0; i < required_data["data"].length; i++) {
+        for (let i = 0; i < required_data['data'].length; i++) {
             // console.log("Company Id: ", required_data["data"][i]["Company_ID"]);
             var obj = {};
-            obj["value"] = required_data["data"][i]["Company_ID"];
-            obj["label"] = required_data["data"][i]["Company_name"];
+            obj['value'] = required_data['data'][i]['Company_ID'];
+            obj['label'] = required_data['data'][i]['Company_name'];
             companies.push(obj);
         }
 
@@ -115,26 +108,25 @@ function AddAnnoucement() {
     }
 
     const changeHandler = (event) => {
-        console.log(event.target.files[0]["name"])
-        document.getElementById("fileUploadName").innerText = " " + event.target.files[0]["name"]
-        const file_data = event.target.files[0]
-        let temp = data
-        temp["Job_Description_File"] = file_data
-        setData(temp)
+        console.log(event.target.files[0]['name']);
+        document.getElementById('fileUploadName').innerText = ' ' + event.target.files[0]['name'];
+        const file_data = event.target.files[0];
+        let temp = data;
+        temp['Job_Description_File'] = file_data;
+        setData(temp);
     };
 
     async function handleSubmit() {
-
-        const res = await UsePostFile("/annoucement/addAnnoucement", data, "POST")
+        const res = await UsePostFile('/annoucement/addAnnoucement', data, 'POST');
         const params1 = {
             data: res,
             HandleToast: {
                 toast: toast,
-                flag: false,
+                flag: false
             }
-        }
+        };
         console.log(res);
-        responsePipelineHandler(params1, 1)
+        responsePipelineHandler(params1, 1);
         // END OF POSTING DATA EXAMPLE
     }
 
@@ -151,7 +143,7 @@ function AddAnnoucement() {
     // }
 
     return (
-        <MainCard title="Add Announcement" >
+        <MainCard title="Add Announcement">
             <form enctype="multipart/form-data">
                 {/* <TextField
                     fullWidth
@@ -167,7 +159,7 @@ function AddAnnoucement() {
                     fullWidth
                     id="companies"
                     select
-                    required
+                    // required
                     label="Select Company"
                     value={data['Company_ID']}
                     onChange={(e) => {
@@ -187,7 +179,7 @@ function AddAnnoucement() {
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                                 label="Date of Visit"
-                                required
+                                // required
                                 value={data['Date_of_Visit']}
                                 onChange={(e) => {
                                     setData({ ...data, Date_of_Visit: e });
@@ -200,7 +192,7 @@ function AddAnnoucement() {
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                                 label="Date of Annoucement"
-                                required
+                                // required
                                 value={data['Date_of_announcement']}
                                 onChange={(e) => {
                                     setData({ ...data, Date_of_announcement: e });
@@ -214,7 +206,7 @@ function AddAnnoucement() {
                             <DatePicker
                                 views={['year']}
                                 label="Passed Out Year"
-                                required
+                                // required
                                 value={data['Passed_out_year']}
                                 onChange={(e) => {
                                     setData({ ...data, Passed_out_year: e });
@@ -231,7 +223,7 @@ function AddAnnoucement() {
                     fullWidth
                     id="eligible-currencies"
                     select
-                    required
+                    // required
                     label="Select Branch"
                     value={data['Eligible_Branches']}
                     onChange={(e) => {
@@ -248,7 +240,7 @@ function AddAnnoucement() {
                 <br />
                 <TextField
                     fullWidth
-                    required
+                    // required
                     label="Job Role"
                     id="fullWidth"
                     helperText="Enter Job Role"
@@ -261,7 +253,7 @@ function AddAnnoucement() {
                 <br />
                 <TextField
                     fullWidth
-                    required
+                    // required
                     label="Salary"
                     id="fullWidth"
                     helperText="Enter Salary"
@@ -274,7 +266,7 @@ function AddAnnoucement() {
                 <br />
                 <TextField
                     fullWidth
-                    required
+                    // required
                     label="Job Location"
                     id="fullWidth"
                     helperText="Enter Job Location"
@@ -287,7 +279,7 @@ function AddAnnoucement() {
                 <br />
                 <TextField
                     fullWidth
-                    required
+                    // required
                     label="Bond Details"
                     id="fullWidth"
                     helperText="Enter Bond Details"
@@ -300,9 +292,12 @@ function AddAnnoucement() {
                 <br />
                 <TextField
                     fullWidth
-                    required
+                    // required
                     label="Other Details"
                     id="fullWidth"
+                    multiline
+                    rows={5}
+                    maxRows={4}
                     helperText="Enter Other Details"
                     value={data['Other_Details']}
                     onChange={(e) => {
@@ -315,10 +310,14 @@ function AddAnnoucement() {
                     <Grid item>
                         <label htmlFor="contained-button-file">
                             {/* <label>Job Description File</label>    */}
-                            <Input onChange={changeHandler}
-                                required
+                            <Input
+                                onChange={changeHandler}
+                                // required
                                 // accept="image/*"
-                                id="contained-button-file" multiple type="file" />
+                                id="contained-button-file"
+                                multiple
+                                type="file"
+                            />
                             <Button variant="outlined" component="span">
                                 Upload Job Description File
                             </Button>
@@ -328,9 +327,17 @@ function AddAnnoucement() {
 
                     <Grid item xs={4}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
-                            <DatePicker
+                            {/* <DatePicker
                                 label="Registration Deadline"
-                                required
+                                // required
+                                value={data['Registration_Deadline']}
+                                onChange={(e) => {
+                                    setData({ ...data, Registration_Deadline: e });
+                                }}
+                                renderInput={(params) => <TextField {...params} />}
+                            /> */}
+                            <DateTimePicker
+                                label="Registration Deadline"
                                 value={data['Registration_Deadline']}
                                 onChange={(e) => {
                                     setData({ ...data, Registration_Deadline: e });
@@ -358,7 +365,7 @@ function AddAnnoucement() {
                 <br />
                 <TextField
                     fullWidth
-                    required
+                    // required
                     label="Eligibility"
                     id="fullWidth"
                     helperText="Eligibility"
@@ -373,9 +380,7 @@ function AddAnnoucement() {
                 <Button onClick={handleSubmit} variant="contained" size="large" color="primary">
                     Add Annoucement
                 </Button>
-
             </form>
-
         </MainCard>
     );
 }

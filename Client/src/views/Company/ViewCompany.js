@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Paper, Typography, Box, Grid, Button, ListItem, List } from '@material-ui/core';
 import { useTheme } from '@material-ui/styles';
 import MainCard from './../../ui-component/cards/MainCard';
@@ -13,6 +13,8 @@ import HandleToast from '../../Utilities/HandleToast';
 import { useHistory } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
+import { TextField } from '@material-ui/core';
+import $ from 'jquery';
 
 const useStyles = makeStyles((theme) => ({
     applyBtn: {
@@ -50,27 +52,52 @@ const LightBlueTextTypography = withStyles({
 });
 
 function ViewCompany() {
+    const [search, setSearch] = useState('');
     const history = useHistory();
     const classes = useStyles();
     const { required_data, loading } = useFetch('/company/getCompany', 'GET');
-    if(!loading)
-    {
-        console.log(required_data["data"]);
+    if (!loading) {
+        console.log(required_data['data']);
+    }
 
+    function handleSearch(e) {
+        console.log(e.target.value);
+        setSearch(e.target.value);
+        let searchText = e.target.value == '' ? ' ' : e.target.value;
+        var root = document.getElementsByClassName('MuiGrid-root MuiGrid-container')[0].children;
+        console.log(root);
+        for (let i = 0; i < root.length; i++) {
+            var elem = document.getElementById(root[i].id);
+            console.log(elem)
+            var elemText = elem.innerText.toLowerCase();
+            if (!elemText.includes(searchText.toLowerCase())) {
+                $(elem).hide();
+            } else {
+                $(elem).show();
+            }
+        }
     }
 
     return (
         <>
             {/* /**{ (setData(data)).map((e) => {return e})} */}
             <MainCard title="View Company">
-                {loading ? "" : required_data['data'] == "No Student data!" ? <h1>No Company Data</h1> : 
+                <TextField label="Search" value={search} onChange={(e) => handleSearch(e)} fullWidth></TextField>
+                <br />
+                <br />
+                <br />
+                {loading ? (
+                    ''
+                ) : required_data['data'] == 'No Student data!' ? (
+                    <h1>No Company Data</h1>
+                ) : (
                     <Grid container rowSpacing={4} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
                         {loading
                             ? ''
                             : required_data['data'].map((e) => {
                                   return (
                                       <>
-                                          <Grid item xs={12} md={12}>
+                                          <Grid item xs={12} md={12} id={e.Company_ID}>
                                               <SubCard title={e['Company_name']}>
                                                   <List dense={false}>
                                                       <ListItem>
@@ -142,7 +169,7 @@ function ViewCompany() {
                         </SubCard>
                     </Grid> */}
                     </Grid>
-                }
+                )}
             </MainCard>
         </>
     );
