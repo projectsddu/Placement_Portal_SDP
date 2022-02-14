@@ -3,17 +3,19 @@ function getTime(date) {
 }
 
 const ParseDate = function (date, time_required = false) {
-    // console.log(date)
+    console.log(date)
+    var new_date = new Date(date)
+    console.log(new_date.getDate() + "/" + new_date.getMonth() + "/" + new_date.getFullYear())
     try {
         var return_date = ""
         var parse_date = date.split("T");
         var date_part = parse_date[0]
         var time_part = parse_date[1]
         var date_splitted = date_part.split("-")
-        return_date += date_splitted[2] + "/" + date_splitted[1] + "/" + date_splitted[0]
+        return_date += new_date.getDate() + "/" + (new_date.getMonth() + 1) + "/" + new_date.getFullYear()
         if (time_required) {
             var time_splitted = time_part.split(":")
-            return_date += " " + time_splitted[0] + ":" + time_splitted[1]
+            return_date += " " + new_date.getHours() + ":" + new_date.getMinutes()
         }
 
         return return_date

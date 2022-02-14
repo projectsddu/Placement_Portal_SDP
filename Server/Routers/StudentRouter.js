@@ -35,7 +35,7 @@ const fileStorage1 = multer.diskStorage({
 
 const upload1 = multer({ storage: fileStorage1 })
 
-router.post("/addStudent", [upload.single("Student_Details_File")], EmptyFieldCheck, StudentController.addStudent)
+router.post("/addStudent", [upload.single("Student_Details_File")], StudentController.addStudent)
 router.get("/getAllStudents",
     //  [Authenticate],
     StudentController.getAllStudents)
