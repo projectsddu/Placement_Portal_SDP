@@ -32,6 +32,14 @@ const ViewSubscribedStudents = Loadable(lazy(() => import('../views/Announcement
 // announcement ends
 
 
+// placement starts
+
+const AddPlacement = Loadable(lazy(() => import('../views/Placement/AddPlacement')));
+
+
+// placement ends
+
+
 // company starts
 const AddCompany = Loadable(lazy(() => import('../views/Company/AddCompany')));
 
@@ -92,6 +100,11 @@ const MainRoutes = () => {
                 "/announcement/view_subscribed_announcement/:annoucement_id",
                 // annoucement routers finished
 
+
+                // placement routes
+                "/placement/add_placement",
+                // placement routes finished
+
                 // Company Routes
 
                 '/company/add_company',
@@ -144,6 +157,10 @@ const MainRoutes = () => {
                     <Route path="/announcement/view_annoucement/:annoucement_id" component={ViewSingleAnnoucement} />
                     <Route path="/announcement/view_subscribed_announcement/:annoucement_id" component={ViewSubscribedStudents} />
                     <Route path="/announcement/view_annoucement" component={ViewAnnouncement} />
+
+
+                    {/* placement routes */}
+                    <Route path="/placement/add_placement" component={AddPlacement} />
 
 
                     {/* Company Routes */}
