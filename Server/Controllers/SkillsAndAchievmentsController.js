@@ -12,10 +12,12 @@ async function checkExists(id) {
 const createSkillsAndAchievements = async (req, res) => {
     try {
         const data = req.body
+        console.log(data)
         if(req.emptyField) {
             throw req.empty_arr[0] + " cannot be empty"
         }
         const status = await SkillsAndAchievementsService.createSkillsAndAchievements(data)
+        console.log(status)
         if(status){
             return res.json({ data: "Student Skills And Achievements Record created", status: true})
         }

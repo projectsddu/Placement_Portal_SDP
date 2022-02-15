@@ -14,6 +14,7 @@ const StudentLoginRouter = require("./Routers/StudentLoginRouter")
 const CommentRouter = require("./Routers/CommentRouter")
 const cookieParser = require('cookie-parser');
 const MailerService = require("./Services/MailerService")
+const SkillsAndAchievementsRouter = require("./Routers/SkillsAndAchievementRouter")
 
 // Middlewares
 
@@ -53,3 +54,4 @@ app.use("/studentinternship", StudentInternshipRouter)
 app.use("/subscribeannouncement", AnnouncementSubscibeRouter)
 app.use("/comment", CommentRouter)
 app.use("/notifications", NotificationRouter)
+app.use("/skillsandachievements", SkillsAndAchievementsRouter)

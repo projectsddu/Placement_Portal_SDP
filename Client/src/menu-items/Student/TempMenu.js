@@ -20,7 +20,7 @@ export const TempMenu = {
     type: 'group',
     children: [
         {
-            id: 'Temp1',
+            id: 'dashboard',
             title: 'Dashboard',
             type: 'item',
             url: '/_student/Dashboard/',
