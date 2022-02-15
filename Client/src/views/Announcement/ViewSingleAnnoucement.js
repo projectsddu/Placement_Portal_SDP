@@ -151,13 +151,17 @@ function ViewSingleAnnoucement() {
     if (!loading) {
 
         announcement_details = required_data["data"][0];
-        // console.log(announcement_details)
+        console.log(required_data["data"][0])
+        let branches = ""
+        announcement_details["Eligible_Branches"].map((e) => {
+            branches += (" " + e["BranchName"])
+        })
         rows = [
             // createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
             createData("Date of Announcement", ParseDate.ParseDate(announcement_details["Date_of_announcement"])),
             createData("Date of Visit", ParseDate.ParseDate(announcement_details["Date_of_Visit"])),
             createData("Registration Deadline", ParseDate.ParseDate(announcement_details["Registration_Deadline"], true)),
-            createData("Eligible Branches", announcement_details["Eligible_Branches"]),
+            createData("Eligible Branches", branches),
             createData("Passed out year", ParseDate.getYear(announcement_details["Passed_out_year"])),
             createData("Job Role", announcement_details["Job_Role"]),
             createData("Salary", announcement_details["Salary"]),
@@ -207,11 +211,11 @@ function ViewSingleAnnoucement() {
 
                             </Grid>
                             <Grid item xs={6} md={9}>
-                                <Button onClick={() => handleSubscribedStudents(announcement_details["Announcement_ID"])} variant="contained" size="large" style={{"backgroundColor": red["A400"]}}>
+                                <Button onClick={() => handleSubscribedStudents(announcement_details["Announcement_ID"])} variant="contained" size="large" style={{ "backgroundColor": red["A400"] }}>
                                     See Subscribed Students
                                 </Button>
                             </Grid>
-                            
+
 
                         </Grid>
                         <br />
@@ -273,7 +277,7 @@ function ViewSingleAnnoucement() {
 
             </MainCard>
             <br />
-            {announcement_details === undefined ? "" : <AddComment id={id}/>}
+            {announcement_details === undefined ? "" : <AddComment id={id} />}
             {/* <MainCard title="See Comments">
                 <h1>See comments</h1>
             </MainCard> */}

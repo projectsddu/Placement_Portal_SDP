@@ -5,6 +5,7 @@ const { announcements } = require("../Models/index")
 const log = new logger(true)
 const db = require("../Models/index")
 const CompanyService = require("./CompanyService");
+const BranchAnnouncementService = require("./BranchAnnouncementService")
 const AnnouncementSubscribeService = require("./AnnouncementSubscribe");
 // const AnnouncementHelper = require('./HelperServices/AnnouncementHelper')
 const NotificationService = require("./NotificationService");
@@ -26,8 +27,20 @@ const createdAnnoucement = async (announcementData, job_description_file) => {
         announcementData["Job_Description_File"] = fileName
         // announcementData["Company_ID"] = 3 // Temporary static
         announcementData["IsOpen"] = true // Temporary static
-
+        const branches = announcementData["Eligible_Branches"].split(",")
+        console.log(branches)
+        announcementData["Eligible_Branches"] = ""
         await Announcement.create(announcementData)
+        let aData = await Announcement.findAll({
+            order: [
+                ['Announcement_ID', 'DESC'],
+            ],
+        })
+        aData = JSON.parse(JSON.stringify(aData))[0]
+        console.log("Here", JSON.parse(JSON.stringify(aData))[0])
+        for (let i = 0; i < branches.length; i++) {
+            const status = await BranchAnnouncementService.addBranchToAnnouncement(aData.Announcement_ID, branches[i])
+        }
         return true
     }
     catch (err) {
@@ -71,7 +84,12 @@ const getAnnoucement = async (id) => {
             // console.log(JSON.parse(JSON.stringify(announcement)));
             let company = await CompanyService.getCompany(announcement[0].Company_ID)
             announcement[0]["Company_details"] = company
-            // console.log(JSON.parse(JSON.stringify(announcement)));
+
+            let branches = await BranchAnnouncementService.getBranchesOfAnnouncement(announcement[0]["Announcement_ID"])
+            branches = JSON.parse(JSON.stringify(branches))
+
+            announcement[0]["Eligible_Branches"] = branches
+
             return announcement
         }
     } catch (error) {
@@ -89,13 +107,11 @@ const updateAnnoucement = async (data, id, sendNotification = false) => {
         else {
             const announcement = await Announcement.update(data, { where: { Announcement_ID: id } })
 
-            if(sendNotification)
-            {
+            if (sendNotification) {
                 let students = await AnnouncementSubscribeService.getSubscribedStudentsOfAnnouncement(id)
                 students = JSON.parse(JSON.stringify(students))
                 const student_list = []
-                for(let i = 0; i < students.length; i++)
-                {
+                for (let i = 0; i < students.length; i++) {
                     student_list.push(students[i].Student_ID)
                 }
 
@@ -108,12 +124,12 @@ const updateAnnoucement = async (data, id, sendNotification = false) => {
                 const mailData = {
                     "subject": "DDU Placement Cell - " + announcementDetails[0]["Company_details"]["Company_name"] + " announcement has been updated!",
                     "header": message,
-                    "body": "" 
+                    "body": ""
                 }
 
                 const status = await NotificationService.adminToBatchNotification(student_list, message, true, mailData)
 
-                if(status) {
+                if (status) {
                     return true
                 }
                 else {

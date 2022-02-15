@@ -2,7 +2,7 @@ const dbConfig = require("../Config/dbConfig")
 const { Sequelize, DataTypes } = require("sequelize")
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     host: dbConfig.HOST,
-    dialect: dbConfig.DIALECT, 
+    dialect: dbConfig.DIALECT,
     logging: false,
     timezone: '+05:30'
 })
@@ -30,6 +30,7 @@ db.subscribes = require("./AnnouncementSubscribe")(sequelize, DataTypes)
 db.LoginTokens = require("./LoginTokensModel")(sequelize, DataTypes)
 db.notifications = require("./NotificationModel")(sequelize, DataTypes)
 db.skills_and_achievements = require("./SkillsAndAchievementsModel")(sequelize, DataTypes)
+db.BranchAnnouncement = require("./BranchAnnouncementModel")(sequelize, DataTypes)
 
 
 db.sequelize.sync({ force: false }).then(() => {
