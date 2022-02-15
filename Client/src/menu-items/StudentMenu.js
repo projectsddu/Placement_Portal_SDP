@@ -50,6 +50,6 @@ export const StudentMenu = {
         //     icon: icons['IconUsers'],
         //     breadcrumbs: false
         // },
-        
+
     ]
 };

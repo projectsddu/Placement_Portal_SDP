@@ -18,7 +18,8 @@ import {
     FormGroup,
     Stack,
     Button,
-    Checkbox
+    Checkbox,
+    Typography
 } from '@material-ui/core';
 import SecondaryAction from './../../ui-component/cards/CardSecondaryAction';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -48,15 +49,18 @@ const useStyles = makeStyles((theme) => ({
 const Branches = [
     {
         value: 'CE',
-        label: 'Computer Engineering'
+        label: 'Computer Engineering',
+        checked: false
     },
     {
         value: 'IT',
-        label: 'Information Technology'
+        label: 'Information Technology',
+        checked: false
     },
     {
         value: 'EC',
-        label: 'Electronics & Communication'
+        label: 'Electronics & Communication',
+        checked: false
     }
 ];
 
@@ -66,6 +70,8 @@ const Item = styled(Paper)(({ theme }) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary
 }));
+
+
 
 const Input = styled('input')({
     display: 'none'
@@ -79,7 +85,7 @@ function AddAnnoucement() {
         Company_ID: '',
         Date_of_announcement: null,
         Date_of_Visit: null,
-        Eligible_Branches: '',
+        Eligible_Branches: [],
         Passed_out_year: null,
         Job_Role: '',
         Salary: '',
@@ -89,7 +95,7 @@ function AddAnnoucement() {
         Registration_Deadline: null,
         Eligibility: ''
     });
-    useEffect(() => {}, [data]);
+    useEffect(() => { }, [data]);
 
     const { required_data, loading } = useFetch('/annoucement/requiredAnnoucementDetails', 'GET');
 
@@ -141,6 +147,30 @@ function AddAnnoucement() {
     //         }
     //     }
     // }
+
+    function handleCheckBox(branchName, c) {
+        for (let i = 0; i < Branches.length; i++) {
+            if (Branches[i]["value"] == branchName) {
+                // console.log("Jenil")
+                if (Branches[i]["checked"] == false) {
+                    Branches[i]["checked"] = true
+                }
+                else {
+                    Branches[i]["checked"] = false
+                }
+            }
+        }
+        const branches = []
+        const dataCopy = data
+        for (let i = 0; i < Branches.length; i++) {
+            if (Branches[i]["checked"] == true) {
+                branches.push(Branches[i]["value"])
+            }
+        }
+        dataCopy["Eligible_Branches"] = branches
+        setData(dataCopy)
+        console.log(data)
+    }
 
     return (
         <MainCard title="Add Announcement">
@@ -218,8 +248,25 @@ function AddAnnoucement() {
                 </Grid>
                 <br />
                 <br />
-
-                <TextField
+                <Grid container
+                    direction="row">
+                    {/* <Checkbox value={"Jenil"} label={"Jenil"} /> */}
+                    {
+                        Branches.map((e) => {
+                            return (
+                                <>
+                                    <div>
+                                        <Checkbox
+                                            value={e.value}
+                                            onClick={() => handleCheckBox(e.value, e)}
+                                        /><label>{e.label}</label>
+                                    </div>
+                                </>
+                            )
+                        })
+                    }
+                </Grid>
+                {/* <TextField
                     fullWidth
                     id="eligible-currencies"
                     select
@@ -235,7 +282,7 @@ function AddAnnoucement() {
                             {option.label}
                         </MenuItem>
                     ))}
-                </TextField>
+                </TextField> */}
                 <br />
                 <br />
                 <TextField

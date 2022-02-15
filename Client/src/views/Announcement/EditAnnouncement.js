@@ -51,20 +51,24 @@ const useStyles = makeStyles((theme) => ({
 
 // Eligible Branches
 
-const Branches = [
-    {
-        value: 'CE',
-        label: 'Computer Engineering'
-    },
-    {
-        value: 'IT',
-        label: 'Information Technology'
-    },
-    {
-        value: 'EC',
-        label: 'Electronics & Communication'
-    }
-];
+
+// const Branches = [
+//     {
+//         value: 'CE',
+//         label: 'Computer Engineering',
+//         checked: false
+//     },
+//     {
+//         value: 'IT',
+//         label: 'Information Technology',
+//         checked: false
+//     },
+//     {
+//         value: 'EC',
+//         label: 'Electronics & Communication',
+//         checked: false
+//     }
+// ];
 
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
@@ -78,6 +82,23 @@ const Input = styled('input')({
 });
 
 function AddAnnoucement() {
+    const [Branches, setBranches] = useState([
+        {
+            value: 'CE',
+            label: 'Computer Engineering',
+            checked: false
+        },
+        {
+            value: 'IT',
+            label: 'Information Technology',
+            checked: false
+        },
+        {
+            value: 'EC',
+            label: 'Electronics & Communication',
+            checked: false
+        }
+    ])
 
     const [data, setData] = useState(undefined)
     const id = useLocation().pathname.split("/")[3]
@@ -85,10 +106,20 @@ function AddAnnoucement() {
         const response = await fetch("/annoucement/getAnnoucement/" + id, { method: "GET" });
         let data1 = await response.json();
         data1 = data1["data"][0]
-
-        // console.log(data1)
+        let b = Branches
+        for (let i = 0; i < Branches.length; i++) {
+            console.log(data1["Eligible_Branches"], b[i].value)
+            for (let j = 0; j < data1["Eligible_Branches"].length; j++) {
+                console.log(b[i].value, data1["Eligible_Branches"][j].BranchName)
+                if (data1["Eligible_Branches"][j].BranchName == b[i].value) {
+                    b[i].checked = true;
+                }
+            }
+        }
+        console.log(data1)
         setData(data1)
-
+        setBranches(b)
+        // console.log(Branches, b)
     }, [])
 
     const [selectedFile, setSelectedFile] = useState();
@@ -188,8 +219,26 @@ function AddAnnoucement() {
                 </Grid>
                 <br />
                 <br />
-
-                <TextField
+                <Grid container
+                    direction="row">
+                    {/* <Checkbox value={"Jenil"} label={"Jenil"} /> */}
+                    {
+                        Branches.map((e) => {
+                            return (
+                                <>
+                                    <div>
+                                        <Checkbox
+                                            checked={e.checked}
+                                            value={e.value}
+                                        // onClick={() => handleCheckBox(e.value, e)}
+                                        /><label>{e.label}</label>
+                                    </div>
+                                </>
+                            )
+                        })
+                    }
+                </Grid>
+                {/* <TextField
                     fullWidth
                     id="eligible-currencies"
                     select
@@ -205,7 +254,7 @@ function AddAnnoucement() {
                             {option.label}
                         </MenuItem>
                     ))}
-                </TextField>
+                </TextField> */}
                 <br />
                 <br />
                 <TextField
