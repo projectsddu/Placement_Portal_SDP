@@ -12,6 +12,7 @@ async function checkExists(id) {
 
 const createSkillsAndAchievements = async (data) => {
     try {
+        // console.log(data)
         await SkillsAndAchievements.create(data)
         return true
     } catch (error) {

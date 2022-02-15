@@ -54,6 +54,7 @@ const S_ViewSingleAnnouncement = Loadable(lazy(() => import('../views/Student_Vi
 const S_ViewSubscribedAnnouncements = Loadable(lazy(() => import('../views/Student_Views/Announcements/S_ViewSubscribedAnnouncement')));
 
 const S_AllNotifications = Loadable(lazy(() => import('../views/Student_Views/Notifications/AllNotifications')));
+const S_ViewProfile = Loadable(lazy(() => import('../views/Student_Views/Profile/S_ViewProfile')));
 
 // student ends
 
@@ -113,7 +114,8 @@ const MainRoutes = () => {
 
                 "/_student/announcement/view_subscribed_announcement",
 
-                "/_student/notifications/all"
+                "/_student/notifications/all",
+                "/_student/Dashboard/profile"
 
 
 
@@ -161,6 +163,7 @@ const MainRoutes = () => {
 
                     {/* Student View Routes */}
 
+                    <Route path="/_student/Dashboard/profile" component={S_ViewProfile} />
                     <Route path="/_student/Dashboard/" component={Temp} />
                     <Route path="/_student/announcement/view_announcement/:idx" component={S_ViewSingleAnnouncement} />
                     <Route path="/_student/announcement/view_announcement" component={S_ViewAnnouncements} />
