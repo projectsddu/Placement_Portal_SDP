@@ -23,7 +23,8 @@ const createdAnnoucement = async (announcementData, job_description_file) => {
     try {
         console.log(announcementData)
         const dat = Date.parse(announcementData["Date_of_Visit"])
-        const fileName = "./public/" + announcementData["Company_ID"] + "-" + dat.toString() + ".pdf"
+        // const fileName = "./public/" + announcementData["Company_ID"] + "-" + dat.toString() + ".pdf"
+        const fileName = job_description_file
         announcementData["Job_Description_File"] = fileName
         // announcementData["Company_ID"] = 3 // Temporary static
         announcementData["IsOpen"] = true // Temporary static
@@ -105,6 +106,13 @@ const updateAnnoucement = async (data, id, sendNotification = false) => {
             throw "Announcement doesn't exist"
         }
         else {
+            console.log(data["Eligible_Branches"])
+            await BranchAnnouncementService.deleteBranchesOfAnnouncement(id)
+            for (let i = 0; i < data["Eligible_Branches"].length; i++) {
+                await BranchAnnouncementService.addBranchToAnnouncement(id, data["Eligible_Branches"][i])
+                console.log(data["Eligible_Branches"][i])
+            }
+            data["Eligible_Branches"] = ""
             const announcement = await Announcement.update(data, { where: { Announcement_ID: id } })
 
             if (sendNotification) {

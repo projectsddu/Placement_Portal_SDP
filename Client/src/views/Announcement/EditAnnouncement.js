@@ -127,6 +127,8 @@ function AddAnnoucement() {
 
 
 
+
+
     const changeHandler = (event) => {
         // console.log(event.target.files[0])
         const file_data = event.target.files[0]
@@ -152,7 +154,37 @@ function AddAnnoucement() {
         // if(response.)
     }
 
+    function updateBranches(s) {
+        setBranches([].concat(s))
+    }
 
+    async function handleCheck(branchName) {
+        let branchesCopy = Branches
+        for (let i = 0; i < Branches.length; i++) {
+            let branchInfo = branchesCopy[i]
+            if (branchInfo.value == branchName) {
+                // console.log()
+                if (branchesCopy[i].checked == false) {
+                    branchesCopy[i].checked = true
+                }
+                else {
+                    branchesCopy[i].checked = false
+                }
+            }
+        }
+        let dataCopy = data
+        dataCopy["Eligible_Branches"] = []
+        for (let i = 0; i < branchesCopy.length; i++) {
+            if (branchesCopy[i].checked == true) {
+                dataCopy["Eligible_Branches"].push(branchesCopy[i].value)
+            }
+        }
+        setBranches(branchesCopy)
+        updateBranches(branchesCopy)
+        setData(dataCopy)
+        // console.log(Branches)
+        // console.log(data)
+    }
     return (
 
         <MainCard title="Edit Annoucement" >
@@ -230,7 +262,7 @@ function AddAnnoucement() {
                                         <Checkbox
                                             checked={e.checked}
                                             value={e.value}
-                                        // onClick={() => handleCheckBox(e.value, e)}
+                                            onClick={() => handleCheck(e.value)}
                                         /><label>{e.label}</label>
                                     </div>
                                 </>

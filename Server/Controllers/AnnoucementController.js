@@ -50,7 +50,7 @@ const addAnnoucement = async (req, res) => {
             // console.log("Req.file: ", req);
             // const job_description_file = req.file
 
-            const annoucementStatus = await AnnouncementService.createdAnnoucement(req.body)
+            const annoucementStatus = await AnnouncementService.createdAnnoucement(req.body, req.fileName)
             const company_name = await CompanyService.getCompany(Company_ID)
             const status = await NotificationService.broadcastNotification(company_name.Company_name + " opened a new " + Job_Role + " position check out announcement in your dashboard!")
             console.log(status);
