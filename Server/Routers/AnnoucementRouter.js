@@ -14,10 +14,12 @@ const fileStorage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         const dat = Date.parse(req.body.Date_of_Visit)
-        // console.log(typeof req.body.Date_of_Visit)
+        // console.log(typeof req.body.Date_of_Visit)'
+        const extension = file.originalname.split(".")[1]
         console.log(req.body)
-        cb(null, req.body.Company_ID + "-" + dat.toString() + ".pdf")
+        cb(null, req.body.Company_ID + "-" + dat.toString() + "." + extension)
         console.log(req.body);
+        req.fileName = "./" + req.body.Company_ID + "-" + dat.toString() + "." + extension
     }
 
 })
@@ -33,7 +35,7 @@ router.post("/deleteAnnoucement/:annoucementId", AnnouncementController.deleteAn
 router.get("/requiredAnnoucementDetails", AnnouncementController.requiredAnnoucementDetails)
 
 // related to comments
-router.post("/addComment/:annoucementId",[StudentAuthenticate], AnnouncementController.addComment)
+router.post("/addComment/:annoucementId", [StudentAuthenticate], AnnouncementController.addComment)
 router.get("/getAllComments/:annoucementId", AnnouncementController.getAllComments)
 
 

@@ -47,8 +47,7 @@ const Dashboard = () => {
         const required_data = data1
         console.log(required_data)
 
-        if(required_data)
-        {
+        if (required_data) {
             // console.log(required_data["data"]);
             Student_ID = required_data["data"]["Student_ID"];
             FirstName = required_data["data"]["FirstName"];
@@ -63,6 +62,7 @@ const Dashboard = () => {
             Sem_6_SPI = required_data["data"]["Sem_6_SPI"];
             Sem_7_SPI = required_data["data"]["Sem_7_SPI"];
             Sem_8_SPI = required_data["data"]["Sem_8_SPI"];
+            console.log()
             CV_Upload = "http://localhost:8000" + required_data["data"]["CV_Upload"].split(".")[1] + ".pdf";
 
             // console.log(CV_Upload);
@@ -80,7 +80,7 @@ const Dashboard = () => {
             console.log(student_spi_list)
 
             setStudent_spi(student_spi_list)
-            setStudentDetails({Student_ID, FirstName, MiddleName, LastName, Email_ID, CV_Upload})
+            setStudentDetails({ Student_ID, FirstName, MiddleName, LastName, Email_ID, CV_Upload })
         }
 
 
@@ -130,7 +130,7 @@ const Dashboard = () => {
     //     setStudent_spi(student_spi_list)
     // }
 
-    
+
 
 
     return (
@@ -139,7 +139,7 @@ const Dashboard = () => {
                 <Grid item xs={12}>
                     <Grid container spacing={gridSpacing}>
                         <Grid item lg={4} md={6} sm={6} xs={12}>
-                            {studentDetails === undefined ?  "" :  <NameCard FirstName={studentDetails.FirstName} MiddleName={studentDetails.MiddleName} LastName={studentDetails.LastName} Email_ID={studentDetails.Email_ID} isLoading={isLoading} />
+                            {studentDetails === undefined ? "" : <NameCard FirstName={studentDetails.FirstName} MiddleName={studentDetails.MiddleName} LastName={studentDetails.LastName} Email_ID={studentDetails.Email_ID} isLoading={isLoading} />
                             }
                         </Grid>
                         <Grid item lg={4} md={6} sm={6} xs={12}>
@@ -161,7 +161,7 @@ const Dashboard = () => {
                 <Grid item xs={12}>
                     <Grid container spacing={gridSpacing}>
                         <Grid item xs={12} md={12}>
-                        {studentDetails === undefined ?  "" : <UploadCVCard CV_Upload={studentDetails.CV_Upload} /> }
+                            {studentDetails === undefined ? "" : <UploadCVCard CV_Upload={studentDetails.CV_Upload} />}
 
                         </Grid>
                         <Grid item xs={12} md={8}>
