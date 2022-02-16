@@ -46,6 +46,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../../Utilities/ResponsePipelineHandler';
 import AddComment from '../Comment/S_AddComment';
 // import Fetch
+import ProfilePhoto from './S_ProfilePhoto'
 
 export default function S_ViewProfile() {
     const useStyles = makeStyles((theme) => ({
@@ -198,6 +199,24 @@ export default function S_ViewProfile() {
                     ''
                 ) : (
                     <>
+                        <TableContainer component={Paper}>
+                            <Table sx={{ minWidth: 200 }} aria-label="simple table">
+                                <TableBody>
+                                        <TableRow>
+                                            <TableCell>
+                                                <ProfilePhoto />
+                                            </TableCell>
+                                            <TableCell>
+                                                <h1>METADATA</h1>
+                                            </TableCell>
+                                            <TableCell>
+                                                <h1>SKILLS</h1>
+                                            </TableCell>
+                                        </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                        <br/><br/>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 200 }} aria-label="simple table">
 
