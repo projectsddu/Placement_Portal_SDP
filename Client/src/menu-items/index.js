@@ -9,6 +9,7 @@ import { AnnouncementMenu } from './AnnouncementMenu';
 import { TempMenu } from './Student/TempMenu';
 import { AnnouncementStudentMenu } from './Student/AnnouncementStudentMenu';
 import { PlacementMenu } from './PlacementMenu';
+import { InternshipMenu } from './InternshipMenu';
 import { useLocation } from 'react-router';
 
 //-----------------------|| MENU ITEMS ||-----------------------//
@@ -23,7 +24,7 @@ if (current_location[3] == "_student") {
 }
 else {
     menuItems = {
-        items: [StudentMenu, PlacementMenu, AnnouncementMenu, CompanyMenu]
+        items: [StudentMenu, PlacementMenu, InternshipMenu, AnnouncementMenu, CompanyMenu]
     };
 }
 

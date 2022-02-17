@@ -39,6 +39,10 @@ const AddPlacement = Loadable(lazy(() => import('../views/Placement/AddPlacement
 
 // placement ends
 
+// internship starts
+const AddInternship = Loadable(lazy(() => import('../views/Internship/AddInternship')));
+
+// internship ends
 
 // company starts
 const AddCompany = Loadable(lazy(() => import('../views/Company/AddCompany')));
@@ -106,6 +110,10 @@ const MainRoutes = () => {
                 "/placement/add_placement",
                 // placement routes finished
 
+                // internship starts
+                "/internship/add_internship",
+                // internship ends
+
                 // Company Routes
 
                 '/company/add_company',
@@ -163,6 +171,9 @@ const MainRoutes = () => {
 
                     {/* placement routes */}
                     <Route path="/placement/add_placement" component={AddPlacement} />
+
+                    {/* internship routes */}
+                    <Route path="/internship/add_internship" component={AddInternship} />
 
 
                     {/* Company Routes */}
