@@ -18,6 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import responsePipelineHandler from '../../../Utilities/ResponsePipelineHandler';
 import usePost from '../../../Utilities/UsePost';
 import UploadCVCard from './UploadCVCard';
+import UploadPhotoCard from './UploadPhotoCard'
 
 //-----------------------|| DEFAULT DASHBOARD ||-----------------------//
 
@@ -28,7 +29,7 @@ const Dashboard = () => {
 
     }, []);
 
-    let Student_ID, FirstName, MiddleName, LastName, Email_ID, CV_Upload, Sem_1_SPI, Sem_2_SPI, Sem_3_SPI, Sem_4_SPI, Sem_5_SPI, Sem_6_SPI, Sem_7_SPI, Sem_8_SPI;
+    let Student_ID, FirstName, MiddleName, LastName, Email_ID, CV_Upload, Student_Photo, Sem_1_SPI, Sem_2_SPI, Sem_3_SPI, Sem_4_SPI, Sem_5_SPI, Sem_6_SPI, Sem_7_SPI, Sem_8_SPI;
 
     const [student_spi, setStudent_spi] = useState(undefined);
 
@@ -64,8 +65,9 @@ const Dashboard = () => {
             Sem_8_SPI = required_data["data"]["Sem_8_SPI"];
             console.log()
             CV_Upload = "http://localhost:8000" + required_data["data"]["CV_Upload"].split(".")[1] + ".pdf";
-
             // console.log(CV_Upload);
+            Student_Photo = "http://localhost:8000" + required_data["data"]["Student_Photo"].split(".")[1] + ".jpg";
+            // console.log(Student_Photo)
 
             // push spi into list one by one
             student_spi_list.push(Sem_1_SPI)
@@ -80,7 +82,7 @@ const Dashboard = () => {
             console.log(student_spi_list)
 
             setStudent_spi(student_spi_list)
-            setStudentDetails({ Student_ID, FirstName, MiddleName, LastName, Email_ID, CV_Upload })
+            setStudentDetails({ Student_ID, FirstName, MiddleName, LastName, Email_ID, CV_Upload, Student_Photo })
         }
 
 
@@ -162,6 +164,10 @@ const Dashboard = () => {
                     <Grid container spacing={gridSpacing}>
                         <Grid item xs={12} md={12}>
                             {studentDetails === undefined ? "" : <UploadCVCard CV_Upload={studentDetails.CV_Upload} />}
+
+                        </Grid>
+                        <Grid item xs={12} md={12}>
+                            {studentDetails === undefined ? "" : <UploadPhotoCard Student_Photo={studentDetails.Student_Photo} />}
 
                         </Grid>
                         <Grid item xs={12} md={8}>

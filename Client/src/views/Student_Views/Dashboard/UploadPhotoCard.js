@@ -24,25 +24,27 @@ const Input = styled('input')({
 
 
 
-export default function UploadResumeCard({ CV_Upload }) {
+export default function UploadPhotoCard({ Student_Photo }) {
 
     const [data, setData] = useState({
     });
     useEffect(() => { }, [data]);
 
-    const changeHandler = (event) => {
+    const changeHandler1 = (event) => {
         console.log(event.target.files[0])
         const file_data = event.target.files[0]
         const file_name = event.target.files[0]["name"]
-        document.getElementById("fileUploadName2").innerText = " " + file_name
+        document.getElementById("fileUploadName1").innerText = " " + file_name
         let temp = data
-        temp["Student_CV_File"] = file_data
+        console.log(document.getElementById('fileUploadName1'));
+        temp["Student_Photo_File"] = file_data
+        console.log(temp)
         setData(temp)
     };
 
     async function handleSubmit() {
 
-        const res = await UsePostFile("/student/addCV", data, "POST")
+        const res = await UsePostFile("/student/uploadPhoto", data, "POST")
         // console.log(res);
         const params1 = {
             data: res,
@@ -57,55 +59,58 @@ export default function UploadResumeCard({ CV_Upload }) {
     }
 
     return (
-        <MainCard title="Add Student CV">
+        <MainCard title="Add Student Photo">
             <Grid container spacing={gridSpacing}>
                 <Grid item>
-                    <form enctype="multipart/form-data" id="CVForm">
-                        <label htmlFor="contained-button-file">
-                            <Input
-                                onChange={(e) => changeHandler(e)}
+                    <form enctype="multipart/form-data" id="PhotoForm">
+                        <Button
+                            variant="outlined"
+                            size='large'
+                            component="label"
+                        >
+                            Upload File
+                            <input
+                                onChange={(e) => changeHandler1(e)}
                                 required
-                                accept=".pdf"
-                                id="contained-button-file"
-                                multiple type="file"
+                                type="file"
+                                accept=".JPG"
+                                hidden
                             />
-                            <Button variant="outlined" size="large" component="span">
-                                Upload CV
-                            </Button>
-                            <b><label id="fileUploadName2"> </label></b>
-                        </label>
+                        </Button>
+                            <b><label id="fileUploadName1"> </label></b>
                         <br />
                         <br />
                     </form>
                 </Grid>
 
                 <Grid item>
-                    <Button onClick={handleSubmit} variant="contained" size="large" color="primary">
-                        Add CV
+                    <Button 
+                        onClick={handleSubmit} 
+                        variant="contained" 
+                        size="large" 
+                        color="primary"
+                    >
+                        Add Photo
                     </Button>
                 </Grid>
 
                 <Grid item>
 
-                    {/* <Chip label={"View Student CV"} /> */}
+                    {/* <Chip label={"View Student Photo"} /> */}
 
-
-
-
-
-                    {CV_Upload === undefined ? "Wait Loading...." : <>
-                        {CV_Upload.includes("/public/student_details/CV") ?
+                    {Student_Photo === undefined ? "Wait Loading...." : <>
+                        {Student_Photo.includes("/public/student_details/Photo") ?
                             <a target='blank'
                                 style={{ "text-decoration": "none", "cursor": "pointer" }}
                                 href={
-                                    CV_Upload}
+                                    Student_Photo}
                             >
                                 <Button variant="contained" size="large" color="primary">
-                                    View CV
+                                    View Photo
                                 </Button>
                             </a> :
                             <>
-                                <Chip label="No CV Uploaded!" />
+                                <Chip label="No Photo Uploaded!" />
                             </>
                         }
 
