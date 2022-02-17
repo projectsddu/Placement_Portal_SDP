@@ -6,12 +6,11 @@ import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import useFetch from '../../Utilities/useFetch';
 
-
 const Input = styled('input')({
     display: 'none'
 });
 
-function CompanyPlacementCard() {
+function CompanyInternshipCard() {
     const { required_data, loading } = useFetch('/annoucement/requiredAnnoucementDetails', 'GET');
 
     let companies = [];
@@ -75,4 +74,4 @@ function CompanyPlacementCard() {
     );
 }
 
-export default CompanyPlacementCard;
+export default CompanyInternshipCard;
