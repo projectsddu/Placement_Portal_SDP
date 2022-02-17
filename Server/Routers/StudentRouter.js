@@ -35,6 +35,20 @@ const fileStorage1 = multer.diskStorage({
 
 const upload1 = multer({ storage: fileStorage1 })
 
+const fileStorage2 = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "./public/student_details/Photo")
+    },
+    
+    filename: (req, file, cb) => {
+        console.log(req.body)
+        cb(null, req.userId + '.jpg')
+        console.log(req.body)
+    }
+})
+
+const upload2 = multer({ storage: fileStorage2 })
+
 router.post("/addStudent", [upload.single("Student_Details_File")], StudentController.addStudent)
 router.get("/getAllStudents",
     //  [Authenticate],
@@ -43,5 +57,6 @@ router.get("/getOneStudent", [Authenticate], StudentController.getOneStudent)
 router.post("/addCV", [Authenticate, upload1.single("Student_CV_File")], StudentController.CV_Upload)
 router.post("/updateStudent/", [upload.single("Student_Details_File")], StudentController.updateStudent)
 router.post("/deleteStudent/:id", StudentController.deleteStudent)
+router.post("/uploadPhoto", [Authenticate, upload2.single("Student_Photo_File")], StudentController.Photo_Upload)
 
 module.exports = router

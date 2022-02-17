@@ -226,11 +226,30 @@ const deleteStudent = async (req, res) => {
     }
 }
 
+const Photo_Upload = async (req, res) => {
+    try {
+        let id = req.userId
+        const studentData = await StudentService.Photo_Upload("./public/student_details/Photo/" + id +".jpg", id)
+        if(studentData)
+        {
+            return res.json({status: true, data: "Student Photo uploaded"})
+        }
+        else
+        {
+            throw "Error uploading student Photo"
+        }
+    } catch (error) {
+        log.error(error.toString())
+        return res.json({ status: true, data: "Error updating student photo !!!" })
+    }
+}
+
 module.exports = {
     addStudent,
     getAllStudents,
     getOneStudent,
     updateStudent,
     CV_Upload,
-    deleteStudent
+    deleteStudent,
+    Photo_Upload
 }
