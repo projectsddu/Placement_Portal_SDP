@@ -59,8 +59,8 @@ const addSubsriberToAnnouncement = async (student_id, announcement_id) => {
         
         const mailData = {
             "subject": "Regarding " + announcementDetails["Company_details"]["Company_name"] + ": " + announcementDetails["Job_Role"] + " Role Announcement Subscription" ,
-            "header": "Announcement Subscribed Successfully",
-            "body": "You will be updated regarding mentioned subscribed announcement for " + announcementDetails["Company_details"]["Company_name"] + " " + announcementDetails["Job_Role"] + " role",
+            "header": "Applied to an Announcement Successfully",
+            "body": "You will be updated regarding mentioned applied announcement for " + announcementDetails["Company_details"]["Company_name"] + " " + announcementDetails["Job_Role"] + " role",
         }
         // console.log(mailData.body);
         await NotificationService.adminToSingleUserNotification(student_id, mailData.body, true, mailData)

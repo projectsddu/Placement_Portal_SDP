@@ -95,7 +95,7 @@ function ViewAnnoucements() {
 
     return (
         <>
-            <MainCard title="View Annoucements">
+            <MainCard title="View Announcements">
                 <TextField label="Search" value={search} onChange={(e) => handleSearch(e)} fullWidth></TextField>
                 <br />
                 <br />
@@ -130,7 +130,7 @@ function ViewAnnoucements() {
                                               fullWidth
                                               className={classes.applyBtn}
                                           >
-                                              View Full Annoucement
+                                              View Full Announcement
                                           </Button>
                                       </SubCard>
                                   </Grid>

@@ -68,7 +68,7 @@ export default function UploadPhotoCard({ Student_Photo }) {
                             size='large'
                             component="label"
                         >
-                            Upload File
+                            Upload Photo
                             <input
                                 onChange={(e) => changeHandler1(e)}
                                 required

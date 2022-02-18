@@ -120,7 +120,7 @@ function S_ViewAnnoucements() {
                                     <ListItem>Branches: {e.Eligible_Branches}</ListItem>
                                 </List>
 
-                                <Button onClick={() => handleRedirect(e.Announcement_ID)} size='large' fullWidth className={classes.applyBtn}>View Full Annoucement</Button>
+                                <Button onClick={() => handleRedirect(e.Announcement_ID)} size='large' fullWidth className={classes.applyBtn}>View Full Announcement</Button>
                             </SubCard>
                         </Grid>
                     ))}

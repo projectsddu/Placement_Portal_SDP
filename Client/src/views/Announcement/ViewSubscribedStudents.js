@@ -78,7 +78,7 @@ function ViewSubscribedStudents() {
 
     return (
         <>
-            <MainCard title="Subscribed Students">
+            <MainCard title="Applied Students">
                 <a
                     href={"http://localhost:8000/subscribeannouncement/downloadSubscribedStudentZip/" + id}
                     style={{ "text-decoration": "none", }}
