@@ -425,7 +425,7 @@ function AddAnnoucement() {
                 <br />
                 <br />
                 <Button onClick={handleSubmit} variant="contained" size="large" color="primary">
-                    Add Annoucement
+                    Add Announcement
                 </Button>
             </form>
         </MainCard>

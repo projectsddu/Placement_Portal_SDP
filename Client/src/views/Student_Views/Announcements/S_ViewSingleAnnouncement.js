@@ -222,7 +222,7 @@ export default function S_ViewSingleAnnouncement() {
             HandleToast: {
                 toast: toast,
                 flag: true,
-                customMessage: "Unsubscribed successfully!!!"
+                customMessage: "Withdrawn successfully!!!"
             }
         }
         console.log(res);
@@ -237,10 +237,10 @@ export default function S_ViewSingleAnnouncement() {
                 >
                     <Grid item>
                         {subscribeStatus === undefined ? "Loading" : subscribeStatus == true ? <>
-                            <Button onClick={handleUnsubscribe} variant="contained" color="error"> Unsubsribe Announcement</Button>
+                            <Button onClick={handleUnsubscribe} variant="contained" color="error"> Withdraw Announcement</Button>
                         </> : 
                             <>
-                            <Button onClick={handleSubscribe} variant="contained" color="success"> Subsribe Announcement</Button>
+                            <Button onClick={handleSubscribe} variant="contained" color="success"> Apply Announcement</Button>
                             </>
                         }
                         <Tooltip title="Keep recieving constant updates" style={{ "margin-left": "10px" }}>

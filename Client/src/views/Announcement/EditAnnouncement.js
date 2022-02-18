@@ -187,7 +187,7 @@ function AddAnnoucement() {
     }
     return (
 
-        <MainCard title="Edit Annoucement" >
+        <MainCard title="Edit Announcement" >
             {data === undefined ? "" : console.log(data)}
             <form enctype="multipart/form-data">
 
@@ -425,7 +425,7 @@ function AddAnnoucement() {
                 <br />
                 <br />
                 <Button onClick={handleSubmit} variant="contained" size="large" color="primary">
-                    Edit Annoucement
+                    Edit Announcement
                 </Button>
 
             </form>

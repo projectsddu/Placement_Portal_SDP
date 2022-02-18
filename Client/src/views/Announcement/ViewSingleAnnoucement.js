@@ -206,13 +206,13 @@ function ViewSingleAnnoucement() {
                         <Grid container spacing={2}>
                             <Grid item xs={6} md={3}>
                                 <Button onClick={() => handleEdit(announcement_details["Announcement_ID"])} variant="contained" size="large" color="primary">
-                                    Edit Annoucement
+                                    Edit Announcement
                                 </Button>
 
                             </Grid>
                             <Grid item xs={6} md={9}>
                                 <Button onClick={() => handleSubscribedStudents(announcement_details["Announcement_ID"])} variant="contained" size="large" style={{ "backgroundColor": red["A400"] }}>
-                                    See Subscribed Students
+                                    See Applied Students
                                 </Button>
                             </Grid>
 

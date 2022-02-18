@@ -10,7 +10,7 @@ const addStudentToAnnouncement = async (req, res) => {
         const studentId = req.userId
         const status = Subscibe.addSubsriberToAnnouncement(studentId, req.params.announcementId)
         if (status) {
-            return res.json({ status: true, data: "Subscribed Successfully!" })
+            return res.json({ status: true, data: "Applied Successfully!" })
         }
         else {
             throw "Error in Subscribing student"
@@ -19,7 +19,7 @@ const addStudentToAnnouncement = async (req, res) => {
     catch (err) {
         console.log(err.toString());
         log.error(err.toString())
-        return res.json({ status: false, data: "Error subscribing to announcement!" })
+        return res.json({ status: false, data: "Error applying to announcement!" })
     }
 }
 

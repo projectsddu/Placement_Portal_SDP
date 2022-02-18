@@ -29,7 +29,7 @@ export const AnnouncementMenu = {
         },
         {
             id: 'ViewAnnoucement',
-            title: 'View Annoucements',
+            title: 'View Announcements',
             type: 'item',
             url: '/announcement/view_annoucement',
             icon: icons['IconEye'],

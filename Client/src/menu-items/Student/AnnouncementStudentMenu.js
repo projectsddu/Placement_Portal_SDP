@@ -30,7 +30,7 @@ export const AnnouncementStudentMenu = {
         },
         {
             id: 'subscribed_announcements',
-            title: 'Subscribed Announcements',
+            title: 'Applied Announcements',
             type: 'item',
             url: '/_student/announcement/view_subscribed_announcement',
             icon: icons['IconBellRinging'],
