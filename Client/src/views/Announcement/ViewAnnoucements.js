@@ -8,7 +8,7 @@ import { withStyles } from '@material-ui/styles';
 import { color } from '@material-ui/system';
 import { ClassNames } from '@emotion/react';
 import { TextField } from '@material-ui/core';
-import $ from 'jquery';
+import $, { param } from 'jquery';
 import usePost from '../../Utilities/UsePost';
 import ParseDate from '../../Utilities/ParseDate';
 import HandleToast from '../../Utilities/HandleToast';
@@ -17,6 +17,8 @@ import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import useFetch from '../../Utilities/useFetch';
 import { useHistory } from 'react-router-dom';
 import SearchSection from '../../layout/MainLayout/Header/SearchSection';
+import { DataGrid, RowsProp, ColDef, GridToolbarContainer, GridToolbarExport } from '@material-ui/data-grid';
+import {IconEye} from '@tabler/icons';
 
 const useStyles = makeStyles((theme) => ({
     applyBtn: {
@@ -53,6 +55,14 @@ const LightBlueTextTypography = withStyles({
     }
 });
 
+function CustomToolbar() {
+    return (
+        <GridToolbarContainer>
+            <GridToolbarExport />
+        </GridToolbarContainer>
+    );
+}
+
 function ViewAnnoucements() {
     const classes = useStyles();
 
@@ -60,15 +70,36 @@ function ViewAnnoucements() {
     const { required_data, loading } = useFetch('/annoucement/getAllAnnoucements/', 'GET');
 
     var annoucements = [];
-
     if (!loading) {
-        // console.log(required_data["data"])
-        if(required_data["data"] != "No Student data!")
-        {
-            annoucements = required_data['data'];
+        // console.log(required_data);
+        if (required_data['data'] != 'No Announcement data!') {
+            for (let i = 0; i < required_data['data'].length; i++) {
+                var obj = {};
+                obj = required_data['data'][i];
+                obj["id"] = i;
+                // console.log(required_data['data'][i])
+                let title=
+                    required_data['data'][i]["Company_details"]['Company_name'] +
+                    '-' +
+                    required_data['data'][i]["Job_Role"] +
+                    ' for ' +
+                    ParseDate.getYear(required_data['data'][i]["Passed_out_year"]) +
+                    ' Batch'
+                obj["title"] = title
+                console.log(title)
+                annoucements.push(obj);
+            }
+            console.log(annoucements);
         }
-        console.log(annoucements);
     }
+    // if (!loading) {
+    //     // console.log(required_data["data"])
+    //     if(required_data["data"] != "No Announcement data!")
+    //     {
+    //         annoucements = required_data['data'];
+    //     }
+    //     console.log(annoucements);
+    // }
 
     let history = useHistory();
 
@@ -79,7 +110,7 @@ function ViewAnnoucements() {
     function handleSearch(e) {
         console.log(e.target.value);
         setSearch(e.target.value);
-        let searchText = e.target.value == '' ? ' ' : e.target.value;
+        let searchText = e.target.value == '' ? ' ' : e.ta1qrget.value;
         var root = document.getElementsByClassName('MuiGrid-root MuiGrid-container')[0].children;
         console.log(root);
         for (let i = 0; i < root.length; i++) {
@@ -93,6 +124,60 @@ function ViewAnnoucements() {
         }
     }
 
+    
+    let Announcement_ID = "";
+    const rows = [];
+    const [columns, setcolumns] = useState([
+        {
+            field: 'view',
+            headerName: 'View Full Announcement',
+            sortable: false,
+            width: 250,
+            disableClickEventBubbling: true,
+            valueGetter: (params) => {
+                Announcement_ID = params.row.Announcement_ID
+            },
+            renderCell: (id) => {
+                return (
+                    <Button 
+                        variant="contained" 
+                        onClick={() => handleRedirect(Announcement_ID)} color="primary" 
+                        startIcon={<IconEye />}
+                    >
+                    View Full Announcement
+                    </Button>
+                );
+            }
+        },
+        { field: 'id', headerName: 'ID', hide: true },
+        { field: 'title', headerName: 'Title', width: 300, editable: false },
+        { field: 'Date_of_Visit', headerName: 'Date of Visit', width: 250, editable: false },
+        { field: 'Registration_Deadline', headerName: 'Registration Deadline', width: 250, editable: false },
+        { field: 'Salary', headerName: 'Salary', width: 200, editable: false, hide: false },
+        { field: 'Announcement_ID', headerName: 'Announcement ID', width: 200, editable: false, hide: true },
+        { field: 'Company_ID', headerName: 'Company ID', width: 200, editable: false, hide: true },
+        { field: 'Date_of_announcement', headerName: 'Date of announcement', width: 200, editable: false, hide: true },
+        { field: 'Eligible_Branches', headerName: 'Eligible Branches', width: 200, editable: false, hide: true },
+        { field: 'Passed_out_year', headerName: 'Passed out year', width: 200, editable: false, hide: true },
+        { field: 'Job_Role', headerName: 'Job Role', width: 200, editable: false, hide: true },
+        { field: 'Job_Location', headerName: 'Job Location', width: 200, editable: false, hide: true },
+        { field: 'Bond_Details', headerName: 'Bond Details', width: 200, editable: false, hide: true },
+        { field: 'Other_Details', headerName: 'Other Details', width: 200, editable: false, hide: true },
+        { field: 'Eligibility', headerName: 'Eligibility', width: 200, editable: false, hide: true },
+        { field: 'IsOpen', headerName: 'IsOpen', width: 200, editable: false, hide: true }
+    ]);
+
+    const [editRowsModel, setEditRowsModel] = React.useState({});
+
+    const handleEditRowsModelChange = React.useCallback((model) => {
+        console.log(model);
+        setEditRowsModel(model);
+    }, []);
+
+    function handleCellClick(params) {
+        console.log(params);
+    }
+
     return (
         <>
             <MainCard title="View Announcements">
@@ -100,43 +185,24 @@ function ViewAnnoucements() {
                 <br />
                 <br />
                 <br />
-                { loading ? "" : annoucements.length == 0 ? <h1>No Announcements Data</h1> : 
-                    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
-                        {loading
-                            ? ''
-                            : annoucements.map((e) => (
-                                  <Grid item xs={12} md={6} id={e.Announcement_ID}>
-                                      <SubCard
-                                          title={
-                                              e.Company_details['Company_name'] +
-                                              '-' +
-                                              e.Job_Role +
-                                              ' for ' +
-                                              ParseDate.getYear(e.Passed_out_year) +
-                                              ' Batch'
-                                          }
-                                      >
-                                          <Typography variant="h5"></Typography>
-                                          <List dense={false}>
-                                              <ListItem>Posted On: {ParseDate.ParseDate(e.Date_of_announcement)}</ListItem>
-                                              <ListItem>Visiting On: {ParseDate.ParseDate(e.Date_of_Visit)}</ListItem>
-                                              <ListItem>Job Location: {e.Job_Location}</ListItem>
-                                              <ListItem>Branches: {e.Eligible_Branches}</ListItem>
-                                          </List>
-
-                                          <Button
-                                              onClick={() => handleRedirect(e.Announcement_ID)}
-                                              size="large"
-                                              fullWidth
-                                              className={classes.applyBtn}
-                                          >
-                                              View Full Announcement
-                                          </Button>
-                                      </SubCard>
-                                  </Grid>
-                              ))}
-                    </Grid>
-                }
+                <div style={{ height: 400, width: '100%' }}>
+                    { loading ? "" : annoucements.length == 0 ? <h1>No Announcements Data</h1> : 
+                    (
+                        <DataGrid
+                            editMode="row"
+                            onEditCellChange={handleEditRowsModelChange}
+                            onCellClick={handleCellClick}
+                            checkboxSelection
+                            rows={annoucements}
+                            columns={columns}
+                            components={{
+                                Toolbar: CustomToolbar
+                            }}
+                            editRowsModel={editRowsModel}
+                            onEditRowsModelChange={handleEditRowsModelChange}
+                        />
+                    )}
+                </div>
             </MainCard>
         </>
     );
