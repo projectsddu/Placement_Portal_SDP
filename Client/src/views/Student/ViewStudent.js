@@ -73,8 +73,8 @@ export default function ViewStudent() {
         { field: 'Email_ID', headerName: 'Email ID', width: 200, editable: false },
         { field: 'Contact_No_1', headerName: 'Contact No 1', width: 200, editable: false },
         { field: 'Contact_No_2', headerName: 'Contact No 2', width: 200, editable: false },
-        
-        
+
+
         // { field: 'Sem_5_SPI', headerName: 'Sem 5 SPI', type: 'number', width: 200, editable: false },
         // { field: 'Sem_6_SPI', headerName: 'Sem 6 SPI', type: 'number', width: 200, editable: false },
         // { field: 'Sem_7_SPI', headerName: 'Sem 7 SPI', type: 'number', width: 200, editable: false }
