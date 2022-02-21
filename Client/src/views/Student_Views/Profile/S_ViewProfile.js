@@ -9,7 +9,7 @@ import {
     Chip,
     Divider,
     Grid,
-
+    Box,
     List,
     ListItem,
     ListItemAvatar,
@@ -29,7 +29,8 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import { IconInfoCircle } from "@tabler/icons"
+import { IconInfoCircle, IconX, IconPlus } from "@tabler/icons"
+
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
@@ -47,6 +48,9 @@ import responsePipelineHandler from '../../../Utilities/ResponsePipelineHandler'
 import AddComment from '../Comment/S_AddComment';
 // import Fetch
 import ProfilePhoto from './S_ProfilePhoto'
+import SubCard from '../../../ui-component/cards/SubCard';
+// import ChipInput from 'material-ui-chip-input'
+import Modal from '@mui/material/Modal';
 
 export default function S_ViewProfile() {
     const useStyles = makeStyles((theme) => ({
@@ -127,6 +131,17 @@ export default function S_ViewProfile() {
         }
     }));
     const classes = useStyles();
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        boxShadow: 24,
+        borderRadius: "2%",
+        p: 4,
+    };
 
     function createData(key, value) {
         if (value == undefined) {
@@ -137,7 +152,9 @@ export default function S_ViewProfile() {
 
     let history = useHistory();
 
-    const { required_data, loading } = useFetch("/student/getOneStudent/", 'GET' )
+    const { required_data, loading } = useFetch("/student/getOneStudent/", 'GET')
+
+    const [skill, setSkill] = useState(["C++", "Python", "MatLab"])
 
     let student_details, rows;
     if (!loading) {
@@ -190,8 +207,29 @@ export default function S_ViewProfile() {
             createData("Branch Id", student_details["Branch_Id"])
         ];
     }
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const [searchData, setSearchData] = useState("")
 
+    function handleSkillAdd() {
+        if (searchData != "") {
+            const skillCopy = [].concat(skill)
+            skillCopy.push(searchData)
+            setSkill(skillCopy)
+            console.log(skillCopy)
+            handleClose()
+        }
+    }
+    function handleDelete(idx) {
+        let skillCopy = skill
+        let i;
+        let res = skillCopy.filter((elem) => {
+            return (idx != elem)
+        })
+        setSkill(res)
 
+    }
     return (
         <>
             <MainCard title="Student Details">
@@ -199,24 +237,76 @@ export default function S_ViewProfile() {
                     ''
                 ) : (
                     <>
-                        <TableContainer component={Paper}>
+
+                        <SubCard>
+                            <Grid container justifyContent={"flex-start"} spacing={3}>
+                                <Grid item md={3} xs={12} >
+                                    <ProfilePhoto student_photo={loading ? "" : student_details["Student_Photo"]} />
+                                </Grid>
+                                <Grid md={9} xs={12} item style={{ "padding-left": "6%" }}>
+                                    {/* <h1>SKILLS</h1> */}
+                                    <Button onClick={handleOpen} variant="contained" borderRadius="50%">Add Skill</Button>
+                                    <Modal
+                                        open={open}
+                                        onClose={handleClose}
+                                        aria-labelledby="modal-modal-title"
+                                        aria-describedby="modal-modal-description"
+                                    >
+                                        <Box sx={style}>
+                                            <Grid spacing={2} container justifyContent={"space-between"}>
+                                                <Grid item>
+                                                    <TextField
+                                                        onChange={(e) => { setSearchData(e.target.value) }}
+                                                        value={searchData}
+                                                        size="small" />
+                                                </Grid>
+                                                <Grid item >
+                                                    <Button
+                                                        size="medium"
+                                                        onClick={() => { handleSkillAdd() }}
+                                                        variant="contained" startIcon={<IconPlus />}>
+                                                        Add Skill
+                                                    </Button>
+                                                </Grid>
+                                            </Grid>
+                                        </Box>
+                                    </Modal>
+                                    <br />
+                                    <br />
+                                    <Grid direction="row" spacing={1}>
+                                        {skill.map((elem) => {
+                                            return (
+                                                <Chip
+                                                    style={{ "margin": "1%" }}
+                                                    icon={IconInfoCircle}
+                                                    variant="outlined"
+                                                    color='primary'
+                                                    onDelete={() => handleDelete(elem)}
+                                                    label={elem} />
+                                            )
+                                        })}
+                                    </Grid>
+
+                                </Grid>
+                            </Grid>
+                        </SubCard>
+
+                        {/* <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 200 }} aria-label="simple table">
                                 <TableBody>
-                                        <TableRow>
-                                            <TableCell>
-                                                <ProfilePhoto />
-                                            </TableCell>
-                                            <TableCell>
-                                                <h1>METADATA</h1>
-                                            </TableCell>
-                                            <TableCell>
-                                                <h1>SKILLS</h1>
-                                            </TableCell>
-                                        </TableRow>
+                                    <TableRow>
+                                        <TableCell>
+                                            <ProfilePhoto student_photo={loading ? "" : student_details["Student_Photo"]} />
+                                        </TableCell>
+
+                                        <TableCell>
+                                            <h1>SKILLS</h1>
+                                        </TableCell>
+                                    </TableRow>
                                 </TableBody>
                             </Table>
-                        </TableContainer>
-                        <br/><br/>
+                        </TableContainer> */}
+                        <br /><br />
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 200 }} aria-label="simple table">
 
