@@ -2,7 +2,7 @@ const express = require("express")
 const multer = require('multer');
 const path = require('path');
 const app = express()
-
+const hostingConfig = require("./Config/hostingConfig")
 const StudentRouter = require("./Routers/StudentRouter")
 const AnnoucementRouter = require("./Routers/AnnoucementRouter")
 const CompanyRouter = require("./Routers/CompanyRouter")
@@ -37,10 +37,10 @@ app.post("/postTest", (req, res) => {
     res.send(req.body)
 })
 
-const port = 8000
+const port = hostingConfig.SERVER_PORT_NO
 
 app.listen(port, () => {
-    console.log("Server is running on port 8000")
+    console.log(`Server is running on port ${port}`)
 })
 
 //routers
