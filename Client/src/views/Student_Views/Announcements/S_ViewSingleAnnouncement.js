@@ -147,12 +147,20 @@ export default function S_ViewSingleAnnouncement() {
 
         announcement_details = required_data["data"][0];
         console.log(announcement_details)
+
+        let branches = ""
+        for(let i = 0; i < announcement_details["Eligible_Branches"].length; i++)
+        {
+            branches += (announcement_details["Eligible_Branches"][i]["BranchName"] + " ") 
+        }
+
         rows = [
             // createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
             createData("Date of Announcement", ParseDate.ParseDate(announcement_details["Date_of_announcement"])),
             createData("Date of Visit", ParseDate.ParseDate(announcement_details["Date_of_Visit"])),
             createData("Registration Deadline", ParseDate.ParseDate(announcement_details["Registration_Deadline"], true)),
-            createData("Eligible Branches", announcement_details["Eligible_Branches"]),
+            // createData("Eligible Branches", announcement_details["Eligible_Branches"]),
+            createData("Eligible Branches", branches),
             createData("Passed out year", ParseDate.getYear(announcement_details["Passed_out_year"])),
             createData("Job Role", announcement_details["Job_Role"]),
             createData("Salary", announcement_details["Salary"]),
