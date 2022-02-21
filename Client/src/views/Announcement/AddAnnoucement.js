@@ -83,7 +83,7 @@ function AddAnnoucement() {
 
     const [data, setData] = useState({
         Company_ID: '',
-        Date_of_announcement: null,
+        Date_of_announcement: new Date(),
         Date_of_Visit: null,
         Eligible_Branches: [],
         Passed_out_year: null,
