@@ -31,7 +31,14 @@ function ViewSubscribedStudents() {
             // console.log(obj)
             students_list.push(obj);
         }
-        console.log(students_list);
+        
+        // sort the array based on CPI of the student
+        students_list.sort(function (a, b) {
+            console.log(a.Current_CPI + " " + b.Current_CPI)
+            return b.Current_CPI - a.Current_CPI
+        });
+
+        // console.log(students_list);
     }
 
     const icons = {
@@ -52,7 +59,7 @@ function ViewSubscribedStudents() {
         { field: 'Current_CPI', headerName: 'Current CPI', width: 200, editable: false },
         { field: 'Email_ID', headerName: 'Email ID', width: 200, editable: false },
         { field: 'Contact_No_1', headerName: 'Contact No 1', width: 200, editable: false },
-        { field: 'Contact_No_2', headerName: 'Contact No 2', width: 200, editable: false },
+        { field: 'Contact_No_2', headerName: 'Contact No 2', width: 200, editable: false }
         // { field: 'id', headerName: 'ID', hide: true },
         // { field: 'Student_ID', headerName: 'Student_ID', width: 200, editable: false },
         // { field: 'FirstName', headerName: 'First Name', width: 200, editable: false },
@@ -72,28 +79,21 @@ function ViewSubscribedStudents() {
         setEditRowsModel(model);
     }, []);
 
-    const history = useHistory()
-
-
+    const history = useHistory();
 
     return (
         <>
             <MainCard title="Applied Students">
                 <a
-                    href={"http://localhost:8000/subscribeannouncement/downloadSubscribedStudentZip/" + id}
-                    style={{ "text-decoration": "none", }}
+                    href={'http://localhost:8000/subscribeannouncement/downloadSubscribedStudentZip/' + id}
+                    style={{ 'text-decoration': 'none' }}
                 >
-
-                    <Button
-                        variant="contained"
-                        size="large"
-                        color="primary"
-
-                    >
+                    <Button variant="contained" size="large" color="primary">
                         Download All CVs
                     </Button>
                 </a>
-                <br /><br />
+                <br />
+                <br />
                 <div style={{ height: 400, width: '100%' }}>
                     <DataGrid
                         checkboxSelection
