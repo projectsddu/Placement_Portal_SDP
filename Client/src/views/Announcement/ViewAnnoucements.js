@@ -18,7 +18,9 @@ import useFetch from '../../Utilities/useFetch';
 import { useHistory } from 'react-router-dom';
 import SearchSection from '../../layout/MainLayout/Header/SearchSection';
 import { DataGrid, RowsProp, ColDef, GridToolbarContainer, GridToolbarExport } from '@material-ui/data-grid';
-import {IconEye} from '@tabler/icons';
+import { IconEye, IconCirclePlus } from '@tabler/icons';
+import ChipCard from '../../ui-component/cards/GenericCards/ChipCard';
+import EmptyAnnouncement from './JSX/EmptyAnnouncement';
 
 const useStyles = makeStyles((theme) => ({
     applyBtn: {
@@ -72,21 +74,21 @@ function ViewAnnoucements() {
     var annoucements = [];
     if (!loading) {
         // console.log(required_data);
-        if (required_data['data'] != 'No Announcement data!') {
+        if (required_data['data'] != 'No Student data!') {
             for (let i = 0; i < required_data['data'].length; i++) {
                 var obj = {};
                 obj = required_data['data'][i];
-                obj["id"] = i;
+                obj['id'] = i;
                 // console.log(required_data['data'][i])
-                let title=
-                    required_data['data'][i]["Company_details"]['Company_name'] +
+                let title =
+                    required_data['data'][i]['Company_details']['Company_name'] +
                     '-' +
-                    required_data['data'][i]["Job_Role"] +
+                    required_data['data'][i]['Job_Role'] +
                     ' for ' +
-                    ParseDate.getYear(required_data['data'][i]["Passed_out_year"]) +
-                    ' Batch'
-                obj["title"] = title
-                console.log(title)
+                    ParseDate.getYear(required_data['data'][i]['Passed_out_year']) +
+                    ' Batch';
+                obj['title'] = title;
+                console.log(title);
                 annoucements.push(obj);
             }
             console.log(annoucements);
@@ -124,8 +126,7 @@ function ViewAnnoucements() {
         }
     }
 
-    
-    let Announcement_ID = "";
+    let Announcement_ID = '';
     const rows = [];
     const [columns, setcolumns] = useState([
         {
@@ -135,16 +136,12 @@ function ViewAnnoucements() {
             width: 250,
             disableClickEventBubbling: true,
             valueGetter: (params) => {
-                Announcement_ID = params.row.Announcement_ID
+                Announcement_ID = params.row.Announcement_ID;
             },
             renderCell: (id) => {
                 return (
-                    <Button 
-                        variant="contained" 
-                        onClick={() => handleRedirect(Announcement_ID)} color="primary" 
-                        startIcon={<IconEye />}
-                    >
-                    View Full Announcement
+                    <Button variant="contained" onClick={() => handleRedirect(Announcement_ID)} color="primary" startIcon={<IconEye />}>
+                        View Full Announcement
                     </Button>
                 );
             }
@@ -186,8 +183,34 @@ function ViewAnnoucements() {
                 <br />
                 <br />
                 <div style={{ height: 400, width: '100%' }}>
-                    { loading ? "" : annoucements.length == 0 ? <h1>No Announcements Data</h1> : 
-                    (
+                    {loading ? (
+                        ''
+                    ) : annoucements.length == 0 ? (
+                        <>
+                            <ChipCard loading={loading} data={<EmptyAnnouncement />} />
+                        </>
+                    ) : (
+                        // <SubCard>
+                        //     <Grid container spacing={2}>
+                        //         <Grid item xs={12} md={10}>
+                        //             <Typography variant="h1">No Announcement is added yet!!!</Typography>
+                        //         </Grid>
+                        //         <Grid item xs={12} md={2}>
+                        //             <Button
+                        //                 variant="contained"
+                        //                 size="large"
+                        //                 startIcon={<IconCirclePlus />}
+                        //                 color="primary"
+                        //                 onClick={() => {
+                        //                     history.push('/announcement/add_annoucement');
+                        //                 }}
+                        //             >
+                        //                 {' '}
+                        //                 Add{' '}
+                        //             </Button>
+                        //         </Grid>
+                        //     </Grid>
+                        // </SubCard>
                         <DataGrid
                             editMode="row"
                             onEditCellChange={handleEditRowsModelChange}
