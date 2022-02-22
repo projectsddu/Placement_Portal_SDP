@@ -11,11 +11,12 @@ const Input = styled('input')({
     display: 'none'
 });
 
-function CompanyPlacementCard() {
+function CompanyPlacementCard(props) {
     const { required_data, loading } = useFetch('/annoucement/requiredAnnoucementDetails', 'GET');
 
     let companies = [];
     if (!loading) {
+        // props.checkFunc("jenil")
         // console.log(required_data["data"].length);
         for (let i = 0; i < required_data['data'].length; i++) {
             // console.log("Company Id: ", required_data["data"][i]["Company_ID"]);
@@ -47,7 +48,18 @@ function CompanyPlacementCard() {
                 <br />
                 <br />
                 <Grid container direction="row" justifyContent="flex-start" alignItems="center" spacing={2}>
-                    <Grid item>
+                    <Grid item md={6} xs={12}>
+                        <TextField fullWidth label="Designation"></TextField>
+                    </Grid>
+                    <Grid item md={6} xs={12}>
+                        <TextField fullWidth label="Salary"></TextField>
+
+                    </Grid>
+                </Grid>
+                <br />
+                <br />
+                <Grid container direction="row" justifyContent="flex-start" alignItems="center" spacing={2}>
+                    <Grid item md={2} xs={12}>
                         <label htmlFor="contained-button-file">
                             {/* <label>Job Description File</label>    */}
                             <Input
@@ -65,8 +77,15 @@ function CompanyPlacementCard() {
                         </label>
                     </Grid>
 
-                    <Grid item>
+                    <Grid item md={2} xs={12}>
                         <Checkbox /> <label>Final</label>
+                    </Grid>
+                    <Grid container md={8} xs={12} justifyContent="flex-end">
+                        <Grid item >
+                            <Button variant="contained" style={{ "margin-top": "15%" }} size="medium" component="span">
+                                Add Placement
+                            </Button>
+                        </Grid>
                     </Grid>
                 </Grid>
             </SubCard>
