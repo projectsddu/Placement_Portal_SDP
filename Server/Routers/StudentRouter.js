@@ -54,6 +54,7 @@ router.get("/getAllStudents",
     //  [Authenticate],
     StudentController.getAllStudents)
 router.get("/getOneStudent", [Authenticate], StudentController.getOneStudent)
+router.get("/getOneStudentInAdmin/:id", StudentController.getOneStudentInAdmin)
 router.post("/addCV", [Authenticate, upload1.single("Student_CV_File")], StudentController.CV_Upload)
 router.post("/updateStudent/", [upload.single("Student_Details_File")], StudentController.updateStudent)
 router.post("/deleteStudent/:id", StudentController.deleteStudent)
