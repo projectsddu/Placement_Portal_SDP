@@ -8,9 +8,13 @@ import {
 import MainCard from '../../ui-component/cards/MainCard';
 import { DataGrid, RowsProp, ColDef, GridToolbarContainer, GridToolbarExport } from '@material-ui/data-grid';
 import EditIcon from '@material-ui/icons/Edit';
-import { Button } from '@material-ui/core';
-import { IconDashboard, IconDeviceAnalytics, IconSpeakerphone } from '@tabler/icons';
+import { Paper, Typography, Box, Grid, Button, ListItem, List } from '@material-ui/core';
+import { IconDashboard, IconCirclePlus, IconDeviceAnalytics, IconSpeakerphone } from '@tabler/icons';
 import useFetch from '../../Utilities/useFetch';
+import SubCard from './../../ui-component/cards/SubCard';
+import { useHistory } from 'react-router-dom';
+import ChipCard from '../../ui-component/cards/GenericCards/ChipCard';
+import EmptyStudent from './JSX/EmptyStudent';
 
 function CustomToolbar() {
     return (
@@ -25,6 +29,8 @@ export default function ViewStudent() {
         IconDeviceAnalytics,
         IconSpeakerphone
     };
+
+    const history = useHistory();
 
     const { required_data, loading } = useFetch('/student/getAllStudents', 'GET');
 
@@ -72,8 +78,7 @@ export default function ViewStudent() {
         { field: 'Current_CPI', headerName: 'Current CPI', width: 200, editable: false },
         { field: 'Email_ID', headerName: 'Email ID', width: 200, editable: false },
         { field: 'Contact_No_1', headerName: 'Contact No 1', width: 200, editable: false },
-        { field: 'Contact_No_2', headerName: 'Contact No 2', width: 200, editable: false },
-
+        { field: 'Contact_No_2', headerName: 'Contact No 2', width: 200, editable: false }
 
         // { field: 'Sem_5_SPI', headerName: 'Sem 5 SPI', type: 'number', width: 200, editable: false },
         // { field: 'Sem_6_SPI', headerName: 'Sem 6 SPI', type: 'number', width: 200, editable: false },
@@ -95,8 +100,31 @@ export default function ViewStudent() {
             {/* <code>Editing: {JSON.stringify(editRowsModel)}</code> */}
             <div style={{ height: 400, width: '100%' }}>
                 {students_list.length == 0 ? (
-                    <h1>No Students Data</h1>
+                    <>
+                        <ChipCard loading={loading} data={<EmptyStudent />} />
+                    </>
                 ) : (
+                    // <SubCard>
+                    //     <Grid container spacing={2}>
+                    //         <Grid item xs={12} md={10}>
+                    //             <Typography variant="h1">No Stduent is added yet!!!</Typography>
+                    //         </Grid>
+                    //         <Grid item xs={12} md={2}>
+                    //             <Button
+                    //                 variant="contained"
+                    //                 size="large"
+                    //                 startIcon={<IconCirclePlus />}
+                    //                 color="primary"
+                    //                 onClick={() => {
+                    //                     history.push('/student/add_student');
+                    //                 }}
+                    //             >
+                    //                 {' '}
+                    //                 Add{' '}
+                    //             </Button>
+                    //         </Grid>
+                    //     </Grid>
+                    // </SubCard>
                     <DataGrid
                         editMode="row"
                         onEditCellChange={handleEditRowsModelChange}

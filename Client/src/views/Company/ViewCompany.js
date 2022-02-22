@@ -15,8 +15,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import { TextField } from '@material-ui/core';
 import $ from 'jquery';
-import { IconDashboard, IconDeviceAnalytics, IconSpeakerphone, IconEye } from '@tabler/icons';
+import { IconDashboard, IconCirclePlus, IconDeviceAnalytics, IconSpeakerphone, IconEye } from '@tabler/icons';
 import { DataGrid, RowsProp, ColDef, GridToolbarContainer, GridToolbarExport } from '@material-ui/data-grid';
+import ChipCard from '../../ui-component/cards/GenericCards/ChipCard';
+import EmptyCompany from './JSX/EmptyCompany';
+
+// import SubCard from '../../ui-component/cards/SubCard';
 
 const useStyles = makeStyles((theme) => ({
     applyBtn: {
@@ -39,7 +43,8 @@ const useStyles = makeStyles((theme) => ({
         marginTop: 12,
         background: theme.palette.primary.light,
         color: theme.palette.grey[700]
-    }
+    },
+    
 }));
 
 function CustomToolbar() {
@@ -89,7 +94,7 @@ function ViewCompany() {
         }
     }
 
-    let temp_id = "";
+    let temp_id = '';
 
     const rows = [];
     const columns = [
@@ -102,13 +107,18 @@ function ViewCompany() {
             width: 230,
             disableClickEventBubbling: true,
             valueGetter: (params) => {
-                temp_id = params.row.Company_ID
+                temp_id = params.row.Company_ID;
             },
             renderCell: (id) => {
                 return (
-                    <Button variant="contained" onClick={() => {
-                        history.push('/company/view_company/' + temp_id);
-                    }} color="primary" startIcon={<IconEye />}>
+                    <Button
+                        variant="contained"
+                        onClick={() => {
+                            history.push('/company/view_company/' + temp_id);
+                        }}
+                        color="primary"
+                        startIcon={<IconEye />}
+                    >
                         View Full Company
                     </Button>
                 );
@@ -119,8 +129,6 @@ function ViewCompany() {
         { field: 'Contact_person_1_name', headerName: 'Contact Person Name', width: 230, editable: false },
         { field: 'Contact_person_1_email_ID', headerName: 'Contact Person Email', width: 230, editable: false },
         { field: 'Contact_person_1_Mobile', headerName: 'Contact Person Mobile', width: 230, editable: false },
-
-        
 
         // hidden columns
         { field: 'Contact_person_1_designation', headerName: 'Contact Person Designation', width: 200, editable: false, hide: true },
@@ -179,7 +187,26 @@ function ViewCompany() {
                 {loading ? (
                     ''
                 ) : required_data['data'] == 'No Student data!' ? (
-                    <h1>No Company Data</h1>
+                    <>
+                        <ChipCard loading={loading} data={<EmptyCompany/>}/>
+                    </>
+                    // <SubCard>
+                    //     <Grid container spacing={2}>
+                    //         <Grid item xs={12} md={10}>
+                    //             <Typography variant="h2">No Company is added yet!!!</Typography>
+                    //         </Grid>
+                    //         <Grid item xs={12} md={2}>
+                    //         <Button variant="contained" 
+                    //             size='large'
+                    //             startIcon={<IconCirclePlus />} 
+                    //             color="primary"
+                    //             onClick={() => {
+                    //                 history.push('/company/add_company');
+                    //             }}
+                    //             > Add </Button>
+                    //         </Grid>
+                    //     </Grid>
+                    // </SubCard>
                 ) : (
                     <div style={{ height: 400, width: '100%' }}>
                         <DataGrid

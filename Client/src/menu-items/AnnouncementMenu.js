@@ -35,14 +35,14 @@ export const AnnouncementMenu = {
             icon: icons['IconEye'],
             breadcrumbs: false
         },
-        {
-            id: 'AnnouncementDetails',
-            title: 'All Announcements',
-            type: 'item',
-            url: '/announcement/index',
-            icon: icons['IconSpeakerphone'],
-            breadcrumbs: false
-        },
+        // {
+        //     id: 'AnnouncementDetails',
+        //     title: 'All Announcements',
+        //     type: 'item',
+        //     url: '/announcement/index',
+        //     icon: icons['IconSpeakerphone'],
+        //     breadcrumbs: false
+        // },
 
 
     ]
