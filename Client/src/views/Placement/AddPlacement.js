@@ -8,66 +8,37 @@ import useFetch from '../../Utilities/useFetch';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { IconCirclePlus } from '@tabler/icons';
 import Grid from '@mui/material/Grid';
+import SubCard from '../../ui-component/cards/SubCard';
+import { Typography } from '@material-ui/core';
+import { ParseDate } from '../../Utilities/ParseDate';
 
 function AddPlacement() {
-    const [placementCard, setPlacementCard] = useState([<CompanyPlacementCard />]);
 
     const [studentData, setStudentData] = useState('');
     const [stduentDetails, setStduentDetails] = useState(undefined);
 
-    // useEffect(async () => {
-    //     if (studentData.length === 10) {
-    //         // fetch details
-    //         const student_data_api = await fetch("/student/getOneStudentInAdmin/" + studentData, {method: 'GET'})
-
-    //         if(student_data_api)
-    //         {
-    //             student_data_api.json()
-    //             .then((value) => {
-    //                 console.log(value)
-    //                 setStduentDetails(value["data"])
-    //                 setTimeout(() =>{
-    //                     // console.log(value["data"]);
-    //                     console.log(stduentDetails);
-    //                 }, 1000)
-                    
-    //             })
-    //         }
-
-    //     } 
-        
-    // }, [studentData]);
 
 
-    async function handleChange(e)
-    {
+    async function handleChange(e) {
         setStudentData(e.target.value)
-        
-        if(e.target.value.length === 10)
-        {
-            fetch("/student/getOneStudentInAdmin/" + e.target.value, {method: 'GET'})
-            .then((value) => {
-                value.json()
-                .then((value) => {
-                    // console.log(value);
-                    setStduentDetails(value)
 
-                    setTimeout(() =>{
-                        // console.log(value["data"]);
-                        console.log(stduentDetails);
-                    }, 1000)
+        if (e.target.value.length === 10) {
+            let response = undefined
+            response = await fetch("/student/getOneStudentInAdmin/" + e.target.value.toUpperCase(), { method: "GET" })
 
-                    // console.log(stduentDetails)
-                })
-            })
-            
-            // const data = await student_data_api.json()
-            
-            // setStduentDetails(data["data"])
-            // console.log(stduentDetails);
+            if (response != undefined) {
+                let jsonData = undefined
+                jsonData = await response.json()
+                if (jsonData != undefined) {
+                    console.log(jsonData);
+                    setStduentDetails(jsonData["data"])
+                }
+            }
+
+
         }
 
-    }   
+    }
 
     function handleClick() {
         // console.log("keval")
@@ -76,6 +47,17 @@ function AddPlacement() {
         setPlacementCard([].concat(placement_card_copy));
     }
 
+    const [first, setfirst] = useState("")
+    useEffect(() => {
+        console.log(first)
+    }, [first])
+
+    let oppo = 9000
+    function checkMe(str1) {
+        setfirst(str1 + oppo + "From GHere")
+    }
+
+    const [placementCard, setPlacementCard] = useState([<CompanyPlacementCard />]);
     return (
         <>
             <MainCard title="Add Placement">
@@ -91,6 +73,25 @@ function AddPlacement() {
                 />
                 <br />
                 <br />
+                {stduentDetails === undefined ? "" : <SubCard>
+                    <Grid container justifyContent={"flex-start"} spacing={2}>
+                        <Grid item md={4} xs={12}>
+                            <Typography variant="h3">
+
+                                {stduentDetails.FirstName + " " + stduentDetails.MiddleName + " " + stduentDetails.LastName}
+                            </Typography>
+                        </Grid>
+                        <Grid item md={4} xs={12}>
+                            <Typography variant="h3">
+
+                                {stduentDetails.Current_CPI}
+                            </Typography>
+                        </Grid>
+                        <Grid item md={4} xs={12}>
+
+                        </Grid>
+                    </Grid>
+                </SubCard>}
 
                 {placementCard.map((e) => {
                     return e;
