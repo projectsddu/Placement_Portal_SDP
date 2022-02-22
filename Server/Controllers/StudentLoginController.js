@@ -5,7 +5,7 @@ const UserLoginService = require("../Services/UserLoginService")
 
 const loginUser = async (req, res) => {
     try {
-        const username = req.body.username
+        const username = req.body.Student_ID
         const password = new Date(req.body.password)
         const userPassword = password.getDate() + "/" + password.getMonth() + "/" + password.getFullYear()
         console.log(username, userPassword);
