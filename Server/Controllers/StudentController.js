@@ -120,6 +120,7 @@ const getAllStudents = async (req, res) => {
 const getOneStudent = async (req, res) => {
     try {
         let id = req.userId
+        console.log(id)
         let student = await StudentService.getOneStudent(id)
         if (student) {
 
@@ -128,6 +129,28 @@ const getOneStudent = async (req, res) => {
         else {
             throw "Error in get One student"
         }
+    }
+    catch (err) {
+        log.error(err.toString())
+        return res.json({ status: false, data: "Error Fetching Student data !!!" })
+    }
+}
+
+const getOneStudentInAdmin = async (req, res) => {
+    try
+    {
+        const student_id = req.params.id;
+        console.log(student_id)
+
+        let student = await StudentService.getOneStudent(student_id)
+        if (student) {
+
+            return res.json({ status: student.length == 0 ? false : true, data: student.length == 0 ? "No Student data!" : student })
+        }
+        else {
+            throw "Error in get One student in admin"
+        }
+
     }
     catch (err) {
         log.error(err.toString())
@@ -251,5 +274,6 @@ module.exports = {
     updateStudent,
     CV_Upload,
     deleteStudent,
-    Photo_Upload
+    Photo_Upload,
+    getOneStudentInAdmin
 }
