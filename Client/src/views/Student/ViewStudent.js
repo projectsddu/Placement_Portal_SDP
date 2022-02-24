@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     useGridApiRef,
     DataGridPro,
@@ -15,6 +15,7 @@ import SubCard from './../../ui-component/cards/SubCard';
 import { useHistory } from 'react-router-dom';
 import ChipCard from '../../ui-component/cards/GenericCards/ChipCard';
 import EmptyStudent from './JSX/EmptyStudent';
+import { TextField } from '@material-ui/core';
 
 function CustomToolbar() {
     return (
@@ -31,25 +32,81 @@ export default function ViewStudent() {
     };
 
     const history = useHistory();
+    const [search, setSearch] = useState('');
+    const [student_list_original, setStudent_list_original] = useState([]);
+    const [student_list_copy, setStudent_list_copy] = useState([]);
 
-    const { required_data, loading } = useFetch('/student/getAllStudents', 'GET');
+    useEffect(async () => {
+        let response = undefined;
+        response = await fetch("/student/getAllStudents", { method: "GET" })
 
-    let students_list = [];
+        if(response != undefined)
+        {
+            let jsonData = undefined
+            jsonData = await response.json()
+            if (jsonData != undefined) {
+                console.log(jsonData);
+                
+                for(let i = 0; i < jsonData["data"].length; i++)
+                {
+                    jsonData["data"][i]["id"] = i;
+                }
+
+                setStudent_list_original([].concat(jsonData["data"]))
+                setStudent_list_copy([].concat(jsonData["data"]))
+                // console.log(company_list_original)
+            }
+        }
+
+    }, []);
+
+    function handleSearch(e)
+    {
+        console.log(e.target.value)
+        setSearch(e.target.value);
+
+        let temp = [];
+        for(let i = 0; i < student_list_original.length; i++)
+        {
+            let keys = Object.keys(student_list_original[i])
+            // console.log(keys)
+            for(let j = 0; j < keys.length; j++)
+            {
+                let key = keys[j];
+                // console.log(company_list_original[i])
+                // console.log(key)
+                let value = student_list_original[i][key].toString().toLowerCase();
+                if(value.includes(e.target.value.toString().toLowerCase()))
+                {
+                    temp.push(student_list_original[i])
+                    break;
+                }
+            }
+            
+        }
+
+        setStudent_list_copy(temp);
+        
+    }
+
+    // const { required_data, loading } = useFetch('/student/getAllStudents', 'GET');
+
+    // let students_list = [];
     function handleClick(idx) {
         console.log(idx);
     }
-    if (!loading) {
-        // console.log(required_data);
-        if (required_data['data'] != 'No Student data!') {
-            for (let i = 0; i < required_data['data'].length; i++) {
-                var obj = {};
-                obj = required_data['data'][i];
-                // console.log(obj)
-                students_list.push(obj);
-            }
-            console.log(students_list);
-        }
-    }
+    // if (!loading) {
+    //     // console.log(required_data);
+    //     if (required_data['data'] != 'No Student data!') {
+    //         for (let i = 0; i < required_data['data'].length; i++) {
+    //             var obj = {};
+    //             obj = required_data['data'][i];
+    //             // console.log(obj)
+    //             students_list.push(obj);
+    //         }
+    //         console.log(students_list);
+    //     }
+    // }
 
     const rows = [];
     const [columns, setcolumns] = useState([
@@ -97,11 +154,15 @@ export default function ViewStudent() {
 
     return (
         <MainCard title="View Student">
+            <TextField label="Search" value={search} onInput={(e) => handleSearch(e)} fullWidth></TextField>
+            <br />
+            <br />
+            <br />
             {/* <code>Editing: {JSON.stringify(editRowsModel)}</code> */}
             <div style={{ height: 400, width: '100%' }}>
-                {students_list.length == 0 ? (
+                {student_list_original.length == 0 ? (
                     <>
-                        <ChipCard loading={loading} data={<EmptyStudent />} />
+                        <ChipCard loading={false} data={<EmptyStudent />} />
                     </>
                 ) : (
                     // <SubCard>
@@ -130,7 +191,7 @@ export default function ViewStudent() {
                         onEditCellChange={handleEditRowsModelChange}
                         onCellClick={handleCellClick}
                         checkboxSelection
-                        rows={students_list}
+                        rows={student_list_copy}
                         columns={columns}
                         components={{
                             Toolbar: CustomToolbar

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Paper, Typography, Box, Grid, Button, ListItem, List } from '@material-ui/core';
 import { useTheme } from '@material-ui/styles';
 import MainCard from './../../ui-component/cards/MainCard';
@@ -68,32 +68,31 @@ function CustomToolbar() {
 function ViewAnnoucements() {
     const classes = useStyles();
 
-    const [search, setSearch] = useState('');
-    const { required_data, loading } = useFetch('/annoucement/getAllAnnoucements/', 'GET');
+    // const { required_data, loading } = useFetch('/annoucement/getAllAnnoucements/', 'GET');
 
-    var annoucements = [];
-    if (!loading) {
-        // console.log(required_data);
-        if (required_data['data'] != 'No Student data!') {
-            for (let i = 0; i < required_data['data'].length; i++) {
-                var obj = {};
-                obj = required_data['data'][i];
-                obj['id'] = i;
-                // console.log(required_data['data'][i])
-                let title =
-                    required_data['data'][i]['Company_details']['Company_name'] +
-                    '-' +
-                    required_data['data'][i]['Job_Role'] +
-                    ' for ' +
-                    ParseDate.getYear(required_data['data'][i]['Passed_out_year']) +
-                    ' Batch';
-                obj['title'] = title;
-                console.log(title);
-                annoucements.push(obj);
-            }
-            console.log(annoucements);
-        }
-    }
+    // var annoucements = [];
+    // if (!loading) {
+    //     // console.log(required_data);
+    //     if (required_data['data'] != 'No Student data!') {
+    //         for (let i = 0; i < required_data['data'].length; i++) {
+    //             var obj = {};
+    //             obj = required_data['data'][i];
+    //             obj['id'] = i;
+    //             // console.log(required_data['data'][i])
+    //             let title =
+    //                 required_data['data'][i]['Company_details']['Company_name'] +
+    //                 '-' +
+    //                 required_data['data'][i]['Job_Role'] +
+    //                 ' for ' +
+    //                 ParseDate.getYear(required_data['data'][i]['Passed_out_year']) +
+    //                 ' Batch';
+    //             obj['title'] = title;
+    //             console.log(title);
+    //             annoucements.push(obj);
+    //         }
+    //         console.log(annoucements);
+    //     }
+    // }
     // if (!loading) {
     //     // console.log(required_data["data"])
     //     if(required_data["data"] != "No Announcement data!")
@@ -103,28 +102,107 @@ function ViewAnnoucements() {
     //     console.log(annoucements);
     // }
 
+    const [search, setSearch] = useState('');
+    const [announcement_list_original, setAnnouncement_list_original] = useState([]);
+    const [announcement_list_copy, setAnnouncement_list_copy] = useState([]);
+
+    useEffect(async () => {
+        let response = undefined;
+        response = await fetch("/annoucement/getAllAnnoucements/", { method: "GET" })
+
+        if(response != undefined)
+        {
+            let jsonData = undefined
+            jsonData = await response.json()
+            if (jsonData != undefined) {
+                console.log(jsonData);
+                
+                for(let i = 0; i < jsonData["data"].length; i++)
+                {
+                    jsonData["data"][i]["id"] = i;
+
+                    jsonData["data"][i]["Date_of_Visit"] = ParseDate.ParseDate(jsonData["data"][i]["Date_of_Visit"]);
+
+                    jsonData["data"][i]["Date_of_announcement"] = ParseDate.ParseDate(jsonData["data"][i]["Date_of_announcement"]);
+
+                    jsonData["data"][i]["Passed_out_year"] = ParseDate.getYear(jsonData["data"][i]["Passed_out_year"]);
+                    
+                    jsonData["data"][i]["Registration_Deadline"] = ParseDate.ParseDate(jsonData["data"][i]["Registration_Deadline"], true);
+
+                    jsonData["data"][i]["title"] = jsonData['data'][i]['Company_details']['Company_name'] +
+                                    '-' +
+                                    jsonData['data'][i]['Job_Role'] +
+                                    ' for ' +
+                                    ParseDate.getYear(jsonData['data'][i]['Passed_out_year']) +
+                                    ' Batch';
+
+
+                }
+
+                setAnnouncement_list_original([].concat(jsonData["data"]))
+                setAnnouncement_list_copy([].concat(jsonData["data"]))
+                console.log(jsonData["data"]);
+
+                // console.log()
+            }
+        }
+
+    }, []);
+
+
+    function handleSearch(e)
+    {
+        console.log(e.target.value)
+        setSearch(e.target.value);
+
+        let temp = [];
+        for(let i = 0; i < announcement_list_original.length; i++)
+        {
+            let keys = Object.keys(announcement_list_original[i])
+            // console.log(keys)
+            for(let j = 0; j < keys.length; j++)
+            {
+                let key = keys[j];
+                // console.log(company_list_original[i])
+                // console.log(key)
+                let value = announcement_list_original[i][key].toString().toLowerCase();
+                if(value.includes(e.target.value.toString().toLowerCase()))
+                {
+                    temp.push(announcement_list_original[i])
+                    break;
+                }
+            }
+            
+        }
+        console.log(temp);
+
+        setAnnouncement_list_copy(temp);
+        
+    }
+
+
     let history = useHistory();
 
     function handleRedirect(id) {
         history.push('/announcement/view_annoucement/' + id);
     }
 
-    function handleSearch(e) {
-        console.log(e.target.value);
-        setSearch(e.target.value);
-        let searchText = e.target.value == '' ? ' ' : e.ta1qrget.value;
-        var root = document.getElementsByClassName('MuiGrid-root MuiGrid-container')[0].children;
-        console.log(root);
-        for (let i = 0; i < root.length; i++) {
-            var elem = document.getElementById(root[i].id);
-            var elemText = elem.innerText.toLowerCase();
-            if (!elemText.includes(searchText.toLowerCase())) {
-                $(elem).hide();
-            } else {
-                $(elem).show();
-            }
-        }
-    }
+    // function handleSearch(e) {
+    //     console.log(e.target.value);
+    //     setSearch(e.target.value);
+    //     let searchText = e.target.value == '' ? ' ' : e.ta1qrget.value;
+    //     var root = document.getElementsByClassName('MuiGrid-root MuiGrid-container')[0].children;
+    //     console.log(root);
+    //     for (let i = 0; i < root.length; i++) {
+    //         var elem = document.getElementById(root[i].id);
+    //         var elemText = elem.innerText.toLowerCase();
+    //         if (!elemText.includes(searchText.toLowerCase())) {
+    //             $(elem).hide();
+    //         } else {
+    //             $(elem).show();
+    //         }
+    //     }
+    // }
 
     let Announcement_ID = '';
     const rows = [];
@@ -178,16 +256,16 @@ function ViewAnnoucements() {
     return (
         <>
             <MainCard title="View Announcements">
-                <TextField label="Search" value={search} onChange={(e) => handleSearch(e)} fullWidth></TextField>
+                <TextField label="Search" value={search} onInput={(e) => handleSearch(e)} fullWidth></TextField>
                 <br />
                 <br />
                 <br />
                 <div style={{ height: 400, width: '100%' }}>
-                    {loading ? (
+                    {announcement_list_original === undefined  ? (
                         ''
-                    ) : annoucements.length == 0 ? (
+                    ) : announcement_list_original.length == 0 ? (
                         <>
-                            <ChipCard loading={loading} data={<EmptyAnnouncement />} />
+                            <ChipCard loading={false} data={<EmptyAnnouncement />} />
                         </>
                     ) : (
                         // <SubCard>
@@ -216,7 +294,7 @@ function ViewAnnoucements() {
                             onEditCellChange={handleEditRowsModelChange}
                             onCellClick={handleCellClick}
                             checkboxSelection
-                            rows={annoucements}
+                            rows={announcement_list_copy}
                             columns={columns}
                             components={{
                                 Toolbar: CustomToolbar

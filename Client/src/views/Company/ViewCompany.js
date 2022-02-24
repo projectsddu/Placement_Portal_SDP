@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Paper, Typography, Box, Grid, Button, ListItem, List } from '@material-ui/core';
 import { useTheme } from '@material-ui/styles';
 import MainCard from './../../ui-component/cards/MainCard';
@@ -76,23 +76,52 @@ function ViewCompany() {
     const [search, setSearch] = useState('');
     const history = useHistory();
     const classes = useStyles();
-    const { required_data, loading } = useFetch('/company/getCompany', 'GET');
 
-    let company_list = [];
 
-    if (!loading) {
-        // console.log(required_data['data']);
-        if (required_data['data'] != 'No Student data!') {
-            for (let i = 0; i < required_data['data'].length; i++) {
-                var obj = {};
-                obj = required_data['data'][i];
-                obj['id'] = i;
-                // console.log(obj)
-                company_list.push(obj);
+    // const { required_data, loading } = useFetch('/company/getCompany', 'GET');
+
+    // let company_list = [];
+
+    // if (!loading) {
+    //     // console.log(required_data['data']);
+    //     if (required_data['data'] != 'No Student data!') {
+    //         for (let i = 0; i < required_data['data'].length; i++) {
+    //             var obj = {};
+    //             obj = required_data['data'][i];
+    //             obj['id'] = i;
+    //             // console.log(obj)
+    //             company_list.push(obj);
+    //         }
+    //         console.log(company_list);
+    //     }
+    // }
+
+    const [company_list_original, setCompany_list_original] = useState([]);
+    const [company_list_copy, setCompany_list_copy] = useState([]);
+
+    useEffect(async () => {
+        let response = undefined;
+        response = await fetch("/company/getCompany", { method: "GET" })
+
+        if(response != undefined)
+        {
+            let jsonData = undefined
+            jsonData = await response.json()
+            if (jsonData != undefined) {
+                console.log(jsonData);
+                
+                for(let i = 0; i < jsonData["data"].length; i++)
+                {
+                    jsonData["data"][i]["id"] = i;
+                }
+
+                setCompany_list_original([].concat(jsonData["data"]))
+                setCompany_list_copy([].concat(jsonData["data"]))
+                // console.log(company_list_original)
             }
-            console.log(company_list);
         }
-    }
+    }, []);
+    
 
     let temp_id = '';
 
@@ -158,37 +187,70 @@ function ViewCompany() {
         setEditRowsModel(model);
     }, []);
 
-    function handleSearch(e) {
-        console.log(e.target.value);
+    function handleSearch(e)
+    {
+        console.log(e.target.value)
         setSearch(e.target.value);
-        let searchText = e.target.value == '' ? ' ' : e.target.value;
-        var root = document.getElementsByClassName('MuiGrid-root MuiGrid-container')[0].children;
-        console.log(root);
-        for (let i = 0; i < root.length; i++) {
-            var elem = document.getElementById(root[i].id);
-            console.log(elem);
-            var elemText = elem.innerText.toLowerCase();
-            if (!elemText.includes(searchText.toLowerCase())) {
-                $(elem).hide();
-            } else {
-                $(elem).show();
+
+        let temp = [];
+        for(let i = 0; i < company_list_original.length; i++)
+        {
+            let keys = Object.keys(company_list_original[i])
+            // console.log(keys)
+            for(let j = 0; j < keys.length; j++)
+            {
+                let key = keys[j];
+                // console.log(company_list_original[i])
+                // console.log(key)
+                let value = company_list_original[i][key].toString().toLowerCase();
+                if(value.includes(e.target.value.toString().toLowerCase()))
+                {
+                    temp.push(company_list_original[i])
+                    break;
+                }
             }
+            
         }
+
+        setCompany_list_copy(temp);
+        
     }
+
+    // function handleSearch(e) {
+    //     console.log(e.target.value);
+    //     setSearch(e.target.value);
+    //     let searchText = e.target.value == '' ? ' ' : e.target.value;
+    //     var root = document.getElementsByClassName('MuiGrid-root MuiGrid-container')[0].children;
+    //     console.log(root);
+    //     for (let i = 0; i < root.length; i++) {
+    //         var elem = document.getElementById(root[i].id);
+    //         console.log(elem);
+    //         var elemText = elem.innerText.toLowerCase();
+    //         if (!elemText.includes(searchText.toLowerCase())) {
+    //             $(elem).hide();
+    //         } else {
+    //             $(elem).show();
+    //         }
+    //     }
+    // }
 
     return (
         <>
             {/* /**{ (setData(data)).map((e) => {return e})} */}
             <MainCard title="View Company">
-                <TextField label="Search" value={search} onChange={(e) => handleSearch(e)} fullWidth></TextField>
+                <TextField label="Search" value={search} onInput={(e) => handleSearch(e)} fullWidth></TextField>
                 <br />
                 <br />
                 <br />
-                {loading ? (
+                {company_list_original === undefined ? (
                     ''
-                ) : required_data['data'] == 'No Student data!' ? (
+                ) : 
+                // required_data['data'] == 'No Student data!'
+                company_list_original.length == 0 
+                ? 
+                (
                     <>
-                        <ChipCard loading={loading} data={<EmptyCompany/>}/>
+                        <ChipCard loading={false} data={<EmptyCompany/>}/>
                     </>
                     // <SubCard>
                     //     <Grid container spacing={2}>
@@ -211,7 +273,7 @@ function ViewCompany() {
                     <div style={{ height: 400, width: '100%' }}>
                         <DataGrid
                             checkboxSelection
-                            rows={company_list}
+                            rows={company_list_copy === undefined ? [] : company_list_copy}
                             columns={columns}
                             components={{
                                 Toolbar: CustomToolbar
