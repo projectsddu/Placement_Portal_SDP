@@ -202,8 +202,8 @@ export default function S_ViewProfile() {
             createData("Pin Code", student_details["Pin_Code"]),
             createData("Current semester", student_details["Current_semester"]),
             createData("Career Preference", student_details["Career_Preference"]),
-            createData("CV Upload", student_details["CV_Upload"]),
-            createData("Student Photo", student_details["Student_Photo"]),
+            // createData("CV Upload", student_details["CV_Upload"]),
+            // createData("Student Photo", student_details["Student_Photo"]),
             createData("Branch Id", student_details["Branch_Id"])
         ];
     }
@@ -324,6 +324,69 @@ export default function S_ViewProfile() {
                                             <TableCell align="right">{row.value}</TableCell>
                                         </TableRow>
                                     ))}
+                                    <TableRow
+                                        key="CV_Upload"
+                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                    >
+                                        <TableCell component="th" scope="row">
+                                            <Typography variant="h5">
+                                                CV Upload
+                                            </Typography>
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {student_details === undefined ? "Wait Loading...." : <>
+                                                <a target='blank'
+                                                    style={{ "text-decoration": "none", "cursor": "pointer" }}
+                                                    href={
+                                                        "http://localhost:8000" + student_details["CV_Upload"].split(".")[1] + "." + student_details["CV_Upload"].split(".")[2]}>
+
+                                                    {student_details === undefined ? "Wait Loading...." : <>
+                                                            <Chip
+                                                                label={"View CV"}
+                                                                // variant="outlined"
+                                                                color='primary'
+                                                                clickable
+                                                            />
+
+                                                    </>
+                                                    }
+
+                                                </a>
+                                            </>}
+
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow
+                                        key="Student_Photo"
+                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                    >
+                                        <TableCell component="th" scope="row">
+                                            <Typography variant="h5">
+                                                Student Photo
+                                            </Typography>
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {student_details === undefined ? "Wait Loading...." : <>
+                                                <a target='blank'
+                                                    style={{ "text-decoration": "none", "cursor": "pointer" }}
+                                                    href={
+                                                        "http://localhost:8000" + student_details["Student_Photo"].split(".")[1] + "." + student_details["Student_Photo"].split(".")[2]}>
+
+                                                    {student_details === undefined ? "Wait Loading...." : <>
+                                                            <Chip
+                                                                label={"View Photo"}
+                                                                // variant="outlined"
+                                                                color='primary'
+                                                                clickable
+                                                            />
+                                                    </>
+                                                    }
+
+                                                </a>
+                                            </>}
+
+                                        </TableCell>
+                                    </TableRow>
                                 </TableBody>
                             </Table>
                         </TableContainer>
