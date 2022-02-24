@@ -5,14 +5,13 @@ import { TextField } from '@material-ui/core';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import useFetch from '../../Utilities/useFetch';
-
+import { Select } from '@mui/material';
 
 const Input = styled('input')({
     display: 'none'
 });
 
 function CompanyPlacementCard(props) {
-
     // let [studentPlacementDetails, setstudentPlacementDetails] = useState({
     //     Designation: "",
     //     Salary: "",
@@ -29,25 +28,22 @@ function CompanyPlacementCard(props) {
         IsFinal: props.details.IsFinal,
         Company_Name: props.details.Company_name,
         Company_ID: 1
-
-    })
+    });
     // console.log(props.details)
 
     useEffect(() => {
-        console.log(props.details)
-    }, [])
-
+        console.log(props.details);
+    }, []);
 
     // useEffect(() => {
     //     console.log(props.details)
     // }, [])
 
-
     const { required_data, loading } = useFetch('/annoucement/requiredAnnoucementDetails', 'GET');
 
     let companies = [];
     if (!loading) {
-        console.log(props)
+        console.log(props);
         // console.log(props.placedCompanyLabel)
         // for (let i = 0; i < required_data['data'].length; i++) {
         for (let i = 0; i < props.allCompanies.length; i++) {
@@ -63,37 +59,35 @@ function CompanyPlacementCard(props) {
 
     return (
         <>
-            {props.details.Company_details === undefined ? "keval" : "jenil"}{props.companyName}
+            {/* {props.details.Company_details === undefined ? "keval" : "jenil"}{props.companyName} */}
             <SubCard>
+                {props.details.Company_details === undefined ? (
+                    <TextField
+                        fullWidth
+                        id="companies"
+                        value={props.details.Company_details === undefined ? '' : props.details.Company_details.Company_name}
+                        // value={"keval"}
+                        select
+                        label="Select Company"
+                    >
+                        {companies.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                ) : (
+                    <TextField value={props.details.Company_details.Company_name} disabled fullWidth></TextField>
+                )}
 
-                <TextField
-                    fullWidth
-                    id="companies"
-                    value={props.companyName}
-                    select
-                    label="Select Company"
-                >
-                    {companies.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                </TextField>
                 <br />
                 <br />
                 <Grid container direction="row" justifyContent="flex-start" alignItems="center" spacing={2}>
                     <Grid item md={6} xs={12}>
-                        <TextField
-                            value={props.details.Designation}
-                            fullWidth
-                            label="Designation"></TextField>
+                        <TextField value={props.details.Designation} fullWidth label="Designation"></TextField>
                     </Grid>
                     <Grid item md={6} xs={12}>
-                        <TextField
-                            value={props.details.Salary}
-                            fullWidth
-                            label="Salary"></TextField>
-
+                        <TextField value={props.details.Salary} fullWidth label="Salary"></TextField>
                     </Grid>
                 </Grid>
                 <br />
@@ -121,11 +115,41 @@ function CompanyPlacementCard(props) {
                         <Checkbox value={props.details.IsFinal} /> <label>Final</label>
                     </Grid>
                     <Grid container md={8} xs={12} justifyContent="flex-end">
-                        <Grid item >
-                            <Button variant="contained" style={{ "margin-top": "15%" }} size="medium" component="span">
+                        {props.details.Company_details === undefined ? (
+                            <Grid item>
+                                <Button variant="contained" style={{ 'margin-top': '15%' }} size="medium" component="span">
+                                    Add Placement
+                                </Button>
+                            </Grid>
+                        ) : (
+                            <Grid container justifyContent="flex-end" spacing={2}>
+                                <Grid item>
+                                    <Button
+                                        color="warning"
+                                        variant="contained"
+                                        style={{ 'margin-top': '15%' }}
+                                        size="medium"
+                                        component="span"
+                                    >
+                                        Update Placement
+                                    </Button>
+                                </Grid>
+                                <Grid item>
+                                    <Button
+                                        color="error"
+                                        variant="contained"
+                                        style={{ 'margin-top': '15%' }}
+                                        size="medium"
+                                        component="span"
+                                    >
+                                        Delele Placement
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        )}
+                        {/* <Button variant="contained" style={{ 'margin-top': '15%' }} size="medium" component="span">
                                 Add Placement
-                            </Button>
-                        </Grid>
+                            </Button> */}
                     </Grid>
                 </Grid>
             </SubCard>
