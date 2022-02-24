@@ -11,13 +11,44 @@ import Grid from '@mui/material/Grid';
 import SubCard from '../../ui-component/cards/SubCard';
 import { Typography } from '@material-ui/core';
 import { ParseDate } from '../../Utilities/ParseDate';
+import ChipCard from "../../ui-component/cards/GenericCards/ChipCard"
+import Student_details from './JSX/Student_details';
 
 function AddPlacement() {
 
     const [studentData, setStudentData] = useState('');
-    const [stduentDetails, setStduentDetails] = useState(undefined);
+    const [StudentDetails, setStudentDetails] = useState(undefined);
+    const [studentPlacement, setStudentPlacement] = useState(undefined)
+    const [allCompanies, setallCompanies] = useState([])
 
+    const [placementCard, setPlacementCard] = useState([]);
 
+    useEffect(async () => {
+        let response = await fetch("/company/getCompany")
+        if (response) {
+            let data = await response.json()
+            if (data) {
+                console.log(data["data"])
+                setallCompanies([].concat(data["data"]))
+                // console.log(allCompanies)
+                setPlacementCard([].concat(<CompanyPlacementCard
+                    companyName={""}
+                    details={{
+                        Designation: "",
+                        Salary: "",
+                        Offer_Letter: "",
+                        Passed_out_year: "",
+                        IsFinal: false,
+                        Company_ID: "",
+                        companyName: ""
+                    }}
+                    allCompanies={data["data"]
+                    } />))
+            }
+        }
+    }, [])
+
+    const [jsonData, setjsonData] = useState(undefined)
 
     async function handleChange(e) {
         setStudentData(e.target.value)
@@ -31,11 +62,45 @@ function AddPlacement() {
                 jsonData = await response.json()
                 if (jsonData != undefined) {
                     console.log(jsonData);
-                    setStduentDetails(jsonData["data"])
+                    setStudentDetails(jsonData["data"])
+                    const student_Id = jsonData["data"]["Student_ID"]
+                    // console.log(student_Id)
+                    let response1 = undefined
+                    response1 = await fetch("/studentplacement/getStudentPlacement/" + student_Id, { method: "GET" })
+
+                    if (response1 != undefined) {
+                        let jsonData1 = undefined
+                        jsonData1 = await response1.json()
+                        console.log(jsonData1)
+                        setStudentPlacement(jsonData1)
+                        let studentPlacementCardCopy = placementCard
+                        console.log(jsonData1.data)
+                        if (jsonData1.data != "Student Placement Record Not Found!") {
+                            console.log(jsonData1.data.length)
+                            for (let i = 0; i < jsonData1.data.length; i++) {
+                                console.log(i, jsonData1.data[i])
+
+                                console.log(jsonData1.data[i].Company_details.Company_name)
+                                jsonData1.data[i].Company_name = jsonData1.data[i].Company_details.Company_name
+                                studentPlacementCardCopy.unshift(<CompanyPlacementCard
+                                    companyName={jsonData1.data[i].Company_details.Company_name}
+                                    details={jsonData1.data[i]}
+                                    allCompanies={allCompanies}
+                                />)
+                            }
+                            setPlacementCard([].concat(studentPlacementCardCopy))
+                            // console.log(placementCard)
+                        }
+                    }
+
                 }
             }
 
 
+        }
+        else if (e.target.value === 0) {
+            setStudentDetails(undefined)
+            console.log("Here")
         }
 
     }
@@ -43,7 +108,18 @@ function AddPlacement() {
     function handleClick() {
         // console.log("keval")
         let placement_card_copy = placementCard;
-        placement_card_copy.push(<CompanyPlacementCard />);
+        placement_card_copy.push(<CompanyPlacementCard
+            companyName={""}
+            details={{
+                Designation: "",
+                Salary: "",
+                Offer_Letter: "",
+                Passed_out_year: "",
+                IsFinal: false,
+                Company_ID: "",
+                companyName: ""
+            }}
+            allCompanies={allCompanies} />);
         setPlacementCard([].concat(placement_card_copy));
     }
 
@@ -57,7 +133,8 @@ function AddPlacement() {
         setfirst(str1 + oppo + "From GHere")
     }
 
-    const [placementCard, setPlacementCard] = useState([<CompanyPlacementCard />]);
+
+
     return (
         <>
             <MainCard title="Add Placement">
@@ -73,28 +150,22 @@ function AddPlacement() {
                 />
                 <br />
                 <br />
-                {stduentDetails === undefined ? "" : <SubCard>
-                    <Grid container justifyContent={"flex-start"} spacing={2}>
-                        <Grid item md={4} xs={12}>
-                            <Typography variant="h3">
+                {StudentDetails === undefined ? "" :
+                    <>
+                        <ChipCard loading={false} data={<Student_details details={StudentDetails} />}>
+                        </ChipCard>
+                        <br />
+                    </>
 
-                                {stduentDetails.FirstName + " " + stduentDetails.MiddleName + " " + stduentDetails.LastName}
-                            </Typography>
-                        </Grid>
-                        <Grid item md={4} xs={12}>
-                            <Typography variant="h3">
+                }
 
-                                {stduentDetails.Current_CPI}
-                            </Typography>
-                        </Grid>
-                        <Grid item md={4} xs={12}>
-
-                        </Grid>
-                    </Grid>
-                </SubCard>}
-
-                {placementCard.map((e) => {
+                {/* {placementCard.map((e) => {
                     return e;
+                })} */}
+                {placementCard.map((elem) => {
+                    return (<>
+                        {elem}
+                    </>)
                 })}
 
                 <br />

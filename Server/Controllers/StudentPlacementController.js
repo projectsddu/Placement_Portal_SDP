@@ -30,7 +30,7 @@ const addStudentPlacement = async (req, res) => {
 
 const getStudentPlacement = async (req, res) => {
     try {
-        const id = req.userId
+        const id = req.params.id
         let studentplacement = await StudentPlacementService.getStudentPlacement(id)
         if (studentplacement) {
             return res.json({ status: studentplacement.length == 0 ? false : true, data: studentplacement.length == 0 ? "Student Placement Record Not Found!" : studentplacement })
