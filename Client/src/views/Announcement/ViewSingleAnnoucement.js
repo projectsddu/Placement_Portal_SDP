@@ -259,8 +259,12 @@ function ViewSingleAnnoucement() {
                                                         "http://localhost:8000" + announcement_details["Job_Description_File"].split(".")[1] + "." + announcement_details["Job_Description_File"].split(".")[2]}>
 
                                                     {announcement_details === undefined ? "Wait Loading...." : <>
-                                                        <Chip label={"View Job Description File"} />
-
+                                                            <Chip
+                                                                label={"View Job Description File"}
+                                                                // variant="outlined"
+                                                                color='primary'
+                                                                clickable
+                                                            />
                                                     </>
                                                     }
 
