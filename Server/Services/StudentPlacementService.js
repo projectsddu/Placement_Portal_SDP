@@ -2,9 +2,10 @@ const logger = require("serverloggerjs/logger")
 const log = new logger(true)
 const db = require("../Models/index")
 const StudentPlacement = db.student_placements
+const CompanyService = require("./CompanyService")
 
 async function checkExists(id) {
-    const studentplacement = await StudentPlacement.findAll({ where: { id }})
+    const studentplacement = await StudentPlacement.findAll({ where: { id } })
     return studentplacement.length > 0 ? true : false
 }
 
@@ -20,16 +21,16 @@ const createStudentPlacement = async (studentplacementdata) => {
 
 const getStudentPlacement = async (id) => {
     try {
-        const status = await checkExists(id)
-        if(!status) {
-            throw "Error finding Student Placement details"
+        let studentplacement = await StudentPlacement.findAll({
+            where: { Student_ID: id }
+        })
+        studentplacement = JSON.parse(JSON.stringify(studentplacement))
+        for (let i = 0; i < studentplacement.length; i++) {
+            studentplacement[i]["Company_details"] = await CompanyService.getCompany(studentplacement[i]["Company_ID"])
+            console.log("Here")
         }
-        else {
-            let studentplacement = await StudentPlacement.findAll({
-                where: { id }
-            })
-            return studentplacement
-        }
+        return studentplacement
+
     } catch (error) {
         log.error(error.toString())
         return false
@@ -49,7 +50,7 @@ const getAllStudentPlacement = async () => {
 const updateStudentPlacement = async (studentplacementdata, id) => {
     try {
         const status = await checkExists(id)
-        if(!status) {
+        if (!status) {
             throw "Student Placement record doesn't exist"
         }
         else {
@@ -65,7 +66,7 @@ const updateStudentPlacement = async (studentplacementdata, id) => {
 const deleteStudentPlacement = async (id) => {
     try {
         const status = await checkExists(id)
-        if(!status) {
+        if (!status) {
             throw "Student Placement record doesn't exist"
         }
         else {
