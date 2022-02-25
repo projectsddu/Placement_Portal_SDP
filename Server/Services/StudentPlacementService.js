@@ -55,6 +55,7 @@ const updateStudentPlacement = async (studentplacementdata, id) => {
         }
         else {
             const studentplacement = await StudentPlacement.update(studentplacementdata, { where: { id } })
+            console.log("here from service");
             return true
         }
     } catch (error) {
