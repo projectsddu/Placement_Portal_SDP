@@ -30,25 +30,12 @@ function AddPlacement() {
             if (data) {
                 console.log(data["data"])
                 setallCompanies([].concat(data["data"]))
-                // console.log(allCompanies)
-                setPlacementCard([].concat(<CompanyPlacementCard
-                    companyName={""}
-                    details={{
-                        Designation: "",
-                        Salary: "",
-                        Offer_Letter: "",
-                        Passed_out_year: "",
-                        IsFinal: false,
-                        Company_ID: "",
-                        companyName: ""
-                    }}
-                    allCompanies={data["data"]
-                    } />))
+
             }
         }
     }, [])
 
-    const [jsonData, setjsonData] = useState(undefined)
+    // const [jsonData, setjsonData] = useState(undefined)
 
     async function handleChange(e) {
         setStudentData(e.target.value)
@@ -75,18 +62,29 @@ function AddPlacement() {
                         setStudentPlacement(jsonData1)
                         let studentPlacementCardCopy = placementCard
                         console.log(jsonData1.data)
-                        if (jsonData1.data != "Student Placement Record Not Found!") {
-                            console.log(jsonData1.data.length)
-                            for (let i = 0; i < jsonData1.data.length; i++) {
-                                console.log(i, jsonData1.data[i])
 
-                                console.log(jsonData1.data[i].Company_details.Company_name)
-                                jsonData1.data[i].Company_name = jsonData1.data[i].Company_details.Company_name
-                                studentPlacementCardCopy.unshift(<CompanyPlacementCard
-                                    companyName={jsonData1.data[i].Company_details.Company_name}
-                                    details={jsonData1.data[i]}
-                                    allCompanies={allCompanies}
-                                />)
+                        if (jsonData1.data != "Student Placement Record Not Found!" && jsonData1 != undefined) {
+                            console.log(jsonData1.data.length)
+
+                            for (let i = 0; i < jsonData1.data.length; i++) {
+                                console.log(jsonData1.data[i])
+                                studentPlacementCardCopy.unshift(
+                                    <CompanyPlacementCard
+                                        from={"line 86"}
+                                        allCompanies={allCompanies}
+                                        details={jsonData1.data[i]}
+                                        idx={i}
+                                    />
+                                )
+                                // console.log(jsonData1.data[i].Company_details.Company_name)
+                                // jsonData1.data[i].Company_name = jsonData1.data[i].Company_details.Company_name
+                                // console.log(i, jsonData1.data[i])
+                                // const sendProps = jsonData.data[i]
+                                // studentPlacementCardCopy.unshift(<CompanyPlacementCard
+                                //     companyName={jsonData1.data[i].Company_details.Company_name}
+                                //     details={sendProps}
+                                //     allCompanies={allCompanies}
+                                // />)
                             }
                             setPlacementCard([].concat(studentPlacementCardCopy))
                             // console.log(placementCard)
@@ -109,7 +107,7 @@ function AddPlacement() {
         // console.log("keval")
         let placement_card_copy = placementCard;
         placement_card_copy.push(<CompanyPlacementCard
-            companyName={""}
+            from={"line 123"}
             details={{
                 Designation: "",
                 Salary: "",
@@ -142,7 +140,7 @@ function AddPlacement() {
                     fullWidth
                     // required
                     label="Student ID"
-                    onChange={(e) => {
+                    onInput={(e) => {
                         handleChange(e)
                     }}
                     id="fullWidth"
