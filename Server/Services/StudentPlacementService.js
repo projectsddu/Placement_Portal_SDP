@@ -3,6 +3,7 @@ const log = new logger(true)
 const db = require("../Models/index")
 const StudentPlacement = db.student_placements
 const CompanyService = require("./CompanyService")
+const StudentService = require("./StudentService")
 
 async function checkExists(id) {
     const studentplacement = await StudentPlacement.findAll({ where: { id } })
@@ -11,6 +12,8 @@ async function checkExists(id) {
 
 const createStudentPlacement = async (studentplacementdata) => {
     try {
+        const student_details = await StudentService.getOneStudent(studentplacementdata.Student_ID)
+        studentplacementdata["Passed_out_year"] = student_details.Passed_out_year
         await StudentPlacement.create(studentplacementdata)
         return true
     } catch (error) {

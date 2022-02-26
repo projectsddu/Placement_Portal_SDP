@@ -12,13 +12,13 @@ import UsePostFile from '../../Utilities/UsePostFile';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import HandleToast from '../../Utilities/HandleToast';
 import { ToastContainer, toast } from 'react-toastify';
-
+const axios = require("axios")
 const Input = styled('input')({
     display: 'none'
 });
 
 function CompanyPlacementCard(props) {
-    
+
 
     // let [studentPlacementDetails, setstudentPlacementDetails] = useState({
     //     // Designation: props.details.Designation,
@@ -45,14 +45,24 @@ function CompanyPlacementCard(props) {
 
 
 
-    function onAddPlacement() {
-        // console.log(studentPlacementDetails)
+    async function onAddPlacement() {
+        let updated_details = studentPlacementStateDetails;
+        const res = await UsePostFile('/studentplacement/addStudentPlacement', updated_details, 'POST');
+        const params1 = {
+            data: res,
+            HandleToast: {
+                toast: toast,
+                flag: false
+            }
+        };
+        console.log(res);
+        responsePipelineHandler(params1, 1);
     }
 
     async function onUpdatePlacement() {
         let updated_details = studentPlacementStateDetails;
         // updated_details["Company_details"] = ""
-        delete(updated_details.Company_details)
+        delete (updated_details.Company_details)
         console.log(updated_details)
         const res = await UsePostFile('/studentplacement/updateStudentPlacement/' + updated_details.id, updated_details, 'POST');
         const params1 = {
@@ -66,7 +76,25 @@ function CompanyPlacementCard(props) {
         responsePipelineHandler(params1, 1);
     }
 
-    function onDeletePlacement() {
+    async function onDeletePlacement() {
+
+        let Resp = await axios({
+            method: 'post',
+            url: "/studentplacement/deleteStudentPlacement/" + studentPlacementStateDetails.id,
+        });
+
+        console.log(Resp)
+        const params1 = {
+            data: Resp.data,
+            HandleToast: {
+                toast: toast,
+                flag: false
+            }
+        };
+        responsePipelineHandler(params1, 1);
+        handleClose()
+        console.log(props)
+        props.callerFunc(props.seed, "delete")
 
     }
 
@@ -86,17 +114,8 @@ function CompanyPlacementCard(props) {
     }
 
 
-    function UpdateStudentState(property, value) {
-        // let studentPlacementCopy = studentPlacementDetails
-        // studentPlacementCopy[property] = value
-        // setstudentPlacementDetails(studentPlacementCopy)
-        // console.log(studentPlacementCopy)
-    }
 
 
-    function handleKeyChange(e, property) {
-        UpdateStudentState(property, e.target.value)
-    }
 
     const style = {
         position: 'absolute',
@@ -115,16 +134,19 @@ function CompanyPlacementCard(props) {
     const handleClose = () => setOpen(false);
 
     const changeHandler = (event) => {
+        console.log(props)
         console.log(event.target.files[0]['name']);
-        document.getElementById('fileUploadName').innerText = ' ' + event.target.files[0]['name'];
+        document.getElementById("fileUploadName" + parseInt(props.seed * 10000)).innerText = ' ' + event.target.files[0]['name'];
+        console.log(document.getElementById("fileUploadName" + parseInt(props.seed * 10000)))
         const file_data = event.target.files[0];
         let temp = studentPlacementStateDetails;
         temp['Job_Description_File'] = file_data;
         setstudentPlacementStateDetails(temp);
-        
+        console.log(studentPlacementStateDetails)
+
     };
 
-    
+
 
     let companies = [];
     for (let i = 0; i < props.allCompanies.length; i++) {
@@ -141,23 +163,39 @@ function CompanyPlacementCard(props) {
     }, [])
 
 
+    function handleCheckBox(e) {
+        const copy = studentPlacementStateDetails
+        if (copy["IsFinal"]) {
+            copy["IsFinal"] = false
+        }
+        else {
+            copy["IsFinal"] = true
+        }
+        console.log(e.target, studentPlacementStateDetails)
+        setstudentPlacementStateDetails(copy)
+    }
+    // const [open, setOpen] = React.useState(false);
+    // const handleOpen = () => setOpen(true);
+    // const handleClose = () => setOpen(false);
     return (
         <>
 
             <SubCard>
-                <Button onClick={() => {
+                {/* <Button onClick={() => {
                     console.log(studentPlacementStateDetails)
-                }} >View State</Button>
+                }} >View State</Button> */}
 
                 {studentPlacementStateDetails.Company_details === undefined ? <TextField
                     fullWidth
                     id="companies"
-                    value={studentPlacementStateDetails.Company_details === undefined ? '' : studentPlacementStateDetails.Company_details.Company_name}
+                    onChange={(e) => { setstudentPlacementStateDetails({ ...studentPlacementStateDetails, Company_ID: e.target.value }) }}
                     select
                     label="Select Company"
                 >
                     {companies.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
+                        <MenuItem
+                            onSelect={(e) => { console.log(e) }}
+                            key={option.value} value={option.value}>
                             {option.label}
                         </MenuItem>
                     ))}
@@ -195,10 +233,10 @@ function CompanyPlacementCard(props) {
                 </Grid>
                 <br />
                 <br />
-                <Grid container direction="row" justifyContent="flex-start" alignItems="center" spacing={2}>
-                    <Grid item md={3} xs={12}>
+                <Grid style={{ "padding-top": "1%" }} container direction="row" justifyContent="flex-start" alignItems="center" spacing={2}>
+                    <Grid item md={studentPlacementStateDetails.Company_details === undefined ? 5 : 3} xs={12}>
                         <label htmlFor="contained-button-file">
-                            <Input
+                            {/* <Input
                                 onChange={changeHandler}
                                 id="contained-button-file"
                                 multiple
@@ -206,15 +244,38 @@ function CompanyPlacementCard(props) {
                             />
                             <Button variant="outlined" component="span">
                                 Upload Job File
+                            </Button> */}
+                            <Button
+                                variant="outlined"
+                                size='large'
+                                component="label"
+                            >
+                                Upload Offer Letter<input
+                                    onChange={changeHandler}
+                                    required
+                                    type="file"
+                                    hidden
+                                />
                             </Button>
-                            <label id="fileUploadName"> </label>
+                            {/* <b><label id="fileUploadName1"> </label></b> */}
+                            <label id={"fileUploadName" + parseInt(props.seed * 10000)}> </label>
                         </label>
                     </Grid>
+                    {studentPlacementStateDetails.Company_details === undefined ? "" :
+                        <Grid justifyContent={"flex-start"} md={2} style={{ "padding-top": "1%" }} >
+                            <a target="_blank" href={"http://localhost:8000" + studentPlacementStateDetails.Offer_Letter} style={{ "text-decoration": "none" }}>
+
+                                <Button variant="contained">View File</Button>
+                            </a>
+                        </Grid>
+                    }
 
                     <Grid item md={2} xs={12}>
-                        <Checkbox value={props.details.IsFinal} /> <label>Final</label>
+                        <Checkbox value={studentPlacementStateDetails.IsFinal}
+                            onChange={(e) => handleCheckBox(e)}
+                        /> <label>Final</label>
                     </Grid>
-                    <Grid container md={7} xs={12} justifyContent="flex-end">
+                    <Grid container md={5} xs={12} justifyContent="flex-end">
                         {studentPlacementStateDetails.Company_details === undefined ? (
                             <Grid item>
                                 <Button
@@ -233,7 +294,7 @@ function CompanyPlacementCard(props) {
                                         style={{ 'margin-top': '15%' }}
                                         size="medium"
                                         component="span"
-                                        onClick={() => onButtonClick("delete")}
+                                        onClick={handleOpen}
                                     >
                                         Delele Placement
                                     </Button>
@@ -246,70 +307,43 @@ function CompanyPlacementCard(props) {
                                         size="medium"
                                         component="span"
                                         onClick={() => onButtonClick("update")}
-                                        // onClick={handleOpen}
+                                    // onClick={handleOpen}
                                     >
                                         Update Placement
                                     </Button>
-                                    {/* <Modal
-                                        open={open}
-                                        onClose={handleClose}
-                                        aria-labelledby="modal-modal-title"
-                                        aria-describedby="modal-modal-description"
-                                    >
-                                        <Box sx={style}>
-                                        <TextField
-                                            fullWidth
-                                            // required
-                                            label="Designation"
-                                            id="fullWidth"
-                                            helperText="Enter Designation"
-                                            // value={data['Bond_Details']}
-                                            // onChange={(e) => {
-                                            //     setData({ ...data, Bond_Details: e.target.value });
-                                            // }}
-                                        />
-                                        <br/>
-                                        <br/>
-                                        <TextField
-                                            fullWidth
-                                            // required
-                                            label="Salary"
-                                            id="fullWidth"
-                                            helperText="Enter Salary"
-                                            // value={data['Bond_Details']}
-                                            // onChange={(e) => {
-                                            //     setData({ ...data, Bond_Details: e.target.value });
-                                            // }}
-                                        />
-                                        <br/>
-                                        <br/>
-                                        <label htmlFor="contained-button-file">
-                                            <Input
 
-                                                id="contained-button-file"
-                                                multiple
-                                                type="file"
-                                            />
-                                            <Button variant="outlined" component="span">
-                                                Upload Job File
-                                            </Button>
-                                            <label id="fileUploadName"> </label>
-                                        </label>
-                                        <br/>
-                                        <br/>
-                                        <Grid container justifyContent="flex-start" spacing={2}>
-                                            <Grid item>
-                                                <Checkbox  /> <label>Final</label>
-                                            </Grid>
-                                            <Grid item>
-                                                <Button variant='contained' color='success'>Update</Button>
-                                            </Grid>
-                                        </Grid>
-                                        </Box>
-                                    </Modal> */}
                                 </Grid>
                             </Grid>
                         )}
+
+                        {/* <Button onClick={handleOpen}>Open modal</Button> */}
+                        <Modal
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                        >
+                            <Box sx={style}>
+                                <Typography style={{ "color": "#616161" }} id="modal-modal-title" variant="h3" component="h1">
+                                    Are, you really sure want to delete this placement?
+                                </Typography><br />
+                                <Grid container spacing={2} justifyContent={""}>
+                                    <Grid md={6} item>
+                                        <Button fullWidth style={{ color: "white", backgroundColor: "#00C853" }} variant="contained"
+                                            onClick={() => onButtonClick("delete")}
+                                        >
+                                            Confirm
+                                        </Button>
+                                    </Grid>
+                                    <Grid md={6} item>
+                                        <Button fullWidth color='error' variant="contained" onClick={handleClose}>
+                                            Cancel
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+
+                            </Box>
+                        </Modal>
 
                     </Grid>
                 </Grid>
