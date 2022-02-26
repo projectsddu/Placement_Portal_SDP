@@ -34,6 +34,24 @@ function AddPlacement() {
             }
         }
     }, [])
+    function changeStateFromChild(seed, operation) {
+        let placement_card_copy = placementCard
+        if (operation == "delete") {
+            // for (let i = 0; i < placementCard.length; i++) {
+            //     let propDetails = placementCard[i].props.seed
+            //     if(seed==propDetails)
+            //     {
+
+            //     }
+            // }
+            let filteredList = placement_card_copy.filter((elem) => {
+                return elem.props.seed != seed
+            })
+            console.log(filteredList)
+
+            setPlacementCard(filteredList)
+        }
+    }
 
     // const [jsonData, setjsonData] = useState(undefined)
 
@@ -68,23 +86,18 @@ function AddPlacement() {
 
                             for (let i = 0; i < jsonData1.data.length; i++) {
                                 console.log(jsonData1.data[i])
+                                let x = Math.random();
                                 studentPlacementCardCopy.unshift(
                                     <CompanyPlacementCard
+                                        callerFunc={changeStateFromChild}
+                                        seed={x}
                                         from={"line 86"}
                                         allCompanies={allCompanies}
                                         details={jsonData1.data[i]}
                                         idx={i}
                                     />
                                 )
-                                // console.log(jsonData1.data[i].Company_details.Company_name)
-                                // jsonData1.data[i].Company_name = jsonData1.data[i].Company_details.Company_name
-                                // console.log(i, jsonData1.data[i])
-                                // const sendProps = jsonData.data[i]
-                                // studentPlacementCardCopy.unshift(<CompanyPlacementCard
-                                //     companyName={jsonData1.data[i].Company_details.Company_name}
-                                //     details={sendProps}
-                                //     allCompanies={allCompanies}
-                                // />)
+
                             }
                             setPlacementCard([].concat(studentPlacementCardCopy))
                             // console.log(placementCard)
@@ -107,6 +120,8 @@ function AddPlacement() {
         // console.log("keval")
         let placement_card_copy = placementCard;
         placement_card_copy.push(<CompanyPlacementCard
+            callerFunc={changeStateFromChild}
+            seed={Math.random()}
             from={"line 123"}
             details={{
                 Designation: "",
@@ -115,7 +130,8 @@ function AddPlacement() {
                 Passed_out_year: "",
                 IsFinal: false,
                 Company_ID: "",
-                companyName: ""
+                companyName: "",
+                Student_ID: studentData.toUpperCase()
             }}
             allCompanies={allCompanies} />);
         setPlacementCard([].concat(placement_card_copy));

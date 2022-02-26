@@ -62,8 +62,8 @@ const getAllStudentPlacement = async (req, res) => {
 const updateStudentPlacement = async (req, res) => {
     try {
         const id = req.params.id
-        console.log("data from controller")
-        console.log(req.body)
+        // console.log("data from controller")
+        // console.log(req.body)
         const studentplacement = await StudentPlacementService.updateStudentPlacement(req.body, id)
         console.log(studentplacement)
         if (studentplacement) {
