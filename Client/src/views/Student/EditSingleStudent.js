@@ -131,7 +131,7 @@ function EditSingleStudent() {
                                         // required
                                         value={studentDetails['DOB']}
                                         onChange={(e) => {
-                                            setStudentDetails({ ...studentDetails, DOB: e.target.value });
+                                            setStudentDetails({ ...studentDetails, DOB: e });
                                         }}
                                         renderInput={(params) => <TextField {...params} helperText={'Enter the date of birth'} fullWidth />}
                                     />
@@ -414,7 +414,7 @@ function EditSingleStudent() {
                                         // required
                                         value={studentDetails['Enrollment_year']}
                                         onChange={(e) => {
-                                            setStudentDetails({ ...studentDetails, Enrollment_year: e.target.value });
+                                            setStudentDetails({ ...studentDetails, Enrollment_year: e });
                                         }}
                                         renderInput={(params) => <TextField {...params} helperText={'Enter the enrollment year'} fullWidth />}
                                     />
@@ -430,9 +430,9 @@ function EditSingleStudent() {
                                         // required
                                         value={studentDetails['Passed_out_year']}
                                         onChange={(e) => {
-                                            setStudentDetails({ ...studentDetails, Passed_out_year: e.target.value });
+                                            setStudentDetails({ ...studentDetails, Passed_out_year: e });
                                         }}
-                                        renderInput={(params) => <TextField {...params} helperText={'Enter the passed out year'} fullWidth/>}
+                                        renderInput={(params) => <TextField {...params} helperText={'Enter the passed out year'} fullWidth />}
                                     />
                                 </LocalizationProvider>
                             </Grid>
