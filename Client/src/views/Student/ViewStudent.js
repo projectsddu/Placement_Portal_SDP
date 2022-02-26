@@ -108,17 +108,49 @@ export default function ViewStudent() {
     //     }
     // }
 
+    let temp_id = "";
+
     const rows = [];
     const [columns, setcolumns] = useState([
+        // {
+        //     field: 'edit',
+        //     headerName: 'Edit',
+        //     sortable: false,
+        //     width: 130,
+        //     disableClickEventBubbling: true,
+        //     renderCell: (id) => {
+        //         return (
+        //             <Button variant="contained" 
+        //             // onClick={() => handleClick(id.id)} 
+        //             onClick={() => {
+        //                 history.push('/student/edit_student/' + id.Student_ID);
+        //             }}
+        //             color="primary" 
+        //             startIcon={<EditIcon />}>
+        //                 Edit
+        //             </Button>
+        //         );
+        //     }
+        // },
         {
             field: 'edit',
             headerName: 'Edit',
             sortable: false,
             width: 130,
             disableClickEventBubbling: true,
+            valueGetter: (params) => {
+                temp_id = params.row.Student_ID;
+            },
             renderCell: (id) => {
                 return (
-                    <Button variant="contained" onClick={() => handleClick(id.id)} color="primary" startIcon={<EditIcon />}>
+                    <Button
+                        variant="contained"
+                        onClick={() => {
+                            history.push('/student/edit_student/' + temp_id);
+                        }}
+                        color="primary"
+                        startIcon={<EditIcon />}
+                    >
                         Edit
                     </Button>
                 );
