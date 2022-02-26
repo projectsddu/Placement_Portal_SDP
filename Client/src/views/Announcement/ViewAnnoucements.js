@@ -110,15 +110,13 @@ function ViewAnnoucements() {
         let response = undefined;
         response = await fetch("/annoucement/getAllAnnoucements/", { method: "GET" })
 
-        if(response != undefined)
-        {
+        if (response != undefined) {
             let jsonData = undefined
             jsonData = await response.json()
             if (jsonData != undefined) {
                 console.log(jsonData);
-                
-                for(let i = 0; i < jsonData["data"].length; i++)
-                {
+
+                for (let i = 0; i < jsonData["data"].length; i++) {
                     jsonData["data"][i]["id"] = i;
 
                     jsonData["data"][i]["Date_of_Visit"] = ParseDate.ParseDate(jsonData["data"][i]["Date_of_Visit"]);
@@ -126,15 +124,15 @@ function ViewAnnoucements() {
                     jsonData["data"][i]["Date_of_announcement"] = ParseDate.ParseDate(jsonData["data"][i]["Date_of_announcement"]);
 
                     jsonData["data"][i]["Passed_out_year"] = ParseDate.getYear(jsonData["data"][i]["Passed_out_year"]);
-                    
+
                     jsonData["data"][i]["Registration_Deadline"] = ParseDate.ParseDate(jsonData["data"][i]["Registration_Deadline"], true);
 
                     jsonData["data"][i]["title"] = jsonData['data'][i]['Company_details']['Company_name'] +
-                                    '-' +
-                                    jsonData['data'][i]['Job_Role'] +
-                                    ' for ' +
-                                    ParseDate.getYear(jsonData['data'][i]['Passed_out_year']) +
-                                    ' Batch';
+                        '-' +
+                        jsonData['data'][i]['Job_Role'] +
+                        ' for ' +
+                        ParseDate.getYear(jsonData['data'][i]['Passed_out_year']) +
+                        ' Batch';
 
 
                 }
@@ -150,34 +148,34 @@ function ViewAnnoucements() {
     }, []);
 
 
-    function handleSearch(e)
-    {
+    function handleSearch(e) {
         console.log(e.target.value)
         setSearch(e.target.value);
 
         let temp = [];
-        for(let i = 0; i < announcement_list_original.length; i++)
-        {
+        for (let i = 0; i < announcement_list_original.length; i++) {
             let keys = Object.keys(announcement_list_original[i])
             // console.log(keys)
-            for(let j = 0; j < keys.length; j++)
-            {
+            for (let j = 0; j < keys.length; j++) {
                 let key = keys[j];
                 // console.log(company_list_original[i])
                 // console.log(key)
-                let value = announcement_list_original[i][key].toString().toLowerCase();
-                if(value.includes(e.target.value.toString().toLowerCase()))
-                {
-                    temp.push(announcement_list_original[i])
-                    break;
+                let value;
+                if (announcement_list_original[i][key] != undefined) {
+
+                    value = announcement_list_original[i][key].toString().toLowerCase();
+                    if (value.includes(e.target.value.toString().toLowerCase())) {
+                        temp.push(announcement_list_original[i])
+                        break;
+                    }
                 }
             }
-            
+
         }
         console.log(temp);
 
         setAnnouncement_list_copy(temp);
-        
+
     }
 
 
@@ -261,7 +259,7 @@ function ViewAnnoucements() {
                 <br />
                 <br />
                 <div style={{ height: 400, width: '100%' }}>
-                    {announcement_list_original === undefined  ? (
+                    {announcement_list_original === undefined ? (
                         ''
                     ) : announcement_list_original.length == 0 ? (
                         <>
