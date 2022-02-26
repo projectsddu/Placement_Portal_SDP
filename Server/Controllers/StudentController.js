@@ -210,6 +210,25 @@ const updateStudent = async (req, res) => {
     }
 }
 
+const updateOneStudent = async (req, res) => {
+    try {
+        const student_id = req.params.id
+        // console.log("Id from update one student")
+        const student = await StudentService.updateStudent(req.body, student_id)
+
+        if (student) {
+            return res.json({ status: true, data: "Student Details Updated!!" })
+        }
+        else {
+            return res.json({ status: false, data: "Error updating student data !!!" })
+        }
+    }
+    catch (err) {
+        log.error(err.toString())
+        return res.json({ status: false, data: "Error updating student data!!" })
+    }
+}
+
 const CV_Upload = async(req, res) => {
     try {
         let id = req.userId;
@@ -275,5 +294,6 @@ module.exports = {
     CV_Upload,
     deleteStudent,
     Photo_Upload,
-    getOneStudentInAdmin
+    getOneStudentInAdmin,
+    updateOneStudent
 }
