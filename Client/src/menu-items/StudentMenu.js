@@ -1,5 +1,5 @@
 // assets
-import { IconDashboard, IconDeviceAnalytics, IconUsers, IconEye, IconCirclePlus, IconEdit } from '@tabler/icons';
+import { IconDashboard, IconDeviceAnalytics, IconUsers, IconEye, IconCirclePlus, IconEdit, IconUserPlus } from '@tabler/icons';
 
 // constant
 const icons = {
@@ -8,7 +8,8 @@ const icons = {
     IconEye,
     IconCirclePlus,
     IconEdit,
-    IconUsers, IconUsers
+    IconUsers,
+    IconUserPlus
 };
 
 //-----------------------|| Student Dashboard Items ||-----------------------//
@@ -28,7 +29,7 @@ export const StudentMenu = {
                 title: 'Add Student',
                 type: 'item',
                 url: '/student/add_student',
-                icon: icons['IconCirclePlus'],
+                icon: icons['IconUserPlus'],
                 breadcrumbs: false
             },
             {

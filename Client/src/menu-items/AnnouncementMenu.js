@@ -9,41 +9,49 @@ const icons = {
     IconSpeakerphone,
     IconLayoutGridAdd,
     IconEye,
-    IconCirclePlus
+    IconCirclePlus,
 };
 
 //-----------------------|| ANNOUNCEMENT DASHBOARD MENU ITEMS ||-----------------------//
 
 export const AnnouncementMenu = {
     id: 'AnnouncementMenu',
-    title: 'Announcement',
+    title: '',
     type: 'group',
     children: [
         {
-            id: 'AddAnnouncement',
-            title: 'Add Announcement',
-            type: 'item',
-            url: '/announcement/add_annoucement',
-            icon: icons['IconCirclePlus'],
-            breadcrumbs: false
-        },
-        {
-            id: 'ViewAnnoucement',
-            title: 'View Announcements',
-            type: 'item',
-            url: '/announcement/view_annoucement',
-            icon: icons['IconEye'],
-            breadcrumbs: false
-        },
-        // {
-        //     id: 'AnnouncementDetails',
-        //     title: 'All Announcements',
-        //     type: 'item',
-        //     url: '/announcement/index',
-        //     icon: icons['IconSpeakerphone'],
-        //     breadcrumbs: false
-        // },
+            id: 'icons',
+            title: 'Annoucement',
+            type: 'collapse',
+            icon: icons['IconSpeakerphone'],
+            children: [{
 
+                id: 'AddAnnouncement',
+                title: 'Add Announcement',
+                type: 'item',
+                url: '/announcement/add_annoucement',
+                icon: icons['IconCirclePlus'],
+                breadcrumbs: false
+            },
+            {
+                id: 'ViewAnnoucement',
+                title: 'View Announcements',
+                type: 'item',
+                url: '/announcement/view_annoucement',
+                icon: icons['IconEye'],
+                breadcrumbs: false
+            },
+            // {
+            //     id: 'AnnouncementDetails',
+            //     title: 'All Announcements',
+            //     type: 'item',
+            //     url: '/announcement/index',
+            //     icon: icons['IconSpeakerphone'],
+            //     breadcrumbs: false
+            // },
+        ]
+            
+    }
 
     ]
 };

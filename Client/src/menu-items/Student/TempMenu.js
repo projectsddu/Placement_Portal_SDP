@@ -16,7 +16,7 @@ const icons = {
 
 export const TempMenu = {
     id: 'Temp',
-    title: 'Dashboard',
+    title: '',
     type: 'group',
     children: [
         {
