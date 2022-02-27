@@ -214,7 +214,7 @@ function AddAnnoucement() {
                                 onChange={(e) => {
                                     setData({ ...data, Date_of_Visit: e });
                                 }}
-                                renderInput={(params) => <TextField {...params} />}
+                                renderInput={(params) => <TextField fullWidth {...params} />}
                             />
                         </LocalizationProvider>
                     </Grid>
@@ -227,7 +227,7 @@ function AddAnnoucement() {
                                 onChange={(e) => {
                                     setData({ ...data, Date_of_announcement: e });
                                 }}
-                                renderInput={(params) => <TextField {...params} />}
+                                renderInput={(params) => <TextField fullWidth {...params} />}
                             />
                         </LocalizationProvider>
                     </Grid>
@@ -241,7 +241,7 @@ function AddAnnoucement() {
                                 onChange={(e) => {
                                     setData({ ...data, Passed_out_year: e });
                                 }}
-                                renderInput={(params) => <TextField {...params} helperText={null} />}
+                                renderInput={(params) => <TextField fullWidth {...params} helperText={null} />}
                             />
                         </LocalizationProvider>
                     </Grid>
@@ -389,7 +389,7 @@ function AddAnnoucement() {
                                 onChange={(e) => {
                                     setData({ ...data, Registration_Deadline: e });
                                 }}
-                                renderInput={(params) => <TextField {...params} />}
+                                renderInput={(params) => <TextField fullWidth {...params} />}
                             />
                         </LocalizationProvider>
                     </Grid>

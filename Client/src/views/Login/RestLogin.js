@@ -98,8 +98,8 @@ const RestLogin = (props, { ...others }) => {
     };
 
     const [data, setData] = useState({
-        Student_ID: "",
-        password: ""
+        adminName: "",
+        adminPassword: ""
     });
 
     const history = useHistory()
@@ -108,7 +108,7 @@ const RestLogin = (props, { ...others }) => {
 
         event.preventDefault();
         console.log(data);
-        const res = await UsePost("/studentLogin/login/", data, "POST")
+        const res = await UsePost("/adminLogin/login/", data, "POST")
         const params1 = {
             data: res,
             HandleToast: {
@@ -118,7 +118,7 @@ const RestLogin = (props, { ...others }) => {
         }
         if (res) {
             if (res.status) {
-                history.push("/_student/Dashboard")
+                history.push("/dashboard/default")
             }
             console.log(res);
             responsePipelineHandler(params1, 1)
@@ -132,17 +132,17 @@ const RestLogin = (props, { ...others }) => {
             <FormControl fullWidth
                 // error={Boolean(touched.email && errors.email)} 
                 className={classes.loginInput}>
-                <InputLabel htmlFor="outlined-adornment-email-login">Student ID</InputLabel>
+                <InputLabel htmlFor="outlined-adornment-email-login">Admin Name</InputLabel>
                 <OutlinedInput
                     // id="outlined-adornment-email-logi
-                    id="Student_ID"
-                    label="Student ID"
-                    name="Student_ID"
+                    id="admin_name"
+                    label="Admin Name"
+                    name="admin_name"
                     type="text"
-                    value={data['Student_ID']}
+                    value={data['adminName']}
                     // onBlur={handleBlur}
                     onChange={(e) => {
-                        setData({ ...data, Student_ID: e.target.value });
+                        setData({ ...data, adminName: e.target.value });
                     }}
                     inputProps={{
                         classes: {
@@ -158,14 +158,14 @@ const RestLogin = (props, { ...others }) => {
                 <InputLabel htmlFor="outlined-adornment-password-login">Password</InputLabel>
                 <OutlinedInput
                     // id="outlined-adornment-password-login"
-                    id="password"
-                    name="password"
-                    label="password"
+                    id="admin_password"
+                    name="admin_password"
+                    label="Admin Password"
                     type={showPassword ? 'text' : 'password'}
-                    value={data['password']}
+                    value={data['adminPassword']}
                     // onBlur={handleBlur}
                     onChange={(e) => {
-                        setData({ ...data, password: e.target.value });
+                        setData({ ...data, adminPassword: e.target.value });
                     }}
                     endAdornment={
                         <InputAdornment position="end">

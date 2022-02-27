@@ -31,6 +31,8 @@ db.LoginTokens = require("./LoginTokensModel")(sequelize, DataTypes)
 db.notifications = require("./NotificationModel")(sequelize, DataTypes)
 db.skills_and_achievements = require("./SkillsAndAchievementsModel")(sequelize, DataTypes)
 db.BranchAnnouncement = require("./BranchAnnouncementModel")(sequelize, DataTypes)
+db.adminLogins = require("./AdminLoginModel")(sequelize, DataTypes)
+
 
 
 db.sequelize.sync({ force: false }).then(() => {
