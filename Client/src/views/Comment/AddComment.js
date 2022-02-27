@@ -41,6 +41,8 @@ import HandleToast from '../../Utilities/HandleToast'
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import ViewComment from './ViewComment';
+import NoComment from './JSX/NoComment';
+import ChipCard from "../../ui-component/cards/GenericCards/ChipCard"
 
 function AddComment(props) {
 
@@ -95,7 +97,7 @@ function AddComment(props) {
         // console.log(res);
         responsePipelineHandler(params1, 1)
 
-        setcommentData({Comment_text: ""})
+        setcommentData({ Comment_text: "" })
 
         // ajax call
         $.ajax({
@@ -149,7 +151,10 @@ function AddComment(props) {
                 </form>
                 <br /><br />
                 {/* // comments */}
-                {allComments === undefined ? <h1>No Comments yet!!!</h1> : <ViewComment data={allComments} />}
+                {allComments === undefined ? <>
+                    <ChipCard data={<NoComment />} isLoading={false} />
+                </>
+                    : <ViewComment data={allComments} />}
             </MainCard>
 
 

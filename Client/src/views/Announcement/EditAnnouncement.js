@@ -130,17 +130,24 @@ function AddAnnoucement() {
 
 
     const changeHandler = (event) => {
-        // console.log(event.target.files[0])
-        const file_data = event.target.files[0]
-        let temp = data
-        temp["Job_Description_File"] = file_data
-        setData(temp)
+        // // console.log(event.target.files[0])
+        // const file_data = event.target.files[0]
+        // let temp = data
+        // temp["Job_Description_File"] = file_data
+        // setData(temp)
+        console.log(event.target.files[0]['name']);
+        document.getElementById('fileUploadName').innerText = ' ' + event.target.files[0]['name'];
+        const file_data = event.target.files[0];
+        let temp = data;
+        temp['Job_Description_File'] = file_data;
+        setData(temp);
     };
 
     async function handleSubmit() {
         const temp = data
         delete temp["Company_Details"]
-        const response = await UsePost("/annoucement/updateAnnoucement/" + id, data, "POST")
+        console.log(data)
+        const response = await UsePostFile("/annoucement/updateAnnoucement/" + id, data, "POST")
         // console.log(response)
         const params1 = {
             data: response,
@@ -208,7 +215,7 @@ function AddAnnoucement() {
                 <br />
                 <br />
                 <Grid container spacing={2}>
-                    <Grid item xs={4}>
+                    <Grid item xs={12} md={4}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                                 label="Date of Visit"
@@ -217,11 +224,11 @@ function AddAnnoucement() {
                                 onChange={(e) => {
                                     setData({ ...data, Date_of_Visit: e });
                                 }}
-                                renderInput={(params) => <TextField {...params} />}
+                                renderInput={(params) => <TextField fullWidth {...params} />}
                             />
                         </LocalizationProvider>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={12} md={4}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                                 label="Date of Annoucement"
@@ -230,11 +237,11 @@ function AddAnnoucement() {
                                 onChange={(e) => {
                                     setData({ ...data, Date_of_announcement: e });
                                 }}
-                                renderInput={(params) => <TextField {...params} />}
+                                renderInput={(params) => <TextField fullWidth {...params} />}
                             />
                         </LocalizationProvider>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={12} md={4}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                                 views={['year']}
@@ -244,7 +251,7 @@ function AddAnnoucement() {
                                 onChange={(e) => {
                                     setData({ ...data, Passed_out_year: e });
                                 }}
-                                renderInput={(params) => <TextField {...params} helperText={null} />}
+                                renderInput={(params) => <TextField fullWidth {...params} helperText={null} />}
                             />
                         </LocalizationProvider>
                     </Grid>
@@ -368,9 +375,15 @@ function AddAnnoucement() {
                             <Button variant="outlined" component="span">
                                 Upload Job Description File
                             </Button>
+                            <label id="fileUploadName"> </label>
                         </label>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item>
+                        <a target='_blank' style={{ "text-decoration": "none" }} href={data === undefined ? "" : "http://localhost:8000/public/" + data["Job_Description_File"].split("/")[1]}>
+                            <Button variant="contained">View Job Description File</Button>
+                        </a>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             {/* <DatePicker
                                 label="Registration Deadline"

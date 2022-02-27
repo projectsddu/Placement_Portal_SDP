@@ -13,6 +13,7 @@ import { Typography } from '@material-ui/core';
 import { ParseDate } from '../../Utilities/ParseDate';
 import ChipCard from "../../ui-component/cards/GenericCards/ChipCard"
 import Student_details from './JSX/Student_details';
+import NoStudent from "./JSX/NoStudent"
 
 function AddPlacement() {
 
@@ -67,45 +68,54 @@ function AddPlacement() {
                 jsonData = await response.json()
                 if (jsonData != undefined) {
                     console.log(jsonData);
-                    setStudentDetails(jsonData["data"])
-                    const student_Id = jsonData["data"]["Student_ID"]
-                    // console.log(student_Id)
-                    let response1 = undefined
-                    response1 = await fetch("/studentplacement/getStudentPlacement/" + student_Id, { method: "GET" })
+                    if (jsonData["data"] == "Error Fetching Student data !!!") {
+                        console.log("Here in ese")
+                        setStudentDetails("No student found!")
+                    }
+                    else {
 
-                    if (response1 != undefined) {
-                        let jsonData1 = undefined
-                        jsonData1 = await response1.json()
-                        console.log(jsonData1)
-                        setStudentPlacement(jsonData1)
-                        let studentPlacementCardCopy = placementCard
-                        console.log(jsonData1.data)
+                        setStudentDetails(jsonData["data"])
+                        const student_Id = jsonData["data"]["Student_ID"]
+                        // console.log(student_Id)
+                        let response1 = undefined
+                        response1 = await fetch("/studentplacement/getStudentPlacement/" + student_Id, { method: "GET" })
 
-                        if (jsonData1.data != "Student Placement Record Not Found!" && jsonData1 != undefined) {
-                            console.log(jsonData1.data.length)
+                        if (response1 != undefined) {
+                            let jsonData1 = undefined
+                            jsonData1 = await response1.json()
+                            console.log(jsonData1)
+                            setStudentPlacement(jsonData1)
+                            let studentPlacementCardCopy = placementCard
+                            console.log(jsonData1.data)
 
-                            for (let i = 0; i < jsonData1.data.length; i++) {
-                                console.log(jsonData1.data[i])
-                                let x = Math.random();
-                                studentPlacementCardCopy.unshift(
-                                    <CompanyPlacementCard
-                                        callerFunc={changeStateFromChild}
-                                        seed={x}
-                                        from={"line 86"}
-                                        allCompanies={allCompanies}
-                                        details={jsonData1.data[i]}
-                                        idx={i}
-                                    />
-                                )
+                            if (jsonData1.data != "Student Placement Record Not Found!" && jsonData1 != undefined) {
+                                console.log(jsonData1.data.length)
 
+                                for (let i = 0; i < jsonData1.data.length; i++) {
+                                    console.log(jsonData1.data[i])
+                                    let x = Math.random();
+                                    studentPlacementCardCopy.unshift(
+                                        <CompanyPlacementCard
+                                            callerFunc={changeStateFromChild}
+                                            seed={x}
+                                            from={"line 86"}
+                                            allCompanies={allCompanies}
+                                            details={jsonData1.data[i]}
+                                            idx={i}
+                                        />
+                                    )
+
+                                }
+                                setPlacementCard([].concat(studentPlacementCardCopy))
                             }
-                            setPlacementCard([].concat(studentPlacementCardCopy))
                             // console.log(placementCard)
                         }
                     }
-
                 }
+
             }
+
+
 
 
         }
@@ -165,11 +175,14 @@ function AddPlacement() {
                 <br />
                 <br />
                 {StudentDetails === undefined ? "" :
-                    <>
-                        <ChipCard loading={false} data={<Student_details details={StudentDetails} />}>
-                        </ChipCard>
-                        <br />
-                    </>
+                    StudentDetails == "No student found!" ?
+                        <ChipCard data={
+                            <NoStudent ID={studentData} />} loading={false} type={"error"} /> :
+                        <>
+                            <ChipCard loading={false} data={<Student_details details={StudentDetails} />}>
+                            </ChipCard>
+                            <br />
+                        </>
 
                 }
 
