@@ -1,12 +1,13 @@
 const CompanyController = require('../controllers/CompanyController.js')
 const EmptyFieldCheck = require('../Middlewares/Company/EmptyFieldCheck.js')
 const router = require('express').Router()
+const AdminAuthenticate = require("../Middlewares/Admin/AdminAuthenticate")
 
-router.post("/addCompany", CompanyController.addCompany)
-router.get("/getCompany/:id", CompanyController.getCompany)
-router.get("/getCompany", CompanyController.getAllCompany)
-router.post("/updateCompany/:id", CompanyController.updateCompany)
-router.post("/deleteCompany/:id", CompanyController.deleteCompany)
+router.post("/addCompany", [AdminAuthenticate.AdminAuthenticate], CompanyController.addCompany)
+router.get("/getCompany/:id",[AdminAuthenticate.AdminAuthenticate] ,CompanyController.getCompany)
+router.get("/getCompany", [AdminAuthenticate.AdminAuthenticate],CompanyController.getAllCompany)
+router.post("/updateCompany/:id", [AdminAuthenticate.AdminAuthenticate],CompanyController.updateCompany)
+router.post("/deleteCompany/:id",[AdminAuthenticate.AdminAuthenticate], CompanyController.deleteCompany)
 
 
 module.exports = router
