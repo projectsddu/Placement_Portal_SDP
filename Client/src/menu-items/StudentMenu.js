@@ -8,40 +8,47 @@ const icons = {
     IconEye,
     IconCirclePlus,
     IconEdit,
-    IconUsers
+    IconUsers, IconUsers
 };
 
 //-----------------------|| Student Dashboard Items ||-----------------------//
 
 export const StudentMenu = {
     id: 'StudentMenu',
-    title: 'Student',
+    title: '',
     type: 'group',
     children: [
         {
-            id: 'AddStudent',
-            title: 'Add Student',
-            type: 'item',
-            url: '/student/add_student',
-            icon: icons['IconCirclePlus'],
-            breadcrumbs: false
-        },
-        {
-            id: 'ViewStudent',
-            title: 'View / Update Student',
-            type: 'item',
-            url: '/student/view_student',
-            icon: icons['IconEye'],
-            breadcrumbs: false
-        },
-        {
-            id: 'UpdateStudent',
-            title: 'Batch Update',
-            type: 'item',
-            url: '/student/update_student',
-            icon: icons['IconEdit'],
-            breadcrumbs: false
+            id: 'icons',
+            title: 'Students',
+            type: 'collapse',
+            icon: icons['IconUsers'],
+            children: [{
+                id: 'AddStudent',
+                title: 'Add Student',
+                type: 'item',
+                url: '/student/add_student',
+                icon: icons['IconCirclePlus'],
+                breadcrumbs: false
+            },
+            {
+                id: 'ViewStudent',
+                title: 'View / Update Student',
+                type: 'item',
+                url: '/student/view_student',
+                icon: icons['IconEye'],
+                breadcrumbs: false
+            },
+            {
+                id: 'UpdateStudent',
+                title: 'Batch Update',
+                type: 'item',
+                url: '/student/update_student',
+                icon: icons['IconEdit'],
+                breadcrumbs: false
+            }]
         }
+
         // {
         //     id: 'StudentDetails',
         //     title: 'Student Details',

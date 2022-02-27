@@ -99,18 +99,22 @@ const getAnnoucement = async (id) => {
     }
 }
 
-const updateAnnoucement = async (data, id, sendNotification = false) => {
+const updateAnnoucement = async (data, id, sendNotification = false, job_description_file = "") => {
     try {
         const status = await checkExists(id)
         if (!status) {
             throw "Announcement doesn't exist"
         }
         else {
-            console.log(data["Eligible_Branches"])
+            console.log(JSON.parse(JSON.stringify(data)))
+            // console.log(data["Eligible_Branches"])
+            const fileName = job_description_file
+            data["Job_Description_File"] = fileName
             await BranchAnnouncementService.deleteBranchesOfAnnouncement(id)
-            for (let i = 0; i < data["Eligible_Branches"].length; i++) {
-                await BranchAnnouncementService.addBranchToAnnouncement(id, data["Eligible_Branches"][i])
-                console.log(data["Eligible_Branches"][i])
+            let branches = data["Eligible_Branches"].split(",")
+            for (let i = 0; i < branches.length; i++) {
+                await BranchAnnouncementService.addBranchToAnnouncement(id, branches[i])
+                console.log(branches[i])
             }
             data["Eligible_Branches"] = ""
             const announcement = await Announcement.update(data, { where: { Announcement_ID: id } })

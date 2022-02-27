@@ -7,6 +7,10 @@ const AnnouncementService = require("../Services/AnnouncementService");
 const NotificationService = require("../Services/NotificationService")
 const CompanyService = require("../Services/CompanyService");
 const CommentService = require("../Services/CommentService");
+const ResponseService = require("../Services/ResponseService")
+const OK = ResponseService.OK
+const ERROR = ResponseService.ERROR
+const RESP = ResponseService.RESP
 const { request } = require("express");
 const { companies } = require("../Models");
 
@@ -73,15 +77,19 @@ const getAllAnnoucements = async (req, res) => {
     try {
         let announcements = await AnnouncementService.getAllAnnoucements()
         if (announcements) {
-            return res.json({ status: announcements.length == 0 ? false : true, data: announcements.length == 0 ? "No Student data!" : announcements })
+            console.log("HERE")
+            return RESP(res, announcements.length == 0 ? false : true, announcements.length == 0 ? "No Announcement data!" : announcements)
+            // return res.json({ status: announcements.length == 0 ? false : true, data: announcements.length == 0 ? "No Student data!" : announcements })
         }
         else {
             throw "Error in getAllAnnoucements"
         }
     }
     catch (e) {
-        console.log(e.toString());
-        res.json({ status: false, data: e.toString() })
+        log.error(e.toString())
+        // console.log(e.toString());
+        return ERROR(res, "Oops! Some unknown error occured in fetching announcements")
+        // res.json({ status: false, data: e.toString() })
     }
 
 }
@@ -101,15 +109,19 @@ const getAnnoucement = async (req, res) => {
 
             announcement_data[0]["Company_Details"] = company
             // console.log(JSON.parse(JSON.stringify(company)))
-            return res.json({ status: announcement.length == 0 ? false : true, data: announcement.length == 0 ? "Annoucement Not Found!" : announcement_data })
+            return RESP(res, announcement.length == 0 ? false : true, announcement.length == 0 ? "Annoucement Not Found!" : announcement_data)
+
+            // return res.json({ status: announcement.length == 0 ? false : true, data: announcement.length == 0 ? "Annoucement Not Found!" : announcement_data })
         }
         else {
             throw "Error in getAnnouncement"
         }
     }
     catch (e) {
-        console.log(e.toString());
-        res.json({ status: false, data: e.toString() })
+        log.error(e.toString())
+        // console.log(e.toString());
+        return ERROR(res, "Oops! some error occured in getting this announcement. ")
+        // res.json({ status: false, data: e.toString() })
     }
 
 }
@@ -117,17 +129,21 @@ const getAnnoucement = async (req, res) => {
 const updateAnnoucement = async (req, res) => {
     try {
         const id = req.params.annoucementId
-        const annoucement = await AnnouncementService.updateAnnoucement(req.body, id, true)
+        const annoucement = await AnnouncementService.updateAnnoucement(req.body, id, true, req.fileName)
         if (annoucement) {
-            return res.json({ status: true, data: "Announcement Updated!!" })
+            return OK(res, "Announcement Updated!!")
+            // return res.json({ status: true, data: "Announcement Updated!!" })
         }
         else {
-            return res.json({ status: false, data: "Error updating Announcement !!!" })
+            return ERROR(res, "Error updating Announcement !!!")
+            // return res.json({ status: false, data: "Error updating Announcement !!!" })
         }
     }
     catch (e) {
-        console.log(e.toString());
-        res.json({ status: false, data: "Error updating announcement !!" })
+        // console.log(e.toString());
+        log.error(e.toString())
+        return ERROR(res, "Error updating Announcement !!!")
+        // res.json({ status: false, data: "Error updating announcement !!" })
     }
 }
 
@@ -136,14 +152,15 @@ const deleteAnnoucement = async (req, res) => {
         let id = req.params.annoucementId
         const status = await AnnouncementService.deleteAnnoucement(id)
         if (status) {
-            return res.json({ status: true, data: "Announcement Deleted Successfully!!" })
+            return OK(res, "Announcement Deleted Successfully!!")
+            // return res.json({ status: true, data: "Announcement Deleted Successfully!!" })
         }
         else {
             throw "Error deleting announcement"
         }
     }
     catch (e) {
-        console.log(e.toString());
+        log.error(e.toString())
         res.json({ status: false, data: e.toString() })
     }
 }
@@ -151,17 +168,20 @@ const deleteAnnoucement = async (req, res) => {
 const requiredAnnoucementDetails = async (req, res) => {
     try {
         let companies = await CompanyService.getAllCompany();
-        return res.json({ status: true, data: companies })
+        return OK(res, companies)
+        // return res.json({ status: true, data: companies })
     }
     catch (e) {
-        console.log(e.toString());
-        res.json({ status: false, data: e.toString() })
+        log.error(e.toString())
+        // console.log(e.toString());
+        return ERROR(res, "Oops Some error occured fetching announcement deatils!")
+        // res.json({ status: false, data: e.toString() })
     }
 }
 
 const addComment = async (req, res) => {
     try {
-        console.log("here in add comment")
+        // console.log("here in add comment")
         const { Comment_text } = req.body;
 
         const Announcement_ID = req.params.annoucementId
@@ -179,15 +199,18 @@ const addComment = async (req, res) => {
 
         const commentStatus = await CommentService.createComment(comment);
         if (commentStatus) {
-            return res.json({ data: "Comment Created", status: true })
+            return OK(res, "Comment Created")
+            // return res.json({ data: "Comment Created", status: true })
         }
         else {
             throw "Error from createdAnnoucement controller (Add Comment method)"
         }
     }
     catch (e) {
-        console.log(e.toString());
-        res.json({ status: false, data: e.toString() })
+        log.error(e.toString())
+        // console.log(e.toString());
+        return ERROR(res, "Oops! some unknown error occured adding comment!")
+        // res.json({ status: false, data: e.toString() })
     }
 }
 
@@ -196,15 +219,18 @@ const getAllComments = async (req, res) => {
         let id = req.params.annoucementId;
         let comments = await CommentService.getAllComments(id);
         if (comments) {
-            return res.json({ status: comments.length == 0 ? false : true, data: comments.length == 0 ? "No Comment data!" : comments })
+            return RESP(res, comments.length == 0 ? false : true, comments.length == 0 ? "No Comment data!" : comments)
+            // return res.json({ status: comments.length == 0 ? false : true, data: comments.length == 0 ? "No Comment data!" : comments })
         }
         else {
             throw "Error in getAllComments";
         }
     }
     catch (e) {
-        console.log(e.toString());
-        res.json({ status: false, data: e.toString() })
+        log.error(e.toString())
+        // console.log(e.toString());
+        // res.json({ status: false, data: e.toString() })
+        return ERROR(res, "Oops! some error occured fetching comments.")
     }
 }
 
