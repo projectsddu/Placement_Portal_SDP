@@ -21,7 +21,7 @@ export const AnnouncementMenu = {
     children: [
         {
             id: 'icons',
-            title: 'Annoucement',
+            title: 'Announcement',
             type: 'collapse',
             icon: icons['IconSpeakerphone'],
             children: [{
