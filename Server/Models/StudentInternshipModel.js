@@ -31,6 +31,10 @@ module.exports = (sequelize, DataTypes) => {
         External_Guide_Email_ID: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        Passed_out_year: {
+            type: DataTypes.DATE,
+            allowNull: false
         }
     }, {
         timestamps: false   
