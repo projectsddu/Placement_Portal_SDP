@@ -1,4 +1,4 @@
-import React, { lazy } from 'react';
+import React, { lazy, useEffect } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import Loadable from '../ui-component/Loadable';
 
@@ -17,7 +17,7 @@ const AuthenticationRoutes = () => {
     const location = useLocation();
 
     return (
-        <Route path={[ '/admin/login', '/_student/login', '/pages/login/login3', '/pages/register/register3']}>
+        <Route path={['/admin/login', '/_student/login', '/pages/login/login3', '/pages/register/register3']}>
             <MinimalLayout>
                 <Switch location={location} key={location.pathname}>
                     <Route path="/admin/login" component={AdminLogin} />

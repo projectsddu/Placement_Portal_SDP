@@ -39,6 +39,7 @@ import UsePost from '../../../Utilities/UsePost';
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../../Utilities/ResponsePipelineHandler';
 import { useHistory } from "react-router-dom";
+const HandleCookies = require("../../../Utilities/HandleCookies")
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -118,6 +119,8 @@ const RestLogin = (props, { ...others }) => {
         }
         if (res) {
             if (res.status) {
+                let a = new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 365);
+                await HandleCookies.SetClientStudentCookies(data.Student_ID, a)
                 history.push("/_student/Dashboard")
             }
             console.log(res);

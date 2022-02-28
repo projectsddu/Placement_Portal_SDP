@@ -1,6 +1,6 @@
-import React, { lazy } from 'react';
-import { Route, Switch, useLocation } from 'react-router-dom';
-
+import React, { lazy, useEffect } from 'react';
+import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
+import HandleCookies from "../Utilities/HandleCookies"
 // project imports
 import MainLayout from './../layout/MainLayout';
 import Loadable from '../ui-component/Loadable';
@@ -80,6 +80,64 @@ const SamplePage = Loadable(lazy(() => import('../views/sample-page')));
 
 const MainRoutes = () => {
     const location = useLocation();
+    const history = useHistory();
+    const exemptRoutes = ["/admin/login", "/_student/login"]
+
+    const isAdminRoute = function (location) {
+        console.log(location.split("/")[2])
+        if (location.split("/")[1] == "_student") {
+            return false
+        }
+        else {
+            return true
+        }
+    }
+
+    useEffect(() => {
+        console.log(location.pathname)
+        if (location.pathname != "/admin/login" && location.pathname != "/_student/login") {
+            console.log("here")
+
+            const isAdmin = isAdminRoute(location.pathname)
+            console.log(document.cookie)
+            const allCookies = HandleCookies.parseCookies(document.cookie)
+
+            if (isAdmin) {
+                try {
+                    const adminCookie = allCookies["adminId"].toString()
+                    console.log(allCookies)
+                    console.log(adminCookie)
+                    console.log(HandleCookies.VerifyAdminCookie(adminCookie))
+                    if (!HandleCookies.VerifyAdminCookie(adminCookie)) {
+                        history.push("/admin/login")
+                    }
+                }
+                catch (err) {
+                    console.log(err)
+                    history.push("/admin/login")
+
+                }
+            }
+            else {
+                console.log("hjjbhjbj")
+                try {
+                    const studentCookie = allCookies["studentId"].toString()
+                    console.log(allCookies)
+                    console.log(studentCookie)
+                    // console.log(HandleCookies.(adminCookie))
+                    if (!HandleCookies.VerifyStudentCookie(studentCookie)) {
+                        history.push("/_student/login")
+                    }
+                }
+                catch (err) {
+                    console.log(err)
+                    history.push("/_student/login")
+
+                }
+            }
+
+        }
+    })
 
     return (
         <Route
