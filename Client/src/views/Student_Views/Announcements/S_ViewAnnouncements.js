@@ -17,6 +17,8 @@ import responsePipelineHandler from '../../../Utilities/ResponsePipelineHandler'
 import useFetch from '../../../Utilities/useFetch';
 import { useHistory } from "react-router-dom";
 import SearchSection from '../../../layout/MainLayout/Header/SearchSection';
+import ChipCard from '../../../ui-component/cards/GenericCards/ChipCard';
+import EmptyAnnouncement from './JSX/EmptyAnnouncement';
 
 const useStyles = makeStyles((theme) => ({
     applyBtn: {
@@ -63,8 +65,7 @@ function S_ViewAnnoucements() {
 
     if (!loading) {
         annoucements = required_data["data"];
-        if(required_data["data"] != "No Student data!")
-        {
+        if (required_data["data"] != "No Student data!") {
             annoucements = required_data['data'];
         }
         console.log(annoucements)
@@ -97,7 +98,7 @@ function S_ViewAnnoucements() {
     return (
 
         <>
-            <MainCard title="View Annoucements">
+            <MainCard title="View Announcements">
                 <TextField
                     label='Search'
                     value={search}
@@ -106,25 +107,36 @@ function S_ViewAnnoucements() {
                 >
                 </TextField>
                 <br /><br /><br />
-                { loading ? "" : required_data['data'] == "No Student data!" ? <h1>No Announcements Data</h1> :
-                <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
+                {/* {loading ? "" : required_data['data'] == "No Student data!" ? <h1>No Announcements Data</h1> : */}
+                {loading ? "" :
+                    typeof annoucements == "string" ?
+                        (
+                            <>
+                                <Grid item>
+                                    <ChipCard loading={false} data={<EmptyAnnouncement />} />
+                                </Grid>
+                            </>
+                        )
+                        // <h1>No Announcements Data</h1> 
+                        :
+                        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
 
-                    {loading ? "" : annoucements.map((e) => (
-                        <Grid item xs={12} md={6} id={e.Announcement_ID}>
-                            <SubCard title={e.Company_details["Company_name"] + "-" + e.Job_Role + " for " + ParseDate.getYear(e.Passed_out_year) + " Batch"}>
-                                <Typography variant="h5"></Typography>
-                                <List dense={false}>
-                                    <ListItem>Posted On: {ParseDate.ParseDate(e.Date_of_announcement)}</ListItem>
-                                    <ListItem>Visiting On: {ParseDate.ParseDate(e.Date_of_Visit)}</ListItem>
-                                    <ListItem>Job Location: {e.Job_Location}</ListItem>
-                                    <ListItem>Branches: {e.Eligible_Branches}</ListItem>
-                                </List>
+                            {annoucements.map((e) => (
+                                <Grid item xs={12} md={6} id={e.Announcement_ID}>
+                                    <SubCard title={e.Company_details["Company_name"] + "-" + e.Job_Role + " for " + ParseDate.getYear(e.Passed_out_year) + " Batch"}>
+                                        <Typography variant="h5"></Typography>
+                                        <List dense={false}>
+                                            <ListItem>Posted On: {ParseDate.ParseDate(e.Date_of_announcement)}</ListItem>
+                                            <ListItem>Visiting On: {ParseDate.ParseDate(e.Date_of_Visit)}</ListItem>
+                                            <ListItem>Job Location: {e.Job_Location}</ListItem>
+                                            <ListItem>Branches: {e.Eligible_Branches}</ListItem>
+                                        </List>
 
-                                <Button onClick={() => handleRedirect(e.Announcement_ID)} size='large' fullWidth className={classes.applyBtn}>View Full Announcement</Button>
-                            </SubCard>
+                                        <Button onClick={() => handleRedirect(e.Announcement_ID)} size='large' fullWidth className={classes.applyBtn}>View Full Announcement</Button>
+                                    </SubCard>
+                                </Grid>
+                            ))}
                         </Grid>
-                    ))}
-                </Grid>
                 }
             </MainCard>
         </>

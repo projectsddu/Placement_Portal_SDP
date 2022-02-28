@@ -3,7 +3,7 @@ import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
 import { useHistory } from 'react-router';
 import { Grid, Button } from '@material-ui/core';
-import { IconCirclePlus } from '@tabler/icons';
+import { IconInfoCircle } from '@tabler/icons';
 import { grey, red } from '@mui/material/colors';
 import { blue, lightBlue } from '@material-ui/core/colors';
 
@@ -16,28 +16,28 @@ const WhiteTextTypography = withStyles({
 // button color
 const color = blue[300]
 
-function EmptyStudent() {
+function EmptyAppliedAnnouncement() {
     const history = useHistory();
 
     return (
         <>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={10}>
-                    <WhiteTextTypography variant="h1">No student added yet</WhiteTextTypography>
+                    <WhiteTextTypography variant="h1">Not applied to any announcement yet</WhiteTextTypography>
                 </Grid>
                 <Grid item xs={12} md={2}>
                     <Button
                         style={{backgroundColor: color}}
                         variant="contained"
                         size="large"
-                        startIcon={<IconCirclePlus />}
+                        startIcon={<IconInfoCircle />}
                         // color={color}
                         onClick={() => {
-                            history.push('/student/add_student');
+                            history.push('/_student/announcement/view_announcement');
                         }}
                     >
                         {' '}
-                        Add{' '}
+                        View{' '}
                     </Button>
                 </Grid>
             </Grid>
@@ -45,4 +45,4 @@ function EmptyStudent() {
     );
 }
 
-export default EmptyStudent;
+export default EmptyAppliedAnnouncement;

@@ -72,6 +72,7 @@ const S_ViewProfile = Loadable(lazy(() => import('../views/Student_Views/Profile
 // student ends
 
 
+const ErrorPage = Loadable(lazy(() => import('../views/Error/ErrorPage')));
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('../views/sample-page')));
@@ -196,9 +197,10 @@ const MainRoutes = () => {
                 "/_student/announcement/view_subscribed_announcement",
 
                 "/_student/notifications/all",
-                "/_student/Dashboard/profile"
+                "/_student/Dashboard/profile",
 
-
+                // for any errorneous page
+                // "/"
 
             ]}
         >
@@ -257,6 +259,9 @@ const MainRoutes = () => {
                     <Route path="/_student/announcement/view_announcement/:idx" component={S_ViewSingleAnnouncement} />
                     <Route path="/_student/announcement/view_announcement" component={S_ViewAnnouncements} />
                     <Route path="/_student/announcement/view_subscribed_announcement" component={S_ViewSubscribedAnnouncements} />
+                    
+                    {/* for any errorneous page */}
+                    {/* <Route path="" component={ErrorPage} /> */}
 
 
 
