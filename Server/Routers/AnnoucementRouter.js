@@ -7,6 +7,8 @@ const EmptyFieldCheck = require("../Middlewares/Annoucement/EmptyFieldCheck");
 const SalaryVerifier = require("../Middlewares/Annoucement/SalaryVerifier");
 const DateValidator = require("../Middlewares/Annoucement/DateValidator");
 const StudentAuthenticate = require("../Middlewares/StudentLogin/Authenticate")
+const AdminAuthenticate = require("../Middlewares/Admin/AdminAuthenticate")
+const ResolveUsers = require("../Middlewares/General/ResloveUser")
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -26,16 +28,22 @@ const fileStorage = multer.diskStorage({
 
 const upload = multer({ storage: fileStorage })
 
-router.post("/addAnnoucement", [upload.single("Job_Description_File")], AnnouncementController.addAnnoucement)
-router.post("/deleteAnnoucement/:annoucementId", AnnouncementController.deleteAnnoucement)
-router.get("/getAllAnnoucements", AnnouncementController.getAllAnnoucements)
-router.get("/getAnnoucement/:annoucementId", AnnouncementController.getAnnoucement)
-router.post("/updateAnnoucement/:annoucementId", [upload.single("Job_Description_File")], AnnouncementController.updateAnnoucement)
-router.post("/deleteAnnoucement/:annoucementId", AnnouncementController.deleteAnnoucement)
-router.get("/requiredAnnoucementDetails", AnnouncementController.requiredAnnoucementDetails)
+router.post("/addAnnoucement", [upload.single("Job_Description_File"), AdminAuthenticate.AdminAuthenticate], AnnouncementController.addAnnoucement)
+
+router.post("/deleteAnnoucement/:annoucementId", [AdminAuthenticate.AdminAuthenticate], AnnouncementController.deleteAnnoucement)
+
+router.get("/getAllAnnoucements", [ResolveUsers.ResolveUserMiddleware], AnnouncementController.getAllAnnoucements)
+
+router.get("/getAnnoucement/:annoucementId", [ResolveUsers.ResolveUserMiddleware], AnnouncementController.getAnnoucement)
+
+router.post("/updateAnnoucement/:annoucementId", [upload.single("Job_Description_File"), AdminAuthenticate.AdminAuthenticate], AnnouncementController.updateAnnoucement)
+
+router.post("/deleteAnnoucement/:annoucementId", [AdminAuthenticate.AdminAuthenticate], AnnouncementController.deleteAnnoucement)
+router.get("/requiredAnnoucementDetails", [AdminAuthenticate.AdminAuthenticate], AnnouncementController.requiredAnnoucementDetails)
 
 // related to comments
 router.post("/addComment/:annoucementId", [StudentAuthenticate], AnnouncementController.addComment)
+
 router.get("/getAllComments/:annoucementId", AnnouncementController.getAllComments)
 
 

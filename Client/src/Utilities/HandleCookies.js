@@ -87,17 +87,18 @@ const VerifyStudentCookie = function (studentCookie) {
         const decryptedCookie = AES.decrypt(studentCookie, SECRETKEY.SECRETKEY).toString(CryptoJS.enc.Utf8)
         console.log(decryptedCookie)
 
-        let year = decryptedCookie[0] + decryptedCookie[1]
+        let year = parseInt(decryptedCookie[0] + decryptedCookie[1])
         let branch = decryptedCookie[2] + decryptedCookie[3]
         let admissionType = decryptedCookie[4] + decryptedCookie[5] + decryptedCookie[6]
-        let admissionNumber = decryptedCookie[7] + decryptedCookie[8] + decryptedCookie[9]
+        let admissionNumber = parseInt(decryptedCookie[7] + decryptedCookie[8] + decryptedCookie[9])
+        if (year <= 0 && year >= 99) {
+            throw "Year not in range"
+        }
+        else if (admissionNumber <= 0 && admissionNumber >= 999) {
+            throw "Admission number not in range"
+        }
         return true
-        // if (decryptedCookie == "admin") {
-        //     return true
-        // }
-        // else {
-        //     return false
-        // }
+
     }
     catch (err) {
         console.log(err.toString())

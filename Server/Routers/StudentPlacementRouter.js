@@ -2,7 +2,7 @@ const StudentPlacementController = require("../Controllers/StudentPlacementContr
 const router = require('express').Router()
 const EmptyFieldCheck = require("../Middlewares/General/EmptyFieldCheck")
 const multer = require('multer');
-
+const AdminAuthenticate = require("../Middlewares/Admin/AdminAuthenticate")
 
 
 const fileStorage1 = multer.diskStorage({
@@ -21,10 +21,10 @@ const fileStorage1 = multer.diskStorage({
 const upload1 = multer({ storage: fileStorage1 })
 
 
-router.post("/addStudentPlacement", [upload1.single("Job_Description_File")], StudentPlacementController.addStudentPlacement)
-router.get("/getStudentPlacement/:id", StudentPlacementController.getStudentPlacement)
-router.get("/getAllStudentPlacement", StudentPlacementController.getAllStudentPlacement)
-router.post("/updateStudentPlacement/:id", [upload1.single("Job_Description_File")], StudentPlacementController.updateStudentPlacement)
-router.post("/deleteStudentPlacement/:id", StudentPlacementController.deleteStudentPlacement)
+router.post("/addStudentPlacement", [upload1.single("Job_Description_File"), AdminAuthenticate.AdminAuthenticate], StudentPlacementController.addStudentPlacement)
+router.get("/getStudentPlacement/:id", [AdminAuthenticate.AdminAuthenticate], StudentPlacementController.getStudentPlacement)
+router.get("/getAllStudentPlacement", [AdminAuthenticate.AdminAuthenticate], StudentPlacementController.getAllStudentPlacement)
+router.post("/updateStudentPlacement/:id", [upload1.single("Job_Description_File"), AdminAuthenticate.AdminAuthenticate], StudentPlacementController.updateStudentPlacement)
+router.post("/deleteStudentPlacement/:id", [AdminAuthenticate.AdminAuthenticate], StudentPlacementController.deleteStudentPlacement)
 
 module.exports = router
