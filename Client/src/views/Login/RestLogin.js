@@ -118,7 +118,8 @@ const RestLogin = (props, { ...others }) => {
         }
         if (res) {
             if (res.status) {
-                await HandleCookies.SetClientAdminCookies(data.adminName, Date.now() + 2589200000)
+                let a = new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 365);
+                await HandleCookies.SetClientAdminCookies(data.adminName, a)
                 history.push("/dashboard/default")
             }
             console.log(res);

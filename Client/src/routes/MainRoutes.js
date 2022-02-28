@@ -95,33 +95,43 @@ const MainRoutes = () => {
 
     useEffect(() => {
         console.log(location.pathname)
-        if (exemptRoutes.indexOf(location.pathname) != -1) {
+        if (location.pathname != "/admin/login" && location.pathname != "/_student/login") {
             console.log("here")
-        }
-        else {
+
             const isAdmin = isAdminRoute(location.pathname)
             console.log(document.cookie)
             const allCookies = HandleCookies.parseCookies(document.cookie)
 
-            if (allCookies["isAdmin"] == "true") {
-                allCookies["isAdmin"] = true
-            }
-            else {
-                allCookies["isAdmin"] = false
-
-            }
-            console.log(allCookies, isAdmin)
             if (isAdmin) {
                 try {
                     const adminCookie = allCookies["adminId"].toString()
+                    console.log(allCookies)
+                    console.log(adminCookie)
                     console.log(HandleCookies.VerifyAdminCookie(adminCookie))
                     if (!HandleCookies.VerifyAdminCookie(adminCookie)) {
                         history.push("/admin/login")
                     }
                 }
                 catch (err) {
-                    console.log(err.toString())
+                    console.log(err)
                     history.push("/admin/login")
+
+                }
+            }
+            else {
+                console.log("hjjbhjbj")
+                try {
+                    const studentCookie = allCookies["studentId"].toString()
+                    console.log(allCookies)
+                    console.log(studentCookie)
+                    // console.log(HandleCookies.(adminCookie))
+                    if (!HandleCookies.VerifyStudentCookie(studentCookie)) {
+                        history.push("/_student/login")
+                    }
+                }
+                catch (err) {
+                    console.log(err)
+                    history.push("/_student/login")
 
                 }
             }
