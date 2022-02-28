@@ -39,7 +39,7 @@ import UsePost from '../../Utilities/UsePost';
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import { useHistory } from "react-router-dom";
-
+import HandleCookies from "../../Utilities/HandleCookies"
 // style constant
 const useStyles = makeStyles((theme) => ({
     redButton: {
@@ -118,6 +118,7 @@ const RestLogin = (props, { ...others }) => {
         }
         if (res) {
             if (res.status) {
+                await HandleCookies.SetClientAdminCookies(data.adminName, Date.now() + 2589200000)
                 history.push("/dashboard/default")
             }
             console.log(res);

@@ -1,6 +1,6 @@
-import React, { lazy } from 'react';
-import { Route, Switch, useLocation } from 'react-router-dom';
-
+import React, { lazy, useEffect } from 'react';
+import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
+import HandleCookies from "../Utilities/HandleCookies"
 // project imports
 import MainLayout from './../layout/MainLayout';
 import Loadable from '../ui-component/Loadable';
@@ -80,6 +80,54 @@ const SamplePage = Loadable(lazy(() => import('../views/sample-page')));
 
 const MainRoutes = () => {
     const location = useLocation();
+    const history = useHistory();
+    const exemptRoutes = ["/admin/login", "/_student/login"]
+
+    const isAdminRoute = function (location) {
+        console.log(location.split("/")[2])
+        if (location.split("/")[1] == "_student") {
+            return false
+        }
+        else {
+            return true
+        }
+    }
+
+    useEffect(() => {
+        console.log(location.pathname)
+        if (exemptRoutes.indexOf(location.pathname) != -1) {
+            console.log("here")
+        }
+        else {
+            const isAdmin = isAdminRoute(location.pathname)
+            console.log(document.cookie)
+            const allCookies = HandleCookies.parseCookies(document.cookie)
+
+            if (allCookies["isAdmin"] == "true") {
+                allCookies["isAdmin"] = true
+            }
+            else {
+                allCookies["isAdmin"] = false
+
+            }
+            console.log(allCookies, isAdmin)
+            if (isAdmin) {
+                try {
+                    const adminCookie = allCookies["adminId"].toString()
+                    console.log(HandleCookies.VerifyAdminCookie(adminCookie))
+                    if (!HandleCookies.VerifyAdminCookie(adminCookie)) {
+                        history.push("/admin/login")
+                    }
+                }
+                catch (err) {
+                    console.log(err.toString())
+                    history.push("/admin/login")
+
+                }
+            }
+
+        }
+    })
 
     return (
         <Route
