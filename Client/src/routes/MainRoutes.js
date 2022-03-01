@@ -104,36 +104,15 @@ const MainRoutes = () => {
             const allCookies = HandleCookies.parseCookies(document.cookie)
 
             if (isAdmin) {
-                try {
-                    const adminCookie = allCookies["adminId"].toString()
-                    console.log(allCookies)
-                    console.log(adminCookie)
-                    console.log(HandleCookies.VerifyAdminCookie(adminCookie))
-                    if (!HandleCookies.VerifyAdminCookie(adminCookie)) {
-                        history.push("/admin/login")
-                    }
-                }
-                catch (err) {
-                    console.log(err)
+                const status = HandleCookies.VerifyAdminCookie()
+                if (!status) {
                     history.push("/admin/login")
-
                 }
             }
             else {
-                console.log("hjjbhjbj")
-                try {
-                    const studentCookie = allCookies["studentId"].toString()
-                    console.log(allCookies)
-                    console.log(studentCookie)
-                    // console.log(HandleCookies.(adminCookie))
-                    if (!HandleCookies.VerifyStudentCookie(studentCookie)) {
-                        history.push("/_student/login")
-                    }
-                }
-                catch (err) {
-                    console.log(err)
+                const status = HandleCookies.VerifyStudentCookie()
+                if (!status) {
                     history.push("/_student/login")
-
                 }
             }
 
@@ -259,7 +238,7 @@ const MainRoutes = () => {
                     <Route path="/_student/announcement/view_announcement/:idx" component={S_ViewSingleAnnouncement} />
                     <Route path="/_student/announcement/view_announcement" component={S_ViewAnnouncements} />
                     <Route path="/_student/announcement/view_subscribed_announcement" component={S_ViewSubscribedAnnouncements} />
-                    
+
                     {/* for any errorneous page */}
                     {/* <Route path="" component={ErrorPage} /> */}
 
