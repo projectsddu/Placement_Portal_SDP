@@ -95,6 +95,7 @@ const MainRoutes = () => {
     }
 
     useEffect(() => {
+
         console.log(location.pathname)
         if (location.pathname != "/admin/login" && location.pathname != "/_student/login") {
             console.log("here")
@@ -117,6 +118,7 @@ const MainRoutes = () => {
             }
 
         }
+
     })
 
     return (
