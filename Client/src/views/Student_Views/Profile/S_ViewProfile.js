@@ -1,9 +1,8 @@
-import React from 'react'
+import React from 'react';
 import { Button } from '@material-ui/core';
 // assets
 import {
     Avatar,
-
     Card,
     CardContent,
     Chip,
@@ -15,21 +14,20 @@ import {
     ListItemAvatar,
     ListItemSecondaryAction,
     ListItemText,
-    Stack,
-
+    Stack
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { IconBrandTelegram, IconBuildingStore, IconMailbox, IconPhoto } from '@tabler/icons';
-import MainCard from '../../../ui-component/cards/MainCard'
+import MainCard from '../../../ui-component/cards/MainCard';
 import { useState, useEffect } from 'react';
-import { Typography } from '@mui/material'
+import { Typography } from '@mui/material';
 import useFetch from '../../../Utilities/useFetch';
-import { useLocation } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import { IconInfoCircle, IconX, IconPlus } from "@tabler/icons"
+import { IconInfoCircle, IconX, IconPlus } from '@tabler/icons';
 
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
@@ -40,14 +38,14 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import SearchSection from '../../../layout/MainLayout/Header/SearchSection';
 import TextField from '@mui/material/TextField';
-import { useHistory } from "react-router-dom";
-import UsePost from '../../../Utilities/UsePost'
-import HandleToast from '../../../Utilities/HandleToast'
+import { useHistory } from 'react-router-dom';
+import UsePost from '../../../Utilities/UsePost';
+import HandleToast from '../../../Utilities/HandleToast';
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../../Utilities/ResponsePipelineHandler';
 import AddComment from '../Comment/S_AddComment';
 // import Fetch
-import ProfilePhoto from './S_ProfilePhoto'
+import ProfilePhoto from './S_ProfilePhoto';
 import SubCard from '../../../ui-component/cards/SubCard';
 // import ChipInput from 'material-ui-chip-input'
 import Modal from '@mui/material/Modal';
@@ -140,96 +138,215 @@ export default function S_ViewProfile() {
         width: 400,
         bgcolor: 'background.paper',
         boxShadow: 24,
-        borderRadius: "2%",
-        p: 4,
+        borderRadius: '2%',
+        p: 4
     };
 
     function createData(key, value) {
         if (value == undefined) {
-            value = "Not Defined!"
+            value = 'Not Defined!';
         }
         return { key, value };
     }
 
     let history = useHistory();
 
-    const { required_data, loading } = useFetch("/student/getOneStudent/", 'GET')
+    const { required_data, loading } = useFetch('/student/getOneStudent/', 'GET');
 
-    const [skill, setSkill] = useState(["C++", "Python", "MatLab"])
+    const [skill, setSkill] = useState(['C++', 'Python', 'MatLab']);
 
     let student_details, rows;
-    if (!loading) {
 
-        student_details = required_data["data"];
+    let student_id = '';
+
+    if (!loading) {
+        student_details = required_data['data'];
+        student_id = student_details['Student_ID'];
+        // console.log("Student Id: ", student_id)
         // console.log(student_details)
         rows = [
-            createData("Student ID", student_details["Student_ID"]),
-            createData("FirstName", student_details["FirstName"]),
-            createData("MiddleName", student_details["MiddleName"]),
-            createData("LastName", student_details["LastName"]),
-            createData("Admission type", student_details["Admission_type"]),
-            createData("Cast category", student_details["Cast_category"]),
-            createData("Gender", student_details["Gender"]),
-            createData("DOB", student_details["DOB"]),
-            createData("SSC Percentage", student_details["SSC_Percentage"]),
-            createData("SSC Percentile", student_details["SSC_Percentile"]),
-            createData("SSC Board", student_details["SSC_Board"]),
-            createData("SSC School", student_details["SSC_School"]),
-            createData("HSC Percentage", student_details["HSC_Percentage"]),
-            createData("HSC Percentile", student_details["HSC_Percentile"]),
-            createData("HSC Board", student_details["HSC_Board"]),
-            createData("HSC School", student_details["HSC_School"]),
-            createData("IsD2D", student_details["IsD2D"]),
-            createData("Diploma Result CPI", student_details["Diploma_Result_CPI"]),
-            createData("Diploma Result Percentage", student_details["Diploma_Result_Percentage"]),
-            createData("Diploma College Name", student_details["Diploma_College_Name"]),
-            createData("Diploma University", student_details["Diploma_University"]),
-            createData("Sem 1 SPI", student_details["Sem_1_SPI"]),
-            createData("Sem 2 SPI", student_details["Sem_2_SPI"]),
-            createData("Sem 3 SPI", student_details["Sem_3_SPI"]),
-            createData("Sem 4 SPI", student_details["Sem_4_SPI"]),
-            createData("Sem 5 SPI", student_details["Sem_5_SPI"]),
-            createData("Sem 6 SPI", student_details["Sem_6_SPI"]),
-            createData("Sem 7 SPI", student_details["Sem_7_SPI"]),
-            createData("Sem 8 SPI", student_details["Sem_8_SPI"]),
-            createData("Current CPI", student_details["Current_CPI"]),
-            createData("Enrollment year", student_details["Enrollment_year"]),
-            createData("Passed out year", student_details["Passed_out_year"]),
-            createData("Email ID", student_details["Email_ID"]),
-            createData("Contact No 1", student_details["Contact_No_1"]),
-            createData("Contact No 2", student_details["Contact_No_2"]),
-            createData("Address", student_details["Address"]),
-            createData("City", student_details["City"]),
-            createData("Pin Code", student_details["Pin_Code"]),
-            createData("Current semester", student_details["Current_semester"]),
-            createData("Career Preference", student_details["Career_Preference"]),
+            createData('Student ID', student_details['Student_ID']),
+            createData('FirstName', student_details['FirstName']),
+            createData('MiddleName', student_details['MiddleName']),
+            createData('LastName', student_details['LastName']),
+            createData('Admission type', student_details['Admission_type']),
+            createData('Cast category', student_details['Cast_category']),
+            createData('Gender', student_details['Gender']),
+            createData('DOB', student_details['DOB']),
+            createData('SSC Percentage', student_details['SSC_Percentage']),
+            createData('SSC Percentile', student_details['SSC_Percentile']),
+            createData('SSC Board', student_details['SSC_Board']),
+            createData('SSC School', student_details['SSC_School']),
+            createData('HSC Percentage', student_details['HSC_Percentage']),
+            createData('HSC Percentile', student_details['HSC_Percentile']),
+            createData('HSC Board', student_details['HSC_Board']),
+            createData('HSC School', student_details['HSC_School']),
+            createData('IsD2D', student_details['IsD2D']),
+            createData('Diploma Result CPI', student_details['Diploma_Result_CPI']),
+            createData('Diploma Result Percentage', student_details['Diploma_Result_Percentage']),
+            createData('Diploma College Name', student_details['Diploma_College_Name']),
+            createData('Diploma University', student_details['Diploma_University']),
+            createData('Sem 1 SPI', student_details['Sem_1_SPI']),
+            createData('Sem 2 SPI', student_details['Sem_2_SPI']),
+            createData('Sem 3 SPI', student_details['Sem_3_SPI']),
+            createData('Sem 4 SPI', student_details['Sem_4_SPI']),
+            createData('Sem 5 SPI', student_details['Sem_5_SPI']),
+            createData('Sem 6 SPI', student_details['Sem_6_SPI']),
+            createData('Sem 7 SPI', student_details['Sem_7_SPI']),
+            createData('Sem 8 SPI', student_details['Sem_8_SPI']),
+            createData('Current CPI', student_details['Current_CPI']),
+            createData('Enrollment year', student_details['Enrollment_year']),
+            createData('Passed out year', student_details['Passed_out_year']),
+            createData('Email ID', student_details['Email_ID']),
+            createData('Contact No 1', student_details['Contact_No_1']),
+            createData('Contact No 2', student_details['Contact_No_2']),
+            createData('Address', student_details['Address']),
+            createData('City', student_details['City']),
+            createData('Pin Code', student_details['Pin_Code']),
+            createData('Current semester', student_details['Current_semester']),
+            createData('Career Preference', student_details['Career_Preference']),
             // createData("CV Upload", student_details["CV_Upload"]),
             // createData("Student Photo", student_details["Student_Photo"]),
-            createData("Branch Id", student_details["Branch_Id"])
+            createData('Branch Id', student_details['Branch_Id'])
         ];
     }
+
+    const [skillDetails, setSkillDetails] = useState(undefined);
+    const [skillExist, setSkillExist] = useState(false);
+
+    useEffect(async () => {
+        let response = undefined;
+        response = await fetch('/skillsandachievements/getSkillsAndAchievements/', { method: 'GET' });
+
+        let data = undefined;
+        if (response != undefined) {
+            data = await response.json();
+            if (data != undefined) {
+                data = data['data'];
+                if (data == 'No Student Skills And Achievements Record found') {
+                    // not exist
+                    setSkillExist(false);
+                    setSkillDetails({
+                        Student_ID: '',
+                        Skills: '',
+                        Competitive_Coding_Achievements: '',
+                        Other_Achievements: '',
+                        GRE_Score: '',
+                        TOEFL_Score: '',
+                        IELTS_Score: '',
+                        GATE_Score: ''
+                    });
+                } else {
+                    // exist
+                    setSkillDetails(data[0]);
+                    setSkillExist(true);
+                }
+                console.log(data[0]);
+            }
+        }
+
+        console.log(response);
+    }, []);
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const [searchData, setSearchData] = useState("")
+    const [searchData, setSearchData] = useState('');
 
-    function handleSkillAdd() {
-        if (searchData != "") {
-            const skillCopy = [].concat(skill)
-            skillCopy.push(searchData)
-            setSkill(skillCopy)
-            console.log(skillCopy)
-            handleClose()
+    async function handleSkillAdd() {
+        // if (searchData != "") {
+        //     const skillCopy = [].concat(skill)
+        //     skillCopy.push(searchData)
+        //     setSkill(skillCopy)
+        //     console.log(skillCopy)
+        //     handleClose()
+        // }
+
+        // check whether skills are exist or not
+
+        if(searchData != "")
+        {
+            const skill_details_copy = JSON.parse(JSON.stringify(skillDetails));
+
+            if(skill_details_copy["Skills"] == "")
+            {
+                skill_details_copy["Skills"] = searchData
+                setSkillDetails(skill_details_copy)
+                setSkillExist(true)
+            }
+            else
+            {
+                skill_details_copy["Skills"] += ("," + searchData)
+                setSkillDetails(skill_details_copy)
+            }
+            
+            if (skillExist) {
+                
+                // update
+                const res = await UsePost('/skillsandachievements/updateSkillsAndAchievements/', skill_details_copy, 'POST');
+                const params1 = {
+                    data: res,
+                    HandleToast: {
+                        toast: toast,
+                        flag: false
+                    }
+                };
+                console.log(res);
+                responsePipelineHandler(params1, 1);
+            } 
+            else {
+                // create
+                const res = await UsePost('/skillsandachievements/addSkillsAndAchievements/', skill_details_copy, 'POST');
+                const params1 = {
+                    data: res,
+                    HandleToast: {
+                        toast: toast,
+                        flag: false
+                    }
+                };
+                console.log(res);
+                responsePipelineHandler(params1, 1);
+            }
         }
-    }
-    function handleDelete(idx) {
-        let skillCopy = skill
-        let i;
-        let res = skillCopy.filter((elem) => {
-            return (idx != elem)
-        })
-        setSkill(res)
 
+        handleClose()
+    }
+    async function handleDelete(idx) {
+        // let skillCopy = skill
+        // let i;
+        // let res = skillCopy.filter((elem) => {
+        //     return (idx != elem)
+        // })
+        // setSkill(res)
+
+        let skillCopy = skillDetails['Skills'].split(',');
+        let res1 = skillCopy.filter((elem) => {
+            return idx != elem;
+        });
+        let skills = '';
+        for (let i = 0; i < res1.length; i++) {
+            skills += res1[i];
+            if (i != res1.length - 1) {
+                skills += ', ';
+            }
+        }
+        console.log(skills);
+
+        const skill_details_copy = JSON.parse(JSON.stringify(skillDetails));
+        skill_details_copy['Skills'] = '' + skills;
+        setSkillDetails(skill_details_copy);
+
+        const res = await UsePost('/skillsandachievements/updateSkillsAndAchievements/', skill_details_copy, 'POST');
+        const params1 = {
+            data: res,
+            HandleToast: {
+                toast: toast,
+                flag: false
+            }
+        };
+        console.log(res);
+        responsePipelineHandler(params1, 1);
+        // console.log(skillDetails)
     }
     return (
         <>
@@ -238,15 +355,16 @@ export default function S_ViewProfile() {
                     ''
                 ) : (
                     <>
-
                         <SubCard>
-                            <Grid container justifyContent={"flex-start"} spacing={3}>
-                                <Grid item md={3} xs={12} >
-                                    <ProfilePhoto student_photo={loading ? "" : student_details["Student_Photo"]} />
+                            <Grid container justifyContent={'flex-start'} spacing={3}>
+                                <Grid item md={3} xs={12}>
+                                    <ProfilePhoto student_photo={loading ? '' : student_details['Student_Photo']} />
                                 </Grid>
-                                <Grid md={9} xs={12} item style={{ "padding-left": "6%" }}>
+                                <Grid md={9} xs={12} item style={{ 'padding-left': '6%' }}>
                                     {/* <h1>SKILLS</h1> */}
-                                    <Button onClick={handleOpen} variant="contained" borderRadius="50%">Add Skill</Button>
+                                    <Button onClick={handleOpen} variant="contained" borderRadius="50%">
+                                        Add Skill
+                                    </Button>
                                     <Modal
                                         open={open}
                                         onClose={handleClose}
@@ -254,18 +372,25 @@ export default function S_ViewProfile() {
                                         aria-describedby="modal-modal-description"
                                     >
                                         <Box sx={style}>
-                                            <Grid spacing={2} container justifyContent={"space-between"}>
+                                            <Grid spacing={2} container justifyContent={'space-between'}>
                                                 <Grid item>
                                                     <TextField
-                                                        onChange={(e) => { setSearchData(e.target.value) }}
+                                                        onChange={(e) => {
+                                                            setSearchData(e.target.value);
+                                                        }}
                                                         value={searchData}
-                                                        size="small" />
+                                                        size="small"
+                                                    />
                                                 </Grid>
-                                                <Grid item >
+                                                <Grid item>
                                                     <Button
                                                         size="medium"
-                                                        onClick={() => { handleSkillAdd() }}
-                                                        variant="contained" startIcon={<IconPlus />}>
+                                                        onClick={() => {
+                                                            handleSkillAdd();
+                                                        }}
+                                                        variant="contained"
+                                                        startIcon={<IconPlus />}
+                                                    >
                                                         Add Skill
                                                     </Button>
                                                 </Grid>
@@ -275,19 +400,21 @@ export default function S_ViewProfile() {
                                     <br />
                                     <br />
                                     <Grid direction="row" spacing={1}>
-                                        {skill.map((elem) => {
-                                            return (
-                                                <Chip
-                                                    style={{ "margin": "1%" }}
-                                                    icon={IconInfoCircle}
-                                                    variant="outlined"
-                                                    color='primary'
-                                                    onDelete={() => handleDelete(elem)}
-                                                    label={elem} />
-                                            )
-                                        })}
+                                        {skillDetails == undefined
+                                            ? ''
+                                            :skillDetails['Skills'] == "" ? "" : skillDetails['Skills'].split(',').map((elem) => {
+                                                  return (
+                                                      <Chip
+                                                          style={{ margin: '1%' }}
+                                                          icon={IconInfoCircle}
+                                                          variant="outlined"
+                                                          color="primary"
+                                                          onDelete={() => handleDelete(elem)}
+                                                          label={elem}
+                                                      />
+                                                  );
+                                              })}
                                     </Grid>
-
                                 </Grid>
                             </Grid>
                         </SubCard>
@@ -311,6 +438,7 @@ export default function S_ViewProfile() {
                                 </TableBody>
                             </Table>
                         </TableContainer> */}
+
                         <br /><br />
                         <SubCard>
                             <TableContainer component={Paper}>
@@ -398,10 +526,99 @@ export default function S_ViewProfile() {
                             </TableContainer>
                         </SubCard>
 
+
+                        <br />
+                        <br />
+                        <TableContainer component={Paper}>
+                            <Table sx={{ minWidth: 200 }} aria-label="simple table">
+                                <TableBody>
+                                    {rows.map((row) => (
+                                        <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                            <TableCell component="th" scope="row">
+                                                <Typography variant="h5">{row.key}</Typography>
+                                            </TableCell>
+                                            <TableCell align="right">{row.value}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                    <TableRow key="CV_Upload" sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                        <TableCell component="th" scope="row">
+                                            <Typography variant="h5">CV Upload</Typography>
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {student_details === undefined ? (
+                                                'Wait Loading....'
+                                            ) : (
+                                                <>
+                                                    <a
+                                                        target="blank"
+                                                        style={{ 'text-decoration': 'none', cursor: 'pointer' }}
+                                                        href={
+                                                            'http://localhost:8000' +
+                                                            student_details['CV_Upload'].split('.')[1] +
+                                                            '.' +
+                                                            student_details['CV_Upload'].split('.')[2]
+                                                        }
+                                                    >
+                                                        {student_details === undefined ? (
+                                                            'Wait Loading....'
+                                                        ) : (
+                                                            <>
+                                                                <Chip
+                                                                    label={'View CV'}
+                                                                    // variant="outlined"
+                                                                    color="primary"
+                                                                    clickable
+                                                                />
+                                                            </>
+                                                        )}
+                                                    </a>
+                                                </>
+                                            )}
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow key="Student_Photo" sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                        <TableCell component="th" scope="row">
+                                            <Typography variant="h5">Student Photo</Typography>
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {student_details === undefined ? (
+                                                'Wait Loading....'
+                                            ) : (
+                                                <>
+                                                    <a
+                                                        target="blank"
+                                                        style={{ 'text-decoration': 'none', cursor: 'pointer' }}
+                                                        href={
+                                                            'http://localhost:8000' +
+                                                            student_details['Student_Photo'].split('.')[1] +
+                                                            '.' +
+                                                            student_details['Student_Photo'].split('.')[2]
+                                                        }
+                                                    >
+                                                        {student_details === undefined ? (
+                                                            'Wait Loading....'
+                                                        ) : (
+                                                            <>
+                                                                <Chip
+                                                                    label={'View Photo'}
+                                                                    // variant="outlined"
+                                                                    color="primary"
+                                                                    clickable
+                                                                />
+                                                            </>
+                                                        )}
+                                                    </a>
+                                                </>
+                                            )}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+
                     </>
                 )}
             </MainCard>
         </>
     );
 }
-

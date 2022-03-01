@@ -48,7 +48,6 @@ function AddInternship() {
             seed={Math.random()}
             from={"line 123"}
             details={{
-                Passed_out_year: "",
                 Stipend: "",
                 Project_Title: "",
                 Internal_Guide_ID: "",
@@ -57,6 +56,7 @@ function AddInternship() {
                 External_Guide_Name: "",
                 External_Guide_Mobile_Number: "",
                 External_Guide_Email_ID: "",
+                Passed_out_year: StudentDetails["Passed_out_year"],
                 Student_ID: studentData.toUpperCase()
             }}
             allCompanies={allCompanies} />);

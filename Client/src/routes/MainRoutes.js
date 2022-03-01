@@ -95,49 +95,28 @@ const MainRoutes = () => {
     }
 
     useEffect(() => {
-        // console.log(location.pathname)
-        // if (location.pathname != "/admin/login" && location.pathname != "/_student/login") {
-        //     console.log("here")
+        console.log(location.pathname)
+        if (location.pathname != "/admin/login" && location.pathname != "/_student/login") {
+            console.log("here")
 
-        //     const isAdmin = isAdminRoute(location.pathname)
-        //     console.log(document.cookie)
-        //     const allCookies = HandleCookies.parseCookies(document.cookie)
+            const isAdmin = isAdminRoute(location.pathname)
+            console.log(document.cookie)
+            const allCookies = HandleCookies.parseCookies(document.cookie)
 
-        //     if (isAdmin) {
-        //         try {
-        //             const adminCookie = allCookies["adminId"].toString()
-        //             console.log(allCookies)
-        //             console.log(adminCookie)
-        //             console.log(HandleCookies.VerifyAdminCookie(adminCookie))
-        //             if (!HandleCookies.VerifyAdminCookie(adminCookie)) {
-        //                 history.push("/admin/login")
-        //             }
-        //         }
-        //         catch (err) {
-        //             console.log(err)
-        //             history.push("/admin/login")
+            if (isAdmin) {
+                const status = HandleCookies.VerifyAdminCookie()
+                if (!status) {
+                    history.push("/admin/login")
+                }
+            }
+            else {
+                const status = HandleCookies.VerifyStudentCookie()
+                if (!status) {
+                    history.push("/_student/login")
+                }
+            }
 
-        //         }
-        //     }
-        //     else {
-        //         console.log("hjjbhjbj")
-        //         try {
-        //             const studentCookie = allCookies["studentId"].toString()
-        //             console.log(allCookies)
-        //             console.log(studentCookie)
-        //             // console.log(HandleCookies.(adminCookie))
-        //             if (!HandleCookies.VerifyStudentCookie(studentCookie)) {
-        //                 history.push("/_student/login")
-        //             }
-        //         }
-        //         catch (err) {
-        //             console.log(err)
-        //             history.push("/_student/login")
-
-        //         }
-        //     }
-
-        // }
+        }
     })
 
     return (
@@ -259,7 +238,7 @@ const MainRoutes = () => {
                     <Route path="/_student/announcement/view_announcement/:idx" component={S_ViewSingleAnnouncement} />
                     <Route path="/_student/announcement/view_announcement" component={S_ViewAnnouncements} />
                     <Route path="/_student/announcement/view_subscribed_announcement" component={S_ViewSubscribedAnnouncements} />
-                    
+
                     {/* for any errorneous page */}
                     {/* <Route path="" component={ErrorPage} /> */}
 

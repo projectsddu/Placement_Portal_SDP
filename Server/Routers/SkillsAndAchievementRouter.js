@@ -1,11 +1,12 @@
 const SkillsAndAchievmentsController = require("../Controllers/SkillsAndAchievmentsController")
 const router = require('express').Router()
 const EmptyFieldCheck = require("../Middlewares/General/EmptyFieldCheck")
+const StudentAuthenticate = require("../Middlewares/StudentLogin/Authenticate")
 
-router.post("/addSkillsAndAchievements", SkillsAndAchievmentsController.createSkillsAndAchievements)
+router.post("/addSkillsAndAchievements",[StudentAuthenticate], SkillsAndAchievmentsController.createSkillsAndAchievements)
 router.get("/getAllSkillsAndAchievements", SkillsAndAchievmentsController.getAllSkillsAndAchievements)
-router.get("/getSkillsAndAchievements/:id", SkillsAndAchievmentsController.getSkillsAndAchievements)
-router.post("/updateSkillsAndAchievements/:id", SkillsAndAchievmentsController.updateSkillsAndAchievements)
+router.get("/getSkillsAndAchievements/", [StudentAuthenticate],SkillsAndAchievmentsController.getSkillsAndAchievements)
+router.post("/updateSkillsAndAchievements/",[StudentAuthenticate], SkillsAndAchievmentsController.updateSkillsAndAchievements)
 router.post("/deleteSkillsAndAchievements/:id", SkillsAndAchievmentsController.deleteSkillsAndAchievements)
 
 module.exports = router
