@@ -51,6 +51,7 @@ import ProfilePhoto from './S_ProfilePhoto'
 import SubCard from '../../../ui-component/cards/SubCard';
 // import ChipInput from 'material-ui-chip-input'
 import Modal from '@mui/material/Modal';
+import S_AddProject from '../Project/S_AddProject';
 
 export default function S_ViewProfile() {
     const useStyles = makeStyles((theme) => ({
@@ -290,6 +291,10 @@ export default function S_ViewProfile() {
                                 </Grid>
                             </Grid>
                         </SubCard>
+                        <br /><br/>
+                        {/* <SubCard> */}
+                            <S_AddProject />
+                        {/* </SubCard> */}
 
                         {/* <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 200 }} aria-label="simple table">
@@ -307,40 +312,41 @@ export default function S_ViewProfile() {
                             </Table>
                         </TableContainer> */}
                         <br /><br />
-                        <TableContainer component={Paper}>
-                            <Table sx={{ minWidth: 200 }} aria-label="simple table">
+                        <SubCard>
+                            <TableContainer component={Paper}>
+                                <Table sx={{ minWidth: 200 }} aria-label="simple table">
 
-                                <TableBody>
-                                    {rows.map((row) => (
+                                    <TableBody>
+                                        {rows.map((row) => (
+                                            <TableRow
+                                                key={row.name}
+                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                            >
+                                                <TableCell component="th" scope="row">
+                                                    <Typography variant="h5">
+                                                        {row.key}
+                                                    </Typography>
+                                                </TableCell>
+                                                <TableCell align="right">{row.value}</TableCell>
+                                            </TableRow>
+                                        ))}
                                         <TableRow
-                                            key={row.name}
+                                            key="CV_Upload"
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                         >
                                             <TableCell component="th" scope="row">
                                                 <Typography variant="h5">
-                                                    {row.key}
+                                                    CV Upload
                                                 </Typography>
                                             </TableCell>
-                                            <TableCell align="right">{row.value}</TableCell>
-                                        </TableRow>
-                                    ))}
-                                    <TableRow
-                                        key="CV_Upload"
-                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                    >
-                                        <TableCell component="th" scope="row">
-                                            <Typography variant="h5">
-                                                CV Upload
-                                            </Typography>
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            {student_details === undefined ? "Wait Loading...." : <>
-                                                <a target='blank'
-                                                    style={{ "text-decoration": "none", "cursor": "pointer" }}
-                                                    href={
-                                                        "http://localhost:8000" + student_details["CV_Upload"].split(".")[1] + "." + student_details["CV_Upload"].split(".")[2]}>
+                                            <TableCell align="right">
+                                                {student_details === undefined ? "Wait Loading...." : <>
+                                                    <a target='blank'
+                                                        style={{ "text-decoration": "none", "cursor": "pointer" }}
+                                                        href={
+                                                            "http://localhost:8000" + student_details["CV_Upload"].split(".")[1] + "." + student_details["CV_Upload"].split(".")[2]}>
 
-                                                    {student_details === undefined ? "Wait Loading...." : <>
+                                                        {student_details === undefined ? "Wait Loading...." : <>
                                                             <Chip
                                                                 label={"View CV"}
                                                                 // variant="outlined"
@@ -348,48 +354,50 @@ export default function S_ViewProfile() {
                                                                 clickable
                                                             />
 
-                                                    </>
-                                                    }
+                                                        </>
+                                                        }
 
-                                                </a>
-                                            </>}
+                                                    </a>
+                                                </>}
 
-                                        </TableCell>
-                                    </TableRow>
-                                    <TableRow
-                                        key="Student_Photo"
-                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                    >
-                                        <TableCell component="th" scope="row">
-                                            <Typography variant="h5">
-                                                Student Photo
-                                            </Typography>
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            {student_details === undefined ? "Wait Loading...." : <>
-                                                <a target='blank'
-                                                    style={{ "text-decoration": "none", "cursor": "pointer" }}
-                                                    href={
-                                                        "http://localhost:8000" + student_details["Student_Photo"].split(".")[1] + "." + student_details["Student_Photo"].split(".")[2]}>
+                                            </TableCell>
+                                        </TableRow>
+                                        <TableRow
+                                            key="Student_Photo"
+                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                        >
+                                            <TableCell component="th" scope="row">
+                                                <Typography variant="h5">
+                                                    Student Photo
+                                                </Typography>
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                {student_details === undefined ? "Wait Loading...." : <>
+                                                    <a target='blank'
+                                                        style={{ "text-decoration": "none", "cursor": "pointer" }}
+                                                        href={
+                                                            "http://localhost:8000" + student_details["Student_Photo"].split(".")[1] + "." + student_details["Student_Photo"].split(".")[2]}>
 
-                                                    {student_details === undefined ? "Wait Loading...." : <>
+                                                        {student_details === undefined ? "Wait Loading...." : <>
                                                             <Chip
                                                                 label={"View Photo"}
                                                                 // variant="outlined"
                                                                 color='primary'
                                                                 clickable
                                                             />
-                                                    </>
-                                                    }
+                                                        </>
+                                                        }
 
-                                                </a>
-                                            </>}
+                                                    </a>
+                                                </>}
 
-                                        </TableCell>
-                                    </TableRow>
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
+                                            </TableCell>
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </SubCard>
+
                     </>
                 )}
             </MainCard>

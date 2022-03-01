@@ -17,6 +17,8 @@ const cookieParser = require('cookie-parser');
 const MailerService = require("./Services/MailerService")
 const SkillsAndAchievementsRouter = require("./Routers/SkillsAndAchievementRouter")
 const AdminLoginRouter = require("./Routers/AdminLoginRouter")
+const StudentProjectRouter = require("./Routers/StudentProjectRouter")
+
 require("dotenv").config();
 
 // Middlewares
@@ -63,3 +65,4 @@ app.use("/comment", CommentRouter)
 app.use("/notifications", NotificationRouter)
 app.use("/adminLogin", AdminLoginRouter)
 app.use("/skillsandachievements", SkillsAndAchievementsRouter)
+app.use("/studentproject", StudentProjectRouter)
