@@ -6,10 +6,8 @@ const SetClientAdminCookies = async function (adminId, expiryTime) {
     try {
         let exp = new Date(expiryTime)
         let aid = AES.encrypt(adminId, process.env.React_App_Encryption_Key).toString().toString()
-        console.log("Here too")
-        console.log(aid)
-        document.cookie = "adminId=" + aid + "; expires=" + exp.toUTCString();
-        console.log(AES.decrypt(aid, process.env.React_App_Encryption_Key).toString(CryptoJS.enc.Utf8))
+        localStorage.setItem("AdminAuthentication", JSON.stringify({ "adminId": aid, "expiry": exp }))
+        console.log("helr")
 
     }
     catch (err) {
@@ -19,11 +17,10 @@ const SetClientAdminCookies = async function (adminId, expiryTime) {
 }
 const SetClientStudentCookies = async function (studentId, expiryTime) {
     try {
-        console.log("Here too1")
+        // console.log("Here too1")
         let exp = new Date(expiryTime)
         let sid = AES.encrypt(studentId, process.env.React_App_Encryption_Key).toString().toString()
-        document.cookie = "studentId=" + sid + "; expires=" + exp.toUTCString();
-        console.log(AES.decrypt(sid, process.env.React_App_Encryption_Key).toString(CryptoJS.enc.Utf8))
+        localStorage.setItem("StudentAuthentication", JSON.stringify({ "studentId": sid, "expiry": exp }))
     }
     catch (err) {
         console.log("Error setting student client cookies")
@@ -66,42 +63,68 @@ const parseCookies = function (cookieData) {
     }
 }
 
-const VerifyAdminCookie = function (adminCookie) {
+const VerifyAdminCookie = function () {
     try {
-        const decryptedCookie = AES.decrypt(adminCookie, process.env.React_App_Encryption_Key).toString(CryptoJS.enc.Utf8)
-        console.log(decryptedCookie)
-        if (decryptedCookie == "admin") {
-            return true
+
+        const AuthenticationData = JSON.parse(localStorage.getItem("AdminAuthentication"))
+        const expiryDate = AuthenticationData.expiry
+        const adminId = AuthenticationData.adminId
+        const currentDate = Date.now()
+        let exp = new Date(expiryDate).getTime()
+        console.log(currentDate, exp)
+        if (currentDate <= exp) {
+            const decryptedData = AES.decrypt(adminId, process.env.React_App_Encryption_Key).toString(CryptoJS.enc.Utf8)
+            if (decryptedData == "admin") {
+                return true
+            }
+            else {
+                throw "Malicious user found!"
+            }
+        } else {
+            throw "Expiry date reached"
         }
-        else {
-            return false
-        }
+
     }
     catch (err) {
         console.log(err.toString())
         return false
     }
 }
-const VerifyStudentCookie = function (studentCookie) {
+const VerifyStudentCookie = function () {
     try {
-        const decryptedCookie = AES.decrypt(studentCookie, process.env.React_App_Encryption_Key).toString(CryptoJS.enc.Utf8)
-        console.log(decryptedCookie)
 
-        let year = parseInt(decryptedCookie[0] + decryptedCookie[1])
-        let branch = decryptedCookie[2] + decryptedCookie[3]
-        let admissionType = decryptedCookie[4] + decryptedCookie[5] + decryptedCookie[6]
-        let admissionNumber = parseInt(decryptedCookie[7] + decryptedCookie[8] + decryptedCookie[9])
-        if (year <= 0 && year >= 99) {
-            throw "Year not in range"
+        const AuthenticationData = JSON.parse(localStorage.getItem("StudentAuthentication"))
+        const expiryDate = AuthenticationData.expiry
+        const studentId = AuthenticationData.studentId
+        const currentDate = Date.now()
+        let exp = new Date(expiryDate).getTime()
+
+        if (currentDate <= exp) {
+            const decryptedData = AES.decrypt(studentId, process.env.React_App_Encryption_Key).toString(CryptoJS.enc.Utf8)
+
+            let year = parseInt(decryptedData[0] + decryptedData[1])
+            let branch = decryptedData[2] + decryptedData[3]
+            let admissionType = decryptedData[4] + decryptedData[5] + decryptedData[6]
+            let admissionNumber = parseInt(decryptedData[7] + decryptedData[8] + decryptedData[9])
+
+            if (year <= 0 && year >= 99) {
+                throw "Year not in range"
+            }
+            else if (admissionNumber <= 0 && admissionNumber >= 999) {
+                throw "Admission number not in range"
+            }
+
         }
-        else if (admissionNumber <= 0 && admissionNumber >= 999) {
-            throw "Admission number not in range"
+        else {
+            throw "Student token is expired!!!"
         }
+
+
         return true
 
     }
     catch (err) {
-        console.log(err.toString())
+        console.log(err)
         return false
     }
 }

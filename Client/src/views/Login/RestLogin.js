@@ -116,14 +116,15 @@ const RestLogin = (props, { ...others }) => {
                 flag: false,
             }
         }
+        console.log(res)
         if (res) {
             if (res.status) {
                 let a = new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 365);
                 await HandleCookies.SetClientAdminCookies(data.adminName, a)
                 history.push("/dashboard/default")
+                console.log(res);
+                responsePipelineHandler(params1, 1)
             }
-            console.log(res);
-            responsePipelineHandler(params1, 1)
         }
 
 
