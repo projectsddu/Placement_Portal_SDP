@@ -33,14 +33,22 @@ const getAllSkillsAndAchievements = async () => {
 
 const getSkillsAndAchievements = async (id) => {
     try {
-        const status = await checkExists(id)
-        if(!status) {
-            throw "Error finding Student Skills And Achievements details"
-        }
-        else {
-            let skillsandachievements = await SkillsAndAchievements.findAll({ where: { id }})
-            return skillsandachievements
-        }
+        // const status = await checkExists(id)
+        // if(!status) {
+        //     throw "Error finding Student Skills And Achievements details"
+        // }
+        // else {
+            let skillsandachievements = await SkillsAndAchievements.findAll({ where: {Student_ID: id }})
+            if(skillsandachievements)
+            {
+                return skillsandachievements
+            }
+            else
+            {
+                throw "Skill and achievements are not exist!"
+            }
+
+        // }
     } catch (error) {
         log.error(error.toString())
         return false
@@ -49,14 +57,14 @@ const getSkillsAndAchievements = async (id) => {
 
 const updateSkillsAndAchievements = async (data, id) => {
     try {
-        const status = await checkExists(id)
-        if(!status) {
-            throw "Student Skills And Achievements record doesn't exist"
-        }
-        else {
-            let skillsandachievements = await SkillsAndAchievements.update(data, { where: { id } })
+        // const status = await checkExists(id)
+        // if(!status) {
+        //     throw "Student Skills And Achievements record doesn't exist"
+        // }
+        // else {
+            let skillsandachievements = await SkillsAndAchievements.update(data, { where: { Student_ID: id } })
             return true
-        }
+        // }
     } catch (error) {
         log.error(error.toString())
         return false

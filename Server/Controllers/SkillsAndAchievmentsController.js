@@ -11,6 +11,7 @@ async function checkExists(id) {
 
 const createSkillsAndAchievements = async (req, res) => {
     try {
+        req.body.Student_ID = req.userId
         const data = req.body
         console.log(data)
         if(req.emptyField) {
@@ -48,7 +49,8 @@ const getAllSkillsAndAchievements = async (req, res) => {
 
 const getSkillsAndAchievements = async (req, res) => {
     try {
-        const id = req.params.id
+        // const id = req.params.id
+        const id = req.userId
         let skillsandachievements = await SkillsAndAchievementsService.getSkillsAndAchievements(id)
         if(skillsandachievements){
             return res.json({ status: skillsandachievements.length == 0 ? false : true, data: skillsandachievements.length == 0 ? "No Student Skills And Achievements Record found" : skillsandachievements})
@@ -65,7 +67,8 @@ const getSkillsAndAchievements = async (req, res) => {
 
 const updateSkillsAndAchievements = async (req, res) => {
     try {
-        const id = req.params.id
+        // const id = req.params.id
+        const id = req.userId
         const skillsandachievements = await SkillsAndAchievementsService.updateSkillsAndAchievements(req.body, id)
         if(skillsandachievements){
             return res.json({ status: true, data: "Student Skills And Achievements Record Updated"})

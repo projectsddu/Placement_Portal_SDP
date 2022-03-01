@@ -4,41 +4,45 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        Programming_Language_Skills: {
+        Skills: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        Web_Development_Skills: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        Database_Skills: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
+        // Programming_Language_Skills: {
+        //     type: DataTypes.STRING,
+        //     allowNull: false
+        // },
+        // Web_Development_Skills: {
+        //     type: DataTypes.STRING,
+        //     allowNull: false
+        // },
+        // Database_Skills: {
+        //     type: DataTypes.STRING,
+        //     allowNull: false
+        // },
         Competitive_Coding_Achievements: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         Other_Achievements: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         GRE_Score: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         TOEFL_Score: {
             type: DataTypes.DOUBLE,
-            allowNull: false
+            allowNull: true
         },
         IELTS_Score: {
             type: DataTypes.DOUBLE,
-            allowNull: false
+            allowNull: true
         },
         GATE_Score: {
             type: DataTypes.DOUBLE,
-            allowNull: false
+            allowNull: true
         }
     }, {
         timestamps: false   
