@@ -173,9 +173,9 @@ function S_AddProject() {
                 {StudentDetails === undefined ? "" :
                     StudentDetails == "No student found!" ?
                         <ChipCard data={
-                            <NoStudent ID={studentData} />} loading={false} type={"error"} /> :
+                            <><h1>Jenil</h1></>} loading={false} type={"error"} /> :
                         <>
-                            <ChipCard loading={false} data={<Student_details details={StudentDetails} />}>
+                            <ChipCard loading={false} data={<><h1>Jenil</h1></>}>
                             </ChipCard>
                             <br />
                         </>

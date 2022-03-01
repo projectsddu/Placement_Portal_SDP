@@ -227,7 +227,6 @@ export default function S_ViewProfile() {
                     // not exist
                     setSkillExist(false);
                     setSkillDetails({
-                        Student_ID: '',
                         Skills: '',
                         Competitive_Coding_Achievements: '',
                         Other_Achievements: '',
@@ -264,24 +263,21 @@ export default function S_ViewProfile() {
 
         // check whether skills are exist or not
 
-        if(searchData != "")
-        {
+        if (searchData != "") {
             const skill_details_copy = JSON.parse(JSON.stringify(skillDetails));
 
-            if(skill_details_copy["Skills"] == "")
-            {
+            if (skill_details_copy["Skills"] == "") {
                 skill_details_copy["Skills"] = searchData
                 setSkillDetails(skill_details_copy)
                 setSkillExist(true)
             }
-            else
-            {
+            else {
                 skill_details_copy["Skills"] += ("," + searchData)
                 setSkillDetails(skill_details_copy)
             }
-            
+
             if (skillExist) {
-                
+
                 // update
                 const res = await UsePost('/skillsandachievements/updateSkillsAndAchievements/', skill_details_copy, 'POST');
                 const params1 = {
@@ -293,7 +289,7 @@ export default function S_ViewProfile() {
                 };
                 console.log(res);
                 responsePipelineHandler(params1, 1);
-            } 
+            }
             else {
                 // create
                 const res = await UsePost('/skillsandachievements/addSkillsAndAchievements/', skill_details_copy, 'POST');
@@ -402,25 +398,25 @@ export default function S_ViewProfile() {
                                     <Grid direction="row" spacing={1}>
                                         {skillDetails == undefined
                                             ? ''
-                                            :skillDetails['Skills'] == "" ? "" : skillDetails['Skills'].split(',').map((elem) => {
-                                                  return (
-                                                      <Chip
-                                                          style={{ margin: '1%' }}
-                                                          icon={IconInfoCircle}
-                                                          variant="outlined"
-                                                          color="primary"
-                                                          onDelete={() => handleDelete(elem)}
-                                                          label={elem}
-                                                      />
-                                                  );
-                                              })}
+                                            : skillDetails['Skills'] == "" ? "" : skillDetails['Skills'].split(',').map((elem) => {
+                                                return (
+                                                    <Chip
+                                                        style={{ margin: '1%' }}
+                                                        icon={IconInfoCircle}
+                                                        variant="outlined"
+                                                        color="primary"
+                                                        onDelete={() => handleDelete(elem)}
+                                                        label={elem}
+                                                    />
+                                                );
+                                            })}
                                     </Grid>
                                 </Grid>
                             </Grid>
                         </SubCard>
-                        <br /><br/>
+                        <br /><br />
                         {/* <SubCard> */}
-                            <S_AddProject />
+                        <S_AddProject />
                         {/* </SubCard> */}
 
                         {/* <TableContainer component={Paper}>

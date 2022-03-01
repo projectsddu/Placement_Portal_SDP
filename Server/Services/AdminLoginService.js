@@ -21,10 +21,10 @@ const getAdminLogin = async (token) => {
         const admin = await AdminLogin.findAll({
             where: {
                 Admin_Name: uid["id"],
-            } 
+            }
         })
-        
-        if(admin.length == 0) {
+
+        if (admin.length == 0) {
             return false
         }
         else {
@@ -39,25 +39,29 @@ const getAdminLogin = async (token) => {
 
 const verifyAdmin = async (admin_name, admin_password) => {
     try {
-        
-        let admin = await AdminLogin.findAll({
+
+        let admin = undefined
+        admin = await AdminLogin.findAll({
             where: {
                 Admin_Name: admin_name,
                 Admin_Password: admin_password
             }
         })
-        admin = JSON.parse(JSON.stringify(admin))
-        console.log(admin);
-        if(admin.length == 0)
-        {
-            console.log("length 0")
-            return false
+        if (admin != undefined) {
+
+            admin = JSON.parse(JSON.stringify(admin))
+            console.log("Line 53:", admin);
+            if (admin.length == 0) {
+                console.log("length 0")
+                return false
+            }
+            else {
+                console.log("in else");
+                const token = await LoginTokenService.addToken(admin_name);
+                return token
+            }
         }
-        else {
-            console.log("in else");
-            const token = await LoginTokenService.addToken(admin_name);
-            return token
-        }
+
     }
     catch (error) {
         log.error(error.toString())
