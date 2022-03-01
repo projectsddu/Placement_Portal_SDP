@@ -1,19 +1,19 @@
-const SECRETKEY = require("./Secrets")
 var CryptoJS = require("crypto-js")
 var AES = require("crypto-js/aes");
 // var SHA256 = require("crypto-js/sha256");
 
 const SetClientAdminCookies = async function (adminId, expiryTime) {
     try {
-        console.log("Here too")
         let exp = new Date(expiryTime)
-        let aid = AES.encrypt(adminId, SECRETKEY.SECRETKEY).toString().toString()
+        let aid = AES.encrypt(adminId, process.env.React_App_Encryption_Key).toString().toString()
+        console.log("Here too")
+        console.log(aid)
         document.cookie = "adminId=" + aid + "; expires=" + exp.toUTCString();
-        console.log(AES.decrypt(aid, SECRETKEY.SECRETKEY).toString(CryptoJS.enc.Utf8))
+        console.log(AES.decrypt(aid, process.env.React_App_Encryption_Key).toString(CryptoJS.enc.Utf8))
 
     }
     catch (err) {
-        console.log(err.toString())
+        console.log(err)
         console.log("Error setting admin client cookies")
     }
 }
@@ -21,9 +21,9 @@ const SetClientStudentCookies = async function (studentId, expiryTime) {
     try {
         console.log("Here too1")
         let exp = new Date(expiryTime)
-        let sid = AES.encrypt(studentId, SECRETKEY.SECRETKEY).toString().toString()
+        let sid = AES.encrypt(studentId, process.env.React_App_Encryption_Key).toString().toString()
         document.cookie = "studentId=" + sid + "; expires=" + exp.toUTCString();
-        console.log(AES.decrypt(sid, SECRETKEY.SECRETKEY).toString(CryptoJS.enc.Utf8))
+        console.log(AES.decrypt(sid, process.env.React_App_Encryption_Key).toString(CryptoJS.enc.Utf8))
     }
     catch (err) {
         console.log("Error setting student client cookies")
@@ -68,7 +68,7 @@ const parseCookies = function (cookieData) {
 
 const VerifyAdminCookie = function (adminCookie) {
     try {
-        const decryptedCookie = AES.decrypt(adminCookie, SECRETKEY.SECRETKEY).toString(CryptoJS.enc.Utf8)
+        const decryptedCookie = AES.decrypt(adminCookie, process.env.React_App_Encryption_Key).toString(CryptoJS.enc.Utf8)
         console.log(decryptedCookie)
         if (decryptedCookie == "admin") {
             return true
@@ -84,7 +84,7 @@ const VerifyAdminCookie = function (adminCookie) {
 }
 const VerifyStudentCookie = function (studentCookie) {
     try {
-        const decryptedCookie = AES.decrypt(studentCookie, SECRETKEY.SECRETKEY).toString(CryptoJS.enc.Utf8)
+        const decryptedCookie = AES.decrypt(studentCookie, process.env.React_App_Encryption_Key).toString(CryptoJS.enc.Utf8)
         console.log(decryptedCookie)
 
         let year = parseInt(decryptedCookie[0] + decryptedCookie[1])
