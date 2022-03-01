@@ -1,6 +1,7 @@
 const express = require("express")
 const multer = require('multer');
 const path = require('path');
+const http = require("http")
 const app = express()
 const hostingConfig = require("./Config/hostingConfig")
 const StudentRouter = require("./Routers/StudentRouter")
@@ -16,6 +17,7 @@ const cookieParser = require('cookie-parser');
 const MailerService = require("./Services/MailerService")
 const SkillsAndAchievementsRouter = require("./Routers/SkillsAndAchievementRouter")
 const AdminLoginRouter = require("./Routers/AdminLoginRouter")
+require("dotenv").config();
 
 // Middlewares
 
@@ -38,10 +40,14 @@ app.post("/postTest", (req, res) => {
     res.send(req.body)
 })
 
-const port = hostingConfig.SERVER_PORT_NO
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`)
+
+
+// const port = hostingConfig.SERVER_PORT_NO
+
+app.listen(process.env.PORT, () => {
+    console.log(`Server is running on port ${process.env.PORT
+        }`)
 })
 
 //routers
