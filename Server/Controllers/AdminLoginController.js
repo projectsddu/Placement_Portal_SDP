@@ -10,8 +10,7 @@ const AdminLogin = db.adminLogins
 const AdminLoginService = require("../Services/AdminLoginService")
 
 const login = async (req, res) => {
-    try 
-    {
+    try {
         const admin_name = req.body.adminName
         const admin_password = req.body.adminPassword
         console.log("body fromn controller");
@@ -19,11 +18,10 @@ const login = async (req, res) => {
         console.log(admin_password)
 
         const token = await AdminLoginService.verifyAdmin(admin_name, admin_password)
-        
+
         console.log("token: ", token)
-        
-        if(token)
-        {
+
+        if (token) {
             const savedCookie = await res.cookie("AdminLoginToken", token, {
                 expires: new Date(Date.now() + 2589200000),
                 httpOnly: true,

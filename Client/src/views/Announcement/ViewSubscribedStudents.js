@@ -1,6 +1,6 @@
 import React from 'react';
 import MainCard from '../../ui-component/cards/MainCard';
-import { DataGrid, RowsProp, ColDef, GridToolbarContainer, GridToolbarExport } from '@material-ui/data-grid';
+import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@material-ui/data-grid';
 import { IconDashboard, IconDeviceAnalytics, IconSpeakerphone } from '@tabler/icons';
 import { useHistory } from 'react-router';
 import useFetch from '../../Utilities/useFetch';
@@ -31,7 +31,7 @@ function ViewSubscribedStudents() {
             // console.log(obj)
             students_list.push(obj);
         }
-        
+
         // sort the array based on CPI of the student
         students_list.sort(function (a, b) {
             console.log(a.Current_CPI + " " + b.Current_CPI)

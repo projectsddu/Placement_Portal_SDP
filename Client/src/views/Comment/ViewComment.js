@@ -1,12 +1,12 @@
-import { Button, Grid, Typography } from '@material-ui/core';
+// import { Button, Grid, Typography } from '@material-ui/core';
 import React from 'react';
-import MainCard from '../../ui-component/cards/MainCard';
-import SubCard from '../../ui-component/cards/SubCard';
-import { Chip } from '@mui/material';
-import { Avatar } from '@material-ui/core';
-import useFetch from '../../Utilities/useFetch';
+// import MainCard from '../../ui-component/cards/MainCard';
+// import SubCard from '../../ui-component/cards/SubCard';
+// import { Chip } from '@mui/material';
+// import { Avatar } from '@material-ui/core';
+// import useFetch from '../../Utilities/useFetch';
 import SingleComment from './SingleComment';
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 
 
 
@@ -28,7 +28,7 @@ function ViewComment(props) {
   // }
 
   let comments = props.data;
-  
+
   return (
     <>
       {comments.map((e) => (
