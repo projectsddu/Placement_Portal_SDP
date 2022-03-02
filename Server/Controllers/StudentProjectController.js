@@ -46,7 +46,8 @@ const getAllStudentProjects = async (req, res) => {
 
 const getOneStudentProject = async (req, res) => {
     try {
-        const id = req.params.id
+        // const id = req.params.id
+        const id = req.userId
         let studentproject = await StudentProjectService.getOneStudentProject(id)
         if(studentproject)
         {

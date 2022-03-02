@@ -59,7 +59,7 @@ const updateStudentProject = async (data, id) => {
 const deleteStudentProject = async (id) => {
     try {
         const status = await checkExists(id)
-        if(status)
+        if(!status)
         {
             throw "Error deleting student project"
         }

@@ -523,9 +523,9 @@ export default function S_ViewProfile() {
                         </SubCard>
 
 
-                        <br />
-                        <br />
-                        <TableContainer component={Paper}>
+                        {/* <br />
+                        <br /> */}
+                        {/* <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 200 }} aria-label="simple table">
                                 <TableBody>
                                     {rows.map((row) => (
@@ -610,7 +610,7 @@ export default function S_ViewProfile() {
                                     </TableRow>
                                 </TableBody>
                             </Table>
-                        </TableContainer>
+                        </TableContainer> */}
 
                     </>
                 )}
