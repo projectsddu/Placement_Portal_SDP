@@ -119,12 +119,12 @@ const RestLogin = (props, { ...others }) => {
         console.log(res)
         if (res) {
             if (res.status) {
-                let a = new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 365);
+                let a = new Date(new Date().getTime() + 2589200000);
                 await HandleCookies.SetClientAdminCookies(data.adminName, a)
                 history.push("/dashboard/default")
                 console.log(res);
-                responsePipelineHandler(params1, 1)
             }
+            responsePipelineHandler(params1, 1)
         }
 
 

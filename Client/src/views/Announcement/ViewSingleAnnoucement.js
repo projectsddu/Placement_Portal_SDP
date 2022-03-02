@@ -1,27 +1,27 @@
 import React from 'react'
 import { Button } from '@material-ui/core';
-import { pink, red } from '@mui/material/colors';
+import { red } from '@mui/material/colors';
 // assets
 import {
-    Avatar,
+    // Avatar,
 
-    Card,
-    CardContent,
+    // Card,
+    // CardContent,
     Chip,
-    Divider,
+    // Divider,
     Grid,
-    List,
-    ListItem,
-    ListItemAvatar,
-    ListItemSecondaryAction,
-    ListItemText,
-    Stack,
+    // List,
+    // ListItem,
+    // ListItemAvatar,
+    // ListItemSecondaryAction,
+    // ListItemText,
+    // Stack,
 
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import { IconBrandTelegram, IconBuildingStore, IconMailbox, IconPhoto } from '@tabler/icons';
+// import { IconBrandTelegram, IconBuildingStore, IconMailbox, IconPhoto } from '@tabler/icons';
 import MainCard from '../../ui-component/cards/MainCard'
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 import { Typography } from '@mui/material'
 import useFetch from '../../Utilities/useFetch';
 import { useLocation } from "react-router-dom";
@@ -29,17 +29,17 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
+// import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import ParseDate from '../../Utilities/ParseDate';
-import SearchSection from '../../layout/MainLayout/Header/SearchSection';
-import TextField from '@mui/material/TextField';
+// import SearchSection from '../../layout/MainLayout/Header/SearchSection';
+// import TextField from '@mui/material/TextField';
 import { useHistory } from "react-router-dom";
-import UsePost from '../../Utilities/UsePost'
-import HandleToast from '../../Utilities/HandleToast'
-import { ToastContainer, toast } from 'react-toastify';
-import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
+// import UsePost from '../../Utilities/UsePost'
+// import HandleToast from '../../Utilities/HandleToast'
+// import { ToastContainer, toast } from 'react-toastify';
+// import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import AddComment from '../Comment/AddComment';
 
 function ViewSingleAnnoucement() {
@@ -259,12 +259,12 @@ function ViewSingleAnnoucement() {
                                                         "http://localhost:8000" + announcement_details["Job_Description_File"].split(".")[1] + "." + announcement_details["Job_Description_File"].split(".")[2]}>
 
                                                     {announcement_details === undefined ? "Wait Loading...." : <>
-                                                            <Chip
-                                                                label={"View Job Description File"}
-                                                                // variant="outlined"
-                                                                color='primary'
-                                                                clickable
-                                                            />
+                                                        <Chip
+                                                            label={"View Job Description File"}
+                                                            // variant="outlined"
+                                                            color='primary'
+                                                            clickable
+                                                        />
                                                     </>
                                                     }
 

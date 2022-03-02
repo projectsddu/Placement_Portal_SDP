@@ -87,6 +87,7 @@ function AddInternship() {
         setStudentData(e.target.value)
 
         if (e.target.value.length === 10) {
+            console.log("called")
             let response = undefined
             response = await fetch("/student/getOneStudentInAdmin/" + e.target.value.toUpperCase(), { method: "GET" })
 

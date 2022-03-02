@@ -42,7 +42,7 @@ router.post("/deleteAnnoucement/:annoucementId", [AdminAuthenticate.AdminAuthent
 router.get("/requiredAnnoucementDetails", [AdminAuthenticate.AdminAuthenticate], AnnouncementController.requiredAnnoucementDetails)
 
 // related to comments
-router.post("/addComment/:annoucementId", [StudentAuthenticate], AnnouncementController.addComment)
+router.post("/addComment/:annoucementId", [ResolveUsers.ResolveUserMiddleware], AnnouncementController.addComment)
 
 router.get("/getAllComments/:annoucementId", AnnouncementController.getAllComments)
 
