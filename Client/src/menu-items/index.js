@@ -10,6 +10,7 @@ import { TempMenu } from './Student/TempMenu';
 import { AnnouncementStudentMenu } from './Student/AnnouncementStudentMenu';
 import { PlacementMenu } from './PlacementMenu';
 import { InternshipMenu } from './InternshipMenu';
+import { AchievementsMenu } from './Student/AchievementsMenu';
 import { useLocation } from 'react-router';
 
 //-----------------------|| MENU ITEMS ||-----------------------//
@@ -17,12 +18,15 @@ import { useLocation } from 'react-router';
 const current_location = window.location.href.split("/")
 let menuItems
 if (current_location[3] == "_student") {
+    console.log(current_location)
     console.log("Here in student")
     menuItems = {
-        items: [TempMenu, AnnouncementStudentMenu]
+        items: [TempMenu, AchievementsMenu, AnnouncementStudentMenu]
     }
 }
 else {
+    console.log(current_location)
+    console.log("Here in admin")
     menuItems = {
         items: [StudentMenu, PlacementMenu, InternshipMenu, AnnouncementMenu, CompanyMenu]
     };
