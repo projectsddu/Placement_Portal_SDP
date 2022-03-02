@@ -1,10 +1,11 @@
 const StudentProjectController = require("../Controllers/StudentProjectController")
 const router = require('express').Router()
+const StudentAuthenticate = require("../Middlewares/StudentLogin/Authenticate")
 
-router.post("/createStudentProject", StudentProjectController.createStudentProject)
+router.post("/createStudentProject", [StudentAuthenticate],StudentProjectController.createStudentProject)
 router.get("/getAllStudentProject", StudentProjectController.getAllStudentProjects)
-router.get("/getOneStudentProject/:id", StudentProjectController.getOneStudentProject)
+router.get("/getOneStudentProject/", [StudentAuthenticate],StudentProjectController.getOneStudentProject)
 router.post("/updateStudentProject/:id", StudentProjectController.updateStudentProject)
-router.post("/deleteStudentProject/:id", StudentProjectController.deleteStudentProject)
+router.post("/deleteStudentProject/:id", [StudentAuthenticate],StudentProjectController.deleteStudentProject)
 
 module.exports = router
