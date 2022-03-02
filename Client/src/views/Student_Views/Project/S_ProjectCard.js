@@ -233,6 +233,14 @@ function S_ProjectCard(props) {
                             }}
                             value={studentPlacementStateDetails.Salary}
                             fullWidth label="Enter Project Link"></TextField>
+                            <br/><br/>
+                        <TextField
+                            // onChange={(e) => handleKeyChange(e, "Salary")}
+                            onChange={(e) => {
+                                setstudentPlacementStateDetails({ ...studentPlacementStateDetails, Salary: e.target.value });
+                            }}
+                            value={studentPlacementStateDetails.Salary}
+                            fullWidth label="Enter Technologies used in Project"></TextField>
                 {/* <Grid container direction="row" justifyContent="flex-start" alignItems="center" spacing={2}>
                     <Grid item md={12} xs={12}>
                     </Grid>
