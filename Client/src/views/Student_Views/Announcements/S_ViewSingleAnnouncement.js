@@ -23,7 +23,7 @@ import { IconBrandTelegram, IconBuildingStore, IconMailbox, IconPhoto } from '@t
 import MainCard from '../../../ui-component/cards/MainCard'
 import { useState, useEffect } from 'react';
 import { Typography } from '@mui/material'
-import useFetch from '../../../Utilities/useFetch';
+import UseFetch from '../../../Utilities/UseFetch';
 import { useLocation } from "react-router-dom";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -140,7 +140,7 @@ export default function S_ViewSingleAnnouncement() {
     const location = useLocation().pathname;
     const id = location.split("/")[4]
 
-    const { required_data, loading } = useFetch("/annoucement/getAnnoucement/" + id, "GET")
+    const { required_data, loading } = UseFetch("/annoucement/getAnnoucement/" + id, "GET")
 
     let announcement_details = undefined, rows;
     if (!loading) {
@@ -149,9 +149,8 @@ export default function S_ViewSingleAnnouncement() {
         console.log(announcement_details)
 
         let branches = ""
-        for(let i = 0; i < announcement_details["Eligible_Branches"].length; i++)
-        {
-            branches += (announcement_details["Eligible_Branches"][i]["BranchName"] + " ") 
+        for (let i = 0; i < announcement_details["Eligible_Branches"].length; i++) {
+            branches += (announcement_details["Eligible_Branches"][i]["BranchName"] + " ")
         }
 
         rows = [
@@ -178,29 +177,29 @@ export default function S_ViewSingleAnnouncement() {
         Comment_text: ''
     })
     useEffect(() => { }, [commentData]);
-    
-    
+
+
     const [subscribeStatus, setsubscribeStatus] = useState(undefined);
-    
+
     // const subscribedata = fetch("/subscribeannouncement/getSubscribedStatus/" + id, "GET")
-    
-    
-    useEffect( async () => {
-        
+
+
+    useEffect(async () => {
+
         const subscribedata = await fetch("/subscribeannouncement/getSubscribedStatus/" + id, { method: "GET" });
 
         let data1 = await subscribedata.json();
         data1 = data1["status"]
         console.log(data1)
 
-        if(data1) {
+        if (data1) {
             setsubscribeStatus(true)
         }
         else {
             setsubscribeStatus(false)
         }
 
-     }, []);
+    }, []);
 
 
     // if (!subscribedata["loading"]) {
@@ -246,9 +245,9 @@ export default function S_ViewSingleAnnouncement() {
                     <Grid item>
                         {subscribeStatus === undefined ? "Loading" : subscribeStatus == true ? <>
                             <Button onClick={handleUnsubscribe} variant="contained" color="error"> Withdraw Announcement</Button>
-                        </> : 
+                        </> :
                             <>
-                            <Button onClick={handleSubscribe} variant="contained" color="success"> Apply Announcement</Button>
+                                <Button onClick={handleSubscribe} variant="contained" color="success"> Apply Announcement</Button>
                             </>
                         }
                         <Tooltip title="Keep recieving constant updates" style={{ "margin-left": "10px" }}>
@@ -305,12 +304,12 @@ export default function S_ViewSingleAnnouncement() {
                                                         "http://localhost:8000" + announcement_details["Job_Description_File"].split(".")[1] + "." + announcement_details["Job_Description_File"].split(".")[2]}>
 
                                                     {announcement_details === undefined ? "Wait Loading...." : <>
-                                                            <Chip
-                                                                label={"View Job Description File"}
-                                                                // variant="outlined"
-                                                                color='primary'
-                                                                clickable
-                                                            />
+                                                        <Chip
+                                                            label={"View Job Description File"}
+                                                            // variant="outlined"
+                                                            color='primary'
+                                                            clickable
+                                                        />
 
                                                     </>
                                                     }

@@ -14,7 +14,7 @@ import ParseDate from "../../../Utilities/ParseDate"
 import HandleToast from '../../../Utilities/HandleToast'
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../../Utilities/ResponsePipelineHandler';
-import useFetch from '../../../Utilities/useFetch';
+import UseFetch from '../../../Utilities/UseFetch';
 import { useHistory } from "react-router-dom";
 import SearchSection from '../../../layout/MainLayout/Header/SearchSection';
 import ChipCard from '../../../ui-component/cards/GenericCards/ChipCard';
@@ -59,7 +59,7 @@ function S_ViewAnnoucements() {
     const classes = useStyles();
 
     const [search, setSearch] = useState("")
-    const { required_data, loading } = useFetch("/annoucement/getAllAnnoucements/", "GET")
+    const { required_data, loading } = UseFetch("/annoucement/getAllAnnoucements/", "GET")
 
     var annoucements = [];
 

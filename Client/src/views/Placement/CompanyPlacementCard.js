@@ -4,7 +4,7 @@ import SubCard from '../../ui-component/cards/SubCard';
 import { TextField } from '@material-ui/core';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
-import useFetch from '../../Utilities/useFetch';
+import UseFetch from '../../Utilities/UseFetch';
 import { Select } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
@@ -12,6 +12,8 @@ import UsePostFile from '../../Utilities/UsePostFile';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import HandleToast from '../../Utilities/HandleToast';
 import { ToastContainer, toast } from 'react-toastify';
+// import structuredClone from '@ungap/structured-clone';
+
 const axios = require("axios")
 const Input = styled('input')({
     display: 'none'
@@ -164,12 +166,12 @@ function CompanyPlacementCard(props) {
 
 
     function handleCheckBox(e) {
-        const copy = studentPlacementStateDetails
-        if (copy["IsFinal"]) {
-            copy["IsFinal"] = false
+        const copy = JSON.parse(JSON.stringify(studentPlacementStateDetails))
+        if (copy["IsFinal"] == 1) {
+            copy["IsFinal"] = 0
         }
         else {
-            copy["IsFinal"] = true
+            copy["IsFinal"] = 1
         }
         console.log(e.target, studentPlacementStateDetails)
         setstudentPlacementStateDetails(copy)
@@ -271,7 +273,7 @@ function CompanyPlacementCard(props) {
                     }
 
                     <Grid item md={2} xs={12}>
-                        <Checkbox value={studentPlacementStateDetails.IsFinal}
+                        <Checkbox checked={studentPlacementStateDetails.IsFinal == 1 ? true : false} value={studentPlacementStateDetails.IsFinal}
                             onChange={(e) => handleCheckBox(e)}
                         /> <label>Final</label>
                     </Grid>

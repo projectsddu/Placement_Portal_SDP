@@ -18,7 +18,7 @@ import FileCopyTwoToneIcon from '@material-ui/icons/FileCopyOutlined';
 import PictureAsPdfTwoToneIcon from '@material-ui/icons/PictureAsPdfOutlined';
 import ArchiveTwoToneIcon from '@material-ui/icons/ArchiveOutlined';
 
-import useFetch from '../../../Utilities/useFetch';
+import UseFetch from '../../../Utilities/UseFetch';
 import { useLocation } from "react-router-dom";
 
 // style constant
@@ -118,7 +118,7 @@ const NameCard = ({ isLoading, FirstName, MiddleName, LastName, Email_ID }) => {
 
     // const id = useLocation().pathname.split("/")[3]
     // console.log("id: "+id)
-    // const { required_data, loading } = useFetch("/student/getOneStudent/", "GET")
+    // const { required_data, loading } = UseFetch("/student/getOneStudent/", "GET")
     // let Student_ID, FirstName, MiddleName, LastName, Email_ID;
     // if(!loading)
     // {

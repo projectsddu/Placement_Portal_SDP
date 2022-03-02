@@ -4,7 +4,7 @@ import React from 'react';
 // import SubCard from '../../ui-component/cards/SubCard';
 // import { Chip } from '@mui/material';
 // import { Avatar } from '@material-ui/core';
-// import useFetch from '../../Utilities/useFetch';
+// import UseFetch from '../../Utilities/UseFetch';
 import SingleComment from './SingleComment';
 // import { useLocation } from "react-router-dom";
 
@@ -15,7 +15,7 @@ function ViewComment(props) {
   // const location = useLocation().pathname;
   //   const id = location.split("/")[3]
 
-  // const { required_data, loading } = useFetch("/annoucement/getAllComments/" + id, "GET")
+  // const { required_data, loading } = UseFetch("/annoucement/getAllComments/" + id, "GET")
 
   // let comments;
 

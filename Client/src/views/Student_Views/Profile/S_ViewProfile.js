@@ -21,7 +21,7 @@ import { IconBrandTelegram, IconBuildingStore, IconMailbox, IconPhoto } from '@t
 import MainCard from '../../../ui-component/cards/MainCard';
 import { useState, useEffect } from 'react';
 import { Typography } from '@mui/material';
-import useFetch from '../../../Utilities/useFetch';
+import UseFetch from '../../../Utilities/UseFetch';
 import { useLocation } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -151,7 +151,7 @@ export default function S_ViewProfile() {
 
     let history = useHistory();
 
-    const { required_data, loading } = useFetch('/student/getOneStudent/', 'GET');
+    const { required_data, loading } = UseFetch('/student/getOneStudent/', 'GET');
 
     const [skill, setSkill] = useState(['C++', 'Python', 'MatLab']);
 

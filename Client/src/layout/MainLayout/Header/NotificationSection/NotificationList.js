@@ -2,7 +2,7 @@ import React from 'react';
 
 // material-ui
 import { makeStyles } from '@material-ui/styles';
-import useFetch from "../../../../Utilities/useFetch"
+import UseFetch from "../../../../Utilities/UseFetch"
 import ParseDate from "../../../../Utilities/ParseDate"
 import {
     Avatar,

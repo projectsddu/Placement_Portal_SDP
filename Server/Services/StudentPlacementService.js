@@ -5,6 +5,43 @@ const StudentPlacement = db.student_placements
 const CompanyService = require("./CompanyService")
 const StudentService = require("./StudentService")
 
+
+async function isFinalPlacementPresent(studentId) {
+    try {
+        const allPlacements = await getStudentPlacement(studentId)
+        if (allPlacements) {
+            for (let i = 0; i < allPlacements.length; i++) {
+                let obj = allPlacements[i]
+                if (obj["IsFinal"] == 1) {
+                    obj["IsFinal"] = 0
+                    // update to 0 and break return true
+                    await updateStudentPlacement(obj, obj["id"])
+                    return true
+                }
+            }
+            return true
+        }
+        else {
+            return true
+        }
+    }
+    catch (err) {
+        log.error("")
+    }
+}
+
+async function isFirstPlacement(studentId) {
+    try {
+        const studentplacement = await StudentPlacement.findAll({ where: { Student_ID: studentId } })
+
+        return studentplacement.length == 0 ? true : false
+    }
+    catch (err) {
+        log.error(err.toString())
+        return false
+    }
+}
+
 async function checkExists(id) {
     const studentplacement = await StudentPlacement.findAll({ where: { id } })
     return studentplacement.length > 0 ? true : false
@@ -12,6 +49,11 @@ async function checkExists(id) {
 
 const createStudentPlacement = async (studentplacementdata) => {
     try {
+        await isFinalPlacementPresent(studentplacementdata.Student_ID)
+        const status = await isFirstPlacement(studentplacementdata.Student_ID)
+        if (status) {
+            studentplacementdata["IsFinal"] = true
+        }
         const student_details = await StudentService.getOneStudent(studentplacementdata.Student_ID)
         studentplacementdata["Passed_out_year"] = student_details.Passed_out_year
         await StudentPlacement.create(studentplacementdata)
@@ -57,9 +99,20 @@ const updateStudentPlacement = async (studentplacementdata, id) => {
             throw "Student Placement record doesn't exist"
         }
         else {
-            const studentplacement = await StudentPlacement.update(studentplacementdata, { where: { id } })
-            console.log("here from service");
-            return true
+            if (studentplacementdata["IsFinal"] == 1) {
+                const status1 = await isFinalPlacementPresent(studentplacementdata.Student_ID)
+                if (status1) {
+
+                    const studentplacement = await StudentPlacement.update(studentplacementdata, { where: { id } })
+                    console.log("here from service");
+                    return true
+                }
+            }
+            else {
+                const studentplacement = await StudentPlacement.update(studentplacementdata, { where: { id } })
+                console.log("here from service");
+                return true
+            }
         }
     } catch (error) {
         log.error(error.toString())

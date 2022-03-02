@@ -31,7 +31,7 @@ import UsePostFile from '../../Utilities/UsePostFile';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import HandleToast from '../../Utilities/HandleToast';
 import { ToastContainer, toast } from 'react-toastify';
-import useFetch from '../../Utilities/useFetch';
+import UseFetch from '../../Utilities/UseFetch';
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -97,7 +97,7 @@ function AddAnnoucement() {
     });
     useEffect(() => { }, [data]);
 
-    const { required_data, loading } = useFetch('/annoucement/requiredAnnoucementDetails', 'GET');
+    const { required_data, loading } = UseFetch('/annoucement/requiredAnnoucementDetails', 'GET');
 
     let companies = [];
     if (!loading) {

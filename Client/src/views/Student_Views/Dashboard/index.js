@@ -11,7 +11,7 @@ import TotalIncomeDarkCard from './TotalIncomeDarkCard';
 import TotalIncomeLightCard from './TotalIncomeLightCard';
 import StudentDataBarChart from './StudentDataBarChart';
 import { gridSpacing } from '../../../store/constant';
-import useFetch from '../../../Utilities/useFetch';
+import UseFetch from '../../../Utilities/UseFetch';
 import HandleToast from '../../../Utilities/HandleToast';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -91,7 +91,7 @@ const Dashboard = () => {
 
 
 
-    // const { required_data, loading } = useFetch("/student/getOneStudent/", "GET")
+    // const { required_data, loading } = UseFetch("/student/getOneStudent/", "GET")
     // let Student_ID, FirstName, MiddleName, LastName, Email_ID, CV_Upload, Sem_1_SPI, Sem_2_SPI, Sem_3_SPI, Sem_4_SPI, Sem_5_SPI, Sem_6_SPI, Sem_7_SPI, Sem_8_SPI;
 
     // let student_spi_list = []

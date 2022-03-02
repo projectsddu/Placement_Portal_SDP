@@ -6,7 +6,7 @@ import SubCard from '../../ui-component/cards/SubCard';
 import { TextField } from '@material-ui/core';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
-import useFetch from '../../Utilities/useFetch';
+import UseFetch from '../../Utilities/UseFetch';
 import UsePost from '../../Utilities/UsePost'
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import HandleToast from '../../Utilities/HandleToast';
@@ -253,76 +253,76 @@ function CompanyInternshipCard(props) {
                 </Grid>
                 <br />
                 <Grid container xs={12} justifyContent="flex-end">
-                        {studentInternshipStateDetails.Company_details === undefined ? (
+                    {studentInternshipStateDetails.Company_details === undefined ? (
+                        <Grid item>
+                            <Button
+                                onClick={() => onButtonClick("add")}
+                                variant="contained" style={{ 'margin-top': '15%' }} size="medium" component="span">
+                                Add Internship
+                            </Button>
+                        </Grid>
+                    ) : (
+                        <Grid container justifyContent="flex-end" spacing={2}>
+
                             <Grid item>
                                 <Button
-                                    onClick={() => onButtonClick("add")}
-                                    variant="contained" style={{ 'margin-top': '15%' }} size="medium" component="span">
-                                    Add Internship
+                                    color="error"
+                                    variant="contained"
+                                    style={{ 'margin-top': '15%' }}
+                                    size="medium"
+                                    component="span"
+                                    onClick={handleOpen}
+                                >
+                                    Delele Internship
                                 </Button>
                             </Grid>
-                        ) : (
-                            <Grid container justifyContent="flex-end" spacing={2}>
+                            <Grid item>
+                                <Button
+                                    color="warning"
+                                    variant="contained"
+                                    style={{ 'margin-top': '15%', "color": "white", "background": "#FFC107" }}
+                                    size="medium"
+                                    component="span"
+                                    onClick={() => onButtonClick("update")}
+                                // onClick={handleOpen}
+                                >
+                                    Update Internship
+                                </Button>
 
-                                <Grid item>
-                                    <Button
-                                        color="error"
-                                        variant="contained"
-                                        style={{ 'margin-top': '15%' }}
-                                        size="medium"
-                                        component="span"
-                                        onClick={handleOpen}
+                            </Grid>
+                        </Grid>
+                    )}
+
+                    {/* <Button onClick={handleOpen}>Open modal</Button> */}
+                    <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <Box sx={style}>
+                            <Typography style={{ "color": "#616161" }} id="modal-modal-title" variant="h3" component="h1">
+                                Are, you really sure want to delete this placement?
+                            </Typography><br />
+                            <Grid container spacing={2} justifyContent={""}>
+                                <Grid md={6} item>
+                                    <Button fullWidth style={{ color: "white", backgroundColor: "#00C853" }} variant="contained"
+                                        onClick={() => onButtonClick("delete")}
                                     >
-                                        Delele Internship
+                                        Confirm
                                     </Button>
                                 </Grid>
-                                <Grid item>
-                                    <Button
-                                        color="warning"
-                                        variant="contained"
-                                        style={{ 'margin-top': '15%', "color": "white", "background": "#FFC107" }}
-                                        size="medium"
-                                        component="span"
-                                        onClick={() => onButtonClick("update")}
-                                    // onClick={handleOpen}
-                                    >
-                                        Update Internship
+                                <Grid md={6} item>
+                                    <Button fullWidth color='error' variant="contained" onClick={handleClose}>
+                                        Cancel
                                     </Button>
-
                                 </Grid>
                             </Grid>
-                        )}
 
-                        {/* <Button onClick={handleOpen}>Open modal</Button> */}
-                        <Modal
-                            open={open}
-                            onClose={handleClose}
-                            aria-labelledby="modal-modal-title"
-                            aria-describedby="modal-modal-description"
-                        >
-                            <Box sx={style}>
-                                <Typography style={{ "color": "#616161" }} id="modal-modal-title" variant="h3" component="h1">
-                                    Are, you really sure want to delete this placement?
-                                </Typography><br />
-                                <Grid container spacing={2} justifyContent={""}>
-                                    <Grid md={6} item>
-                                        <Button fullWidth style={{ color: "white", backgroundColor: "#00C853" }} variant="contained"
-                                            onClick={() => onButtonClick("delete")}
-                                        >
-                                            Confirm
-                                        </Button>
-                                    </Grid>
-                                    <Grid md={6} item>
-                                        <Button fullWidth color='error' variant="contained" onClick={handleClose}>
-                                            Cancel
-                                        </Button>
-                                    </Grid>
-                                </Grid>
+                        </Box>
+                    </Modal>
 
-                            </Box>
-                        </Modal>
-
-                    </Grid>
+                </Grid>
             </SubCard>
             <br />
         </>

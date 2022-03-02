@@ -11,7 +11,7 @@ import TotalIncomeDarkCard from './TotalIncomeDarkCard';
 import TotalIncomeLightCard from './TotalIncomeLightCard';
 import TotalGrowthBarChart from './TotalGrowthBarChart';
 import { gridSpacing } from './../../../store/constant';
-import useFetch from '../../../Utilities/useFetch';
+import UseFetch from '../../../Utilities/UseFetch';
 import HandleToast from '../../../Utilities/HandleToast';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -26,7 +26,7 @@ const Dashboard = () => {
 
     }, []);
 
-    // const { data, loading } = useFetch("/annoucement/getAllAnnoucements", "GET", toast, true)
+    // const { data, loading } = UseFetch("/annoucement/getAllAnnoucements", "GET", toast, true)
     // const params = {
     //     data: data,
     //     HandleToast: {

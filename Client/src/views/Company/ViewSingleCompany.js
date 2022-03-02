@@ -1,7 +1,7 @@
 import React from 'react'
 import MainCard from '../../ui-component/cards/MainCard'
 import { useHistory, useLocation } from 'react-router'
-import useFetch from '../../Utilities/useFetch'
+import UseFetch from '../../Utilities/UseFetch'
 import { Button, Typography } from '@material-ui/core'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -20,7 +20,7 @@ export default function ViewSingleCompany() {
 
     const companyId = useLocation().pathname.split("/")[3]
     console.log(companyId)
-    const { required_data, loading } = useFetch("/company/getCompany/" + companyId, "GET")
+    const { required_data, loading } = UseFetch("/company/getCompany/" + companyId, "GET")
     var rows = [];
     if (!loading) {
         rows = [

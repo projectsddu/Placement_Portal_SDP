@@ -1,7 +1,7 @@
 import React from 'react';
 import MainCard from '../../../ui-component/cards/MainCard';
 import SubCard from '../../../ui-component/cards/SubCard';
-import useFetch from '../../../Utilities/useFetch';
+import UseFetch from '../../../Utilities/UseFetch';
 import { makeStyles } from '@material-ui/styles';
 import ParseDate from "../../../Utilities/ParseDate"
 import {
@@ -100,7 +100,7 @@ export default function AllNotifications() {
         }
     }));
     const classes = useStyles();
-    const { required_data, loading } = useFetch("/notifications/getUserNotifications", "POST")
+    const { required_data, loading } = UseFetch("/notifications/getUserNotifications", "POST")
     if (!loading) {
         console.log(required_data);
     }

@@ -30,7 +30,7 @@ import UsePost from '../../Utilities/UsePost'
 import HandleToast from '../../Utilities/HandleToast'
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
-import useFetch from '../../Utilities/useFetch';
+import UseFetch from '../../Utilities/UseFetch';
 import { useHistory, useLocation } from 'react-router';
 
 
@@ -51,7 +51,7 @@ function EditCompany() {
     }, [])
 
     // const id = useLocation().pathname.split("/")[3]
-    // const { required_data, loading } = useFetch("/company/getCompany/" + id, "GET")
+    // const { required_data, loading } = UseFetch("/company/getCompany/" + id, "GET")
     // // const { data1, setData1 } = useState()
 
 

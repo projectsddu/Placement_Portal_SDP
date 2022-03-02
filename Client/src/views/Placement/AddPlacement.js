@@ -4,7 +4,7 @@ import { TextField } from '@material-ui/core';
 import CompanyPlacementCard from './CompanyPlacementCard';
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
-import useFetch from '../../Utilities/useFetch';
+import UseFetch from '../../Utilities/UseFetch';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { IconCirclePlus } from '@tabler/icons';
 import Grid from '@mui/material/Grid';
@@ -21,6 +21,8 @@ function AddPlacement() {
     const [StudentDetails, setStudentDetails] = useState(undefined);
     const [studentPlacement, setStudentPlacement] = useState(undefined)
     const [allCompanies, setallCompanies] = useState([])
+    // const [checkedStatus, setcheckedStatus] = useState([])
+    const [placementData, setplacementData] = useState([])
 
     const [placementCard, setPlacementCard] = useState([]);
 
@@ -89,8 +91,6 @@ function AddPlacement() {
                             console.log(jsonData1.data)
 
                             if (jsonData1.data != "Student Placement Record Not Found!" && jsonData1 != undefined) {
-                                console.log(jsonData1.data.length)
-
                                 for (let i = 0; i < jsonData1.data.length; i++) {
                                     console.log(jsonData1.data[i])
                                     let x = Math.random();

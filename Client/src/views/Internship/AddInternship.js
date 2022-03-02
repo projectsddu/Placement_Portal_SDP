@@ -4,7 +4,7 @@ import { TextField } from '@material-ui/core';
 import CompanyInternshipCard from './CompanyInternshipCard';
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
-import useFetch from '../../Utilities/useFetch';
+import UseFetch from '../../Utilities/UseFetch';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { IconCirclePlus } from '@tabler/icons';
 import Grid from '@mui/material/Grid';
