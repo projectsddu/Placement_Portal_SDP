@@ -3,7 +3,7 @@ import MainCard from '../../ui-component/cards/MainCard';
 import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@material-ui/data-grid';
 import { IconDashboard, IconDeviceAnalytics, IconSpeakerphone } from '@tabler/icons';
 import { useHistory } from 'react-router';
-import useFetch from '../../Utilities/useFetch';
+import UseFetch from '../../Utilities/UseFetch';
 import { useLocation } from 'react-router-dom';
 import { Button } from '@mui/material';
 
@@ -19,7 +19,7 @@ function ViewSubscribedStudents() {
     const location = useLocation().pathname;
     const id = location.split('/')[3];
 
-    const { required_data, loading } = useFetch('/subscribeannouncement/getSubscribedStudentsOfAnnouncement/' + id, 'GET');
+    const { required_data, loading } = UseFetch('/subscribeannouncement/getSubscribedStudentsOfAnnouncement/' + id, 'GET');
 
     let students_list = [];
     if (!loading) {

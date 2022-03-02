@@ -4,7 +4,7 @@ import SubCard from '../../../ui-component/cards/SubCard';
 import { TextField } from '@material-ui/core';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
-import useFetch from '../../../Utilities/useFetch';
+import UseFetch from '../../../Utilities/UseFetch';
 import { Select } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
@@ -212,17 +212,18 @@ function S_ProjectCard(props) {
 
                 <br />
 
-                        <TextField
-                            value={studentPlacementStateDetails.Designation}
-                            onChange={(e) => {
-                                setstudentPlacementStateDetails({ ...studentPlacementStateDetails, Designation: e.target.value });
-                            }}
-                            fullWidth
-                            multiline
-                            rows={5}
-                            maxRows={4}
-                            label="Enter Project Description"
-                        >
+                <TextField
+                    value={studentPlacementStateDetails.Designation}
+                    onChange={(e) => {
+                        setstudentPlacementStateDetails({ ...studentPlacementStateDetails, Designation: e.target.value });
+                    }}
+                    fullWidth
+                    multiline
+                    rows={5}
+                    maxRows={4}
+                    label="Enter Project Description"
+                >
+
 
                         </TextField>
                         <br/><br/>
@@ -241,6 +242,7 @@ function S_ProjectCard(props) {
                             }}
                             value={studentPlacementStateDetails.Salary}
                             fullWidth label="Enter Technologies used in Project"></TextField>
+
                 {/* <Grid container direction="row" justifyContent="flex-start" alignItems="center" spacing={2}>
                     <Grid item md={12} xs={12}>
                     </Grid>
@@ -252,7 +254,7 @@ function S_ProjectCard(props) {
                 <Grid style={{ "padding-top": "1%" }} container direction="row" justifyContent="flex-start" alignItems="center" spacing={2}>
                     {/* <Grid item md={studentPlacementStateDetails.Company_details === undefined ? 5 : 3} xs={12}>
                         <label htmlFor="contained-button-file"> */}
-                            {/* <Input
+                    {/* <Input
                                 onChange={changeHandler}
                                 id="contained-button-file"
                                 multiple
@@ -261,7 +263,7 @@ function S_ProjectCard(props) {
                             <Button variant="outlined" component="span">
                                 Upload Job File
                             </Button> */}
-                            {/* <Button
+                    {/* <Button
                                 variant="outlined"
                                 size='large'
                                 component="label"
@@ -273,8 +275,8 @@ function S_ProjectCard(props) {
                                     hidden
                                 />
                             </Button> */}
-                            {/* <b><label id="fileUploadName1"> </label></b> */}
-                            {/* <label id={"fileUploadName" + parseInt(props.seed * 10000)}> </label>
+                    {/* <b><label id="fileUploadName1"> </label></b> */}
+                    {/* <label id={"fileUploadName" + parseInt(props.seed * 10000)}> </label>
                         </label>
                     </Grid> */}
                     {/* {studentPlacementStateDetails.Company_details === undefined ? "" :

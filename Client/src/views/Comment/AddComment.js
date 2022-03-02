@@ -23,7 +23,7 @@ import {
 import MainCard from '../../ui-component/cards/MainCard'
 import { useState, useEffect } from 'react';
 // import { Typography } from '@mui/material'
-// import useFetch from '../../Utilities/useFetch';
+// import UseFetch from '../../Utilities/UseFetch';
 import { useLocation } from "react-router-dom";
 // import Table from '@mui/material/Table';
 // import TableBody from '@mui/material/TableBody';
@@ -69,7 +69,7 @@ function AddComment(props) {
     }, [])
     // useEffect
 
-    // const { required_data, loading } = useFetch("/annoucement/getAllComments/" + id, "GET")
+    // const { required_data, loading } = UseFetch("/annoucement/getAllComments/" + id, "GET")
 
     // let comments;
 

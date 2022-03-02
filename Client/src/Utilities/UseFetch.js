@@ -5,7 +5,7 @@ import { useHistory } from 'react-router';
 // also you can check if the data is arrived by loading variable's 
 // value .
 // The callback would modify data as you want before setting it.
-const useFetch = (url, method = "POST") => {
+const UseFetch = (url, method = "POST") => {
     const [required_data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -19,4 +19,4 @@ const useFetch = (url, method = "POST") => {
 
     return { required_data, loading };
 };
-export default useFetch
+export default UseFetch

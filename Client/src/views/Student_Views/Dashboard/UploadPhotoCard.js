@@ -14,7 +14,7 @@ import UsePostFile from '../../../Utilities/UsePostFile'
 import HandleToast from '../../../Utilities/HandleToast'
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../../Utilities/ResponsePipelineHandler';
-import useFetch from '../../../Utilities/useFetch';
+import UseFetch from '../../../Utilities/UseFetch';
 
 import { gridSpacing } from '../../../store/constant';
 
@@ -77,17 +77,17 @@ export default function UploadPhotoCard({ Student_Photo }) {
                                 hidden
                             />
                         </Button>
-                            <b><label id="fileUploadName1"> </label></b>
+                        <b><label id="fileUploadName1"> </label></b>
                         <br />
                         <br />
                     </form>
                 </Grid>
 
                 <Grid item>
-                    <Button 
-                        onClick={handleSubmit} 
-                        variant="contained" 
-                        size="large" 
+                    <Button
+                        onClick={handleSubmit}
+                        variant="contained"
+                        size="large"
                         color="primary"
                     >
                         Add Photo

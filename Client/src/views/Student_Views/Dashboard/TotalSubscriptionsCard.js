@@ -19,7 +19,7 @@ import ChartDataYear from './chart-data/total-order-year-line-chart';
 import LocalMallOutlinedIcon from '@material-ui/icons/LocalMallOutlined';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
-import useFetch from '../../../Utilities/useFetch';
+import UseFetch from '../../../Utilities/UseFetch';
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -107,15 +107,15 @@ const TotalSubscriptionsCard = ({ isLoading }) => {
         setTimeValue(newValue);
     };
 
-    const { required_data, loading } = useFetch("/subscribeannouncement/getSubscribedAnnouncements/", "GET")
+    const { required_data, loading } = UseFetch("/subscribeannouncement/getSubscribedAnnouncements/", "GET")
 
     let no_of_subscriptions;
 
-    if(!loading) {
+    if (!loading) {
         // console.log(required_data["data"].length)
 
         no_of_subscriptions = required_data["data"].length
-        
+
     }
 
     return (
@@ -160,7 +160,7 @@ const TotalSubscriptionsCard = ({ isLoading }) => {
                                             {timeValue ? (
                                                 <Typography className={classes.cardHeading}>25</Typography>
                                             ) : (
-                                                <Typography className={classes.cardHeading}>{loading ? "" :no_of_subscriptions}</Typography>
+                                                <Typography className={classes.cardHeading}>{loading ? "" : no_of_subscriptions}</Typography>
                                             )}
                                         </Grid>
                                         <Grid item>

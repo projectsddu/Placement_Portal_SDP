@@ -8,7 +8,7 @@ import { withStyles } from '@material-ui/styles';
 import { color } from '@material-ui/system';
 import { ClassNames } from '@emotion/react';
 import usePost from '../../Utilities/UsePost';
-import useFetch from '../../Utilities/useFetch';
+import UseFetch from '../../Utilities/UseFetch';
 import HandleToast from '../../Utilities/HandleToast';
 import { useHistory } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
         background: theme.palette.primary.light,
         color: theme.palette.grey[700]
     },
-    
+
 }));
 
 function CustomToolbar() {
@@ -78,7 +78,7 @@ function ViewCompany() {
     const classes = useStyles();
 
 
-    // const { required_data, loading } = useFetch('/company/getCompany', 'GET');
+    // const { required_data, loading } = UseFetch('/company/getCompany', 'GET');
 
     // let company_list = [];
 
@@ -103,15 +103,13 @@ function ViewCompany() {
         let response = undefined;
         response = await fetch("/company/getCompany", { method: "GET" })
 
-        if(response != undefined)
-        {
+        if (response != undefined) {
             let jsonData = undefined
             jsonData = await response.json()
             if (jsonData != undefined) {
                 console.log(jsonData);
-                
-                for(let i = 0; i < jsonData["data"].length; i++)
-                {
+
+                for (let i = 0; i < jsonData["data"].length; i++) {
                     jsonData["data"][i]["id"] = i;
                 }
 
@@ -121,7 +119,7 @@ function ViewCompany() {
             }
         }
     }, []);
-    
+
 
     let temp_id = '';
 
@@ -187,33 +185,29 @@ function ViewCompany() {
         setEditRowsModel(model);
     }, []);
 
-    function handleSearch(e)
-    {
+    function handleSearch(e) {
         console.log(e.target.value)
         setSearch(e.target.value);
 
         let temp = [];
-        for(let i = 0; i < company_list_original.length; i++)
-        {
+        for (let i = 0; i < company_list_original.length; i++) {
             let keys = Object.keys(company_list_original[i])
             // console.log(keys)
-            for(let j = 0; j < keys.length; j++)
-            {
+            for (let j = 0; j < keys.length; j++) {
                 let key = keys[j];
                 // console.log(company_list_original[i])
                 // console.log(key)
                 let value = company_list_original[i][key].toString().toLowerCase();
-                if(value.includes(e.target.value.toString().toLowerCase()))
-                {
+                if (value.includes(e.target.value.toString().toLowerCase())) {
                     temp.push(company_list_original[i])
                     break;
                 }
             }
-            
+
         }
 
         setCompany_list_copy(temp);
-        
+
     }
 
     // function handleSearch(e) {
@@ -244,119 +238,119 @@ function ViewCompany() {
                 <br />
                 {company_list_original === undefined ? (
                     ''
-                ) : 
-                // required_data['data'] == 'No Student data!'
-                company_list_original.length == 0 
-                ? 
-                (
-                    <>
-                        <ChipCard loading={false} data={<EmptyCompany/>}/>
-                    </>
-                    // <SubCard>
-                    //     <Grid container spacing={2}>
-                    //         <Grid item xs={12} md={10}>
-                    //             <Typography variant="h2">No Company is added yet!!!</Typography>
-                    //         </Grid>
-                    //         <Grid item xs={12} md={2}>
-                    //         <Button variant="contained" 
-                    //             size='large'
-                    //             startIcon={<IconCirclePlus />} 
-                    //             color="primary"
-                    //             onClick={() => {
-                    //                 history.push('/company/add_company');
-                    //             }}
-                    //             > Add </Button>
-                    //         </Grid>
-                    //     </Grid>
-                    // </SubCard>
-                ) : (
-                    <div style={{ height: 400, width: '100%' }}>
-                        <DataGrid
-                            checkboxSelection
-                            rows={company_list_copy === undefined ? [] : company_list_copy}
-                            columns={columns}
-                            components={{
-                                Toolbar: CustomToolbar
-                            }}
-                        />
-                    </div>
-                    // <h1>keval Gandevia</h1>
-                    // <Grid container rowSpacing={4} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
-                    //     {loading
-                    //         ? ''
-                    //         : required_data['data'].map((e) => {
-                    //               return (
-                    //                   <>
-                    //                       <Grid item xs={12} md={12} id={e.Company_ID}>
-                    //                           <SubCard title={e['Company_name']}>
-                    //                               <List dense={false}>
-                    //                                   <ListItem>
-                    //                                       <Typography variant="h5">Roles :</Typography>
-                    //                                       {e['Company_offer_type']}
-                    //                                   </ListItem>
-                    //                                   <ListItem>
-                    //                                       <Typography variant="h5">Address :</Typography>
-                    //                                       {e['Company_address']}
-                    //                                   </ListItem>
-                    //                                   <ListItem>
-                    //                                       <Typography variant="h5">City :</Typography>
-                    //                                       {e['City'] + ' ' + e['State']}
-                    //                                   </ListItem>
-                    //                               </List>
+                ) :
+                    // required_data['data'] == 'No Student data!'
+                    company_list_original.length == 0
+                        ?
+                        (
+                            <>
+                                <ChipCard loading={false} data={<EmptyCompany />} />
+                            </>
+                            // <SubCard>
+                            //     <Grid container spacing={2}>
+                            //         <Grid item xs={12} md={10}>
+                            //             <Typography variant="h2">No Company is added yet!!!</Typography>
+                            //         </Grid>
+                            //         <Grid item xs={12} md={2}>
+                            //         <Button variant="contained" 
+                            //             size='large'
+                            //             startIcon={<IconCirclePlus />} 
+                            //             color="primary"
+                            //             onClick={() => {
+                            //                 history.push('/company/add_company');
+                            //             }}
+                            //             > Add </Button>
+                            //         </Grid>
+                            //     </Grid>
+                            // </SubCard>
+                        ) : (
+                            <div style={{ height: 400, width: '100%' }}>
+                                <DataGrid
+                                    checkboxSelection
+                                    rows={company_list_copy === undefined ? [] : company_list_copy}
+                                    columns={columns}
+                                    components={{
+                                        Toolbar: CustomToolbar
+                                    }}
+                                />
+                            </div>
+                            // <h1>keval Gandevia</h1>
+                            // <Grid container rowSpacing={4} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
+                            //     {loading
+                            //         ? ''
+                            //         : required_data['data'].map((e) => {
+                            //               return (
+                            //                   <>
+                            //                       <Grid item xs={12} md={12} id={e.Company_ID}>
+                            //                           <SubCard title={e['Company_name']}>
+                            //                               <List dense={false}>
+                            //                                   <ListItem>
+                            //                                       <Typography variant="h5">Roles :</Typography>
+                            //                                       {e['Company_offer_type']}
+                            //                                   </ListItem>
+                            //                                   <ListItem>
+                            //                                       <Typography variant="h5">Address :</Typography>
+                            //                                       {e['Company_address']}
+                            //                                   </ListItem>
+                            //                                   <ListItem>
+                            //                                       <Typography variant="h5">City :</Typography>
+                            //                                       {e['City'] + ' ' + e['State']}
+                            //                                   </ListItem>
+                            //                               </List>
 
-                    //                               <Button
-                    //                                   size="large"
-                    //                                   onClick={() => {
-                    //                                       history.push('/company/view_company/' + e['Company_ID']);
-                    //                                   }}
-                    //                                   fullWidth
-                    //                                   className={classes.applyBtn}
-                    //                               >
-                    //                                   View Details
-                    //                               </Button>
-                    //                           </SubCard>
-                    //                       </Grid>
-                    //                   </>
-                    //               );
-                    //           })}
-                    //     {/* <Grid item xs={12} md={12}>
-                    //     <SubCard title="Infosys">
-                    //         <Typography variant="h5">Description</Typography>
-                    //         <List dense={true}>
-                    //             <ListItem>
-                    //                 ABOUT : Infosys Limited is an Indian multinational information technology company
-                    //                 that provides business consulting, information technology and outsourcing services
-                    //             </ListItem>
-                    //         </List>
+                            //                               <Button
+                            //                                   size="large"
+                            //                                   onClick={() => {
+                            //                                       history.push('/company/view_company/' + e['Company_ID']);
+                            //                                   }}
+                            //                                   fullWidth
+                            //                                   className={classes.applyBtn}
+                            //                               >
+                            //                                   View Details
+                            //                               </Button>
+                            //                           </SubCard>
+                            //                       </Grid>
+                            //                   </>
+                            //               );
+                            //           })}
+                            //     {/* <Grid item xs={12} md={12}>
+                            //     <SubCard title="Infosys">
+                            //         <Typography variant="h5">Description</Typography>
+                            //         <List dense={true}>
+                            //             <ListItem>
+                            //                 ABOUT : Infosys Limited is an Indian multinational information technology company
+                            //                 that provides business consulting, information technology and outsourcing services
+                            //             </ListItem>
+                            //         </List>
 
-                    //     </SubCard>
-                    // </Grid>
-                    // <Grid item xs={12} md={12}>
-                    //     <SubCard title="TCS">
-                    //         <Typography variant="h5">Description</Typography>
-                    //         <List dense={true}>
-                    //             <ListItem>
-                    //                 ABOUT : Tata Consultancy Services is an Indian multinational information technology services and
-                    //                 consulting company headquartered in Mumbai, Maharashtra, India with its largest campus located in Chennai, Tamil Nadu, India.
-                    //             </ListItem>
-                    //         </List>
+                            //     </SubCard>
+                            // </Grid>
+                            // <Grid item xs={12} md={12}>
+                            //     <SubCard title="TCS">
+                            //         <Typography variant="h5">Description</Typography>
+                            //         <List dense={true}>
+                            //             <ListItem>
+                            //                 ABOUT : Tata Consultancy Services is an Indian multinational information technology services and
+                            //                 consulting company headquartered in Mumbai, Maharashtra, India with its largest campus located in Chennai, Tamil Nadu, India.
+                            //             </ListItem>
+                            //         </List>
 
-                    //     </SubCard>
-                    // </Grid>
-                    // <Grid item xs={12} md={12}>
-                    //     <SubCard title="Jio Platforms">
-                    //         <Typography variant="h5">Description</Typography>
-                    //         <List dense={true}>
-                    //             <ListItem>
-                    //                 ABOUT : Jio Platforms is an Indian technology company and a subsidiary of
-                    //                 Reliance Industries, headquartered in Mumbai, India.
-                    //             </ListItem>
-                    //         </List>
+                            //     </SubCard>
+                            // </Grid>
+                            // <Grid item xs={12} md={12}>
+                            //     <SubCard title="Jio Platforms">
+                            //         <Typography variant="h5">Description</Typography>
+                            //         <List dense={true}>
+                            //             <ListItem>
+                            //                 ABOUT : Jio Platforms is an Indian technology company and a subsidiary of
+                            //                 Reliance Industries, headquartered in Mumbai, India.
+                            //             </ListItem>
+                            //         </List>
 
-                    //     </SubCard>
-                    // </Grid> */}
-                    // </Grid>
-                )}
+                            //     </SubCard>
+                            // </Grid> */}
+                            // </Grid>
+                        )}
             </MainCard>
         </>
     );

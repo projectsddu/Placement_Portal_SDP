@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import useFetch from "../../../../Utilities/useFetch"
+import UseFetch from "../../../../Utilities/UseFetch"
 import { useHistory } from 'react-router';
 // material-ui
 import { makeStyles, useTheme } from '@material-ui/styles';
@@ -148,7 +148,7 @@ const NotificationSection = () => {
     // }, []);
 
 
-    const { required_data, loading } = useFetch("/notifications/getUserNotifications", "POST")
+    const { required_data, loading } = UseFetch("/notifications/getUserNotifications", "POST")
 
     if (!loading) {
         console.log(required_data);

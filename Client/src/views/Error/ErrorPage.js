@@ -14,7 +14,7 @@ import UsePostFile from '../../Utilities/UsePostFile'
 import HandleToast from '../../Utilities/HandleToast'
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
-import useFetch from '../../Utilities/useFetch';
+import UseFetch from '../../Utilities/UseFetch';
 import Box from '@mui/material/Box';
 
 import './ErrorPage.css'

@@ -30,9 +30,7 @@ app.use(cookieParser());
 
 
 // Testing API
-app.get("/", (req, res) => {
-    res.send("Working all right!")
-})
+
 app.get("/dummyMail", async (req, res) => {
     let status = await MailerService.notificationMail("keval sleeping", "jenilgandhi2111@gmail.com")
     console.log(status)
@@ -66,3 +64,6 @@ app.use("/notifications", NotificationRouter)
 app.use("/adminLogin", AdminLoginRouter)
 app.use("/skillsandachievements", SkillsAndAchievementsRouter)
 app.use("/studentproject", StudentProjectRouter)
+app.get("/", (req, res) => {
+    res.send("Working all right!")
+})

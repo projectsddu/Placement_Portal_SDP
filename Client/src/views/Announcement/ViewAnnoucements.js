@@ -14,7 +14,7 @@ import ParseDate from '../../Utilities/ParseDate';
 // import HandleToast from '../../Utilities/HandleToast';
 // import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
-// import useFetch from '../../Utilities/useFetch';
+// import UseFetch from '../../Utilities/UseFetch';
 import { useHistory } from 'react-router-dom';
 import SearchSection from '../../layout/MainLayout/Header/SearchSection';
 import { DataGrid, RowsProp, ColDef, GridToolbarContainer, GridToolbarExport } from '@material-ui/data-grid';
@@ -68,7 +68,7 @@ function CustomToolbar() {
 function ViewAnnoucements() {
     const classes = useStyles();
 
-    // const { required_data, loading } = useFetch('/annoucement/getAllAnnoucements/', 'GET');
+    // const { required_data, loading } = UseFetch('/annoucement/getAllAnnoucements/', 'GET');
 
     // var annoucements = [];
     // if (!loading) {

@@ -23,7 +23,7 @@ import { makeStyles } from '@material-ui/styles';
 import MainCard from '../../ui-component/cards/MainCard'
 // import { useState, useEffect } from 'react';
 import { Typography } from '@mui/material'
-import useFetch from '../../Utilities/useFetch';
+import UseFetch from '../../Utilities/UseFetch';
 import { useLocation } from "react-router-dom";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -145,7 +145,7 @@ function ViewSingleAnnoucement() {
     const location = useLocation().pathname;
     const id = location.split("/")[3]
 
-    const { required_data, loading } = useFetch("/annoucement/getAnnoucement/" + id, "GET")
+    const { required_data, loading } = UseFetch("/annoucement/getAnnoucement/" + id, "GET")
 
     let announcement_details = undefined, rows;
     if (!loading) {

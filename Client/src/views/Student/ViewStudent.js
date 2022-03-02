@@ -10,7 +10,7 @@ import { DataGrid, RowsProp, ColDef, GridToolbarContainer, GridToolbarExport } f
 import EditIcon from '@material-ui/icons/Edit';
 import { Paper, Typography, Box, Grid, Button, ListItem, List } from '@material-ui/core';
 import { IconDashboard, IconCirclePlus, IconDeviceAnalytics, IconSpeakerphone } from '@tabler/icons';
-import useFetch from '../../Utilities/useFetch';
+import UseFetch from '../../Utilities/UseFetch';
 import SubCard from './../../ui-component/cards/SubCard';
 import { useHistory } from 'react-router-dom';
 import ChipCard from '../../ui-component/cards/GenericCards/ChipCard';
@@ -40,15 +40,13 @@ export default function ViewStudent() {
         let response = undefined;
         response = await fetch("/student/getAllStudents", { method: "GET" })
 
-        if(response != undefined)
-        {
+        if (response != undefined) {
             let jsonData = undefined
             jsonData = await response.json()
             if (jsonData != undefined) {
                 console.log(jsonData);
-                
-                for(let i = 0; i < jsonData["data"].length; i++)
-                {
+
+                for (let i = 0; i < jsonData["data"].length; i++) {
                     jsonData["data"][i]["id"] = i;
                 }
 
@@ -60,36 +58,32 @@ export default function ViewStudent() {
 
     }, []);
 
-    function handleSearch(e)
-    {
+    function handleSearch(e) {
         console.log(e.target.value)
         setSearch(e.target.value);
 
         let temp = [];
-        for(let i = 0; i < student_list_original.length; i++)
-        {
+        for (let i = 0; i < student_list_original.length; i++) {
             let keys = Object.keys(student_list_original[i])
             // console.log(keys)
-            for(let j = 0; j < keys.length; j++)
-            {
+            for (let j = 0; j < keys.length; j++) {
                 let key = keys[j];
                 // console.log(company_list_original[i])
                 // console.log(key)
                 let value = student_list_original[i][key].toString().toLowerCase();
-                if(value.includes(e.target.value.toString().toLowerCase()))
-                {
+                if (value.includes(e.target.value.toString().toLowerCase())) {
                     temp.push(student_list_original[i])
                     break;
                 }
             }
-            
+
         }
 
         setStudent_list_copy(temp);
-        
+
     }
 
-    // const { required_data, loading } = useFetch('/student/getAllStudents', 'GET');
+    // const { required_data, loading } = UseFetch('/student/getAllStudents', 'GET');
 
     // let students_list = [];
     function handleClick(idx) {
@@ -200,8 +194,8 @@ export default function ViewStudent() {
         { field: 'Pin_Code', headerName: 'Pin Code', width: 200, editable: false, hide: true },
         { field: 'Current_semester', headerName: 'Current Semester', width: 200, editable: false, hide: true },
         { field: 'Career_Preference', headerName: 'Career Preference', width: 200, editable: false, hide: true },
-        
-        
+
+
     ]);
     const [editRowsModel, setEditRowsModel] = React.useState({});
 

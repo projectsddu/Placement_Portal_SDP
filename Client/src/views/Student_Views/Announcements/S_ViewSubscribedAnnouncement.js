@@ -14,7 +14,7 @@ import ParseDate from "../../../Utilities/ParseDate"
 import HandleToast from '../../../Utilities/HandleToast'
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../../Utilities/ResponsePipelineHandler';
-import useFetch from '../../../Utilities/useFetch';
+import UseFetch from '../../../Utilities/UseFetch';
 import { useHistory } from "react-router-dom";
 import SearchSection from '../../../layout/MainLayout/Header/SearchSection';
 import ChipCard from '../../../ui-component/cards/GenericCards/ChipCard';
@@ -60,8 +60,8 @@ function S_ViewSubscribedAnnouncement() {
     const classes = useStyles();
 
     const [search, setSearch] = useState("")
-    // const { required_data, loading } = useFetch("/annoucement/getAllannouncements/", "GET")
-    const { required_data, loading } = useFetch("/subscribeannouncement/getSubscribedAnnouncements/", "GET")
+    // const { required_data, loading } = UseFetch("/annoucement/getAllannouncements/", "GET")
+    const { required_data, loading } = UseFetch("/subscribeannouncement/getSubscribedAnnouncements/", "GET")
 
     var announcements;
 
@@ -106,35 +106,35 @@ function S_ViewSubscribedAnnouncement() {
                 >
                 </TextField>
                 <br /><br /><br />
-                {loading ? "" : announcements.length == 0 ? 
+                {loading ? "" : announcements.length == 0 ?
                     (
                         <>
                             <Grid item>
-                            <ChipCard loading={false} data={<EmptyAppliedAnnouncement />} />
+                                <ChipCard loading={false} data={<EmptyAppliedAnnouncement />} />
                             </Grid>
                         </>
                     )
                     :
-                <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
-                
-                    {announcements.map((e) => (
-                        <Grid item xs={12} md={6} id={e.Announcement_ID}>
-                            <SubCard title={e.Company_details["Company_name"] + "-" + e.Job_Role + " for " + ParseDate.getYear(e.Passed_out_year) + " Batch"}>
-                                <Typography variant="h5"></Typography>
-                                <List dense={false}>
-                                    <ListItem>Posted On: {ParseDate.ParseDate(e.Date_of_announcement)}</ListItem>
-                                    <ListItem>Visiting On: {ParseDate.ParseDate(e.Date_of_Visit)}</ListItem>
-                                    <ListItem>Job Location: {e.Job_Location}</ListItem>
-                                    <ListItem>Branches: {e.Eligible_Branches}</ListItem>
-                                </List>
+                    <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
 
-                                <Button onClick={() => handleRedirect(e.Announcement_ID)} size='large' fullWidth className={classes.applyBtn}>View Full Announcement</Button>
-                            </SubCard>
-                        </Grid>
-                    ))
+                        {announcements.map((e) => (
+                            <Grid item xs={12} md={6} id={e.Announcement_ID}>
+                                <SubCard title={e.Company_details["Company_name"] + "-" + e.Job_Role + " for " + ParseDate.getYear(e.Passed_out_year) + " Batch"}>
+                                    <Typography variant="h5"></Typography>
+                                    <List dense={false}>
+                                        <ListItem>Posted On: {ParseDate.ParseDate(e.Date_of_announcement)}</ListItem>
+                                        <ListItem>Visiting On: {ParseDate.ParseDate(e.Date_of_Visit)}</ListItem>
+                                        <ListItem>Job Location: {e.Job_Location}</ListItem>
+                                        <ListItem>Branches: {e.Eligible_Branches}</ListItem>
+                                    </List>
+
+                                    <Button onClick={() => handleRedirect(e.Announcement_ID)} size='large' fullWidth className={classes.applyBtn}>View Full Announcement</Button>
+                                </SubCard>
+                            </Grid>
+                        ))
+                        }
+                    </Grid>
                 }
-                </Grid>
-            }
             </MainCard>
         </>
     )
