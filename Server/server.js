@@ -18,6 +18,7 @@ const MailerService = require("./Services/MailerService")
 const SkillsAndAchievementsRouter = require("./Routers/SkillsAndAchievementRouter")
 const AdminLoginRouter = require("./Routers/AdminLoginRouter")
 const StudentProjectRouter = require("./Routers/StudentProjectRouter")
+const StudentAchievementsInternshipsRouter = require("./Routers/StudentAchievementsInternshipsRouter")
 
 require("dotenv").config();
 
@@ -64,6 +65,7 @@ app.use("/notifications", NotificationRouter)
 app.use("/adminLogin", AdminLoginRouter)
 app.use("/skillsandachievements", SkillsAndAchievementsRouter)
 app.use("/studentproject", StudentProjectRouter)
+app.use("/StudentAchievementsInternships", StudentAchievementsInternshipsRouter)
 app.get("/", (req, res) => {
     res.send("Working all right!")
 })

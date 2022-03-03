@@ -8,6 +8,10 @@ import { IconCirclePlus } from '@tabler/icons';
 function S_AddInternship() {
     const [internshipCard, setInternshipCard] = useState([]);
 
+    const [studentInternships, setStudentInternships] = useState(undefined);
+
+
+
     function handleClick() {
         let internship_card_copy = internshipCard;
         internship_card_copy.push(
@@ -45,6 +49,54 @@ function S_AddInternship() {
             setInternshipCard(filteredList);
         }
     }
+
+    useEffect(async () => {
+        // const data = await fetch("/student/getOneStudent/", { method: 'GET' })
+
+        // let data1 = await data.json();
+        // let student_id = "";
+        // if(data1)
+        // {
+        //     student_id = data1["data"]["Student_ID"];
+        // }
+        // // console.log(student_id)
+
+        let response = undefined
+        response = await fetch("/StudentAchievementsInternships/getStudentAchievementsInternshipsByStudentID")
+
+        if(response != undefined)
+        {
+            let jsonData = undefined
+            jsonData = await response.json()
+            setStudentInternships(jsonData)
+            console.log(jsonData)
+
+            let studentInternshipCardCopy = internshipCard
+
+            if (jsonData.data != "Student Internship Record Not Found!" && jsonData != undefined) {
+                // console.log(jsonData1.data.length)
+
+                for (let i = 0; i < jsonData.data.length; i++) {
+                    console.log(jsonData.data[i])
+                    let x = Math.random();
+                    studentInternshipCardCopy.unshift(
+                        <S_AddInternshipsCard
+                            callerFunc={changeStateFromChild}
+                            source={"server"}
+                            seed={x}
+                            from={"line 86"}
+                            details={jsonData.data[i]}
+                            idx={i}
+                        />
+                    )
+
+                }
+                setInternshipCard([].concat(studentInternshipCardCopy))
+            }
+        }
+        
+
+    }, []);
 
     return (
         <>
