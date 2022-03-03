@@ -6,54 +6,58 @@ const Student = db.students
 const Announcement = db.announcements
 // require csvtojson module
 const CSVToJSON = require('csvtojson');
+
 const fs = require("fs")
+const { ERROR, OK } = require("../Services/ResponseService")
+const FirstTimePasswordService = require("../Services/FirstTimePasswordService")
+
 // to add a new student
 const addStudent = async (req, res) => {
     try {
         // Student.create({
-            // Student_ID: "19CEUOS001",
-            // FirstName: "Manan",
-            // MiddleName: "Dipakkumar",
-            // LastName: "Chauhan",
-            // Admission_type: "Normal",
-            // Cast_category: "General",
-            // Gender: "Male",
-            // DOB: "2001-02-29",
-            // SSC_Percentage: 85.59,
-            // SSC_Percentile: 95.97,
-            // SSC_Board: "GSEB",
-            // SSC_School: "GTG",
-            // HSC_Percentage: 80.59,
-            // HSC_Percentile: 95.97,
-            // HSC_Board: "GSEB",
-            // HSC_School: "GTG",
-            // IsD2D: "FALSE",
-            // Diploma_Result_CPI: 0,
-            // Diploma_Result_Percentage: 0,
-            // Diploma_College_Name: "NOT APPLICABLE",
-            // Diploma_University: "NOT APPLICABLE",
-            // Sem_1_SPI: 9.5,
-            // Sem_2_SPI: 9.2,
-            // Sem_3_SPI: 9.1,
-            // Sem_4_SPI: 9.1,
-            // Sem_5_SPI: 9.2,
-            // Sem_6_SPI: 9.1,
-            // Sem_7_SPI: 9.0,
-            // Sem_8_SPI: 9.5,
-            // Current_CPI: 9.5,
-            // Enrollment_year: "2019",
-            // Passed_out_year: "2023",
-            // Email_ID: "abc@gmail.com",
-            // Contact_No_1: "1234567890",
-            // Contact_No_2: "0987654321",
-            // Address: "gujarat",
-            // City: "vadodara",
-            // Pin_Code: "390021",
-            // Current_semester: "6",
-            // Career_Preference: "Placement",
-            // CV_Upload: "image.png",
-            // Student_Photo: "image1.png",
-            // Branch_Id: "CE"
+        // Student_ID: "19CEUOS001",
+        // FirstName: "Manan",
+        // MiddleName: "Dipakkumar",
+        // LastName: "Chauhan",
+        // Admission_type: "Normal",
+        // Cast_category: "General",
+        // Gender: "Male",
+        // DOB: "2001-02-29",
+        // SSC_Percentage: 85.59,
+        // SSC_Percentile: 95.97,
+        // SSC_Board: "GSEB",
+        // SSC_School: "GTG",
+        // HSC_Percentage: 80.59,
+        // HSC_Percentile: 95.97,
+        // HSC_Board: "GSEB",
+        // HSC_School: "GTG",
+        // IsD2D: "FALSE",
+        // Diploma_Result_CPI: 0,
+        // Diploma_Result_Percentage: 0,
+        // Diploma_College_Name: "NOT APPLICABLE",
+        // Diploma_University: "NOT APPLICABLE",
+        // Sem_1_SPI: 9.5,
+        // Sem_2_SPI: 9.2,
+        // Sem_3_SPI: 9.1,
+        // Sem_4_SPI: 9.1,
+        // Sem_5_SPI: 9.2,
+        // Sem_6_SPI: 9.1,
+        // Sem_7_SPI: 9.0,
+        // Sem_8_SPI: 9.5,
+        // Current_CPI: 9.5,
+        // Enrollment_year: "2019",
+        // Passed_out_year: "2023",
+        // Email_ID: "abc@gmail.com",
+        // Contact_No_1: "1234567890",
+        // Contact_No_2: "0987654321",
+        // Address: "gujarat",
+        // City: "vadodara",
+        // Pin_Code: "390021",
+        // Current_semester: "6",
+        // Career_Preference: "Placement",
+        // CV_Upload: "image.png",
+        // Student_Photo: "image1.png",
+        // Branch_Id: "CE"
         // })
         // Student.create(req.body)
 
@@ -64,12 +68,11 @@ const addStudent = async (req, res) => {
         const studentData = await CSVToJSON().fromFile(path)
         // console.log(studentData.length);
 
-        if(studentData)
-        {
+        if (studentData) {
             for (let i = 0; i < studentData.length; i++) {
-    
+
                 // console.log(studentData[i]);
-    
+
                 try {
 
                     let studentStatus = await StudentService.createStudent(studentData[i]);
@@ -90,7 +93,7 @@ const addStudent = async (req, res) => {
         // else {
         //     throw "Error from create student controller"
         // }
-        
+
     }
     catch (err) {
         log.error(err.toString())
@@ -137,8 +140,7 @@ const getOneStudent = async (req, res) => {
 }
 
 const getOneStudentInAdmin = async (req, res) => {
-    try
-    {
+    try {
         const student_id = req.params.id;
         console.log(student_id)
 
@@ -166,20 +168,18 @@ const updateStudent = async (req, res) => {
         const studentData = await CSVToJSON().fromFile(path)
         console.log(studentData.length);
 
-        
-        if(studentData)
-        {
+
+        if (studentData) {
             for (let i = 0; i < studentData.length; i++) {
-                
+
                 console.log(studentData[i]);
                 let id = studentData[i]["Student_ID"];
                 console.log(id)
-                
+
                 try {
 
                     let studentStatus = await StudentService.updateStudent(studentData[i], id)
-                    if(!studentStatus)
-                    {
+                    if (!studentStatus) {
                         throw `Error from update student for record ${id}`
                     }
 
@@ -229,16 +229,14 @@ const updateOneStudent = async (req, res) => {
     }
 }
 
-const CV_Upload = async(req, res) => {
+const CV_Upload = async (req, res) => {
     try {
         let id = req.userId;
-        const studentData = await StudentService.CV_Upload("./public/student_details/CV/" + id +".pdf", id)
-        if(studentData)
-        {
-            return res.json({status: true, data: "Student CV uploaded"})
+        const studentData = await StudentService.CV_Upload("./public/student_details/CV/" + id + ".pdf", id)
+        if (studentData) {
+            return res.json({ status: true, data: "Student CV uploaded" })
         }
-        else
-        {
+        else {
             throw "Error uploading student CV"
         }
 
@@ -271,13 +269,11 @@ const deleteStudent = async (req, res) => {
 const Photo_Upload = async (req, res) => {
     try {
         let id = req.userId
-        const studentData = await StudentService.Photo_Upload("./public/student_details/Photo/" + id +".jpg", id)
-        if(studentData)
-        {
-            return res.json({status: true, data: "Student Photo uploaded"})
+        const studentData = await StudentService.Photo_Upload("./public/student_details/Photo/" + id + ".jpg", id)
+        if (studentData) {
+            return res.json({ status: true, data: "Student Photo uploaded" })
         }
-        else
-        {
+        else {
             throw "Error uploading student Photo"
         }
     } catch (error) {
@@ -285,6 +281,22 @@ const Photo_Upload = async (req, res) => {
         return res.json({ status: true, data: "Error updating student photo !!!" })
     }
 }
+
+
+const getAllStudentPasswords = async (req, res) => {
+    try {
+        console.log("Here")
+        let data = await FirstTimePasswordService.getAllFirstTimePasswords()
+        data = JSON.parse(JSON.stringify(data))
+        return OK(res, data)
+    }
+    catch (err) {
+        log.error(err.toString())
+        return ERROR(res, "Oops cannot get student passwords")
+    }
+}
+
+
 
 module.exports = {
     addStudent,
@@ -295,5 +307,6 @@ module.exports = {
     deleteStudent,
     Photo_Upload,
     getOneStudentInAdmin,
-    updateOneStudent
+    updateOneStudent,
+    getAllStudentPasswords
 }

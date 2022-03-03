@@ -1,5 +1,5 @@
 // assets
-import { IconDashboard, IconDeviceAnalytics, IconUsers, IconEye, IconCirclePlus, IconEdit, IconUserPlus } from '@tabler/icons';
+import { IconDashboard, IconDeviceAnalytics, IconUsers, IconEye, IconCirclePlus, IconEdit, IconUserPlus, IconKey } from '@tabler/icons';
 
 // constant
 const icons = {
@@ -9,7 +9,8 @@ const icons = {
     IconCirclePlus,
     IconEdit,
     IconUsers,
-    IconUserPlus
+    IconUserPlus,
+    IconKey
 };
 
 //-----------------------|| Student Dashboard Items ||-----------------------//
@@ -47,7 +48,16 @@ export const StudentMenu = {
                 url: '/student/update_student',
                 icon: icons['IconEdit'],
                 breadcrumbs: false
-            }]
+            },
+            {
+                id: 'StudentPasswords',
+                title: 'Student Passwords',
+                type: 'item',
+                url: "/student/student_passwords",
+                icon: icons['IconKey'],
+                breadcrumbs: false
+            }
+            ]
         }
 
         // {
