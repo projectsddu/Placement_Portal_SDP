@@ -436,7 +436,7 @@ export default function S_ViewProfile() {
                         </TableContainer> */}
 
                         <br /><br />
-                        <SubCard>
+                        {/* <SubCard> */}
                             <TableContainer component={Paper}>
                                 <Table sx={{ minWidth: 200 }} aria-label="simple table">
 
@@ -520,7 +520,7 @@ export default function S_ViewProfile() {
                                     </TableBody>
                                 </Table>
                             </TableContainer>
-                        </SubCard>
+                        {/* </SubCard> */}
 
 
                         {/* <br />

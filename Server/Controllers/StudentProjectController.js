@@ -11,7 +11,9 @@ async function checkExists(id) {
 
 const createStudentProject = async (req, res) => {
     try {
+        req.body.Student_ID = req.userId
         const data = req.body
+        // data.Student_ID = req.userId
         const studentprojectStatus = await StudentProjectService.createStudentProject(data)
         if(studentprojectStatus) 
         {

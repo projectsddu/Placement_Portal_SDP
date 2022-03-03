@@ -9,6 +9,7 @@ import { Select } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import UsePostFile from '../../../Utilities/UsePostFile';
+import UsePost from '../../../Utilities/UsePost';
 import responsePipelineHandler from '../../../Utilities/ResponsePipelineHandler';
 import HandleToast from '../../../Utilities/HandleToast';
 import { ToastContainer, toast } from 'react-toastify';
@@ -20,51 +21,23 @@ const Input = styled('input')({
 function S_ProjectCard(props) {
 
 
-    // let [studentPlacementDetails, setstudentPlacementDetails] = useState({
-    //     // Designation: props.details.Designation,
-    //     // Salary: props.details.Salary,
-    //     // Offer_Letter: props.details.Offer_Letter,
-    //     // Passed_out_year: props.details.Passed_out_year,
-    //     // IsFinal: props.details.IsFinal,
-    //     // Company_Name: props.details.Company_name,
-    //     // Company_ID: 1,
-    //     Designation: "",
-    //     Salary: "",
-    //     Offer_Letter: "",
-    //     Passed_out_year: "",
-    //     IsFinal: "",
-    //     Company_Name: "",
-    //     Company_ID: 1,
-    // });
+    let [studentProjectDetails, setstudentProjectDetails] = useState({
+        Project_Title: null,
+        Brief_Description: null,
+        Project_Link: null,
+        Technologies: null
+    });
 
-    let [studentPlacementStateDetails, setstudentPlacementStateDetails] = useState(
+    let [studentProjectStateDetails, setstudentProjectStateDetails] = useState(
         props.details
     );
-    const [selectedFile, setSelectedFile] = useState();
-    const [isFilePicked, setIsFilePicked] = useState(false);
 
 
 
-    async function onAddPlacement() {
-        let updated_details = studentPlacementStateDetails;
-        const res = await UsePostFile('/studentplacement/addStudentPlacement', updated_details, 'POST');
-        const params1 = {
-            data: res,
-            HandleToast: {
-                toast: toast,
-                flag: false
-            }
-        };
-        console.log(res);
-        responsePipelineHandler(params1, 1);
-    }
-
-    async function onUpdatePlacement() {
-        let updated_details = studentPlacementStateDetails;
-        // updated_details["Company_details"] = ""
-        delete (updated_details.Company_details)
+    async function onAddProject() {
+        let updated_details = studentProjectStateDetails;
         console.log(updated_details)
-        const res = await UsePostFile('/studentplacement/updateStudentPlacement/' + updated_details.id, updated_details, 'POST');
+        const res = await UsePost('/studentproject/createStudentProject', updated_details, 'POST');
         const params1 = {
             data: res,
             HandleToast: {
@@ -76,11 +49,27 @@ function S_ProjectCard(props) {
         responsePipelineHandler(params1, 1);
     }
 
-    async function onDeletePlacement() {
+    async function onUpdateProject() {
+        let updated_details = studentProjectStateDetails;
+        console.log(updated_details.Project_ID)
+        console.log(updated_details)
+        const res = await UsePost('/studentproject/updateStudentProject/' + updated_details.Project_ID, updated_details, 'POST');
+        const params1 = {
+            data: res,
+            HandleToast: {
+                toast: toast,
+                flag: false
+            }
+        };
+        console.log(res);
+        responsePipelineHandler(params1, 1);
+    }
+
+    async function onDeleteProject() {
 
         let Resp = await axios({
             method: 'post',
-            url: "/studentplacement/deleteStudentPlacement/" + studentPlacementStateDetails.id,
+            url: "/studentproject/deleteStudentProject/" + studentProjectStateDetails.Project_ID,
         });
 
         console.log(Resp)
@@ -99,17 +88,33 @@ function S_ProjectCard(props) {
     }
 
     function onButtonClick(event) {
+        // required fields validations
+        const keys = Object.keys(studentProjectStateDetails);
+        // console.log(keys)
+        let count = 0;
+        for (let i = 0; i < keys.length; i++) {
+            let key = keys[i];
+            console.log(studentProjectStateDetails[key]);
+            if (studentProjectStateDetails[key] == null) {
+                // alert("Please fill all fields.")
+                count++;
+            }
+        }
+        // console.log("Count: ", count)
+        if (count != 0) {
+            toast.error("To add project all fields are required")
+        }
 
         // Updations Here
 
         if (event == "add") {
-            onAddPlacement()
+            onAddProject()
         }
         else if (event == "update") {
-            onUpdatePlacement()
+            onUpdateProject()
         }
         else if (event == "delete") {
-            onDeletePlacement()
+            onDeleteProject()
         }
     }
 
@@ -133,89 +138,37 @@ function S_ProjectCard(props) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const changeHandler = (event) => {
-        console.log(props)
-        console.log(event.target.files[0]['name']);
-        document.getElementById("fileUploadName" + parseInt(props.seed * 10000)).innerText = ' ' + event.target.files[0]['name'];
-        console.log(document.getElementById("fileUploadName" + parseInt(props.seed * 10000)))
-        const file_data = event.target.files[0];
-        let temp = studentPlacementStateDetails;
-        temp['Job_Description_File'] = file_data;
-        setstudentPlacementStateDetails(temp);
-        console.log(studentPlacementStateDetails)
-
-    };
-
-
-
-    let companies = [];
-    for (let i = 0; i < props.allCompanies.length; i++) {
-        var obj = {};
-        obj['value'] = props.allCompanies[i]['Company_ID'];
-        obj['label'] = props.allCompanies[i]['Company_name'];
-        companies.push(obj);
-    }
-
     useEffect(() => {
 
         console.log(props)
-        setstudentPlacementStateDetails(props.details)
+        setstudentProjectStateDetails(props.details)
     }, [])
 
-
-    function handleCheckBox(e) {
-        const copy = studentPlacementStateDetails
-        if (copy["IsFinal"]) {
-            copy["IsFinal"] = false
-        }
-        else {
-            copy["IsFinal"] = true
-        }
-        console.log(e.target, studentPlacementStateDetails)
-        setstudentPlacementStateDetails(copy)
-    }
-    // const [open, setOpen] = React.useState(false);
-    // const handleOpen = () => setOpen(true);
-    // const handleClose = () => setOpen(false);
     return (
         <>
 
             <SubCard>
                 {/* <Button onClick={() => {
-                    console.log(studentPlacementStateDetails)
+                    console.log(studentProjectStateDetails)
                 }} >View State</Button> */}
 
-                {studentPlacementStateDetails.Company_details === undefined ? <TextField
+                <TextField
                     fullWidth
-                    id="companies"
-                    // onChange={(e) => { setstudentPlacementStateDetails({ ...studentPlacementStateDetails, Company_ID: e.target.value }) }}
-                    // select
+                    value={(studentProjectStateDetails.Project_Title)}
+                    id="title"
+                    onChange={(e) => { setstudentProjectStateDetails({ ...studentProjectStateDetails, Project_Title: e.target.value }) }}
                     label="Enter Project Title"
                 >
-                    {/* {companies.map((option) => (
-                        <MenuItem
-                            onSelect={(e) => { console.log(e) }}
-                            key={option.value} value={option.value}>
-                            {option.label}
-                        </MenuItem>
-                    ))} */}
-                </TextField> :
-                    <>
-                        <TextField value={studentPlacementStateDetails.Company_details.Company_name} disabled fullWidth></TextField>
-
-
-                    </>
-                }
+                </TextField>
 
 
                 <br />
-
                 <br />
 
                 <TextField
-                    value={studentPlacementStateDetails.Designation}
+                    value={studentProjectStateDetails.Brief_Description}
                     onChange={(e) => {
-                        setstudentPlacementStateDetails({ ...studentPlacementStateDetails, Designation: e.target.value });
+                        setstudentProjectStateDetails({ ...studentProjectStateDetails, Brief_Description: e.target.value });
                     }}
                     fullWidth
                     multiline
@@ -224,77 +177,29 @@ function S_ProjectCard(props) {
                     label="Enter Project Description"
                 >
 
-
-                        </TextField>
-                        <br/><br/>
-                        <TextField
-                            // onChange={(e) => handleKeyChange(e, "Salary")}
-                            onChange={(e) => {
-                                setstudentPlacementStateDetails({ ...studentPlacementStateDetails, Salary: e.target.value });
-                            }}
-                            value={studentPlacementStateDetails.Salary}
-                            fullWidth label="Enter Project Link"></TextField>
-                            <br/><br/>
-                        <TextField
-                            // onChange={(e) => handleKeyChange(e, "Salary")}
-                            onChange={(e) => {
-                                setstudentPlacementStateDetails({ ...studentPlacementStateDetails, Salary: e.target.value });
-                            }}
-                            value={studentPlacementStateDetails.Salary}
-                            fullWidth label="Enter Technologies used in Project"></TextField>
-
-                {/* <Grid container direction="row" justifyContent="flex-start" alignItems="center" spacing={2}>
-                    <Grid item md={12} xs={12}>
-                    </Grid>
-                    <Grid item md={12} xs={12}>
-                    </Grid>
-                </Grid> */}
+                </TextField>
+                <br /><br />
+                <TextField
+                    onChange={(e) => {
+                        setstudentProjectStateDetails({ ...studentProjectStateDetails, Project_Link: e.target.value });
+                    }}
+                    value={studentProjectStateDetails.Project_Link}
+                    fullWidth
+                    label="Enter Project Link"></TextField>
+                <br /><br />
+                <TextField
+                    onChange={(e) => {
+                        setstudentProjectStateDetails({ ...studentProjectStateDetails, Technologies: e.target.value });
+                    }}
+                    value={studentProjectStateDetails.Technologies}
+                    fullWidth
+                    label="Enter Technologies used in Project (comma separated)"></TextField>
                 <br />
                 <br />
                 <Grid style={{ "padding-top": "1%" }} container direction="row" justifyContent="flex-start" alignItems="center" spacing={2}>
-                    {/* <Grid item md={studentPlacementStateDetails.Company_details === undefined ? 5 : 3} xs={12}>
-                        <label htmlFor="contained-button-file"> */}
-                    {/* <Input
-                                onChange={changeHandler}
-                                id="contained-button-file"
-                                multiple
-                                type="file"
-                            />
-                            <Button variant="outlined" component="span">
-                                Upload Job File
-                            </Button> */}
-                    {/* <Button
-                                variant="outlined"
-                                size='large'
-                                component="label"
-                            >
-                                Upload Offer Letter<input
-                                    onChange={changeHandler}
-                                    required
-                                    type="file"
-                                    hidden
-                                />
-                            </Button> */}
-                    {/* <b><label id="fileUploadName1"> </label></b> */}
-                    {/* <label id={"fileUploadName" + parseInt(props.seed * 10000)}> </label>
-                        </label>
-                    </Grid> */}
-                    {/* {studentPlacementStateDetails.Company_details === undefined ? "" :
-                        <Grid justifyContent={"flex-start"} md={2} style={{ "padding-top": "1%" }} >
-                            <a target="_blank" href={"http://localhost:8000" + studentPlacementStateDetails.Offer_Letter} style={{ "text-decoration": "none" }}>
 
-                                <Button variant="contained">View File</Button>
-                            </a>
-                        </Grid> */}
-                    {/* } */}
-
-                    {/* <Grid item md={2} xs={12}>
-                        <Checkbox value={studentPlacementStateDetails.IsFinal}
-                            onChange={(e) => handleCheckBox(e)}
-                        /> <label>Final</label>
-                    </Grid> */}
                     <Grid container md={12} xs={12} justifyContent="flex-end">
-                        {studentPlacementStateDetails.Company_details === undefined ? (
+                        { props.source != "server" ? (
                             <Grid item>
                                 <Button
                                     onClick={() => onButtonClick("add")}
@@ -314,7 +219,7 @@ function S_ProjectCard(props) {
                                         component="span"
                                         onClick={handleOpen}
                                     >
-                                        Delele Placement
+                                        Delele Project
                                     </Button>
                                 </Grid>
                                 <Grid item>
@@ -327,7 +232,7 @@ function S_ProjectCard(props) {
                                         onClick={() => onButtonClick("update")}
                                     // onClick={handleOpen}
                                     >
-                                        Update Placement
+                                        Update Project
                                     </Button>
 
                                 </Grid>
@@ -343,7 +248,7 @@ function S_ProjectCard(props) {
                         >
                             <Box sx={style}>
                                 <Typography style={{ "color": "#616161" }} id="modal-modal-title" variant="h3" component="h1">
-                                    Are, you really sure want to delete this placement?
+                                    Are, you really sure want to delete this project?
                                 </Typography><br />
                                 <Grid container spacing={2} justifyContent={""}>
                                     <Grid md={6} item>
