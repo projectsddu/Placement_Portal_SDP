@@ -32,6 +32,14 @@ export const AchievementsMenu = {
                 breadcrumbs: false
             },
             // {
+            //     id: 'student_projects',
+            //     title: 'Projects',
+            //     type: 'item',
+            //     url: '/_student/achievements/add_project',
+            //     icon: icons['IconEye'],
+            //     breadcrumbs: false
+            // }
+            // {
             //     id: 'subscribed_announcements',
             //     title: 'Applied Announcements',
             //     type: 'item',

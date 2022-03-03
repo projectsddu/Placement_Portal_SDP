@@ -17,132 +17,78 @@ function S_AddProject() {
 
     const [studentData, setStudentData] = useState('');
     const [StudentDetails, setStudentDetails] = useState(undefined);
-    const [studentPlacement, setStudentPlacement] = useState(undefined)
-    const [allCompanies, setallCompanies] = useState([])
-
-    const [placementCard, setPlacementCard] = useState([]);
+    const [studentProject, setStudentProject] = useState(undefined)
+    const [projectCard, setProjectCard] = useState([]);
 
     useEffect(async () => {
-        let response = await fetch("/company/getCompany")
-        if (response) {
-            let data = await response.json()
-            if (data) {
-                console.log(data["data"])
-                setallCompanies([].concat(data["data"]))
+        let response = undefined
+        response = await fetch("/studentproject/getOneStudentProject/")
+        if (response != undefined) {
+            let data = undefined
+            data = await response.json()
+            console.log(data)
+            setStudentProject(data)
 
+            let project_card_copy = projectCard
+
+            if (data.data != "Student project record not found" && data != undefined) {
+                for (let i = 0; i < data.data.length; i++) {
+                    console.log(data.data[i])
+                    let x = Math.random();
+                    project_card_copy.unshift(
+                        <S_ProjectCard
+                            callerFunc={changeStateFromChild}
+                            source={"server"}
+                            seed={x}
+                            from={"line 86"}
+                            details={data.data[i]}
+                            idx={i}
+                        />
+                    )
+
+                }
+                setProjectCard([].concat(project_card_copy))
             }
         }
     }, [])
+
     function changeStateFromChild(seed, operation) {
-        let placement_card_copy = placementCard
+        let project_card_copy = projectCard
         if (operation == "delete") {
-            // for (let i = 0; i < placementCard.length; i++) {
-            //     let propDetails = placementCard[i].props.seed
+            // for (let i = 0; i < projectCard.length; i++) {
+            //     let propDetails = projectCard[i].props.seed
             //     if(seed==propDetails)
             //     {
 
             //     }
             // }
-            let filteredList = placement_card_copy.filter((elem) => {
+            let filteredList = project_card_copy.filter((elem) => {
                 return elem.props.seed != seed
             })
             console.log(filteredList)
 
-            setPlacementCard(filteredList)
+            setProjectCard(filteredList)
         }
     }
 
     // const [jsonData, setjsonData] = useState(undefined)
 
-    async function handleChange(e) {
-        setStudentData(e.target.value)
-
-        if (e.target.value.length === 10) {
-            let response = undefined
-            response = await fetch("/student/getOneStudentInAdmin/" + e.target.value.toUpperCase(), { method: "GET" })
-
-            if (response != undefined) {
-                let jsonData = undefined
-                jsonData = await response.json()
-                if (jsonData != undefined) {
-                    console.log(jsonData);
-                    if (jsonData["data"] == "Error Fetching Student data !!!") {
-                        console.log("Here in ese")
-                        setStudentDetails("No student found!")
-                    }
-                    else {
-
-                        setStudentDetails(jsonData["data"])
-                        const student_Id = jsonData["data"]["Student_ID"]
-                        // console.log(student_Id)
-                        let response1 = undefined
-                        response1 = await fetch("/studentplacement/getStudentPlacement/" + student_Id, { method: "GET" })
-
-                        if (response1 != undefined) {
-                            let jsonData1 = undefined
-                            jsonData1 = await response1.json()
-                            console.log(jsonData1)
-                            setStudentPlacement(jsonData1)
-                            let studentPlacementCardCopy = placementCard
-                            console.log(jsonData1.data)
-
-                            if (jsonData1.data != "Student Placement Record Not Found!" && jsonData1 != undefined) {
-                                console.log(jsonData1.data.length)
-
-                                for (let i = 0; i < jsonData1.data.length; i++) {
-                                    console.log(jsonData1.data[i])
-                                    let x = Math.random();
-                                    studentPlacementCardCopy.unshift(
-                                        <S_ProjectCard
-                                            callerFunc={changeStateFromChild}
-                                            seed={x}
-                                            from={"line 86"}
-                                            allCompanies={allCompanies}
-                                            details={jsonData1.data[i]}
-                                            idx={i}
-                                        />
-                                    )
-
-                                }
-                                setPlacementCard([].concat(studentPlacementCardCopy))
-                            }
-                            // console.log(placementCard)
-                        }
-                    }
-                }
-
-            }
-
-
-
-
-        }
-        else if (e.target.value === 0) {
-            setStudentDetails(undefined)
-            console.log("Here")
-        }
-
-    }
 
     function handleClick() {
-        // console.log("keval")
-        let placement_card_copy = placementCard;
-        placement_card_copy.push(<S_ProjectCard
+        // console.log("rikin here line number 80")
+        let project_card_copy = projectCard;
+        project_card_copy.push(<S_ProjectCard
             callerFunc={changeStateFromChild}
             seed={Math.random()}
             from={"line 123"}
             details={{
-                Designation: "",
-                Salary: "",
-                Offer_Letter: "",
-                Passed_out_year: "",
-                IsFinal: false,
-                Company_ID: "",
-                companyName: "",
-                Student_ID: studentData.toUpperCase()
+                Project_Title: null,
+                Brief_Description: null,
+                Project_Link: null,
+                Technologies: null
             }}
-            allCompanies={allCompanies} />);
-        setPlacementCard([].concat(placement_card_copy));
+        />);
+        setProjectCard([].concat(project_card_copy));
     }
 
     const [first, setfirst] = useState("")
@@ -150,42 +96,10 @@ function S_AddProject() {
         console.log(first)
     }, [first])
 
-    let oppo = 9000
-    function checkMe(str1) {
-        setfirst(str1 + oppo + "From GHere")
-    }
-
-
-
     return (
         <>
             <MainCard title="Add Project">
-                {/* <TextField
-                    fullWidth
-                    // required
-                    label="Student ID"
-                    onInput={(e) => {
-                        handleChange(e)
-                    }}
-                    id="fullWidth"
-                    helperText="Enter Student ID"
-                /> */}
-                {StudentDetails === undefined ? "" :
-                    StudentDetails == "No student found!" ?
-                        <ChipCard data={
-                            <><h1>Jenil</h1></>} loading={false} type={"error"} /> :
-                        <>
-                            <ChipCard loading={false} data={<><h1>Jenil</h1></>}>
-                            </ChipCard>
-                            <br />
-                        </>
-
-                }
-
-                {/* {placementCard.map((e) => {
-                    return e;
-                })} */}
-                {placementCard.map((elem) => {
+                {projectCard.map((elem) => {
                     return (<>
                         {elem}
                     </>)
