@@ -302,7 +302,7 @@ function CompanyInternshipCard(props) {
                     >
                         <Box sx={style}>
                             <Typography style={{ "color": "#616161" }} id="modal-modal-title" variant="h3" component="h1">
-                                Are, you really sure want to delete this placement?
+                                Are, you really sure want to delete this internship?
                             </Typography><br />
                             <Grid container spacing={2} justifyContent={""}>
                                 <Grid md={6} item>
