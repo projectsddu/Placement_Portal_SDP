@@ -19,11 +19,11 @@ const getUserLoginObj = async (studentId) => {
     }
 }
 
-const createUserLogin = async (studentId, DOB) => {
+const createUserLogin = async (studentId, password) => {
     try {
-        const userDob = new Date(DOB)
-        const userPassword = userDob.getDate() + "/" + userDob.getMonth() + "/" + userDob.getFullYear()
-        await UserLogin.create({ Password: SHA256(userPassword).toString(), LoginId: studentId, IsFirstTime: true })
+        // const userDob = new Date(DOB)
+        // const userPassword = userDob.getDate() + "/" + userDob.getMonth() + "/" + userDob.getFullYear()
+        await UserLogin.create({ Password: SHA256(password).toString(), LoginId: studentId, IsFirstTime: true })
     }
     catch (err) {
         log.error("Error creating user login!", err.toString())
