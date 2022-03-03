@@ -3,6 +3,7 @@ const logger = require("serverloggerjs/logger")
 const log = new logger(true)
 const db = require("../Models/index")
 const Student = db.students
+const FirstTimePasswordService = require("./FirstTimePasswordService")
 
 async function checkExists(id) {
     const students = await Student.findAll({ where: { Student_ID: id } })
@@ -17,7 +18,8 @@ async function checkExists(id) {
 const createStudent = async (studentData) => {
     try {
         const student = await Student.create(studentData)
-        await UserLoginService.createUserLogin(student.Student_ID, student.DOB.toString())
+        const password = await FirstTimePasswordService.AddFirstTimePassword(student.Student_ID)
+        await UserLoginService.createUserLogin(student.Student_ID, password)
     }
     catch (err) {
         log.error(err.toString())
@@ -103,16 +105,14 @@ const deleteStudent = async (id) => {
 
 const Photo_Upload = async (data, id) => {
     try {
-        if(await checkExists(id))
-        {
-            const student = await Student.update({ Student_Photo: data } , { where: { Student_ID: id } })
+        if (await checkExists(id)) {
+            const student = await Student.update({ Student_Photo: data }, { where: { Student_ID: id } })
             return student
         }
-        else
-        {
+        else {
             return false
         }
-        
+
     } catch (error) {
         log.error(error.toString())
         return false

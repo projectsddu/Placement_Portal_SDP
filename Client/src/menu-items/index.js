@@ -17,6 +17,8 @@ import { useLocation } from 'react-router';
 
 const current_location = window.location.href.split("/")
 let menuItems
+
+
 if (current_location[3] == "_student") {
     console.log(current_location)
     console.log("Here in student")
@@ -24,6 +26,7 @@ if (current_location[3] == "_student") {
         items: [TempMenu, AchievementsMenu, AnnouncementStudentMenu]
     }
 }
+
 else {
     console.log(current_location)
     console.log("Here in admin")

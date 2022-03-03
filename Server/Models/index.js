@@ -32,6 +32,7 @@ db.notifications = require("./NotificationModel")(sequelize, DataTypes)
 db.skills_and_achievements = require("./SkillsAndAchievementsModel")(sequelize, DataTypes)
 db.BranchAnnouncement = require("./BranchAnnouncementModel")(sequelize, DataTypes)
 db.adminLogins = require("./AdminLoginModel")(sequelize, DataTypes)
+db.FirstTimeLogin = require("./FirstTimePasswordsModel")(sequelize, DataTypes)
 db.student_projects = require("./StudentProjectModel")(sequelize, DataTypes)
 db.student_achievements_internships = require(".//StudentAchievementsInternshipsModel")(sequelize, DataTypes)
 
