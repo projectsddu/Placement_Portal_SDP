@@ -8,8 +8,9 @@ import {
 import MainCard from '../../ui-component/cards/MainCard';
 import { DataGrid, RowsProp, ColDef, GridToolbarContainer, GridToolbarExport } from '@material-ui/data-grid';
 import EditIcon from '@material-ui/icons/Edit';
-import { Paper, Typography, Box, Grid, Button, ListItem, List } from '@material-ui/core';
-import { IconDashboard, IconCirclePlus, IconDeviceAnalytics, IconSpeakerphone } from '@tabler/icons';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import { Paper, Typography, Box, Grid, IconButton, Button, ListItem, List } from '@material-ui/core';
+import { IconDashboard, IconEye, IconCirclePlus, IconDeviceAnalytics, IconSpeakerphone } from '@tabler/icons';
 import UseFetch from '../../Utilities/UseFetch';
 import SubCard from './../../ui-component/cards/SubCard';
 import { useHistory } from 'react-router-dom';
@@ -128,7 +129,7 @@ export default function ViewStudent() {
         // },
         {
             field: 'edit',
-            headerName: 'Edit',
+            headerName: 'Edit & View',
             sortable: false,
             width: 130,
             disableClickEventBubbling: true,
@@ -137,22 +138,38 @@ export default function ViewStudent() {
             },
             renderCell: (id) => {
                 return (
-                    <Button
+                    <>
+                    {/* <Button
                         variant="contained"
+                        // style={{'padding' : "0px", "width" : "50%"}}
                         onClick={() => {
                             history.push('/student/edit_student/' + temp_id);
                         }}
                         color="primary"
                         startIcon={<EditIcon />}
                     >
-                        Edit
-                    </Button>
+                    </Button> */}
+                        <IconButton color="primary" 
+                        onClick={() => {
+                            history.push('/student/edit_student/' + temp_id);
+                        }}
+                        aria-label="upload picture" component="span">
+                            <EditIcon />
+                        </IconButton>
+                        <IconButton color="primary"
+                        onClick={() => {
+                            history.push('/student/view_student_profile/' + temp_id);
+                        }}
+                        aria-label="upload picture" component="span">
+                            <VisibilityIcon />
+                        </IconButton>
+                    </>
                 );
             }
         },
 
         { field: 'id', headerName: 'ID', hide: true },
-        { field: 'Student_ID', headerName: 'Student_ID', width: 200, editable: true },
+        { field: 'Student_ID', headerName: 'Student ID', width: 170, editable: true },
         { field: 'FirstName', headerName: 'First Name', width: 200, editable: false },
         { field: 'MiddleName', headerName: 'Middle Name', width: 200, editable: false },
         { field: 'LastName', headerName: 'Last Name', width: 200, editable: false },

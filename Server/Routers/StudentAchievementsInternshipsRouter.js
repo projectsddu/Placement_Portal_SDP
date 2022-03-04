@@ -11,6 +11,8 @@ router.get("/getAllStudentAchievementsInternships", [StudentAuthenticate],Studen
 
 router.get("/getStudentAchievementsInternshipsByStudentID", [StudentAuthenticate],StudentAchievementsInternshipsController.getStudentAchievementsInternshipsByStudentID)
 
+router.get("/getStudentAchievementsInternshipsByStudentIDInAdmin/:id",StudentAchievementsInternshipsController.getStudentAchievementsInternshipsByStudentIDInAdmin)
+
 router.post("/deleteStudentAchievementsInternships/:id", [StudentAuthenticate],StudentAchievementsInternshipsController.deleteStudentAchievementsInternships)
 
 module.exports = router

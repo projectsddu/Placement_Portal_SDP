@@ -65,6 +65,25 @@ const getSkillsAndAchievements = async (req, res) => {
     }
 }
 
+const getSkillsAndAchievementsInAdmin = async (req, res) => {
+
+    try {
+        const id = req.params.id
+        // const id = req.userId
+        let skillsandachievements = await SkillsAndAchievementsService.getSkillsAndAchievements(id)
+        if (skillsandachievements) {
+            return res.json({ status: skillsandachievements.length == 0 ? false : true, data: skillsandachievements.length == 0 ? "No Student Skills And Achievements Record found" : skillsandachievements })
+        }
+        else {
+            throw "Error from getSkillsAndAchievements controller"
+        }
+    }
+    catch (error) {
+        log.error(error.toString())
+        return res.json({ data: error.toString(), status: false })
+    }
+}
+
 const updateSkillsAndAchievements = async (req, res) => {
     try {
         // const id = req.params.id
@@ -105,5 +124,6 @@ module.exports = {
     getAllSkillsAndAchievements,
     getSkillsAndAchievements,
     updateSkillsAndAchievements,
-    deleteSkillsAndAchievements
+    deleteSkillsAndAchievements,
+    getSkillsAndAchievementsInAdmin
 }
