@@ -414,9 +414,9 @@ export default function S_ViewProfile() {
                                 </Grid>
                             </Grid>
                         </SubCard>
-                        <br /><br />
+                        
                         {/* <SubCard> */}
-                        <S_AddProject />
+                        {/* <S_AddProject /> */}
                         {/* </SubCard> */}
 
                         {/* <TableContainer component={Paper}>
