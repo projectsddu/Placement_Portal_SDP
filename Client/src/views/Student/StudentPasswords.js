@@ -140,7 +140,7 @@ export default function ViewStudent() {
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <DatePicker
                             views={['year']}
-                            label="Passed Out Year"
+                            label="Enrollment Year"
                             onChange={(e) => HandleDateChanged(e)}
                             // required
                             value={date}
