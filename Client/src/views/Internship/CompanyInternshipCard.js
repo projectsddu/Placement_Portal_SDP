@@ -198,7 +198,7 @@ function CompanyInternshipCard(props) {
                         <TextField
                             fullWidth
                             // required
-                            label="Internal Guide ID"
+                            label="Internal Guide Name"
                             id="internal_guide_id"
                             helperText="Enter the internal guide id"
                             value={studentInternshipStateDetails.Internal_Guide_ID}

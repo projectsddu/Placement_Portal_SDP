@@ -81,6 +81,25 @@ const getStudentAchievementsInternshipsByStudentID = async (req, res) => {
     }
 }
 
+const getStudentAchievementsInternshipsByStudentIDInAdmin = async (req, res) => {
+
+    try
+    {
+        const student_id = req.params.id
+        let studentinternship = await StudentAchievementsInternshipsService.getStudentAchievementsInternshipsByStudentID(student_id)
+        if(studentinternship) {
+            return res.json({ status: studentinternship.length == 0 ? false : true, data: studentinternship.length == 0 ? "Student Internship Record Not Found!" : studentinternship })   
+        }
+        else {
+            throw "Error ocurred while getting all internships by student id!"
+        }
+    }
+    catch (error) {
+        log.error(error.toString())
+        return res.json({ data: error.toString(), status: false})
+    }
+}
+
 const deleteStudentAchievementsInternships = async (req, res) => {
 
     try
@@ -105,5 +124,6 @@ module.exports = {
     updateStudentAchievementsInternships,
     getAllStudentAchievementsInternships,
     getStudentAchievementsInternshipsByStudentID,
-    deleteStudentAchievementsInternships
+    deleteStudentAchievementsInternships,
+    getStudentAchievementsInternshipsByStudentIDInAdmin
 }

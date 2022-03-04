@@ -60,6 +60,7 @@ const Temp = Loadable(lazy(() => import('../views/Student_Views/Dashboard/index'
 // student starts
 const AddStudent = Loadable(lazy(() => import('../views/Student/AddStudent')));
 const EditSingleStudent = Loadable(lazy(() => import('../views/Student/EditSingleStudent')));
+const ViewStudentProfile = Loadable(lazy(() => import('../views/Student/ViewStudentProfile')));
 const StudentPasswords = Loadable(lazy(() => import('../views/Student/StudentPasswords')));
 const UpdateStudent = Loadable(lazy(() => import('../views/Student/UpdateStudent')));
 const S_ViewAnnouncements = Loadable(lazy(() => import('../views/Student_Views/Announcements/S_ViewAnnouncements')));
@@ -173,6 +174,7 @@ const MainRoutes = () => {
                 '/student/update_student',
                 '/student/student_passwords',
                 '/student/edit_student/:id',
+                '/student/view_student_profile/:id',
 
                 '/_student/Dashboard',
                 "/_student/announcement/view_announcement/:idx",
@@ -237,6 +239,7 @@ const MainRoutes = () => {
                     <Route path="/student/add_student" component={AddStudent} />
                     <Route path="/student/update_student" component={UpdateStudent} />
                     <Route path="/student/edit_student/:id" component={EditSingleStudent} />
+                    <Route path="/student/view_student_profile/:id" component={ViewStudentProfile} />
                     <Route path="/student/student_passwords" component={StudentPasswords} />
 
                     {/* </AuthGuard> */}
