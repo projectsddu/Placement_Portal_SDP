@@ -100,7 +100,7 @@ const MainRoutes = () => {
 
     useEffect(() => {
         console.log(location.pathname)
-        if (location.pathname != "/admin/login" && location.pathname != "/_student/login") {
+        if (location.pathname != "/admin/login" && location.pathname != "/_student/login" && location.pathname != "/_student/firstTimeLogin") {
             console.log("here")
 
             const isAdmin = isAdminRoute(location.pathname)
