@@ -297,6 +297,18 @@ const getAllStudentPasswords = async (req, res) => {
 }
 
 
+const sendFirstTimePasswords = async (req, res) => {
+    try {
+        const curYear = req.body.curYear
+        await FirstTimePasswordService.sendPasswords(curYear)
+        return OK(res, "Passwords sent successfully!")
+    }
+    catch (err) {
+        log.error(err.toString())
+        return ERROR(res, "Sorry cannot send student passwords!")
+    }
+}
+
 
 module.exports = {
     addStudent,
@@ -308,5 +320,6 @@ module.exports = {
     Photo_Upload,
     getOneStudentInAdmin,
     updateOneStudent,
-    getAllStudentPasswords
+    getAllStudentPasswords,
+    sendFirstTimePasswords
 }

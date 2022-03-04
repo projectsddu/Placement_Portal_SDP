@@ -4,3 +4,4 @@
 ./Server/Logs
 ./Server/.env
 ./Client/.env
+/Server/public

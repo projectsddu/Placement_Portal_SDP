@@ -3,7 +3,9 @@ const log = new logger(true)
 const db = require("../Models/index")
 var CryptoJS = require("crypto-js")
 var AES = require("crypto-js/aes");
+const MailerService = require("./MailerService")
 const FirstTimeModel = db.FirstTimeLogin
+const StudentService = require("./StudentService")
 
 const generateRandomPassword = (length) => {
     try {
@@ -77,8 +79,29 @@ const getAllFirstTimePasswords = async () => {
     }
 }
 
+const sendPasswords = async (dateYear) => {
+    try {
+        const allPasswords = await getAllFirstTimePasswords()
+        dateYear = dateYear.toString()
+        for (let i = 0; i < allPasswords.length; i++) {
+            const date = allPasswords[i]["StudentId"][0] + allPasswords[i]["StudentId"][1]
+            if (date == dateYear) {
+                await MailerService.notificationMail({
+                    "header": "Your Access To Placement Portal", "body": `You can access the DDU placement portal via the following credentials<br/><b>Student Id:</b>${allPasswords[i]["StudentId"]}<br/><b>Password:</b> ${allPasswords[i].FirstTimePassword}<br/>please visit ${process.env.DOMAIN}  to login`
+                }, allPasswords[i]["StudentId"] + "@ddu.ac.in")
+            }
+        }
+        return true
+    }
+    catch (err) {
+        log.error(err.toString())
+        return false
+    }
+}
+
 module.exports = {
     getAllFirstTimePasswords,
     getFirstTimePassword,
-    AddFirstTimePassword
+    AddFirstTimePassword,
+    sendPasswords
 }
