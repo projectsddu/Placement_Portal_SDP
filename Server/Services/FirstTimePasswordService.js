@@ -5,6 +5,7 @@ var CryptoJS = require("crypto-js")
 var AES = require("crypto-js/aes");
 const MailerService = require("./MailerService")
 const FirstTimeModel = db.FirstTimeLogin
+const StudentModel = db.students
 const StudentService = require("./StudentService")
 
 const generateRandomPassword = (length) => {
@@ -86,9 +87,12 @@ const sendPasswords = async (dateYear) => {
         for (let i = 0; i < allPasswords.length; i++) {
             const date = allPasswords[i]["StudentId"][0] + allPasswords[i]["StudentId"][1]
             if (date == dateYear) {
+                let student = await StudentModel.findAll({ where: { Student_ID: allPasswords[i]["StudentId"]}})
+                student = JSON.parse(JSON.stringify(student))
                 await MailerService.notificationMail({
                     "header": "Your Access To Placement Portal", "body": `You can access the DDU placement portal via the following credentials<br/><b>Student Id:</b>${allPasswords[i]["StudentId"]}<br/><b>Password:</b> ${allPasswords[i].FirstTimePassword}<br/>please visit ${process.env.DOMAIN}  to login`
-                }, allPasswords[i]["StudentId"] + "@ddu.ac.in")
+                }, student[0]["Email_ID"]
+                )
             }
         }
         return true

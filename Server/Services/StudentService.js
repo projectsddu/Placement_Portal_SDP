@@ -17,9 +17,23 @@ async function checkExists(id) {
 
 const createStudent = async (studentData) => {
     try {
-        const student = await Student.create(studentData)
-        const password = await FirstTimePasswordService.AddFirstTimePassword(student.Student_ID)
-        await UserLoginService.createUserLogin(student.Student_ID, password)
+        const id = studentData["Student_ID"]
+        // console.log("line 21 student Id:")
+        // console.log(id)
+        if(await checkExists(id))
+        {
+            // console.log("line 25")
+            const data = await Student.update(studentData, { where: { Student_ID: id } })
+            // console.log(id)
+            // return student
+        }
+        else 
+        {
+            const student = await Student.create(studentData)
+            const password = await FirstTimePasswordService.AddFirstTimePassword(student.Student_ID)
+            await UserLoginService.createUserLogin(student.Student_ID, password)
+            // return true
+        }
     }
     catch (err) {
         log.error(err.toString())
