@@ -10,6 +10,7 @@ const AuthLogin3 = Loadable(lazy(() => import('../views/pages/authentication/aut
 const AuthRegister3 = Loadable(lazy(() => import('../views/pages/authentication/authentication3/Register3')));
 const StudentLogin = Loadable(lazy(() => import('../views/Student_Views/Login/StudentLogin')));
 const AdminLogin = Loadable(lazy(() => import('../views/Login/AdminLogin')));
+const FirstTimeLogin = Loadable(lazy(() => import('../views/Student_Views/Login/FirstTimeLogin')));
 
 //-----------------------|| AUTHENTICATION ROUTING ||-----------------------//
 
@@ -17,11 +18,12 @@ const AuthenticationRoutes = () => {
     const location = useLocation();
 
     return (
-        <Route path={['/admin/login', '/_student/login', '/pages/login/login3', '/pages/register/register3']}>
+        <Route path={['/admin/login', '/_student/login', '/pages/login/login3', '/pages/register/register3', "/_student/firstTimeLogin"]}>
             <MinimalLayout>
                 <Switch location={location} key={location.pathname}>
                     <Route path="/admin/login" component={AdminLogin} />
                     <Route path="/_student/login" component={StudentLogin} />
+                    <Route path="/_student/firstTimeLogin" component={FirstTimeLogin} />
                     <Route path="/pages/login/login3" component={AuthLogin3} />
                     <Route path="/pages/register/register3" component={AuthRegister3} />
                 </Switch>

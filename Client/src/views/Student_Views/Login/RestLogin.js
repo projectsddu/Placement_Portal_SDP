@@ -120,8 +120,14 @@ const RestLogin = (props, { ...others }) => {
         if (res) {
             if (res.status) {
                 let a = new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 365);
-                await HandleCookies.SetClientStudentCookies(data.Student_ID, a)
-                history.push("/_student/Dashboard")
+                if (res.data == "Please Set your password to continue") {
+                    history.push("/_student/firstTimeLogin")
+                }
+                else {
+
+                    await HandleCookies.SetClientStudentCookies(data.Student_ID, a)
+                    history.push("/_student/Dashboard")
+                }
             }
             console.log(res);
             responsePipelineHandler(params1, 1)
