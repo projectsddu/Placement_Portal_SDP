@@ -7,10 +7,15 @@ import { Paper, Typography, Box, Grid, Button, ListItem, List } from '@material-
 import { IconDashboard, IconCirclePlus, IconDeviceAnalytics, IconSpeakerphone } from '@tabler/icons';
 import UseFetch from '../../Utilities/UseFetch';
 import SubCard from './../../ui-component/cards/SubCard';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
+
 import { useHistory } from 'react-router-dom';
 import ChipCard from '../../ui-component/cards/GenericCards/ChipCard';
 import EmptyStudent from './JSX/EmptyStudent';
 import { TextField } from '@material-ui/core';
+import UsePost from '../../Utilities/UsePost';
 
 function CustomToolbar() {
     return (
@@ -28,6 +33,8 @@ export default function ViewStudent() {
 
     const history = useHistory();
     const [search, setSearch] = useState('');
+    const curDate = new Date(Date.now()).getFullYear()
+    const [date, setDate] = useState(curDate.toString())
     const [student_list_original, setStudent_list_original] = useState([]);
     const [student_list_copy, setStudent_list_copy] = useState([]);
 
@@ -99,12 +106,61 @@ export default function ViewStudent() {
         console.log(params);
     }
 
+    function HandleDateChanged(e) {
+        const dateNow = new Date(e).getFullYear().toString();
+        let yearNew = dateNow[2] + dateNow[3]
+        console.log(yearNew)
+        setDate(dateNow)
+        const filteredList = student_list_original.filter((elem) => {
+            let year = elem.StudentId[0] + elem.StudentId[1]
+            year = year.toString()
+            if (yearNew.toString() == year) {
+                return elem
+            }
+        })
+        setStudent_list_copy(filteredList)
+    }
+
+    async function HandleSendPasswords() {
+        const dateNow = new Date(date).getFullYear().toString();
+        let yearNew = dateNow[2] + dateNow[3]
+        console.log(yearNew)
+        const resp = await UsePost("/student/sendPasswords", { curYear: yearNew }, "POST")
+        console.log(resp)
+
+    }
+
     return (
         <MainCard title="Student First Time Passwords">
-            <TextField label="Search" value={search} onInput={(e) => handleSearch(e)} fullWidth></TextField>
+            <Grid container spacing={2} >
+                <Grid item xs={12} md={10}>
+                    <TextField label="Search" value={search} onInput={(e) => handleSearch(e)} fullWidth></TextField>
+                </Grid>
+                <Grid item xs={12} md={2}>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DatePicker
+                            views={['year']}
+                            label="Passed Out Year"
+                            onChange={(e) => HandleDateChanged(e)}
+                            // required
+                            value={date}
+                            // onChange={(e) => {
+                            //     setData({ ...data, Passed_out_year: e });
+                            // }}
+                            renderInput={(params) => <TextField fullWidth {...params} helperText={null} />}
+                        />
+                    </LocalizationProvider>
+                </Grid>
+            </Grid>
             <br />
+            <Grid container>
+                <Grid item>
+                    <Button variant="contained" onClick={() => HandleSendPasswords()} color='success' style={{ "color": "white" }}>Send Passwords</Button>
+                </Grid>
+
+            </Grid>
             <br />
-            <br />
+
 
             <div style={{ height: 400, width: '100%' }}>
                 {student_list_original.length == 0 ? (

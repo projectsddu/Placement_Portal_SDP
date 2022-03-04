@@ -24,48 +24,56 @@ require("dotenv").config();
 
 // Middlewares
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-app.use(express.static(__dirname + '/public'));
-app.use(cookieParser());
+
+try {
 
 
-// Testing API
-
-app.get("/dummyMail", async (req, res) => {
-    let status = await MailerService.notificationMail("keval sleeping", "jenilgandhi2111@gmail.com")
-    console.log(status)
-    res.send(status)
-})
-app.post("/postTest", (req, res) => {
-    res.send(req.body)
-})
+    app.use(express.json())
+    app.use(express.urlencoded({ extended: true }))
+    app.use(express.static(__dirname + '/public'));
+    app.use(cookieParser());
 
 
+    // Testing API
+
+    app.get("/dummyMail", async (req, res) => {
+        let status = await MailerService.notificationMail("keval sleeping", "jenilgandhi2111@gmail.com")
+        console.log(status)
+        res.send(status)
+    })
+    app.post("/postTest", (req, res) => {
+        res.send(req.body)
+    })
 
 
-// const port = hostingConfig.SERVER_PORT_NO
 
-app.listen(process.env.PORT, () => {
-    console.log(`Server is running on port ${process.env.PORT
-        }`)
-})
 
-//routers
-app.use("/public", express.static(__dirname + "/public"));
-app.use("/student", StudentRouter)
-app.use("/studentLogin", StudentLoginRouter)
-app.use("/annoucement", AnnoucementRouter)
-app.use("/company", CompanyRouter)
-app.use("/studentplacement", StudentPlacementRouter)
-app.use("/studentinternship", StudentInternshipRouter)
-app.use("/subscribeannouncement", AnnouncementSubscibeRouter)
-app.use("/comment", CommentRouter)
-app.use("/notifications", NotificationRouter)
-app.use("/adminLogin", AdminLoginRouter)
-app.use("/skillsandachievements", SkillsAndAchievementsRouter)
-app.use("/studentproject", StudentProjectRouter)
-app.use("/StudentAchievementsInternships", StudentAchievementsInternshipsRouter)
-app.get("/", (req, res) => {
-    res.send("Working all right!")
-})
+    // const port = hostingConfig.SERVER_PORT_NO
+
+    app.listen(process.env.PORT, () => {
+        console.log(`Server is running on port ${process.env.PORT
+            }`)
+    })
+
+    //routers
+    app.use("/public", express.static(__dirname + "/public"));
+    app.use("/student", StudentRouter)
+    app.use("/studentLogin", StudentLoginRouter)
+    app.use("/annoucement", AnnoucementRouter)
+    app.use("/company", CompanyRouter)
+    app.use("/studentplacement", StudentPlacementRouter)
+    app.use("/studentinternship", StudentInternshipRouter)
+    app.use("/subscribeannouncement", AnnouncementSubscibeRouter)
+    app.use("/comment", CommentRouter)
+    app.use("/notifications", NotificationRouter)
+    app.use("/adminLogin", AdminLoginRouter)
+    app.use("/skillsandachievements", SkillsAndAchievementsRouter)
+    app.use("/studentproject", StudentProjectRouter)
+    app.use("/StudentAchievementsInternships", StudentAchievementsInternshipsRouter)
+    app.get("/", (req, res) => {
+        res.send("Working all right!")
+    })
+}
+catch (err) {
+    console.log(err.toString())
+}
