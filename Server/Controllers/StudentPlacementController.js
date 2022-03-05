@@ -3,6 +3,7 @@ const logger = require("serverloggerjs/logger")
 const log = new logger(true)
 const StudentPlacement = db.student_placements
 const StudentPlacementService = require("../Services/StudentPlacementService")
+const CSVToJSON = require('csvtojson');
 
 async function checkExists(id) {
     const studentplacement = await StudentPlacement.findAll({ where: { id } })
@@ -25,6 +26,33 @@ const addStudentPlacement = async (req, res) => {
     } catch (error) {
         log.error(error.toString())
         return res.json({ data: "Error from createStudentPlacement controller", status: false })
+    }
+}
+
+const addStudentPlacementViaCSV = async(req, res) => {
+    try {
+        // convert CSV file to JSON array
+        const path = "./public/PlacementFiles/DDU_PLACEMENT.csv"
+        const studentPlacementData = await CSVToJSON().fromFile(path)
+        // console.log("from line 37")
+        // console.log(studentPlacementData)
+        if(studentPlacementData)
+        {
+            for(let i = 0; i < studentPlacementData.length; i++)
+            {
+                try {
+                    let studentStatus = await StudentPlacementService.createStudentPlacement(studentPlacementData[i])
+                    
+                } catch (error) {
+                    log.error(error.toString())
+                    throw "Error from create student placement using file"
+                }
+            }
+        }
+        return res.json({ status: true, data: "Student placement added" })
+    } catch (error) {
+        log.error(error.toString())
+        return res.json({ data: "Error from addStudentPlacementViaCSV controller", status: false })
     }
 }
 
@@ -96,6 +124,7 @@ const deleteStudentPlacement = async (req, res) => {
 
 module.exports = {
     addStudentPlacement,
+    addStudentPlacementViaCSV,
     getStudentPlacement,
     getAllStudentPlacement,
     updateStudentPlacement,

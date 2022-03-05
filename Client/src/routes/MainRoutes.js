@@ -36,6 +36,8 @@ const ViewSubscribedStudents = Loadable(lazy(() => import('../views/Announcement
 
 const AddPlacement = Loadable(lazy(() => import('../views/Placement/AddPlacement')));
 
+const AddPlacementViaCSV = Loadable(lazy(() => import('../views/Placement/AddPlacementViaCSV')));
+
 
 // placement ends
 
@@ -152,6 +154,7 @@ const MainRoutes = () => {
 
                 // placement routes
                 "/placement/add_placement",
+                "/placement/add_placement_via_csv",
                 // placement routes finished
 
                 // internship starts
@@ -223,6 +226,7 @@ const MainRoutes = () => {
 
                     {/* placement routes */}
                     <Route path="/placement/add_placement" component={AddPlacement} />
+                    <Route path="/placement/add_placement_via_csv" component={AddPlacementViaCSV} />
 
                     {/* internship routes */}
                     <Route path="/internship/add_internship" component={AddInternship} />
