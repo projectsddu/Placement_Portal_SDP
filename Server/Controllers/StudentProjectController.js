@@ -65,6 +65,25 @@ const getOneStudentProject = async (req, res) => {
     }
 }
 
+const getOneStudentProjectInAdmin = async (req, res) => {
+    try {
+        const id = req.params.id
+        // const id = req.userId
+        let studentproject = await StudentProjectService.getOneStudentProject(id)
+        if(studentproject)
+        {
+            return res.json({status: studentproject.length == 0 ? false : true, data: studentproject.length == 0 ? "Student project record not found" : studentproject })
+        }
+        else
+        {
+            throw "Error from getOneStudentProject controller"
+        }
+    } catch (error) {
+        log.error(error.toString())
+        return res.json({ status: false, data: "Error from getOneStudentProject controller" })
+    }
+}
+
 const updateStudentProject = async (req, res) => {
     try {
         const id = req.params.id
@@ -105,5 +124,6 @@ module.exports = {
     getAllStudentProjects,
     getOneStudentProject,
     updateStudentProject,
-    deleteStudentProject
+    deleteStudentProject,
+    getOneStudentProjectInAdmin
 }

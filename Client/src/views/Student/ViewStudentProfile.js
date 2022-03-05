@@ -27,6 +27,12 @@ import {
 } from '@material-ui/core';
 import SubCard from '../../ui-component/cards/SubCard';
 import { IconInfoCircle, IconX, IconPlus } from '@tabler/icons';
+import ChipCard from '../../ui-component/cards/GenericCards/ChipCard';
+import EmptyStudent from './JSX/EmptyStudent';
+import EmptySkills from './JSX/EmptySkills';
+import EmptyInternships from './JSX/EmptyInternships';
+import EmptyProjects from './JSX/EmptyProjects';
+
 
 function ViewStudentProfile() {
     const style = {
@@ -106,6 +112,7 @@ function ViewStudentProfile() {
 
     const [skillDetails, setSkillDetails] = useState(undefined);
     const [studentInternships, setStudentInternships] = useState(undefined);
+    const [studentProjects, setStudentProjects] = useState(undefined);
     // fetch skills details
     useEffect(async () => {
         let response = undefined;
@@ -116,8 +123,18 @@ function ViewStudentProfile() {
             // console.log(jsonData)
             if (jsonData != undefined) {
                 let data = jsonData['data'];
-                console.log(data[0])
-                setSkillDetails(data[0]);
+
+                console.log(data)
+
+                if(data == "No Student Skills And Achievements Record found")
+                {
+                    setSkillDetails(undefined)
+                }
+                else
+                {
+
+                    setSkillDetails(data[0]);
+                }
                 // console.log(skillDetails)
 
                 let response1 = undefined
@@ -132,6 +149,7 @@ function ViewStudentProfile() {
                     if(internshipsData != undefined)
                     {
                         let data = internshipsData["data"]
+                        console.log(data)
                         if(data == "Student Internship Record Not Found!")
                         {
                             setStudentInternships(undefined)
@@ -141,7 +159,29 @@ function ViewStudentProfile() {
                             setStudentInternships(data)
                         }
 
-                        
+                        let response3 = undefined
+                        response3 = await fetch("/studentproject/getOneStudentProjectInAdmin/" + student_id)
+
+                        if(response3 != undefined)
+                        {
+                            let projectsData = undefined
+                            projectsData = await response3.json()
+                            // console.log(projectsData)
+
+                            if(projectsData != undefined)
+                            {
+                                let data = projectsData["data"]
+                                console.log(data)
+                                if(data = "Student project record not found")
+                                {
+                                    setStudentProjects(undefined)
+                                }
+                                else
+                                {
+                                    setStudentProjects(data)
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -246,7 +286,10 @@ function ViewStudentProfile() {
                         <MainCard title="Student Skills">
                             <Grid direction="row" spacing={1}>
                                 {skillDetails == undefined
-                                    ? ''
+                                    ? 
+                                        <>
+                                            <ChipCard loading={false} data={<EmptySkills />} />
+                                        </>
                                     : skillDetails['Skills'] == ''
                                     ? ''
                                     : skillDetails['Skills'].split(',').map((elem) => {
@@ -266,7 +309,10 @@ function ViewStudentProfile() {
                         <br />
                         <MainCard title="Internships">
                             {studentInternships == undefined
-                            ? ""
+                            ? 
+                                <>
+                                    <ChipCard loading={false} data={<EmptyInternships />} />
+                                </>
                             :
                             studentInternships.map((e) => {
                                 return (
@@ -320,6 +366,66 @@ function ViewStudentProfile() {
                             }
                             
                         </MainCard>
+                        <br/>
+                        {/* <MainCard title="Projects">
+                            {studentProjects == undefined
+                            ? 
+                                <>
+                                    <ChipCard loading={false} data={<EmptyProjects />} />
+                                </>
+                            :
+                            studentProjects.map((e) => {
+                                return (
+                                    <>
+                                        <SubCard>
+                                            
+                                            <Grid container>
+                                                <Grid item fullWidth>
+                                                    <Grid container spacing={2}>
+                                                        <Grid item xs = {12} md={6}>
+                                                        <Typography variant='h4'>Company:  </Typography>
+                                                        </Grid>
+                                                        <Grid item xs = {12} md={6}>
+                                                        <Typography> {e.Company_Name}</Typography>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+                                                    
+                                            </Grid>
+                                            <br/>
+                                            <Grid container>
+                                                <Grid item>
+                                                    <Grid container spacing={2}>
+                                                        <Grid item>
+                                                        <Typography variant='h4'>Start Date:  </Typography>
+                                                        </Grid>
+                                                        <Grid item>
+                                                        <Typography> {e.Start_Date}</Typography>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                            <br/>
+                                            <Grid container>
+                                                <Grid item>
+                                                    <Grid container spacing={2}>
+                                                        <Grid item>
+                                                        <Typography variant='h4'>End Date:  </Typography>
+                                                        </Grid>
+                                                        <Grid item>
+                                                        <Typography> {e.End_Date}</Typography>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                        </SubCard>
+                                    </>
+                                )
+                            })
+
+                            }
+                            
+                        </MainCard> */}
                     </>
                 )}
             </MainCard>
