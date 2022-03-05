@@ -130,7 +130,7 @@ const VerifyStudentCookie = function () {
 }
 
 
-module.exports = {
+export default {
     SetClientAdminCookies,
     SetClientStudentCookies,
     RemoveClientAdminCookies,

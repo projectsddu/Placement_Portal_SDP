@@ -1,5 +1,5 @@
 const multer = require('multer');
-const StudentController = require('../controllers/StudentController.js')
+const StudentController = require('../Controllers/StudentController.js')
 const EmptyFieldCheck = require('../Middlewares/General/EmptyFieldCheck')
 const router = require('express').Router()
 const Authenticate = require("../Middlewares/StudentLogin/Authenticate")

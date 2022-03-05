@@ -1,7 +1,9 @@
 import React, { lazy, useEffect } from 'react';
 import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
-import HandleCookies from "../Utilities/HandleCookies"
+// import HandleCookies from "../Utilities/HandleCookies"
 // project imports
+import VerifyStudentCookie from "../Utilities/HandleCookie/VerifyStudentCookie"
+import VerifyAdminCookie from "../Utilities/HandleCookie/VerifyAdminCookie"
 import MainLayout from './../layout/MainLayout';
 import Loadable from '../ui-component/Loadable';
 import AuthGuard from './../utils/route-guard/AuthGuard';
@@ -108,16 +110,16 @@ const MainRoutes = () => {
 
             const isAdmin = isAdminRoute(location.pathname)
             console.log(document.cookie)
-            const allCookies = HandleCookies.parseCookies(document.cookie)
+            // const allCookies = HandleCookies.parseCookies(document.cookie)
 
             if (isAdmin) {
-                const status = HandleCookies.VerifyAdminCookie()
+                const status = VerifyAdminCookie()
                 if (!status) {
                     history.push("/admin/login")
                 }
             }
             else {
-                const status = HandleCookies.VerifyStudentCookie()
+                const status = VerifyStudentCookie()
                 if (!status) {
                     history.push("/_student/login")
                 }

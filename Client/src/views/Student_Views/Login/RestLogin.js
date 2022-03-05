@@ -39,8 +39,9 @@ import UsePost from '../../../Utilities/UsePost';
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../../Utilities/ResponsePipelineHandler';
 import { useHistory } from "react-router-dom";
-const HandleCookies = require("../../../Utilities/HandleCookies")
-
+// const HandleCookies = require("../../../Utilities/HandleCookies")
+import SetClientStudentCookies
+    from "../../../Utilities/HandleCookie/SetClientStudentCookies"
 // style constant
 const useStyles = makeStyles((theme) => ({
     redButton: {
@@ -125,7 +126,7 @@ const RestLogin = (props, { ...others }) => {
                 }
                 else {
 
-                    await HandleCookies.SetClientStudentCookies(data.Student_ID, a)
+                    await SetClientStudentCookies(data.Student_ID, a)
                     history.push("/_student/Dashboard")
                 }
             }

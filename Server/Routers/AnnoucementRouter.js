@@ -1,6 +1,6 @@
 // import controllers review, products
 const multer = require('multer');
-const AnnouncementController = require('../controllers/AnnoucementController.js')
+const AnnouncementController = require('../Controllers/AnnoucementController.js')
 const router = require('express').Router()
 // const EmptyFieldCheck = require('../Middlewares/General/EmptyFieldCheck')
 const EmptyFieldCheck = require("../Middlewares/Annoucement/EmptyFieldCheck");
