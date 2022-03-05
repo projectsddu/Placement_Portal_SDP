@@ -32,6 +32,14 @@ export const PlacementMenu = {
                 url: '/placement/add_placement',
                 icon: icons['IconCirclePlus'],
                 breadcrumbs: false
+            },
+            {
+                id:'AddPlacementViaCSV',
+                title: 'Add Placement Via CSV',
+                type: 'item',
+                url: '/placement/add_placement_via_csv',
+                icon: icons['IconCirclePlus'],
+                breadcrumbs: false
             }
             ]
         }
