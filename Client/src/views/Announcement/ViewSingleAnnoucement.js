@@ -256,7 +256,7 @@ function ViewSingleAnnoucement() {
                                                 <a target='blank'
                                                     style={{ "text-decoration": "none", "cursor": "pointer" }}
                                                     href={
-                                                        "http://localhost:8000" + announcement_details["Job_Description_File"].split(".")[1] + "." + announcement_details["Job_Description_File"].split(".")[2]}>
+                                                        process.env.React_App_DOMAIN + announcement_details["Job_Description_File"].split(".")[1] + "." + announcement_details["Job_Description_File"].split(".")[2]}>
 
                                                     {announcement_details === undefined ? "Wait Loading...." : <>
                                                         <Chip

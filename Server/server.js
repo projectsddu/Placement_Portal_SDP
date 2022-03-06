@@ -70,9 +70,21 @@ try {
     app.use("/skillsandachievements", SkillsAndAchievementsRouter)
     app.use("/studentproject", StudentProjectRouter)
     app.use("/StudentAchievementsInternships", StudentAchievementsInternshipsRouter)
-    app.get("/", (req, res) => {
-        res.send("Working all right!")
-    })
+
+    if (process.env.NODE_ENV === "production") {
+        console.log("Here")
+        app.use(express.static(path.join(__dirname, "../Client/build")))
+        app.get("*", (req, res) => {
+            res.sendFile(path.resolve(__dirname, "../Client/build", "index.html"))
+        })
+    }
+    else {
+        app.get("/", (req, res) => {
+            res.send("Working all right!")
+        })
+    }
+
+
 }
 catch (err) {
     console.log(err.toString())
