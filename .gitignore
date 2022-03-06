@@ -1,2 +1,9 @@
 ./Server/node_modules
+./Server/public
 ./Client/node_modules
+./Server/Logs
+./Server/.env
+./Client/.env
+/Server/public
+/Client/build
+Logs

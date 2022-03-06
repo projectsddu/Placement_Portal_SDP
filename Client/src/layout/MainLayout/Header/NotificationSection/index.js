@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import UseFetch from "../../../../Utilities/UseFetch"
+import { useHistory } from 'react-router';
 // material-ui
 import { makeStyles, useTheme } from '@material-ui/styles';
 import {
@@ -107,6 +108,7 @@ const status = [
 //-----------------------|| NOTIFICATION ||-----------------------//
 
 const NotificationSection = () => {
+    const history = useHistory()
     const classes = useStyles();
     const theme = useTheme();
     const matchesXs = useMediaQuery(theme.breakpoints.down('sm'));
@@ -138,6 +140,19 @@ const NotificationSection = () => {
         setValue(event.target.value);
     };
 
+
+
+
+    // useEffect(() => {
+
+    // }, []);
+
+
+    const { required_data, loading } = UseFetch("/notifications/getUserNotifications", "POST")
+
+    if (!loading) {
+        console.log(required_data);
+    }
     return (
         <React.Fragment>
             <Box component="span" className={classes.box}>
@@ -186,14 +201,14 @@ const NotificationSection = () => {
                                                         <Grid item>
                                                             <Stack direction="row" spacing={2}>
                                                                 <Typography variant="subtitle1">All Notification</Typography>
-                                                                <Chip size="small" label="01" className={classes.notificationChip} />
+                                                                {loading ? "" : <Chip size="small" label={required_data["data"].length >= 3 ? "3+" : required_data["data"].length} className={classes.notificationChip} />}
                                                             </Stack>
                                                         </Grid>
-                                                        <Grid item>
+                                                        {/* <Grid item>
                                                             <Typography component={Link} to="#" variant="subtitle2" color="primary">
                                                                 Mark as all read
                                                             </Typography>
-                                                        </Grid>
+                                                        </Grid> */}
                                                     </Grid>
                                                 </div>
                                             </Grid>
@@ -201,7 +216,7 @@ const NotificationSection = () => {
                                                 <PerfectScrollbar className={classes.ScrollHeight}>
                                                     <Grid container direction="column" spacing={2}>
                                                         <Grid item xs={12}>
-                                                            <div className={classes.textBoxSpacing}>
+                                                            {/* <div className={classes.textBoxSpacing}>
                                                                 <TextField
                                                                     id="outlined-select-currency-native"
                                                                     select
@@ -218,13 +233,13 @@ const NotificationSection = () => {
                                                                         </option>
                                                                     ))}
                                                                 </TextField>
-                                                            </div>
+                                                            </div> */}
                                                         </Grid>
                                                         <Grid item xs={12} p={0}>
                                                             <Divider className={classes.divider} />
                                                         </Grid>
                                                         <Grid item xs={12}>
-                                                            <NotificationList />
+                                                            {loading ? "Loading...." : <NotificationList data={required_data["data"]} />}
                                                         </Grid>
                                                     </Grid>
                                                 </PerfectScrollbar>
@@ -233,9 +248,11 @@ const NotificationSection = () => {
                                     </CardContent>
                                     <Divider />
                                     <CardActions className={classes.cardAction}>
-                                        <Button size="small" disableElevation>
+
+                                        <Button onClick={() => { history.push("/_student/notifications/all") }} size="small" disableElevation>
                                             View All
                                         </Button>
+
                                     </CardActions>
                                 </MainCard>
                             </ClickAwayListener>

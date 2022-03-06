@@ -2,6 +2,8 @@ import React from 'react';
 
 // material-ui
 import { makeStyles } from '@material-ui/styles';
+import UseFetch from "../../../../Utilities/UseFetch"
+import ParseDate from "../../../../Utilities/ParseDate"
 import {
     Avatar,
     Button,
@@ -104,45 +106,66 @@ const useStyles = makeStyles((theme) => ({
 
 //-----------------------|| NOTIFICATION LIST ITEM ||-----------------------//
 
-const NotificationList = () => {
+let notifs = 0
+const NotificationList = (props) => {
+
     const classes = useStyles();
+    // console.log(props.data);
+    let data = props.data.slice(0, 3)
+    console.log(data);
 
     return (
         <List className={classes.navContainer}>
-            <div className={classes.itemAction}>
-                <ListItem alignItems="center" className={classes.listItem}>
-                    <ListItemAvatar>
-                        <Avatar alt="John Doe" src={User1} />
-                    </ListItemAvatar>
-                    <ListItemText primary={<Typography variant="subtitle1">John Doe</Typography>} />
-                    <ListItemSecondaryAction className={classes.listAction}>
-                        <Grid container justifyContent="flex-end">
-                            <Grid item xs={12}>
-                                <Typography variant="caption" display="block" gutterBottom className={classes.actionColor}>
-                                    2 min ago
-                                </Typography>
+
+            {data.map((elem) => {
+
+                console.log(elem.message);
+                return (
+                    <>
+                        <div className={classes.itemAction}>
+                            <ListItem alignItems="center" className={classes.listItem}>
+                                <ListItemAvatar>
+                                    <Avatar>A</Avatar>
+                                </ListItemAvatar>
+                                <ListItemText primary={<Typography variant="subtitle1">Admin</Typography>} />
+                                <ListItemSecondaryAction className={classes.listAction}>
+                                    <Grid container justifyContent="flex-end">
+                                        <Grid item xs={12}>
+                                            <Typography variant="caption" display="block" gutterBottom className={classes.actionColor}>
+                                                {ParseDate.ParseDate(elem.dateAdded, true)}
+                                            </Typography>
+                                        </Grid>
+                                    </Grid>
+                                </ListItemSecondaryAction>
+                            </ListItem>
+                            <Grid container direction="column" className={classes.listContainer}>
+                                <Grid item xs={12} className={classes.paddingBottom}>
+                                    <p style={{ "color": "#5c5c5c" }}>{elem.message}</p>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Grid container>
+                                        {elem.isSeen ? <>
+                                            <Grid item>
+                                                <Chip label="Read" className={classes.listChipSuccess} />
+                                            </Grid>
+                                        </> : <><Grid item>
+                                            <Chip label="Unread" className={classes.listChipError} />
+                                        </Grid>
+                                            <Grid item>
+                                                <Chip label="New" className={classes.listChipWarning} />
+                                            </Grid></>}
+
+                                    </Grid>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </ListItemSecondaryAction>
-                </ListItem>
-                <Grid container direction="column" className={classes.listContainer}>
-                    <Grid item xs={12} className={classes.paddingBottom}>
-                        <Typography variant="subtitle2">It is a long established fact that a reader will be distracted</Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Grid container>
-                            <Grid item>
-                                <Chip label="Unread" className={classes.listChipError} />
-                            </Grid>
-                            <Grid item>
-                                <Chip label="New" className={classes.listChipWarning} />
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </div>
-            <Divider className={classes.listDivider} />
-            <div className={classes.itemAction}>
+                        </div>
+                        <Divider className={classes.listDivider} />
+
+                    </>
+                )
+            })}
+
+            {/* <div className={classes.itemAction}>
                 <ListItem alignItems="center" className={classes.listItem}>
                     <ListItemAvatar>
                         <Avatar className={classes.listAvatarSuccess}>
@@ -219,7 +242,7 @@ const NotificationList = () => {
                         <Grid container justifyContent="flex-end">
                             <Grid item xs={12}>
                                 <Typography variant="caption" display="block" gutterBottom className={classes.actionColor}>
-                                    2 min ago
+                                    2 min
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -282,8 +305,8 @@ const NotificationList = () => {
                             </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-            </div>
+                </Grid> */}
+            {/* </div> */}
         </List>
     );
 };

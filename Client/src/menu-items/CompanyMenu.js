@@ -1,36 +1,46 @@
 // assets
-import { IconDashboard, IconDeviceAnalytics, IconBuildingCottage, IconCirclePlus } from '@tabler/icons';
+import { IconDashboard, IconDeviceAnalytics, IconBuildingCottage, IconCirclePlus, IconBuildingArch } from '@tabler/icons';
 
 // constant
 const icons = {
     IconDashboard: IconDashboard,
     IconDeviceAnalytics,
     IconBuildingCottage,
-    IconCirclePlus
+    IconCirclePlus,
+    IconBuildingArch
 };
 
 //-----------------------|| COMPANY DASHBOARD MENU ITEMS ||-----------------------//
 
 export const CompanyMenu = {
     id: 'CompanyMenu',
-    title: 'Company',
+    title: '',
     type: 'group',
     children: [
         {
-            id: 'CompanyDetails',
-            title: 'Company Details',
-            type: 'item',
-            url: '/icons/form_elements',
-            icon: icons['IconBuildingCottage'],
-            breadcrumbs: false
-        },
-        {
-            id: 'CompanyAdd',
-            title: 'Add Company',
-            type: 'item',
-            url: '/icons/form_elements',
-            icon: icons['IconCirclePlus'],
-            breadcrumbs: false
+            id: 'Company Menu',
+            title: 'Company',
+            type: 'collapse',
+            icon: icons['IconBuildingArch'],
+            children: [
+                {
+                    id: 'CompanyAdd',
+                    title: 'Add Company',
+                    type: 'item',
+                    url: '/company/add_company',
+                    icon: icons['IconCirclePlus'],
+                    breadcrumbs: false
+                },
+                {
+                    id: 'ViewCompany',
+                    title: 'View Company',
+                    type: 'item',
+                    url: '/company/view_company',
+                    icon: icons['IconBuildingCottage'],
+                    breadcrumbs: false
+                }
+        ]
+        
         }
     ]
 };

@@ -62,13 +62,13 @@ const Header = ({ handleLeftDrawerToggle }) => {
             {/* header search */}
             {/* <SearchSection theme="light" /> */}
             <div className={classes.grow} />
-            <Box component="span" sx={{ display: { xs: 'none', md: 'block', marginBottom:'1.6%' }, flexGrow: -1 }}>
+            <Box component="span" sx={{ display: { xs: 'none', md: 'block', marginBottom: '1.6%' }, flexGrow: -1 }}>
                 <LogoSection />
             </Box>
             {/* smDown = this defines size for laptop and tablet*/}
             <Hidden smDown>
                 <Typography fontSize='2rem' fontWeight='bold'>
-                    Dharamsinh Desai University
+                    Dharmsinh Desai University
                 </Typography>
             </Hidden>
             {/* smUp = this defines size for mobile */}

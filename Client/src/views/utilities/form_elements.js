@@ -128,7 +128,7 @@ const TablerIcons = () => {
                 helperText="Textbox description here!"
             />
             <br /><br /><br />
-            <Button variant="contained" fullWidth size="large">Contained</Button>
+            <Button variant="contained"  fullWidth size="large">Contained</Button>
         </MainCard >
     );
 };

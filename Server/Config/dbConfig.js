@@ -1,7 +1,7 @@
 module.exports = {
-    HOST: 'localhost',
-    USER: 'root',
-    PASSWORD: '',
-    DB: 'SEQUELIZE_TESTING',
+    HOST: 'sql6.freemysqlhosting.net',
+    USER: 'sql6477012',
+    PASSWORD: 'rvsiwZZ5MQ',
+    DB: 'sql6477012',
     DIALECT: 'mysql',
 }
