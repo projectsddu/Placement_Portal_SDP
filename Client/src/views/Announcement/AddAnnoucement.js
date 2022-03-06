@@ -205,7 +205,7 @@ function AddAnnoucement() {
                 <br />
                 <br />
                 <Grid container spacing={2}>
-                    <Grid item xs={4}>
+                    <Grid item md={4} xs={12}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                                 label="Date of Visit"
@@ -218,7 +218,7 @@ function AddAnnoucement() {
                             />
                         </LocalizationProvider>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item md={4} xs={12}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                                 label="Date of Annoucement"
@@ -231,7 +231,7 @@ function AddAnnoucement() {
                             />
                         </LocalizationProvider>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item md={4} xs={12}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                                 views={['year']}
@@ -372,7 +372,7 @@ function AddAnnoucement() {
                         </label>
                     </Grid>
 
-                    <Grid item xs={4}>
+                    <Grid item md={4} xs={12}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             {/* <DatePicker
                                 label="Registration Deadline"

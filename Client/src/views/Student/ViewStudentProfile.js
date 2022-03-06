@@ -9,7 +9,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
-import ParseDate from '../../Utilities/ParseDate'
+import {getYear, ParseDate} from '../../Utilities/ParseDate'
 import {
     Avatar,
     Card,
@@ -27,6 +27,12 @@ import {
 } from '@material-ui/core';
 import SubCard from '../../ui-component/cards/SubCard';
 import { IconInfoCircle, IconX, IconPlus } from '@tabler/icons';
+import ChipCard from '../../ui-component/cards/GenericCards/ChipCard';
+import EmptyStudent from './JSX/EmptyStudent';
+import EmptySkills from './JSX/EmptySkills';
+import EmptyInternships from './JSX/EmptyInternships';
+import EmptyProjects from './JSX/EmptyProjects';
+
 
 function ViewStudentProfile() {
     const style = {
@@ -56,14 +62,17 @@ function ViewStudentProfile() {
 
     if (!loading) {
         student_details = required_data['data'];
+        student_details["DOB"] = ParseDate(student_details["DOB"])
+        student_details["Enrollment_year"] = getYear(student_details["Enrollment_year"])
+        student_details['Passed_out_year'] = getYear(student_details['Passed_out_year'])
         // console.log(required_data["data"])
         rows = [
             createData('Student ID', student_details['Student_ID']),
-            createData('FirstName', student_details['FirstName']),
-            createData('MiddleName', student_details['MiddleName']),
-            createData('LastName', student_details['LastName']),
-            createData('Admission type', student_details['Admission_type']),
-            createData('Cast category', student_details['Cast_category']),
+            createData('First Name', student_details['FirstName']),
+            createData('Middle Name', student_details['MiddleName']),
+            createData('Last Name', student_details['LastName']),
+            createData('Admission Type', student_details['Admission_type']),
+            createData('Cast Category', student_details['Cast_category']),
             createData('Gender', student_details['Gender']),
             createData('DOB', student_details['DOB']),
             createData('SSC Percentage', student_details['SSC_Percentage']),
@@ -88,15 +97,15 @@ function ViewStudentProfile() {
             createData('Sem 7 SPI', student_details['Sem_7_SPI']),
             createData('Sem 8 SPI', student_details['Sem_8_SPI']),
             createData('Current CPI', student_details['Current_CPI']),
-            createData('Enrollment year', student_details['Enrollment_year']),
-            createData('Passed out year', student_details['Passed_out_year']),
+            createData('Enrollment Year', student_details['Enrollment_year']),
+            createData('Passed Out Year', student_details['Passed_out_year']),
             createData('Email ID', student_details['Email_ID']),
             createData('Contact No 1', student_details['Contact_No_1']),
             createData('Contact No 2', student_details['Contact_No_2']),
             createData('Address', student_details['Address']),
             createData('City', student_details['City']),
             createData('Pin Code', student_details['Pin_Code']),
-            createData('Current semester', student_details['Current_semester']),
+            createData('Current Semester', student_details['Current_semester']),
             createData('Career Preference', student_details['Career_Preference']),
             // createData("CV Upload", student_details["CV_Upload"]),
             // createData("Student Photo", student_details["Student_Photo"]),
@@ -106,6 +115,7 @@ function ViewStudentProfile() {
 
     const [skillDetails, setSkillDetails] = useState(undefined);
     const [studentInternships, setStudentInternships] = useState(undefined);
+    const [studentProjects, setStudentProjects] = useState(undefined);
     // fetch skills details
     useEffect(async () => {
         let response = undefined;
@@ -116,8 +126,18 @@ function ViewStudentProfile() {
             // console.log(jsonData)
             if (jsonData != undefined) {
                 let data = jsonData['data'];
-                console.log(data[0])
-                setSkillDetails(data[0]);
+
+                console.log(data)
+
+                if(data == "No Student Skills And Achievements Record found")
+                {
+                    setSkillDetails(undefined)
+                }
+                else
+                {
+
+                    setSkillDetails(data[0]);
+                }
                 // console.log(skillDetails)
 
                 let response1 = undefined
@@ -132,6 +152,7 @@ function ViewStudentProfile() {
                     if(internshipsData != undefined)
                     {
                         let data = internshipsData["data"]
+                        console.log(data)
                         if(data == "Student Internship Record Not Found!")
                         {
                             setStudentInternships(undefined)
@@ -141,7 +162,29 @@ function ViewStudentProfile() {
                             setStudentInternships(data)
                         }
 
-                        
+                        let response3 = undefined
+                        response3 = await fetch("/studentproject/getOneStudentProjectInAdmin/" + student_id)
+
+                        if(response3 != undefined)
+                        {
+                            let projectsData = undefined
+                            projectsData = await response3.json()
+                            // console.log(projectsData)
+
+                            if(projectsData != undefined)
+                            {
+                                let data = projectsData["data"]
+                                console.log(data)
+                                if(data == "Student project record not found")
+                                {
+                                    setStudentProjects(undefined)
+                                }
+                                else
+                                {
+                                    setStudentProjects(data)
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -246,7 +289,10 @@ function ViewStudentProfile() {
                         <MainCard title="Student Skills">
                             <Grid direction="row" spacing={1}>
                                 {skillDetails == undefined
-                                    ? ''
+                                    ? 
+                                        <>
+                                            <ChipCard loading={false} data={<EmptySkills />} />
+                                        </>
                                     : skillDetails['Skills'] == ''
                                     ? ''
                                     : skillDetails['Skills'].split(',').map((elem) => {
@@ -266,20 +312,23 @@ function ViewStudentProfile() {
                         <br />
                         <MainCard title="Internships">
                             {studentInternships == undefined
-                            ? ""
+                            ? 
+                                <>
+                                    <ChipCard loading={false} data={<EmptyInternships />} />
+                                </>
                             :
                             studentInternships.map((e) => {
                                 return (
                                     <>
                                         <SubCard>
                                             
-                                            <Grid container>
-                                                <Grid item fullWidth>
-                                                    <Grid container spacing={2}>
-                                                        <Grid item xs = {12} md={6}>
+                                            <Grid container spacing={1}>
+                                                <Grid item xs={12} md={12}>
+                                                    <Grid container spacing={1}>
+                                                        <Grid item xs = {6} md={2}>
                                                         <Typography variant='h4'>Company:  </Typography>
                                                         </Grid>
-                                                        <Grid item xs = {12} md={6}>
+                                                        <Grid item xs = {6} md={10}>
                                                         <Typography> {e.Company_Name}</Typography>
                                                         </Grid>
                                                     </Grid>
@@ -287,27 +336,101 @@ function ViewStudentProfile() {
                                                     
                                             </Grid>
                                             <br/>
-                                            <Grid container>
-                                                <Grid item>
-                                                    <Grid container spacing={2}>
-                                                        <Grid item>
+                                            <Grid container spacimg={1}>
+                                                <Grid item xs={12} md={12}>
+                                                    <Grid container spacing={1}>
+                                                        <Grid item xs={6} md={2}>
                                                         <Typography variant='h4'>Start Date:  </Typography>
                                                         </Grid>
-                                                        <Grid item>
-                                                        <Typography> {e.Start_Date}</Typography>
+                                                        <Grid item xs={6} md={10}>
+                                                        <Typography> {ParseDate( e.Start_Date)}</Typography>
                                                         </Grid>
                                                     </Grid>
                                                 </Grid>
                                             </Grid>
                                             <br/>
-                                            <Grid container>
-                                                <Grid item>
-                                                    <Grid container spacing={2}>
-                                                        <Grid item>
+                                            <Grid container spacing={1}>
+                                                <Grid item xs={12} md={12}>
+                                                    <Grid container spacing={1}>
+                                                        <Grid item xs={6} md={2}>
                                                         <Typography variant='h4'>End Date:  </Typography>
                                                         </Grid>
-                                                        <Grid item>
-                                                        <Typography> {e.End_Date}</Typography>
+                                                        <Grid item xs={6} md={10}>
+                                                        <Typography> {ParseDate(e.End_Date)}</Typography>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                        </SubCard>
+                                        <br/>
+                                    </>
+                                )
+                            })
+
+                            }
+                            
+                        </MainCard>
+                        <br/>
+                        <MainCard title="Projects">
+                            {studentProjects == undefined
+                            ? 
+                                <>
+                                    <ChipCard loading={false} data={<EmptyProjects />} />
+                                </>
+                            :
+                            studentProjects.map((e) => {
+                                return (
+                                    <>
+                                        <SubCard>
+                                            
+                                            <Grid container spacing={1}>
+                                                <Grid item md={12} xs={12}>
+                                                    <Grid container spacing={1}>
+                                                        <Grid item xs = {12} md={2}>
+                                                        <Typography variant='h4'>Project Title:  </Typography>
+                                                        </Grid>
+                                                        <Grid item xs = {12} md={10}>
+                                                        <Typography> {e.Project_Title}</Typography>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+                                                    
+                                            </Grid>
+                                            <br/>
+                                            <Grid container spacing={1}>
+                                                <Grid item ms={12} xs={12}>
+                                                    <Grid container spacing={1}>
+                                                        <Grid item md={2}>
+                                                        <Typography variant='h4'>Brief Description:  </Typography>
+                                                        </Grid>
+                                                        <Grid item md={10}>
+                                                        <Typography> {e.	Brief_Description}</Typography>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                            <br/>
+                                            <Grid container spacing={1}>
+                                                <Grid item xs={12} md={12}>
+                                                    <Grid container spacing={1}>
+                                                        <Grid item md={2}>
+                                                        <Typography variant='h4'>Project Link:  </Typography>
+                                                        </Grid>
+                                                        <Grid item md={10}>
+                                                        <Typography> {e.Project_Link}</Typography>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                            <br/>
+                                            <Grid container spacing={1}>
+                                                <Grid item xs={12} md={12}>
+                                                    <Grid container spacing={1}>
+                                                        <Grid item md={2}>
+                                                        <Typography variant='h4'>Technologies:  </Typography>
+                                                        </Grid>
+                                                        <Grid item md={10}>
+                                                        <Typography> {e.Technologies}</Typography>
                                                         </Grid>
                                                     </Grid>
                                                 </Grid>

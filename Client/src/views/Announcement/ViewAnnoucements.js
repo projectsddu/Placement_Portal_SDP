@@ -7,7 +7,9 @@ import { makeStyles } from '@material-ui/styles';
 import { withStyles } from '@material-ui/styles';
 // import { color } from '@material-ui/system';
 // import { ClassNames } from '@emotion/react';
-import { TextField } from '@material-ui/core';
+import { TextField, IconButton } from '@material-ui/core';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import EditIcon from '@material-ui/icons/Edit';
 // import $, { param } from 'jquery';
 // import usePost from '../../Utilities/UsePost';
 import ParseDate from '../../Utilities/ParseDate';
@@ -127,6 +129,7 @@ function ViewAnnoucements() {
 
                     jsonData["data"][i]["Registration_Deadline"] = ParseDate.ParseDate(jsonData["data"][i]["Registration_Deadline"], true);
 
+                    
                     jsonData["data"][i]["title"] = jsonData['data'][i]['Company_details']['Company_name'] +
                         '-' +
                         jsonData['data'][i]['Job_Role'] +
@@ -185,6 +188,11 @@ function ViewAnnoucements() {
         history.push('/announcement/view_annoucement/' + id);
     }
 
+    function handleEdit(id) {
+        console.log(id);
+        history.push('/announcement/edit_announcement/' + id)
+    }
+
     // function handleSearch(e) {
     //     console.log(e.target.value);
     //     setSearch(e.target.value);
@@ -207,37 +215,57 @@ function ViewAnnoucements() {
     const [columns, setcolumns] = useState([
         {
             field: 'view',
-            headerName: 'View Full Announcement',
+            headerName: 'Edit & View',
             sortable: false,
-            width: 250,
+            width: 145,
             disableClickEventBubbling: true,
             valueGetter: (params) => {
                 Announcement_ID = params.row.Announcement_ID;
             },
             renderCell: (id) => {
                 return (
-                    <Button variant="contained" onClick={() => handleRedirect(Announcement_ID)} color="primary" startIcon={<IconEye />}>
-                        View Full Announcement
-                    </Button>
+                    // <Button variant="contained" onClick={() => handleRedirect(Announcement_ID)} color="primary" startIcon={<IconEye />}>
+                    //     View Full Announcement
+                    // </Button>
+                    <>
+                    <IconButton color="primary" 
+                        onClick={() => handleEdit(Announcement_ID)}
+                        aria-label="upload picture" component="span">
+                            <EditIcon />
+                        </IconButton>
+                    <IconButton color="primary"
+                    onClick={() => handleRedirect(Announcement_ID)}
+                    aria-label="upload picture" component="span">
+                        <VisibilityIcon />
+                    </IconButton>
+                    </>
                 );
             }
         },
         { field: 'id', headerName: 'ID', hide: true },
         { field: 'title', headerName: 'Title', width: 300, editable: false },
-        { field: 'Date_of_Visit', headerName: 'Date of Visit', width: 250, editable: false },
-        { field: 'Registration_Deadline', headerName: 'Registration Deadline', width: 250, editable: false },
-        { field: 'Salary', headerName: 'Salary', width: 200, editable: false, hide: false },
-        { field: 'Announcement_ID', headerName: 'Announcement ID', width: 200, editable: false, hide: true },
-        { field: 'Company_ID', headerName: 'Company ID', width: 200, editable: false, hide: true },
-        { field: 'Date_of_announcement', headerName: 'Date of announcement', width: 200, editable: false, hide: true },
-        { field: 'Eligible_Branches', headerName: 'Eligible Branches', width: 200, editable: false, hide: true },
+        { field: 'Date_of_Visit', headerName: 'Date of Visit', width: 180, editable: false },
+        { field: 'Registration_Deadline', headerName: 'Registration Deadline', width: 220, editable: false },
+        { field: 'Salary', headerName: 'Salary', width: 155, editable: false, hide: false },
+
+        // hidden columns
+        // { field: 'Announcement_ID', headerName: 'Announcement ID', width: 200, editable: false },
+        // { field: 'Company_ID', headerName: 'Company ID', width: 200, editable: false },
+        { field: 'Date_of_announcement', headerName: 'Date of announcement', width: 230, editable: false, hide: true },
+        { field: 'Eligible_Branches', headerName: 'Eligible Branches', width: 200, editable: false, hide: true,
+        renderCell: (id) => {
+            console.log(id)
+        }
+    
+    
+    },
         { field: 'Passed_out_year', headerName: 'Passed out year', width: 200, editable: false, hide: true },
         { field: 'Job_Role', headerName: 'Job Role', width: 200, editable: false, hide: true },
         { field: 'Job_Location', headerName: 'Job Location', width: 200, editable: false, hide: true },
         { field: 'Bond_Details', headerName: 'Bond Details', width: 200, editable: false, hide: true },
         { field: 'Other_Details', headerName: 'Other Details', width: 200, editable: false, hide: true },
-        { field: 'Eligibility', headerName: 'Eligibility', width: 200, editable: false, hide: true },
-        { field: 'IsOpen', headerName: 'IsOpen', width: 200, editable: false, hide: true }
+        { field: 'Eligibility', headerName: 'Eligibility', width: 185, editable: false, hide: true },
+        { field: 'IsOpen', headerName: 'IsOpen', width: 165, editable: false, hide: true }
     ]);
 
     const [editRowsModel, setEditRowsModel] = React.useState({});

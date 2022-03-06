@@ -17,6 +17,7 @@ import { useHistory } from 'react-router-dom';
 import ChipCard from '../../ui-component/cards/GenericCards/ChipCard';
 import EmptyStudent from './JSX/EmptyStudent';
 import { TextField } from '@material-ui/core';
+import { getYear, ParseDate } from '../../Utilities/ParseDate';
 
 function CustomToolbar() {
     return (
@@ -49,6 +50,9 @@ export default function ViewStudent() {
 
                 for (let i = 0; i < jsonData["data"].length; i++) {
                     jsonData["data"][i]["id"] = i;
+                    jsonData["data"][i]["DOB"] = ParseDate(jsonData["data"][i]["DOB"]);
+                    jsonData["data"][i]["Enrollment_year"] = getYear(jsonData["data"][i]["Enrollment_year"]);
+                    jsonData["data"][i]["Passed_out_year"] = getYear(jsonData["data"][i]["Passed_out_year"]);
                 }
 
                 setStudent_list_original([].concat(jsonData["data"]))
@@ -169,46 +173,46 @@ export default function ViewStudent() {
         },
 
         { field: 'id', headerName: 'ID', hide: true },
-        { field: 'Student_ID', headerName: 'Student ID', width: 170, editable: true },
-        { field: 'FirstName', headerName: 'First Name', width: 200, editable: false },
-        { field: 'MiddleName', headerName: 'Middle Name', width: 200, editable: false },
-        { field: 'LastName', headerName: 'Last Name', width: 200, editable: false },
-        { field: 'SSC_Percentage', headerName: 'SSC Percentage', width: 200, editable: false },
-        { field: 'HSC_Percentage', headerName: 'HSC Percentage', width: 200, editable: false },
-        { field: 'Current_CPI', headerName: 'Current CPI', width: 200, editable: false },
-        { field: 'Email_ID', headerName: 'Email ID', width: 200, editable: false },
-        { field: 'Contact_No_1', headerName: 'Contact No 1', width: 200, editable: false },
-        { field: 'Contact_No_2', headerName: 'Contact No 2', width: 200, editable: false },
+        { field: 'Student_ID', headerName: 'Student ID', width: 150, editable: true },
+        { field: 'FirstName', headerName: 'First Name', width: 155, editable: false },
+        { field: 'MiddleName', headerName: 'Middle Name', width: 168, editable: false },
+        { field: 'LastName', headerName: 'Last Name', width: 155, editable: false },
+        { field: 'SSC_Percentage', headerName: 'SSC Percentage', width: 185, editable: false },
+        { field: 'HSC_Percentage', headerName: 'HSC Percentage', width: 187, editable: false },
+        { field: 'Current_CPI', headerName: 'Current CPI', width: 160, editable: false },
+        { field: 'Email_ID', headerName: 'Email ID', width: 180, editable: false },
+        { field: 'Contact_No_1', headerName: 'Contact No 1', width: 167, editable: false },
+        { field: 'Contact_No_2', headerName: 'Contact No 2', width: 167, editable: false },
 
         // hidden columns
-        { field: 'Admission_type', headerName: 'Admission Type', width: 200, editable: false, hide: true },
-        { field: 'Cast_category', headerName: 'Cast Category', width: 200, editable: false, hide: true },
-        { field: 'Gender', headerName: 'Gender', width: 200, editable: false, hide: true },
-        { field: 'DOB', headerName: 'Date of Birth', width: 200, editable: false, hide: true },
-        { field: 'SSC_Percentile', headerName: 'SSC Percentile', width: 200, editable: false, hide: true },
-        { field: 'SSC_Board', headerName: 'SSC Board', width: 200, editable: false, hide: true },
+        { field: 'Admission_type', headerName: 'Admission Type', width: 185, editable: false, hide: true },
+        { field: 'Cast_category', headerName: 'Cast Category', width: 175, editable: false, hide: true },
+        { field: 'Gender', headerName: 'Gender', width: 135, editable: false, hide: true },
+        { field: 'DOB', headerName: 'Date of Birth', width: 170, editable: false, hide: true },
+        { field: 'SSC_Percentile', headerName: 'SSC Percentile', width: 180, editable: false, hide: true },
+        { field: 'SSC_Board', headerName: 'SSC Board', width: 155, editable: false, hide: true },
         { field: 'SSC_School', headerName: 'SSC School', width: 200, editable: false, hide: true },
-        { field: 'HSC_Percentile', headerName: 'HSC Percentile', width: 200, editable: false, hide: true },
-        { field: 'HSC_Board', headerName: 'HSC Board', width: 200, editable: false, hide: true },
+        { field: 'HSC_Percentile', headerName: 'HSC Percentile', width: 180, editable: false, hide: true },
+        { field: 'HSC_Board', headerName: 'HSC Board', width: 155, editable: false, hide: true },
         { field: 'HSC_School', headerName: 'HSC School', width: 200, editable: false, hide: true },
-        { field: 'IsD2D', headerName: 'Is D2D', width: 200, editable: false, hide: true },
-        { field: 'Diploma_Result_CPI', headerName: 'Diploma_Result_CPI', width: 200, editable: false, hide: true },
-        { field: 'Diploma_Result_Percentage', headerName: 'Diploma Result Percentage', width: 200, editable: false, hide: true },
+        { field: 'IsD2D', headerName: 'Is D2D', width: 145, editable: false, hide: true },
+        { field: 'Diploma_Result_CPI', headerName: 'Diploma Result CPI', width: 220, editable: false, hide: true },
+        { field: 'Diploma_Result_Percentage', headerName: 'Diploma Result Percentage', width: 220, editable: false, hide: true },
         { field: 'Diploma_College_Name', headerName: 'Diploma College Name', width: 200, editable: false, hide: true },
-        { field: 'Diploma_University', headerName: 'Diploma University', width: 200, editable: false, hide: true },
-        { field: 'Sem_1_SPI', headerName: 'Sem - 1 SPI', width: 200, editable: false, hide: true },
-        { field: 'Sem_2_SPI', headerName: 'Sem - 2 SPI', width: 200, editable: false, hide: true },
-        { field: 'Sem_3_SPI', headerName: 'Sem - 3 SPI', width: 200, editable: false, hide: true },
-        { field: 'Sem_4_SPI', headerName: 'Sem - 4 SPI', width: 200, editable: false, hide: true },
-        { field: 'Sem_5_SPI', headerName: 'Sem - 5 SPI', width: 200, editable: false, hide: true },
-        { field: 'Sem_6_SPI', headerName: 'Sem - 6 SPI', width: 200, editable: false, hide: true },
-        { field: 'Sem_7_SPI', headerName: 'Sem - 7 SPI', width: 200, editable: false, hide: true },
-        { field: 'Sem_8_SPI', headerName: 'Sem - 8 SPI', width: 200, editable: false, hide: true },
+        { field: 'Diploma_University', headerName: 'Diploma University', width: 230, editable: false, hide: true },
+        { field: 'Sem_1_SPI', headerName: 'Sem - 1 SPI', width: 165, editable: false, hide: true },
+        { field: 'Sem_2_SPI', headerName: 'Sem - 2 SPI', width: 165, editable: false, hide: true },
+        { field: 'Sem_3_SPI', headerName: 'Sem - 3 SPI', width: 165, editable: false, hide: true },
+        { field: 'Sem_4_SPI', headerName: 'Sem - 4 SPI', width: 165, editable: false, hide: true },
+        { field: 'Sem_5_SPI', headerName: 'Sem - 5 SPI', width: 165, editable: false, hide: true },
+        { field: 'Sem_6_SPI', headerName: 'Sem - 6 SPI', width: 165, editable: false, hide: true },
+        { field: 'Sem_7_SPI', headerName: 'Sem - 7 SPI', width: 165, editable: false, hide: true },
+        { field: 'Sem_8_SPI', headerName: 'Sem - 8 SPI', width: 165, editable: false, hide: true },
         { field: 'Enrollment_year', headerName: 'Enrollment Year', width: 200, editable: false, hide: true },
         { field: 'Passed_out_year', headerName: 'Passed Out Year', width: 200, editable: false, hide: true },
         { field: 'Address', headerName: 'Address', width: 200, editable: false, hide: true },
         { field: 'City', headerName: 'City', width: 200, editable: false, hide: true },
-        { field: 'Pin_Code', headerName: 'Pin Code', width: 200, editable: false, hide: true },
+        { field: 'Pin_Code', headerName: 'Pin Code', width: 155, editable: false, hide: true },
         { field: 'Current_semester', headerName: 'Current Semester', width: 200, editable: false, hide: true },
         { field: 'Career_Preference', headerName: 'Career Preference', width: 200, editable: false, hide: true },
 

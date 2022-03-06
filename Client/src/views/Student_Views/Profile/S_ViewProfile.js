@@ -32,7 +32,7 @@ import { IconInfoCircle, IconX, IconPlus } from '@tabler/icons';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import ParseDate from '../../../Utilities/ParseDate';
+import {ParseDate, getYear} from '../../../Utilities/ParseDate';
 // import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
@@ -162,6 +162,9 @@ export default function S_ViewProfile() {
     if (!loading) {
         student_details = required_data['data'];
         student_id = student_details['Student_ID'];
+        student_details["DOB"] = ParseDate(student_details["DOB"])
+        student_details["Enrollment_year"] = getYear(student_details["Enrollment_year"])
+        student_details['Passed_out_year'] = getYear(student_details['Passed_out_year'])
         // console.log("Student Id: ", student_id)
         // console.log(student_details)
         rows = [
