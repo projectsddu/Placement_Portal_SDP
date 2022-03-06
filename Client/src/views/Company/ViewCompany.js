@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Paper, Typography, Box, Grid, Button, ListItem, List } from '@material-ui/core';
+import { Paper, Typography, IconButton, Box, Grid, Button, ListItem, List } from '@material-ui/core';
 import { useTheme } from '@material-ui/styles';
 import MainCard from './../../ui-component/cards/MainCard';
 import SubCard from './../../ui-component/cards/SubCard';
 import { makeStyles } from '@material-ui/styles';
 import { withStyles } from '@material-ui/styles';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import EditIcon from '@material-ui/icons/Edit';
 import { color } from '@material-ui/system';
 import { ClassNames } from '@emotion/react';
 import usePost from '../../Utilities/UsePost';
@@ -120,6 +122,11 @@ function ViewCompany() {
         }
     }, []);
 
+    function handleRedirect(id) {
+        
+        history.push("/company/edit_company/" + id)
+    }
+
 
     let temp_id = '';
 
@@ -129,55 +136,64 @@ function ViewCompany() {
         { field: 'Company_ID', headerName: 'Company ID', width: 200, editable: false, hide: true },
         {
             field: 'View',
-            headerName: 'View',
+            headerName: 'Edit & View',
             sortable: false,
-            width: 230,
+            width: 145,
             disableClickEventBubbling: true,
             valueGetter: (params) => {
                 temp_id = params.row.Company_ID;
             },
             renderCell: (id) => {
                 return (
-                    <Button
-                        variant="contained"
-                        onClick={() => {
-                            history.push('/company/view_company/' + temp_id);
-                        }}
-                        color="primary"
-                        startIcon={<IconEye />}
-                    >
-                        View Full Company
-                    </Button>
+                    // <Button
+                    //     variant="contained"
+                    //     onClick={() => {
+                    //         history.push('/company/view_company/' + temp_id);
+                    //     }}
+                    //     color="primary"
+                    //     startIcon={<IconEye />}
+                    // >
+                    //     View Full Company
+                    // </Button>
+                    <>
+                    <IconButton color="primary" 
+                        onClick={() => handleRedirect(temp_id)}
+                        aria-label="upload picture" component="span">
+                            <EditIcon />
+                        </IconButton>
+                    <IconButton color="primary"
+                    onClick={() => {
+                                history.push('/company/view_company/' + temp_id);
+                            }}
+                    aria-label="upload picture" component="span">
+                        <VisibilityIcon />
+                    </IconButton>
+                    </>
                 );
             }
         },
         { field: 'Company_name', headerName: 'Company Name', width: 200, editable: false },
-        { field: 'City', headerName: 'City', width: 200, editable: false },
+        { field: 'City', headerName: 'City', width: 180, editable: false },
         { field: 'Contact_person_1_name', headerName: 'Contact Person Name', width: 230, editable: false },
         { field: 'Contact_person_1_email_ID', headerName: 'Contact Person Email', width: 230, editable: false },
         { field: 'Contact_person_1_Mobile', headerName: 'Contact Person Mobile', width: 230, editable: false },
 
         // hidden columns
-        { field: 'Contact_person_1_designation', headerName: 'Contact Person Designation', width: 200, editable: false, hide: true },
-        { field: 'Company_address', headerName: 'Company Address', width: 200, editable: false, hide: true },
-        { field: 'Contact_person_2_name', headerName: 'Contact Person 2 Name', width: 200, editable: false, hide: true },
-        { field: 'Contact_person_2_email_ID', headerName: 'Contact Person 2 Email', width: 200, editable: false, hide: true },
-        { field: 'Contact_person_2_designation', headerName: 'Contact Person 2 Designation', width: 200, editable: false, hide: true },
-        { field: 'Contact_person_2_Mobile', headerName: 'Contact Person 2 Mobile', width: 200, editable: false, hide: true },
-        { field: 'Contact_person_3_name', headerName: 'Contact Person 3 Name', width: 200, editable: false, hide: true },
-        { field: 'Contact_person_3_email_ID', headerName: 'Contact Person 3 Email', width: 200, editable: false, hide: true },
-        { field: 'Contact_person_3_designation', headerName: 'Contact Person 3 Designation', width: 200, editable: false, hide: true },
-        { field: 'Contact_person_3_Mobile', headerName: 'Contact Person 3 Mobile', width: 200, editable: false, hide: true },
-        { field: 'Company_web_site', headerName: 'Company Web Site', width: 200, editable: false, hide: true },
+        { field: 'Contact_person_1_designation', headerName: 'Contact Person Designation', width: 270, editable: false, hide: true },
+        { field: 'Company_address', headerName: 'Company Address', width: 300, editable: false, hide: true },
+        { field: 'Contact_person_2_name', headerName: 'Contact Person 2 Name', width: 240, editable: false, hide: true },
+        { field: 'Contact_person_2_email_ID', headerName: 'Contact Person 2 Email', width: 250, editable: false, hide: true },
+        { field: 'Contact_person_2_designation', headerName: 'Contact Person 2 Designation', width: 280, editable: false, hide: true },
+        { field: 'Contact_person_2_Mobile', headerName: 'Contact Person 2 Mobile', width: 240, editable: false, hide: true },
+        { field: 'Contact_person_3_name', headerName: 'Contact Person 3 Name', width: 240, editable: false, hide: true },
+        { field: 'Contact_person_3_email_ID', headerName: 'Contact Person 3 Email', width: 240, editable: false, hide: true },
+        { field: 'Contact_person_3_designation', headerName: 'Contact Person 3 Designation', width: 280, editable: false, hide: true },
+        { field: 'Contact_person_3_Mobile', headerName: 'Contact Person 3 Mobile', width: 240, editable: false, hide: true },
+        { field: 'Company_web_site', headerName: 'Company Website', width: 230, editable: false, hide: true },
         { field: 'Remarks', headerName: 'Remarks', width: 200, editable: false, hide: true },
-        { field: 'Company_offer_type', headerName: 'Company Offer Type', width: 200, editable: false, hide: true },
-        { field: 'State', headerName: 'State', width: 200, editable: false, hide: true }
+        { field: 'Company_offer_type', headerName: 'Company Offer Type', width: 230, editable: false, hide: true},
+        { field: 'State', headerName: 'State', width: 200, editable: false, hide: true}
 
-        // { field: 'HSC_Percentage', headerName: 'HSC Percentage', width: 200, editable: false },
-        // { field: 'Current_CPI', headerName: 'Current CPI', width: 200, editable: false },
-        // { field: 'Email_ID', headerName: 'Email ID', width: 200, editable: false },
-        // { field: 'Contact_No_1', headerName: 'Contact No 1', width: 200, editable: false },
-        // { field: 'Contact_No_2', headerName: 'Contact No 2', width: 200, editable: false },
     ];
 
     const [editRowsModel, setEditRowsModel] = React.useState({});

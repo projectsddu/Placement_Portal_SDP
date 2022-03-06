@@ -101,7 +101,7 @@ function EditCompany() {
                     <Typography variant="h5">Person 1 Contact Details</Typography>
                     <br />
                     <Grid container spacing={2}>
-                        <Grid item xs={2}>
+                        <Grid item md={2} xs={12}>
                             <TextField
                                 // required
                                 fullWidth
@@ -112,7 +112,7 @@ function EditCompany() {
                                 }}
                             />
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item md={4} xs={12}>
                             <TextField
                                 // required
                                 fullWidth
@@ -123,7 +123,7 @@ function EditCompany() {
                                 }}
                             />
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item md={3} xs={12}>
                             <TextField
                                 // required
                                 fullWidth
@@ -135,7 +135,7 @@ function EditCompany() {
                             />
                         </Grid>
 
-                        <Grid item xs={3}>
+                        <Grid item md={3} xs={12}>
                             <TextField
                                 // required
                                 fullWidth
@@ -152,7 +152,7 @@ function EditCompany() {
                     <Typography variant="h5">Person 2 Contact Details</Typography>
                     <br />
                     <Grid container spacing={2}>
-                        <Grid item xs={2}>
+                        <Grid item md={2} xs={12}>
                             <TextField
                                 // required
                                 fullWidth
@@ -163,7 +163,7 @@ function EditCompany() {
                                 }}
                             />
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item md={4} xs={12}>
                             <TextField
                                 // required
                                 fullWidth
@@ -174,7 +174,7 @@ function EditCompany() {
                                 }}
                             />
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item md={3} xs={12}>
                             <TextField
                                 // required
                                 fullWidth
@@ -186,7 +186,7 @@ function EditCompany() {
                             />
                         </Grid>
 
-                        <Grid item xs={3}>
+                        <Grid item md={3} xs={12}>
                             <TextField
                                 // required
                                 fullWidth
@@ -203,7 +203,7 @@ function EditCompany() {
                     <Typography variant="h5">Person 3 Contact Details</Typography>
                     <br />
                     <Grid container spacing={2}>
-                        <Grid item xs={2}>
+                        <Grid item md={2} xs={12}>
                             <TextField
                                 // required
                                 fullWidth
@@ -214,7 +214,7 @@ function EditCompany() {
                                 }}
                             />
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item md={4} xs={12}>
                             <TextField
                                 // required
                                 fullWidth
@@ -225,7 +225,7 @@ function EditCompany() {
                                 }}
                             />
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item md={3} xs={12}>
                             <TextField
                                 // required
                                 fullWidth
@@ -237,7 +237,7 @@ function EditCompany() {
                             />
                         </Grid>
 
-                        <Grid item xs={3}>
+                        <Grid item md={3} xs={12}>
                             <TextField
                                 // required
                                 fullWidth
