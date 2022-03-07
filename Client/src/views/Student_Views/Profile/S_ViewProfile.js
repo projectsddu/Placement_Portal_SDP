@@ -32,7 +32,7 @@ import { IconInfoCircle, IconX, IconPlus } from '@tabler/icons';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {ParseDate, getYear} from '../../../Utilities/ParseDate';
+import { ParseDate, getYear } from '../../../Utilities/ParseDate';
 // import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
@@ -417,7 +417,7 @@ export default function S_ViewProfile() {
                                 </Grid>
                             </Grid>
                         </SubCard>
-                        
+
                         {/* <SubCard> */}
                         {/* <S_AddProject /> */}
                         {/* </SubCard> */}
@@ -440,89 +440,92 @@ export default function S_ViewProfile() {
 
                         <br /><br />
                         {/* <SubCard> */}
-                            <TableContainer component={Paper}>
-                                <Table sx={{ minWidth: 200 }} aria-label="simple table">
+                        <TableContainer component={Paper}>
+                            <Table sx={{ minWidth: 200 }} aria-label="simple table">
 
-                                    <TableBody>
-                                        {rows.map((row) => (
-                                            <TableRow
-                                                key={row.name}
-                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                            >
-                                                <TableCell component="th" scope="row">
-                                                    <Typography variant="h5">
-                                                        {row.key}
-                                                    </Typography>
-                                                </TableCell>
-                                                <TableCell align="right">{row.value}</TableCell>
-                                            </TableRow>
-                                        ))}
+                                <TableBody>
+                                    {rows.map((row) => (
                                         <TableRow
-                                            key="CV_Upload"
+                                            key={row.name}
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                         >
                                             <TableCell component="th" scope="row">
                                                 <Typography variant="h5">
-                                                    CV Upload
+                                                    {row.key}
                                                 </Typography>
                                             </TableCell>
-                                            <TableCell align="right">
-                                                {student_details === undefined ? "Wait Loading...." : <>
-                                                    <a target='blank'
-                                                        style={{ "text-decoration": "none", "cursor": "pointer" }}
-                                                        href={
-                                                            "http://localhost:8000" + student_details["CV_Upload"].split(".")[1] + "." + student_details["CV_Upload"].split(".")[2]}>
-
-                                                        {student_details === undefined ? "Wait Loading...." : <>
-                                                            <Chip
-                                                                label={"View CV"}
-                                                                // variant="outlined"
-                                                                color='primary'
-                                                                clickable
-                                                            />
-
-                                                        </>
-                                                        }
-
-                                                    </a>
-                                                </>}
-
-                                            </TableCell>
+                                            <TableCell align="right">{row.value}</TableCell>
                                         </TableRow>
-                                        <TableRow
-                                            key="Student_Photo"
-                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        >
-                                            <TableCell component="th" scope="row">
-                                                <Typography variant="h5">
-                                                    Student Photo
-                                                </Typography>
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {student_details === undefined ? "Wait Loading...." : <>
-                                                    <a target='blank'
-                                                        style={{ "text-decoration": "none", "cursor": "pointer" }}
-                                                        href={
-                                                            "http://localhost:8000" + student_details["Student_Photo"].split(".")[1] + "." + student_details["Student_Photo"].split(".")[2]}>
+                                    ))}
+                                    <TableRow
+                                        key="CV_Upload"
+                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                    >
+                                        <TableCell component="th" scope="row">
+                                            <Typography variant="h5">
+                                                CV Upload
+                                            </Typography>
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {student_details === undefined ? "Wait Loading...." : <>
+                                                <a target='blank'
+                                                    style={{ "text-decoration": "none", "cursor": "pointer" }}
+                                                    href={
+                                                        "https://drive.google.com/file/d/" + student_details["CV_Upload"] + "/view?usp=drivesdk"
+                                                    }>
 
-                                                        {student_details === undefined ? "Wait Loading...." : <>
-                                                            <Chip
-                                                                label={"View Photo"}
-                                                                // variant="outlined"
-                                                                color='primary'
-                                                                clickable
-                                                            />
-                                                        </>
-                                                        }
+                                                    {student_details === undefined ? "Wait Loading...." : <>
+                                                        <Chip
+                                                            label={"View CV"}
+                                                            // variant="outlined"
+                                                            color='primary'
+                                                            clickable
+                                                        />
 
-                                                    </a>
-                                                </>}
+                                                    </>
+                                                    }
 
-                                            </TableCell>
-                                        </TableRow>
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
+                                                </a>
+                                            </>}
+
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow
+                                        key="Student_Photo"
+                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                    >
+                                        <TableCell component="th" scope="row">
+                                            <Typography variant="h5">
+                                                Student Photo
+                                            </Typography>
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {student_details === undefined ? "Wait Loading...." : <>
+                                                <a target='blank'
+                                                    style={{ "text-decoration": "none", "cursor": "pointer" }}
+                                                    href={
+                                                        "https://drive.google.com/file/d/" + student_details["Student_Photo"] + "/view?usp=drivesdk"
+
+                                                    }>
+
+                                                    {student_details === undefined ? "Wait Loading...." : <>
+                                                        <Chip
+                                                            label={"View Photo"}
+                                                            // variant="outlined"
+                                                            color='primary'
+                                                            clickable
+                                                        />
+                                                    </>
+                                                    }
+
+                                                </a>
+                                            </>}
+
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                         {/* </SubCard> */}
 
 

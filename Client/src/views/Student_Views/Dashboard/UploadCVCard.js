@@ -94,11 +94,12 @@ export default function UploadResumeCard({ CV_Upload }) {
 
 
                     {CV_Upload === undefined ? "Wait Loading...." : <>
-                        {CV_Upload.includes("/public/student_details/CV") ?
+                        {CV_Upload.length == 33 ?
                             <a target='blank'
                                 style={{ "text-decoration": "none", "cursor": "pointer" }}
                                 href={
-                                    CV_Upload}
+                                    "https://drive.google.com/file/d/" + CV_Upload + "/view?usp=drivesdk"
+                                }
                             >
                                 <Button variant="contained" size="large" color="primary">
                                     View CV

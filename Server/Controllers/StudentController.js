@@ -232,7 +232,7 @@ const updateOneStudent = async (req, res) => {
 const CV_Upload = async (req, res) => {
     try {
         let id = req.userId;
-        const studentData = await StudentService.CV_Upload("./public/student_details/CV/" + id + ".pdf", id)
+        const studentData = await StudentService.CV_Upload(req.fileName, id)
         if (studentData) {
             return res.json({ status: true, data: "Student CV uploaded" })
         }
@@ -269,7 +269,7 @@ const deleteStudent = async (req, res) => {
 const Photo_Upload = async (req, res) => {
     try {
         let id = req.userId
-        const studentData = await StudentService.Photo_Upload("./public/student_details/Photo/" + id + ".jpg", id)
+        const studentData = await StudentService.Photo_Upload(req.fileName, id)
         if (studentData) {
             return res.json({ status: true, data: "Student Photo uploaded" })
         }
