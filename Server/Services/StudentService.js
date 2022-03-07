@@ -20,15 +20,13 @@ const createStudent = async (studentData) => {
         const id = studentData["Student_ID"]
         // console.log("line 21 student Id:")
         // console.log(id)
-        if(await checkExists(id))
-        {
+        if (await checkExists(id)) {
             // console.log("line 25")
             const data = await Student.update(studentData, { where: { Student_ID: id } })
             // console.log(id)
             // return student
         }
-        else 
-        {
+        else {
             studentData["Student_Photo"] = "./public/student_details/Photo/default_image.jpg"
             const student = await Student.create(studentData)
             const password = await FirstTimePasswordService.AddFirstTimePassword(student.Student_ID)
@@ -121,6 +119,8 @@ const deleteStudent = async (id) => {
 const Photo_Upload = async (data, id) => {
     try {
         if (await checkExists(id)) {
+            // console.log(data)
+            data = data.toString()
             const student = await Student.update({ Student_Photo: data }, { where: { Student_ID: id } })
             return student
         }
