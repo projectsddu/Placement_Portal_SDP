@@ -10,6 +10,7 @@ import { TempMenu } from './Student/TempMenu';
 import { AnnouncementStudentMenu } from './Student/AnnouncementStudentMenu';
 import { PlacementMenu } from './PlacementMenu';
 import { InternshipMenu } from './InternshipMenu';
+import { ReportMenu } from './ReportMenu';
 import { AchievementsMenu } from './Student/AchievementsMenu';
 import { AdminDashboard } from './AdminDashboard';
 import { useLocation } from 'react-router';
@@ -33,6 +34,7 @@ else {
     console.log(current_location)
     console.log("Here in admin")
     menuItems = {
+
         items: [AdminDashboard, StudentMenu, PlacementMenu, InternshipMenu, AnnouncementMenu, CompanyMenu]
     };
 }
