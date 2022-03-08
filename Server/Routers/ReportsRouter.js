@@ -3,7 +3,7 @@ const router = require('express').Router()
 const ReportController = require("../Controllers/ReportsController")
 
 
-router.get("/getPlacementReportByBatchYear", ReportController.getPlacementReportByBatchYear)
+router.post("/getPlacementReportByBatchYear", ReportController.getPlacementReportByBatchYear)
 
 router.get("/multiplePlacements", ReportController.multiplePlacements)
 

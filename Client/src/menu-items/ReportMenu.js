@@ -28,6 +28,14 @@ export const ReportMenu = {
             icon: icons['IconFiles'],
             children: [
                 {
+                    id: 'GetPlacement',
+                    title: 'Get Placement',
+                    type: 'item',
+                    url: '/reports/get_placement_report',
+                    icon: icons['IconFileDownload'],
+                    breadcrumbs: false
+                },
+                {
                     id: 'MultiplePlacement',
                     title: 'Multiple Placement',
                     type: 'item',
