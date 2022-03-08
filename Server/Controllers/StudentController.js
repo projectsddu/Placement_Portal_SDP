@@ -64,8 +64,10 @@ const addStudent = async (req, res) => {
 
 
         // convert students.csv file to JSON array
-        const path = "./public/student_details/DDU.csv"
-        const studentData = await CSVToJSON().fromFile(path)
+        // const path = "./public/student_details/DDU.csv"
+        console.log("Here")
+        const studentData = await CSVToJSON().fromStream(req.fileData)
+        console.log("Here1")
         // console.log(studentData.length);
 
         if (studentData) {

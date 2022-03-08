@@ -4,6 +4,9 @@ const log = new logger(true)
 const AnnouncementService = require("../Services/AnnouncementService")
 const AnnouncementSubscribeService = require("../Services/AnnouncementSubscribe")
 const ZippingService = require("../Services/ZippingService")
+const ResponseService = require("../Services/ResponseService")
+const OK = ResponseService.OK
+const ERROR = ResponseService.ERROR
 
 const addStudentToAnnouncement = async (req, res) => {
     try {
@@ -105,19 +108,20 @@ const downloadSubscribedStudentZip = async (req, res) => {
         // console.log(zipName);
         const subscribedStudents = await AnnouncementSubscribeService.getSubscribedStudentsOfAnnouncement(announcement_id)
         const subscribedStudentList = []
+        const filesList = []
         subscribedStudents.map((student) => {
-            subscribedStudentList.push(student["Student_ID"])
+            subscribedStudentList.push(
+                student["Student_ID"])
+
+            filesList.push(student["CV_Upload"])
         })
         // console.log("ehjk");
         // console.log(subscribedStudentList);
-        const data = await ZippingService.downloadZipFile("../public/student_details/CV/", zipName, subscribedStudentList)
+        // const data = await ZippingService.downloadZipFile("../public/student_details/CV/", zipName, subscribedStudentList)
 
-        // console.log("jer");
-        res.set('Content-Type', 'application/octet-stream');
-        res.set('Content-Disposition', `attachment; filename=${zipName
-            }.zip`);
-        res.set('Content-Length', data.length);
-        return res.send(data);
+        const resp = await ZippingService.createSharedFolderLink(subscribedStudentList, filesList, zipName)
+
+        return OK(res, resp);
     }
     catch (err) {
         console.log(err.toString());

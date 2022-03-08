@@ -379,7 +379,9 @@ function AddAnnoucement() {
                         </label>
                     </Grid>
                     <Grid item>
-                        <a target='_blank' style={{ "text-decoration": "none" }} href={data === undefined ? "" : "http://localhost:8000/public/" + data["Job_Description_File"].split("/")[1]}>
+                        <a target='_blank' style={{ "text-decoration": "none" }} href={data === undefined ? "" :
+                            "https://drive.google.com/file/d/" + data["Job_Description_File"] + "/view?usp=drivesdk"
+                        }>
                             <Button variant="contained">View Job Description File</Button>
                         </a>
                     </Grid>

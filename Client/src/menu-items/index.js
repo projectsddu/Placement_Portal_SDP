@@ -12,7 +12,9 @@ import { PlacementMenu } from './PlacementMenu';
 import { InternshipMenu } from './InternshipMenu';
 import { ReportMenu } from './ReportMenu';
 import { AchievementsMenu } from './Student/AchievementsMenu';
+import { AdminDashboard } from './AdminDashboard';
 import { useLocation } from 'react-router';
+
 
 //-----------------------|| MENU ITEMS ||-----------------------//
 
@@ -32,7 +34,8 @@ else {
     console.log(current_location)
     console.log("Here in admin")
     menuItems = {
-        items: [StudentMenu, PlacementMenu, InternshipMenu, AnnouncementMenu, CompanyMenu, ReportMenu]
+
+        items: [AdminDashboard, StudentMenu, PlacementMenu, InternshipMenu, AnnouncementMenu, CompanyMenu]
     };
 }
 

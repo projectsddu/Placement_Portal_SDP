@@ -18,6 +18,7 @@ const ResolveUserMiddleware = function (req, res, next) {
             AdminAuthenticate.AdminAuthenticate(req, res, next)
         }
         else if (studentLoginToken != undefined) {
+
             StudentAuthenticate(req, res, next)
         }
         else {

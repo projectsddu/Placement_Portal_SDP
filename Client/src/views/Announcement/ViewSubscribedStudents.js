@@ -5,7 +5,12 @@ import { IconDashboard, IconDeviceAnalytics, IconSpeakerphone } from '@tabler/ic
 import { useHistory } from 'react-router';
 import UseFetch from '../../Utilities/UseFetch';
 import { useLocation } from 'react-router-dom';
+// import LoadingButton from '@mui/lab/LoadingButton';
 import { Button } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
+import { Grid } from '@material-ui/core';
+import axios from 'axios';
+
 
 function CustomToolbar() {
     return (
@@ -78,20 +83,41 @@ function ViewSubscribedStudents() {
     const handleEditRowsModelChange = React.useCallback((model) => {
         setEditRowsModel(model);
     }, []);
+    const [folderData, setfolderData] = React.useState(undefined)
+    const [folderLink, setfolderLink] = React.useState(undefined)
 
     const history = useHistory();
+
+
+    async function handleClick() {
+        console.log("Here")
+        const link = '/subscribeannouncement/downloadSubscribedStudentZip/' + id
+        setfolderData(true)
+        const resp = await axios.get(link)
+        const driveLink = resp.data.data
+        setfolderData(false)
+        const win = window.open(driveLink, "_blank");
+    }
 
     return (
         <>
             <MainCard title="Applied Students">
-                <a
-                    href={'http://localhost:8000/subscribeannouncement/downloadSubscribedStudentZip/' + id}
-                    style={{ 'text-decoration': 'none' }}
-                >
-                    <Button variant="contained" size="large" color="primary">
-                        Download All CVs
-                    </Button>
-                </a>
+
+                <Grid container spacing={2}>
+                    <Grid item xs={12} md={2}>
+                        <Button variant="contained" onClick={() => handleClick()} size="large" color="primary">
+                            See All CV's
+                        </Button>
+                    </Grid>
+                    {folderData === undefined ?
+                        "" :
+                        folderData == true ?
+                            <Grid item xs={12} md={2}>
+                                <CircularProgress />
+                            </Grid> : ""
+                    }
+                </Grid>
+                {/* // </a> */}
                 <br />
                 <br />
                 <div style={{ height: 400, width: '100%' }}>
@@ -104,7 +130,7 @@ function ViewSubscribedStudents() {
                         }}
                     />
                 </div>
-            </MainCard>
+            </MainCard >
         </>
     );
 }

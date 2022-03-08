@@ -9,6 +9,8 @@ const DateValidator = require("../Middlewares/Annoucement/DateValidator");
 const StudentAuthenticate = require("../Middlewares/StudentLogin/Authenticate")
 const AdminAuthenticate = require("../Middlewares/Admin/AdminAuthenticate")
 const ResolveUsers = require("../Middlewares/General/ResloveUser")
+const fileUpload = require("../Middlewares/FileUpload/FileUpload")
+
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -28,7 +30,7 @@ const fileStorage = multer.diskStorage({
 
 const upload = multer({ storage: fileStorage })
 
-router.post("/addAnnoucement", [upload.single("Job_Description_File"), AdminAuthenticate.AdminAuthenticate], AnnouncementController.addAnnoucement)
+router.post("/addAnnoucement", [AdminAuthenticate.AdminAuthenticate, fileUpload.jobFileUploadMiddleWare], AnnouncementController.addAnnoucement)
 
 router.post("/deleteAnnoucement/:annoucementId", [AdminAuthenticate.AdminAuthenticate], AnnouncementController.deleteAnnoucement)
 
@@ -36,7 +38,7 @@ router.get("/getAllAnnoucements", [ResolveUsers.ResolveUserMiddleware], Announce
 
 router.get("/getAnnoucement/:annoucementId", [ResolveUsers.ResolveUserMiddleware], AnnouncementController.getAnnoucement)
 
-router.post("/updateAnnoucement/:annoucementId", [upload.single("Job_Description_File"), AdminAuthenticate.AdminAuthenticate], AnnouncementController.updateAnnoucement)
+router.post("/updateAnnoucement/:annoucementId", [AdminAuthenticate.AdminAuthenticate, fileUpload.jobFileUploadMiddleWare], AnnouncementController.updateAnnoucement)
 
 router.post("/deleteAnnoucement/:annoucementId", [AdminAuthenticate.AdminAuthenticate], AnnouncementController.deleteAnnoucement)
 router.get("/requiredAnnoucementDetails", [AdminAuthenticate.AdminAuthenticate], AnnouncementController.requiredAnnoucementDetails)

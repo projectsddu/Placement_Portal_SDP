@@ -154,6 +154,7 @@ const NotificationSection = () => {
         console.log(required_data);
     }
     return (
+
         <React.Fragment>
             <Box component="span" className={classes.box}>
                 <ButtonBase sx={{ borderRadius: '12px' }}>

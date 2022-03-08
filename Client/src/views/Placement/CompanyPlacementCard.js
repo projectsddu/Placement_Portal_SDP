@@ -265,7 +265,9 @@ function CompanyPlacementCard(props) {
                     </Grid>
                     {studentPlacementStateDetails.Company_details === undefined ? "" :
                         <Grid justifyContent={"flex-start"} md={2} style={{ "padding-top": "1%" }} >
-                            <a target="_blank" href={"http://localhost:8000" + studentPlacementStateDetails.Offer_Letter} style={{ "text-decoration": "none" }}>
+                            <a target="_blank" href={
+                                "https://drive.google.com/file/d/" + studentPlacementStateDetails.Offer_Letter + "/view?usp=drivesdk"
+                            } style={{ "text-decoration": "none" }}>
 
                                 <Button variant="contained">View File</Button>
                             </a>

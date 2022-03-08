@@ -88,7 +88,7 @@ const fileStorage2 = multer.diskStorage({
 
 const upload2 = multer({ storage: fileStorage2 })
 
-router.post("/addStudent", [upload.single("Student_Details_File")], StudentController.addStudent)
+router.post("/addStudent", [AdminAuthenticate.AdminAuthenticate, fileUpload.csvFileUploadMiddleWare], StudentController.addStudent)
 router.get("/getAllStudents",
     [AdminAuthenticate.AdminAuthenticate],
     StudentController.getAllStudents)

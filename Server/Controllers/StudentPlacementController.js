@@ -29,20 +29,18 @@ const addStudentPlacement = async (req, res) => {
     }
 }
 
-const addStudentPlacementViaCSV = async(req, res) => {
+const addStudentPlacementViaCSV = async (req, res) => {
     try {
         // convert CSV file to JSON array
         const path = "./public/PlacementFiles/DDU_PLACEMENT.csv"
         const studentPlacementData = await CSVToJSON().fromFile(path)
         // console.log("from line 37")
         // console.log(studentPlacementData)
-        if(studentPlacementData)
-        {
-            for(let i = 0; i < studentPlacementData.length; i++)
-            {
+        if (studentPlacementData) {
+            for (let i = 0; i < studentPlacementData.length; i++) {
                 try {
                     let studentStatus = await StudentPlacementService.createStudentPlacement(studentPlacementData[i])
-                    
+
                 } catch (error) {
                     log.error(error.toString())
                     throw "Error from create student placement using file"
@@ -58,7 +56,7 @@ const addStudentPlacementViaCSV = async(req, res) => {
 
 const getStudentPlacement = async (req, res) => {
     try {
-        const id = req.params.id
+        const id = req.params.studentId
         let studentplacement = await StudentPlacementService.getStudentPlacement(id)
         if (studentplacement) {
             return res.json({ status: studentplacement.length == 0 ? false : true, data: studentplacement.length == 0 ? "Student Placement Record Not Found!" : studentplacement })
