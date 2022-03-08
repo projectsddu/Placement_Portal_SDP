@@ -99,11 +99,12 @@ export default function UploadPhotoCard({ Student_Photo }) {
                     {/* <Chip label={"View Student Photo"} /> */}
 
                     {Student_Photo === undefined ? "Wait Loading...." : <>
-                        {Student_Photo.includes("/public/student_details/Photo") ?
+                        {/* {console.log(Student_Photo)} */}
+                        {Student_Photo.length == 33 ?
                             <a target='blank'
                                 style={{ "text-decoration": "none", "cursor": "pointer" }}
                                 href={
-                                    Student_Photo}
+                                    'https://drive.google.com/uc?export=view&id=' + Student_Photo}
                             >
                                 <Button variant="contained" size="large" color="primary">
                                     View Photo

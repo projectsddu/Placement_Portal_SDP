@@ -20,6 +20,8 @@ const AdminLoginRouter = require("./Routers/AdminLoginRouter")
 const StudentProjectRouter = require("./Routers/StudentProjectRouter")
 const StudentAchievementsInternshipsRouter = require("./Routers/StudentAchievementsInternshipsRouter")
 const ReportsRouter = require("./Routers/ReportsRouter")
+const fileupload = require("express-fileupload");
+
 
 require("dotenv").config();
 
@@ -33,6 +35,7 @@ try {
     app.use(express.urlencoded({ extended: true }))
     app.use(express.static(__dirname + '/public'));
     app.use(cookieParser());
+    app.use(fileupload());
 
 
     // Testing API

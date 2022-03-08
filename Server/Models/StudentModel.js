@@ -162,11 +162,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         CV_Upload: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         },
         Student_Photo: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         },
         Branch_Id: {

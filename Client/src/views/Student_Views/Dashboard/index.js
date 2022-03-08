@@ -64,9 +64,9 @@ const Dashboard = () => {
             Sem_7_SPI = required_data["data"]["Sem_7_SPI"];
             Sem_8_SPI = required_data["data"]["Sem_8_SPI"];
             console.log()
-            CV_Upload = "http://localhost:8000" + required_data["data"]["CV_Upload"].split(".")[1] + ".pdf";
+            CV_Upload = required_data["data"]["CV_Upload"];
             // console.log(CV_Upload);
-            Student_Photo = "http://localhost:8000" + required_data["data"]["Student_Photo"].split(".")[1] + ".jpg";
+            Student_Photo = required_data["data"]["Student_Photo"]
             // console.log(Student_Photo)
 
             // push spi into list one by one
@@ -167,7 +167,10 @@ const Dashboard = () => {
 
                         </Grid>
                         <Grid item xs={12} md={12}>
-                            {studentDetails === undefined ? "" : <UploadPhotoCard Student_Photo={studentDetails.Student_Photo} />}
+                            {studentDetails === undefined ? "" : <>
+                                {/* {studentDetails.Student_Photo} */}
+                                <UploadPhotoCard Student_Photo={studentDetails.Student_Photo} />
+                            </>}
 
                         </Grid>
                         <Grid item xs={12} md={8}>
