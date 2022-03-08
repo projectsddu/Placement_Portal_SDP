@@ -1,5 +1,5 @@
 // assets
-import { IconDashboard, IconDeviceAnalytics, IconBuildingCottage, IconCirclePlus, IconBuildingArch } from '@tabler/icons';
+import { IconDashboard, IconDeviceAnalytics, IconBuildingCottage, IconCirclePlus, IconBuildingArch, IconFileReport, IconFiles, IconFileInfo, IconFileDownload } from '@tabler/icons';
 
 // constant
 const icons = {
@@ -7,7 +7,11 @@ const icons = {
     IconDeviceAnalytics,
     IconBuildingCottage,
     IconCirclePlus,
-    IconBuildingArch
+    IconBuildingArch,
+    IconFileReport,
+    IconFiles,
+    IconFileInfo,
+    IconFileDownload
 };
 
 //-----------------------|| COMPANY DASHBOARD MENU ITEMS ||-----------------------//
@@ -21,16 +25,16 @@ export const ReportMenu = {
             id: 'Report Menu',
             title: 'Reports',
             type: 'collapse',
-            icon: icons['IconBuildingArch'],
+            icon: icons['IconFiles'],
             children: [
-                // {
-                //     id: 'CompanyAdd',
-                //     title: 'Add Company',
-                //     type: 'item',
-                //     url: '/company/add_company',
-                //     icon: icons['IconCirclePlus'],
-                //     breadcrumbs: false
-                // },
+                {
+                    id: 'MultiplePlacement',
+                    title: 'Multiple Placement',
+                    type: 'item',
+                    url: '/reports/multiple_placement_report',
+                    icon: icons['IconFileDownload'],
+                    breadcrumbs: false
+                },
                 // {
                 //     id: 'ViewCompany',
                 //     title: 'View Company',

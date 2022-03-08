@@ -80,6 +80,7 @@ const S_AddProject = Loadable(lazy(() => import('../views/Student_Views/Project/
 
 // student ends
 
+const MultiplePlacement = Loadable(lazy(() => import('../views/Report/MultiplePlacement')));
 
 const ErrorPage = Loadable(lazy(() => import('../views/Error/ErrorPage')));
 
@@ -194,6 +195,8 @@ const MainRoutes = () => {
 
                 // "/_student/achievements/add_project"
 
+                "/reports/multiple_placement_report",
+
                 // for any errorneous page
                 // "/"
 
@@ -260,6 +263,8 @@ const MainRoutes = () => {
                     <Route path="/_student/achievements/add_internship" component={S_AddInternship} />
                     <Route path="/_student/achievements/add_projects" component={S_AddProject} />
                     {/* <Route path="/_student/achievements/add_project" component={S_AddProject} /> */}
+
+                    <Route path="/reports/multiple_placement_report" component={MultiplePlacement} />
 
                     {/* for any errorneous page */}
                     {/* <Route path="" component={ErrorPage} /> */}
