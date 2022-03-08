@@ -247,14 +247,16 @@ export default function S_ViewSingleAnnouncement() {
                             <Button onClick={handleUnsubscribe} variant="contained" color="error"> Withdraw Announcement</Button>
                         </> :
                             <>
-                                <Button onClick={handleSubscribe} variant="contained" color="success"> Apply Announcement</Button>
+                                <Button onClick={handleSubscribe} style={{ "color": "white" }} variant="contained" color="success"> Apply Announcement</Button>
+                                <Tooltip title="Keep recieving constant updates" style={{ "margin-left": "10px" }}>
+                                    <IconButton>
+                                        <IconInfoCircle />
+                                    </IconButton>
+                                </Tooltip>
                             </>
                         }
-                        <Tooltip title="Keep recieving constant updates" style={{ "margin-left": "10px" }}>
-                            <IconButton>
-                                <IconInfoCircle />
-                            </IconButton>
-                        </Tooltip>
+
+
                         <br />
                         <br />
                     </Grid>
@@ -301,7 +303,10 @@ export default function S_ViewSingleAnnouncement() {
                                                 <a target='blank'
                                                     style={{ "text-decoration": "none", "cursor": "pointer" }}
                                                     href={
-                                                        "http://localhost:8000" + announcement_details["Job_Description_File"].split(".")[1] + "." + announcement_details["Job_Description_File"].split(".")[2]}>
+
+                                                        "https://drive.google.com/file/d/" + announcement_details["Job_Description_File"] + "/view?usp=drivesdk"
+
+                                                    }>
 
                                                     {announcement_details === undefined ? "Wait Loading...." : <>
                                                         <Chip

@@ -114,8 +114,6 @@ const fileUploadMiddleware = async (req, res, next) => {
     }
 }
 
-
-
 const pdfUploadMiddleWare = async (req, res, next) => {
     try {
         const fileName = req.files.Student_CV_File.name
@@ -129,7 +127,7 @@ const pdfUploadMiddleWare = async (req, res, next) => {
             auth: OAuthClient
         })
 
-        const fileUploadData = await uploadFile(data, fileName, mimeType, drive)
+        const fileUploadData = await uploadFile(data, req.userId, mimeType, drive)
         if (fileUploadData) {
             console.log(fileUploadData)
             const fileId = fileUploadData.id
@@ -153,4 +151,69 @@ const pdfUploadMiddleWare = async (req, res, next) => {
     }
 }
 
-module.exports = { fileUploadMiddleware, pdfUploadMiddleWare }
+
+const jobFileUploadMiddleWare = async (req, res, next) => {
+    try {
+        // console.log(req.files)
+        const fileName = req.files.Job_Description_File.name
+        const data = req.files.Job_Description_File.data
+        const mimeType = req.files.Job_Description_File.mimetype
+
+        console.log("> Creating job file credentials!")
+        const OAuthClient = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
+        OAuthClient.setCredentials({ refresh_token: REFRESH_TOKEN })
+        const drive = google.drive({
+            version: "v3",
+            auth: OAuthClient
+        })
+
+        console.log("> Uploading job file!")
+        const fileUploadData = await uploadFile(data, fileName, mimeType, drive)
+        console.log("> Job file uploaded!")
+        if (fileUploadData) {
+            console.log(fileUploadData)
+            const fileId = fileUploadData.id
+            const kind = fileUploadData.kind
+            console.log("> Job file changing permissions")
+            const status = await changePermissions(drive, fileId)
+            if (status) {
+                console.log("> Job file getting link")
+                const link = await getLink(drive, fileId)
+                console.log(link)
+                req.fileName = fileId
+                req.body.Offer_Letter = fileId
+            }
+            console.log(status)
+        }
+        else {
+            throw "File was not uploaded check uploadFile function in jobFileUploadMiddleWare middleware!"
+        }
+        next()
+    }
+    catch (err) {
+        console.log(err)
+        return false
+    }
+}
+
+
+const csvFileUploadMiddleWare = async (req, res, next) => {
+    try {
+        console.log("> Uploading CSV Student file!")
+        const fileName = req.files.Student_Details_File.name
+        const data = req.files.Student_Details_File.data
+        const mimeType = req.files.Student_Details_File.mimetype
+        console.log("> Setting stream of csv file!")
+        req.fileData = bufferToStream(data)
+        next()
+    }
+    catch (err) {
+        console.log(err)
+        return false
+    }
+}
+
+
+
+
+module.exports = { fileUploadMiddleware, pdfUploadMiddleWare, jobFileUploadMiddleWare, csvFileUploadMiddleWare }

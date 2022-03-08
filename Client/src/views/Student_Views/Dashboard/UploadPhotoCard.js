@@ -17,7 +17,7 @@ import responsePipelineHandler from '../../../Utilities/ResponsePipelineHandler'
 import UseFetch from '../../../Utilities/UseFetch';
 
 import { gridSpacing } from '../../../store/constant';
-
+import CircularProgress from '@mui/material/CircularProgress';
 const Input = styled('input')({
     display: 'none',
 });
@@ -25,7 +25,7 @@ const Input = styled('input')({
 
 
 export default function UploadPhotoCard({ Student_Photo }) {
-
+    const [uploadingData, setuploadingData] = useState(undefined)
     const [data, setData] = useState({
     });
     useEffect(() => { }, [data]);
@@ -43,8 +43,9 @@ export default function UploadPhotoCard({ Student_Photo }) {
     };
 
     async function handleSubmit() {
-
+        setuploadingData(true)
         const res = await UsePostFile("/student/uploadPhoto", data, "POST")
+        setuploadingData(false)
         // console.log(res);
         const params1 = {
             data: res,
@@ -119,6 +120,9 @@ export default function UploadPhotoCard({ Student_Photo }) {
                     }
 
                 </Grid>
+                {uploadingData === undefined ? "" : uploadingData == true ? <Grid item>
+                    <CircularProgress />
+                </Grid> : ""}
 
 
             </Grid>

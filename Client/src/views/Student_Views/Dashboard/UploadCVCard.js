@@ -15,7 +15,7 @@ import HandleToast from '../../../Utilities/HandleToast'
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../../Utilities/ResponsePipelineHandler';
 import UseFetch from '../../../Utilities/UseFetch';
-
+import CircularProgress from '@mui/material/CircularProgress';
 import { gridSpacing } from '../../../store/constant';
 
 const Input = styled('input')({
@@ -26,6 +26,7 @@ const Input = styled('input')({
 
 export default function UploadResumeCard({ CV_Upload }) {
 
+    const [uploadingData, setuploadingData] = useState(undefined)
     const [data, setData] = useState({
     });
     useEffect(() => { }, [data]);
@@ -42,7 +43,9 @@ export default function UploadResumeCard({ CV_Upload }) {
 
     async function handleSubmit() {
 
+        setuploadingData(true)
         const res = await UsePostFile("/student/addCV", data, "POST")
+        setuploadingData(false)
         // console.log(res);
         const params1 = {
             data: res,
@@ -87,12 +90,6 @@ export default function UploadResumeCard({ CV_Upload }) {
 
                 <Grid item>
 
-                    {/* <Chip label={"View Student CV"} /> */}
-
-
-
-
-
                     {CV_Upload === undefined ? "Wait Loading...." : <>
                         {CV_Upload.length == 33 ?
                             <a target='blank'
@@ -114,6 +111,10 @@ export default function UploadResumeCard({ CV_Upload }) {
                     }
 
                 </Grid>
+                {uploadingData === undefined ? "" : uploadingData == true ? <Grid item>
+                    <CircularProgress />
+                </Grid> : ""}
+
 
 
             </Grid>

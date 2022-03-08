@@ -256,7 +256,8 @@ function ViewSingleAnnoucement() {
                                                 <a target='blank'
                                                     style={{ "text-decoration": "none", "cursor": "pointer" }}
                                                     href={
-                                                        process.env.React_App_DOMAIN + announcement_details["Job_Description_File"].split(".")[1] + "." + announcement_details["Job_Description_File"].split(".")[2]}>
+                                                        "https://drive.google.com/file/d/" + announcement_details["Job_Description_File"] + "/view?usp=drivesdk"
+                                                    }>
 
                                                     {announcement_details === undefined ? "Wait Loading...." : <>
                                                         <Chip

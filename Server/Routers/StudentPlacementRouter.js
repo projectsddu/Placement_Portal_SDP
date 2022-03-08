@@ -3,6 +3,9 @@ const router = require('express').Router()
 const EmptyFieldCheck = require("../Middlewares/General/EmptyFieldCheck")
 const multer = require('multer');
 const AdminAuthenticate = require("../Middlewares/Admin/AdminAuthenticate")
+const FileUploadMiddleware = require("../Middlewares/FileUpload/FileUpload")
+const ResolveUser = require("../Middlewares/General/ResloveUser")
+
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -15,7 +18,7 @@ const fileStorage = multer.diskStorage({
     }
 })
 
-const upload = multer({ storage: fileStorage})
+const upload = multer({ storage: fileStorage })
 
 const fileStorage1 = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -32,11 +35,11 @@ const fileStorage1 = multer.diskStorage({
 
 const upload1 = multer({ storage: fileStorage1 })
 
-router.post("/addStudentPlacement", [upload1.single("Job_Description_File"), AdminAuthenticate.AdminAuthenticate], StudentPlacementController.addStudentPlacement)
+router.post("/addStudentPlacement", [AdminAuthenticate.AdminAuthenticate, FileUploadMiddleware.jobFileUploadMiddleWare], StudentPlacementController.addStudentPlacement)
 router.post("/addStudentPlacementWithCSV", [upload.single("Student_Placement_Details_File"), AdminAuthenticate.AdminAuthenticate], StudentPlacementController.addStudentPlacementViaCSV)
-router.get("/getStudentPlacement/:id", [AdminAuthenticate.AdminAuthenticate], StudentPlacementController.getStudentPlacement)
+router.get("/getStudentPlacement/:studentId", [ResolveUser.ResolveUserMiddleware], StudentPlacementController.getStudentPlacement)
 router.get("/getAllStudentPlacement", [AdminAuthenticate.AdminAuthenticate], StudentPlacementController.getAllStudentPlacement)
-router.post("/updateStudentPlacement/:id", [upload1.single("Job_Description_File"), AdminAuthenticate.AdminAuthenticate], StudentPlacementController.updateStudentPlacement)
+router.post("/updateStudentPlacement/:id", [AdminAuthenticate.AdminAuthenticate, FileUploadMiddleware.jobFileUploadMiddleWare], StudentPlacementController.updateStudentPlacement)
 router.post("/deleteStudentPlacement/:id", [AdminAuthenticate.AdminAuthenticate], StudentPlacementController.deleteStudentPlacement)
 
 module.exports = router
