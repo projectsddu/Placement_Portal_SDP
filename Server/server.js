@@ -19,6 +19,7 @@ const SkillsAndAchievementsRouter = require("./Routers/SkillsAndAchievementRoute
 const AdminLoginRouter = require("./Routers/AdminLoginRouter")
 const StudentProjectRouter = require("./Routers/StudentProjectRouter")
 const StudentAchievementsInternshipsRouter = require("./Routers/StudentAchievementsInternshipsRouter")
+const ReportsRouter = require("./Routers/ReportsRouter")
 
 require("dotenv").config();
 
@@ -70,6 +71,7 @@ try {
     app.use("/skillsandachievements", SkillsAndAchievementsRouter)
     app.use("/studentproject", StudentProjectRouter)
     app.use("/StudentAchievementsInternships", StudentAchievementsInternshipsRouter)
+    app.use("/reports", ReportsRouter)
 
     if (process.env.NODE_ENV === "production") {
         console.log("Here")
