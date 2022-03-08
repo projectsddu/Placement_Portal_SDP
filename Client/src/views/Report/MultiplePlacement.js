@@ -44,7 +44,7 @@ export default function MultiplePlacement() {
 
         // const res = await UsePostFile("/student/addStudent", data, "POST")
         const params1 = {
-            data: res,
+            // data: res,
             HandleToast: {
                 toast: toast,
                 flag: false,
@@ -254,7 +254,7 @@ export default function MultiplePlacement() {
             <TextField
                 label="Search"
                 value={search}
-                onInput={(e) => handleSearch(e)}
+                // onInput={(e) => handleSearch(e)}
                 fullWidth
             >
             </TextField>
