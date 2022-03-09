@@ -45,18 +45,29 @@ function GetPlacementReport() {
         setBatchYear({ ...batchYear, Passed_out_year: e.target.value });
 
         if (e.target.value.length == 4) {
+            
             // let updated_details = studentPlacementStateDetails;
             let res = undefined;
             res = await UsePost('/reports/getPlacementReportByBatchYear', { Passed_out_year: e.target.value }, 'POST');
 
             if (res != undefined) {
-                for (let i = 0; i < res['data'][0].length; i++) {
-                    res['data'][0][i]['row_id'] = i;
+                // for (let i = 0; i < res['data'][0].length; i++) {
+                //     res['data'][0][i]['row_id'] = i;
+                // }
+                if(res["data"][0].length == 0)
+                {
+                    setPlacementDetails(res["data"][0])
+                    setPlacementDetails(res['data'][1]);
+                    setDetailsCard(true);
                 }
-                console.log(res['data'][0]);
-                setPlacementTableDetails(res['data'][0]);
-                setPlacementDetails(res['data'][1]);
-                setDetailsCard(true);
+                else
+                {
+                    // console.log(res['data'][0]);
+                    setPlacementTableDetails(res['data'][0]);
+                    setPlacementDetails(res['data'][1]);
+                    setDetailsCard(true);
+                }
+                
             }
             // const params1 = {
             //     data: res,
@@ -83,9 +94,9 @@ function GetPlacementReport() {
             <TextField
                 fullWidth
                 // required
-                label="Batch Year"
+                label="Passed Out Year"
                 id="fullWidth"
-                helperText="Enter Batch year"
+                helperText="Enter passed out year"
                 onInput={(e) => {
                     handleChange(e);
                 }}

@@ -84,6 +84,7 @@ const S_AddProject = Loadable(lazy(() => import('../views/Student_Views/Project/
 
 const MultiplePlacement = Loadable(lazy(() => import('../views/Report/MultiplePlacement')));
 const GetPlacementReport = Loadable(lazy(() => import('../views/Report/GetPlacementReport')));
+const GetReportCompany = Loadable(lazy(() => import('../views/Report/GetReportCompany')));
 
 
 // report ends
@@ -202,6 +203,7 @@ const MainRoutes = () => {
 
                 "/reports/multiple_placement_report",
                 "/reports/get_placement_report",
+                "/reports/report_company",
 
                 // for any errorneous page
                 // "/"
@@ -272,6 +274,7 @@ const MainRoutes = () => {
 
                     <Route path="/reports/multiple_placement_report" component={MultiplePlacement} />
                     <Route path="/reports/get_placement_report" component={GetPlacementReport} />
+                    <Route path="/reports/report_company" component={GetReportCompany} />
 
                     {/* for any errorneous page */}
                     {/* <Route path="" component={ErrorPage} /> */}
