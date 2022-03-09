@@ -35,7 +35,7 @@ else {
     console.log("Here in admin")
     menuItems = {
 
-        items: [AdminDashboard, StudentMenu, PlacementMenu, InternshipMenu, AnnouncementMenu, CompanyMenu]
+        items: [AdminDashboard, StudentMenu, PlacementMenu, InternshipMenu, AnnouncementMenu, CompanyMenu, ReportMenu]
     };
 }
 

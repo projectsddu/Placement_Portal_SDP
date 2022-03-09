@@ -71,6 +71,13 @@ const getPlacementReportByBatchYear = async (batch_year) => {
                 placementsMetadata["Min_Salary"] = placements[i]["Salary"]
             }
 
+            // add company name
+            let companyDetails = await CompanyService.getCompany(
+                placements[i]["Company_ID"]
+            );
+
+            // console.log("Company Name: ", companyDetails["Company_name"])
+            placements[i]["Company_name"] = companyDetails["Company_name"]
         }
 
         // average salary
@@ -84,6 +91,7 @@ const getPlacementReportByBatchYear = async (batch_year) => {
         else {
             placementsMetadata["Median_Salary"] = salaries[parseInt(salaries.length / 2)]
         }
+
 
         // console.log(placements)
         return [placements, placementsMetadata]
@@ -183,8 +191,6 @@ const placedStudentsByCompany = async (batch_year) => {
     {
         batch_year = parseInt(batch_year)
 
-        
-        
         if(batch_year == 1)
         {
             const [results, placementsData] = await sequelize.query("SELECT Company_ID, Count(Student_ID) FROM StudentPlacements GROUP BY (Company_ID)");
