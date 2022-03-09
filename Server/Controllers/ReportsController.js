@@ -93,8 +93,75 @@ const placedStudentsByCompany = async (req, res) => {
     }
 }
 
+const studentsInterestedInHigherStudies = async (req, res) => {
+    try {
+        let Passed_out_year = req.body.Passed_out_year
+
+        let data = await ReportService.studentsInterestedInHigherStudies(Passed_out_year)
+
+        if(data)
+        {
+            return OK(res, data)
+        }
+        else {
+            throw "Error from studentsInterestedInHigherStudies controller"
+        }
+    } catch (error) {
+        log.error(error.toString())
+        return res.json({ status: false, data: "Error from studentsInterestedInHigherStudies controller" })
+    }
+}
+
+const unplacedStudents = async (req, res) => {
+    try {
+        
+        // console.log("in unplaced students controlller")
+
+        let Passed_out_year = req.body.Passed_out_year
+
+        let data = await ReportService.unplacedStudents(Passed_out_year)
+
+        if(data)
+        {
+            return OK(res, data)
+        }
+        else
+        {
+            throw "Error from unplacedStudents controller"
+        }
+    } catch (error) {
+        log.error(error.toString())
+        return res.json({ status: false, data: "Error from unplacedStudents controller" })
+    }
+}
+
+const unplacedInternship = async(req, res) => {
+    try {
+        
+        let Passed_out_year = req.body.Passed_out_year
+
+        let data = await ReportService.unplacedInternship(Passed_out_year)
+
+        if(data)
+        {
+            return OK(res, data)
+        }
+        else
+        {
+            throw "Error from unplacedInternship controller"
+        }
+
+    } catch (error) {
+        log.error(error.toString())
+        return res.json({ status: false, data: "Error from unplacedInternship controller" })
+    }
+}
+
 module.exports = {
     getPlacementReportByBatchYear,
     multiplePlacements,
-    placedStudentsByCompany
+    placedStudentsByCompany,
+    studentsInterestedInHigherStudies,
+    unplacedStudents,
+    unplacedInternship
 }

@@ -9,5 +9,10 @@ router.get("/multiplePlacements", ReportController.multiplePlacements)
 
 router.post("/placedStudentsByCompany", ReportController.placedStudentsByCompany)
 
+router.get("/studentsInterestedInHigherStudies", ReportController.studentsInterestedInHigherStudies)
+
+router.get("/unplacedStudents", ReportController.unplacedStudents)
+
+router.get("/unplacedInternship", ReportController.unplacedInternship)
 
 module.exports = router
