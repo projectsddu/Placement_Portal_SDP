@@ -3,7 +3,8 @@ import { Link as RouterLink } from 'react-router-dom';
 
 // material-ui
 import { Button, TextField } from '@material-ui/core';
-
+import { ToastContainer, toast } from 'react-toastify';
+import responsePipelineHandler from '../../../Utilities/ResponsePipelineHandler'
 import { useTheme } from '@material-ui/core';
 import { Divider, Grid, Stack, Typography, useMediaQuery } from '@material-ui/core';
 
@@ -14,15 +15,31 @@ import Logo from './../../../layout/MainLayout/LogoSection/index';
 import AuthCardWrapper from './AuthCardWrapper';
 import RestLogin from './RestLogin';
 import AuthFooter from './../../../ui-component/cards/AuthFooter';
+import UsePost from "../../../Utilities/UsePost"
+import { useHistory } from "react-router-dom"
 
 // assets
 
 //================================|| LOGIN MAIN ||================================//
 
 const FirstTimeLogin = () => {
-
+    const history = useHistory()
     const handleSubmit = async () => {
-
+        console.log(password)
+        const res = await UsePost("/studentLogin/changePasswordFirstTime", password, "POST")
+        console.log(res)
+        const data = res.data
+        const params1 = {
+            data: res,
+            HandleToast: {
+                toast: toast,
+                flag: false,
+            }
+        }
+        responsePipelineHandler(params1, 1)
+        if (data == "Password updated successfully") {
+            history.push("/_student/login")
+        }
 
     }
     const [password, setpassword] = useState({
