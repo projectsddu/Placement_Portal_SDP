@@ -30,7 +30,7 @@ const getPlacementReportByBatchYear = async (batch_year) => {
             Total_Placed: placements.length,
             Male: 0,
             Female: 0,
-            Average_Salary: 0.0,
+            Average_Salary: 0,
             Median_Salary: 0,
             Max_Salary: 0,
             Min_Salary: 100000000,
@@ -189,22 +189,46 @@ const placedStudentsByCompany = async (batch_year) => {
 
     try
     {
+        // console.log("from the service")
         batch_year = parseInt(batch_year)
+        // console.log(batch_year)
+
+        let placements = undefined
 
         if(batch_year == 1)
         {
-            const [results, placementsData] = await sequelize.query("SELECT Company_ID, Count(Student_ID) FROM StudentPlacements GROUP BY (Company_ID)");
+            console.log("inside all")
+            // use according name of the table by lloking at ppmyadmin
+            const [results, placementsData] = await sequelize.query("SELECT Company_ID, Count(Student_ID) AS Student_Count FROM StudentPlacements GROUP BY (Company_ID)");
+
+            placements = placementsData
         }
         else
         {
-            const [results, placementsData] = await sequelize.query("SELECT Company_ID, Count(Student_ID) FROM StudentPlacements WHERE Passed_out_year GROUP BY (Company_ID)");
+            console.log("inside the else")
+            const [results, placementsData] = await sequelize.query("SELECT Company_ID, Count(Student_ID) AS Student_Count FROM StudentPlacements WHERE year(Passed_out_year) = " + batch_year + " GROUP BY (Company_ID)");
+
+            placements = placementsData
         }
 
-        // const [results, placementsData] = await sequelize.query("SELECT * FROM StudentPlacements");
 
-        return placementsData
+        // console.log(placements[1]["Count(Student_ID)"])
 
+        let company_list = []
 
+        for(let i = 0; i < placements.length; i++)
+        {
+            let companyDetails = await CompanyService.getCompany(placements[i]["Company_ID"])
+
+            let data = {};
+
+            data["Company_name"] = companyDetails["Company_name"]
+            data["Student_Count"] = placements[i]["Student_Count"]
+
+            company_list.push(data)
+        }
+
+        return company_list
     }
     catch (err) {
         log.error(err.toString())

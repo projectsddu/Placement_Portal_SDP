@@ -29,7 +29,7 @@ export const ReportMenu = {
             children: [
                 {
                     id: 'GetPlacement',
-                    title: 'Get Placement',
+                    title: 'Get Placement Report',
                     type: 'item',
                     url: '/reports/get_placement_report',
                     icon: icons['IconFileDownload'],
@@ -40,6 +40,14 @@ export const ReportMenu = {
                     title: 'Multiple Placement',
                     type: 'item',
                     url: '/reports/multiple_placement_report',
+                    icon: icons['IconFileDownload'],
+                    breadcrumbs: false
+                },
+                {
+                    id: 'GetReportByCompany',
+                    title: 'Placed Student by Company',
+                    type: 'item',
+                    url: '/reports/report_company',
                     icon: icons['IconFileDownload'],
                     breadcrumbs: false
                 },

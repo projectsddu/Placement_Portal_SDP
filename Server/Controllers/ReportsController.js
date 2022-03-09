@@ -68,7 +68,7 @@ const placedStudentsByCompany = async (req, res) => {
     {
         let data = req.body
         let batch_year = req.body.Passed_out_year
-
+        
         if(batch_year.toLowerCase() == "all")
         {
             batch_year = "1"
