@@ -4,8 +4,10 @@ const Sequelize = require("sequelize")
 const log = new logger(true)
 const db = require("../Models/index")
 const StudentPlacement = db.student_placements
+const Student = db.students
 const StudentService = require("../Services/StudentService")
 const CompanyService = require("../Services/CompanyService")
+const StudentInternship = db.student_internships
 
 
 const getPlacementReportByBatchYear = async (batch_year) => {
@@ -291,8 +293,133 @@ const placedStudentsByCompany = async (batch_year) => {
 
 // }
 
+const studentsInterestedInHigherStudies = async(Passed_out_year) => {
+    try
+    {
+        Passed_out_year = parseInt(Passed_out_year)
+
+        let batchYearData = await Student.findAll({
+            where: sequelize.where(sequelize.fn('YEAR', sequelize.col('Passed_out_year')), Passed_out_year)
+        })
+
+        // console.log(batchYearData)
+
+        let higherStudiesData = []
+
+        for(let i = 0; i < batchYearData.length; i++)
+        {
+            const studentData = batchYearData[i]
+
+            const Career_Preference = JSON.stringify(studentData["Career_Preference"])
+
+            // console.log("Student-",i,Career_Preference)
+            
+            if(Career_Preference.toLowerCase().includes("higher") || Career_Preference.toLowerCase().includes("study"))
+            {
+                higherStudiesData.push(studentData)
+            }
+        }
+
+        console.log("Count of Student interested in higher studies: ", higherStudiesData.length)
+
+        return higherStudiesData
+
+    }
+    catch (err) {
+        log.error(err.toString())
+        return false
+    }
+}
+
+const unplacedStudents = async(Passed_out_year) => {
+    try {
+
+        Passed_out_year = parseInt(Passed_out_year)
+
+        // console.log("in unplaced students service")
+
+        let batchYearData = await Student.findAll({
+            where: sequelize.where(sequelize.fn('YEAR', sequelize.col('Passed_out_year')), Passed_out_year)
+        })
+
+        // console.log(batchYearData)
+
+        let unplacedStudentsData = []
+
+        for(let i = 0; i < batchYearData.length; i++)
+        {
+            const studentData = batchYearData[i]
+
+            const id = studentData["Student_ID"]
+
+            // console.log("Student - ", i, id)
+
+            const Career_Preference = JSON.stringify(studentData["Career_Preference"])
+
+            // console.log("Student - ", i, Career_Preference)
+
+            const data = await StudentPlacement.findAll({ where: { Student_ID: id } })
+
+            // console.log("Student - ", i, data)
+
+            if(!data.length && Career_Preference.toLowerCase().includes("placement"))
+            {
+                unplacedStudentsData.push(studentData)
+            }
+        }
+
+        console.log("Count of Student unplaced: ", unplacedStudentsData.length)
+
+        return unplacedStudentsData
+        
+    } catch (error) {
+        log.error(error.toString())
+        return false
+    }
+}
+
+const unplacedInternship = async (Passed_out_year) => {
+    try {
+
+        Passed_out_year = parseInt(Passed_out_year)
+
+        let batchYearData = await Student.findAll({
+            where: sequelize.where(sequelize.fn('YEAR', sequelize.col('Passed_out_year')), Passed_out_year)
+        })
+
+        let unplacedInternshipData = []
+
+        for(let i = 0; i < batchYearData.length; i++)
+        {
+            const studentData = batchYearData[i]
+
+            const id = studentData["Student_ID"]
+
+            // console.log("Student - ", i, id)
+
+            const data = await StudentInternship.findAll({ where: { Student_ID: id } })
+
+            if(!data.length)
+            {
+                unplacedInternshipData.push(studentData)
+            }
+        }
+
+        console.log("Count of unplaced Internship: ", unplacedInternshipData.length)
+
+        return unplacedInternshipData
+        
+    } catch (error) {
+        log.error(error.toString())
+        return false
+    }
+}
+
 module.exports = {
     getPlacementReportByBatchYear,
     multiplePlacements,
-    placedStudentsByCompany
+    placedStudentsByCompany,
+    studentsInterestedInHigherStudies,
+    unplacedStudents,
+    unplacedInternship
 }
