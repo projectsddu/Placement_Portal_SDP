@@ -7,7 +7,7 @@ router.post("/getPlacementReportByBatchYear", ReportController.getPlacementRepor
 
 router.get("/multiplePlacements", ReportController.multiplePlacements)
 
-router.get("/placedStudentsByCompany", ReportController.placedStudentsByCompany)
+router.post("/placedStudentsByCompany", ReportController.placedStudentsByCompany)
 
 
 module.exports = router
