@@ -14,6 +14,7 @@ const getPlacementReportByBatchYear = async (req, res) => {
     {
         let data = req.body
         let batch_year = req.body.Passed_out_year
+        console.log(data)
         
         let placements = await ReportService.getPlacementReportByBatchYear(batch_year)
         console.log(placements)
