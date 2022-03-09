@@ -3,18 +3,22 @@ const log = new logger(true)
 const db = require("../Models/index")
 const UserLogin = db.userLogin
 const SHA256 = require("crypto-js/sha256")
+var CryptoJS = require("crypto-js")
+var AES = require("crypto-js/aes");
 const LoginTokenService = require("./LoginTokensService")
 const StudentService = require("./StudentService")
+const FirstTimePasswordService = require("./FirstTimePasswordService")
 const jwt = require("jsonwebtoken")
 const Student = db.students
 // const { where } = require("sequelize/dist")
 
 const getUserLoginObj = async (studentId) => {
     try {
-        const userLoginObj = await UserLogin.findAll({ where: { studentId } })
+        const userLoginObj = await UserLogin.findAll({ where: { LoginId: studentId } })
         return userLoginObj
     }
     catch (err) {
+        log.error(err)
         return false
     }
 }
@@ -92,12 +96,19 @@ const loginUser = async (loginId, password) => {
             return false
         }
         else {
-            const token = await LoginTokenService.addToken(loginId);
-            if (token) {
-                return token
+            // console.log(loginObj)
+            const IsFirstTime = JSON.parse(JSON.stringify(loginObj))[0]["IsFirstTime"]
+            if (IsFirstTime) {
+                return "Please Set your password to continue"
             }
             else {
-                return false
+                const token = await LoginTokenService.addToken(loginId);
+                if (token) {
+                    return token
+                }
+                else {
+                    return false
+                }
             }
         }
     }
@@ -128,10 +139,73 @@ const verifyUser = async (token, userId) => {
         return false
     }
 }
+
+
+const passwordFormatChecker = (password) => {
+    if (password.length <= 7) {
+        return "Too small password! password must be atleast 8 characters long."
+    }
+    else {
+        return "OK"
+    }
+}
+
+
+const changePasswordFirstTime = async (studentId, oldPassword, newPassword) => {
+    try {
+        let firstTimePassword = await FirstTimePasswordService.getFirstTimePassword(studentId)
+        firstTimePassword = (JSON.parse(JSON.stringify(firstTimePassword)))
+        if (firstTimePassword) {
+            const decryptedPassword = AES.decrypt(firstTimePassword.FirstTimePassword, process.env.ECRYPTION_KEY).toString(CryptoJS.enc.Utf8)
+            if (decryptedPassword == oldPassword) {
+                // change userlogin first time to false and update password
+                const msg = passwordFormatChecker(newPassword)
+                if (msg == "OK") {
+
+                    let userLoginObj = await getUserLoginObj(studentId)
+                    userLoginObj.Password = SHA256(newPassword).toString()
+                    userLoginObj.IsFirstTime = false
+
+                    console.log(userLoginObj)
+
+                    const status = await UserLogin.update(userLoginObj, { where: { LoginId: studentId } })
+
+                    if (status) {
+                        return "Password updated successfully"
+                    }
+                    else {
+                        return "Error updating password!"
+                    }
+                }
+                else {
+                    return msg
+                }
+            }
+            else {
+                console.log("Here150")
+                return "First time password is not correct!"
+            }
+
+
+
+        }
+
+        else {
+            return "Oops you are not verified"
+        }
+    }
+    catch (err) {
+        console.log(err.toString())
+        return "Oops you are not verified"
+    }
+
+}
+
 module.exports = {
     addFreshPassword,
     changePassword,
     createUserLogin,
+    changePasswordFirstTime,
     loginUser,
     verifyUser
 }
