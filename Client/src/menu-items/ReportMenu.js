@@ -51,6 +51,30 @@ export const ReportMenu = {
                     icon: icons['IconFileDownload'],
                     breadcrumbs: false
                 },
+                {
+                    id: 'UnplacedStudents',
+                    title: 'Unplaced Students',
+                    type: 'item',
+                    url: '/reports/unplaced_students_report',
+                    icon: icons['IconFileDownload'],
+                    breadcrumbs: false
+                },
+                {
+                    id: 'UnplacedInternship',
+                    title: 'Unplaced Internship',
+                    type: 'item',
+                    url: '/reports/unplaced_internship_report',
+                    icon: icons['IconFileDownload'],
+                    breadcrumbs: false
+                },
+                {
+                    id: 'InterestedInHigherStudies',
+                    title: 'Interested In Higher Studies',
+                    type: 'item',
+                    url: '/reports/interested_in_higher_studies_report',
+                    icon: icons['IconFileDownload'],
+                    breadcrumbs: false
+                }
                 // {
                 //     id: 'ViewCompany',
                 //     title: 'View Company',
