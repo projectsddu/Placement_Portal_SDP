@@ -85,6 +85,9 @@ const S_AddProject = Loadable(lazy(() => import('../views/Student_Views/Project/
 const MultiplePlacement = Loadable(lazy(() => import('../views/Report/MultiplePlacement')));
 const GetPlacementReport = Loadable(lazy(() => import('../views/Report/GetPlacementReport')));
 const GetReportCompany = Loadable(lazy(() => import('../views/Report/GetReportCompany')));
+const UnplacedStudents = Loadable(lazy(() => import('../views/Report/unplacedStudents')));
+const UnplacedInternship = Loadable(lazy(() => import('../views/Report/unplacedInternship')));
+const InterestedInHigherStudies = Loadable(lazy(() => import('../views/Report/InterestedInHigherStudies')));
 
 
 // report ends
@@ -201,9 +204,13 @@ const MainRoutes = () => {
 
                 // "/_student/achievements/add_project"
 
+                // reports route
                 "/reports/multiple_placement_report",
                 "/reports/get_placement_report",
                 "/reports/report_company",
+                "/reports/unplaced_students_report",
+                "/reports/unplaced_internship_report",
+                "/reports/interested_in_higher_studies_report"
 
                 // for any errorneous page
                 // "/"
@@ -272,9 +279,15 @@ const MainRoutes = () => {
                     <Route path="/_student/achievements/add_projects" component={S_AddProject} />
                     {/* <Route path="/_student/achievements/add_project" component={S_AddProject} /> */}
 
+
+                    {/* Reports View Routes */}
+                    
                     <Route path="/reports/multiple_placement_report" component={MultiplePlacement} />
                     <Route path="/reports/get_placement_report" component={GetPlacementReport} />
                     <Route path="/reports/report_company" component={GetReportCompany} />
+                    <Route path="/reports/unplaced_students_report" component={UnplacedStudents} />
+                    <Route path="/reports/unplaced_internship_report" component={UnplacedInternship} />
+                    <Route path="/reports/interested_in_higher_studies_report" component={InterestedInHigherStudies} />
 
                     {/* for any errorneous page */}
                     {/* <Route path="" component={ErrorPage} /> */}

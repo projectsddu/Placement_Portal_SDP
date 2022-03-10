@@ -13,11 +13,10 @@ function CustomToolbar() {
     );
 }
 
-export default function MultiplePlacement() {
-
+function unplacedInternship() {
 
     const [studentDetails, setStudentDetails] = useState([]);
-    
+
     const [batchYear, setBatchYear] = useState({
         Passed_out_year: ''
     });
@@ -32,53 +31,18 @@ export default function MultiplePlacement() {
         if (e.target.value.length == 4) 
         {
             let response = undefined;
-            response = await UsePost('/reports/multiplePlacements', { Passed_out_year: e.target.value }, 'POST');
+            response = await UsePost('/reports/unplacedInternship', { Passed_out_year: e.target.value }, 'POST');
 
             if (response != undefined) 
             {
-
-                // let length = Object.keys(response["data"]).length; 
-                // console.log(length);
-
-                var ids = [];
-
-                for(let keys in response["data"])
+                // console.log(response["data"]);
+                for(let i = 0; i < response["data"].length; i++)
                 {
-                    // console.log(keys);
-                    ids.push(keys);
+                    response["data"][i]["id"] = i;
                 }
 
-                // console.log(ids);
-
-                // for (var prop in response["data"]) {
-                //     console.log(response["data"][prop]["Student_Information"]["Student_Name"]);
-                // }
-
-                var data = Object.keys(response["data"]).map((key) => [Number(key), response["data"][key]]);
-
-                // console.log(data.length);
-
-                // console.log(data);
-
-                for (let i = 0; i < data.length; i++) {
-                    console.log(data[i][1]["Student_Information"]["Student_Name"]);
-                }
-
-                var data1 = [];
-
-                for (let i = 0; i < data.length; i++) {
-                    // console.log(data[i][1]);
-                    data[i][1]['id'] = i;
-                    data[i][1]['Student_ID'] = ids[i];
-                    data[i][1]['Student_Name'] = data[i][1]["Student_Information"]["Student_Name"];
-                    data1.push(data[i][1]);
-                }
-
-                
-                // console.log(data1);
-                
-                setCount(data.length);
-                setStudentDetails(data1);
+                setCount(response["data"].length);
+                setStudentDetails(response["data"]);
                 setTableExist(true);
             }
         }
@@ -110,12 +74,15 @@ export default function MultiplePlacement() {
     const columns = [
         { field: 'id', headerName: 'ID', hide: true },
         { field: 'Student_ID', headerName: 'Student ID', width: 150, editable: false },
-        { field: 'Student_Name', headerName: 'Name', width: 250, editable: false },
-        { field: 'Companies', headerName: 'Companies', width: 500, editable: false }
+        { field: 'FirstName', headerName: 'First Name', width: 200, editable: false },
+        { field: 'MiddleName', headerName: 'Middle Name', width: 200, editable: false },
+        { field: 'LastName', headerName: 'Last Name', width: 200, editable: false },
+        { field: 'Contact_No_1', headerName: 'Contact No 1', width: 200, editable: false },
+        { field: 'Contact_No_2', headerName: 'Contact No 2', width: 200, editable: false }
     ];
 
     return (
-        <MainCard title="View / Download Multiple Student Placement Report">
+        <MainCard title="View / Download Unplaced Student Internship Report">
             <TextField
                 fullWidth
                 label="Enter Passed Out Year"
@@ -132,7 +99,7 @@ export default function MultiplePlacement() {
                         variant="h1"
                         color="primary"
                     >
-                        Total students who got multiple placements: {count == "undefined" ? "" : count}
+                        Total students who didn't got any internship : {count == "undefined" ? "" : count}
                     </Typography>
                     <br />
                     <br />
@@ -160,8 +127,8 @@ export default function MultiplePlacement() {
                     </div>
                 </>
             }
-
-
         </MainCard>
     )
 }
+
+export default unplacedInternship
