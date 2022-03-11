@@ -22,7 +22,7 @@ const current_location = window.location.href.split("/")
 let menuItems
 
 
-if (current_location[3] == "_student") {
+if (current_location[3] == "_student" || current_location[3] == "") {
     console.log(current_location)
     console.log("Here in student")
     menuItems = {

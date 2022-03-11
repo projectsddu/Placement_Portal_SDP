@@ -129,6 +129,7 @@ const getAnnoucement = async (req, res) => {
 const updateAnnoucement = async (req, res) => {
     try {
         const id = req.params.annoucementId
+        console.log(req.fileName)
         const annoucement = await AnnouncementService.updateAnnoucement(req.body, id, true, req.fileName)
         if (annoucement) {
             return OK(res, "Announcement Updated!!")

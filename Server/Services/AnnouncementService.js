@@ -25,11 +25,17 @@ const createdAnnoucement = async (announcementData, job_description_file) => {
         const dat = Date.parse(announcementData["Date_of_Visit"])
         // const fileName = "./public/" + announcementData["Company_ID"] + "-" + dat.toString() + ".pdf"
         const fileName = job_description_file
-        announcementData["Job_Description_File"] = fileName
+        if (fileName != null || fileName != "" || fileName != undefined) {
+
+            announcementData["Job_Description_File"] = fileName
+        }
+        else {
+            announcementData["Job_Description_File"] = ""
+        }
         // announcementData["Company_ID"] = 3 // Temporary static
         announcementData["IsOpen"] = true // Temporary static
         const branches = announcementData["Eligible_Branches"].split(",")
-        console.log(branches)
+        // console.log(branches)
         announcementData["Eligible_Branches"] = ""
         await Announcement.create(announcementData)
         let aData = await Announcement.findAll({
@@ -38,7 +44,8 @@ const createdAnnoucement = async (announcementData, job_description_file) => {
             ],
         })
         aData = JSON.parse(JSON.stringify(aData))[0]
-        console.log("Here", JSON.parse(JSON.stringify(aData))[0])
+        console.log("FileName", fileName)
+        // console.log("Here", JSON.parse(JSON.stringify(aData))[0])
         for (let i = 0; i < branches.length; i++) {
             const status = await BranchAnnouncementService.addBranchToAnnouncement(aData.Announcement_ID, branches[i])
         }
@@ -109,12 +116,19 @@ const updateAnnoucement = async (data, id, sendNotification = false, job_descrip
             console.log(JSON.parse(JSON.stringify(data)))
             // console.log(data["Eligible_Branches"])
             const fileName = job_description_file
-            data["Job_Description_File"] = fileName
+            if (fileName != "") {
+
+                data["Job_Description_File"] = fileName
+            }
+
+            console.log("File Naem", fileName == "")
+            // return false
+            // data["Job_Description_File"] = fileName
             await BranchAnnouncementService.deleteBranchesOfAnnouncement(id)
             let branches = data["Eligible_Branches"].split(",")
             for (let i = 0; i < branches.length; i++) {
                 await BranchAnnouncementService.addBranchToAnnouncement(id, branches[i])
-                console.log(branches[i])
+                // console.log(branches[i])
             }
             data["Eligible_Branches"] = ""
             const announcement = await Announcement.update(data, { where: { Announcement_ID: id } })

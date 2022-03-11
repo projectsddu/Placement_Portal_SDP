@@ -154,7 +154,10 @@ const pdfUploadMiddleWare = async (req, res, next) => {
 
 const jobFileUploadMiddleWare = async (req, res, next) => {
     try {
-        // console.log(req.files)
+        console.log(req.files)
+        if (req.files == null) {
+            next()
+        }
         const fileName = req.files.Job_Description_File.name
         const data = req.files.Job_Description_File.data
         const mimeType = req.files.Job_Description_File.mimetype
@@ -200,6 +203,7 @@ const jobFileUploadMiddleWare = async (req, res, next) => {
 const csvFileUploadMiddleWare = async (req, res, next) => {
     try {
         console.log("> Uploading CSV Student file!")
+        console.log(req.files)
         const fileName = req.files.Student_Details_File.name
         const data = req.files.Student_Details_File.data
         const mimeType = req.files.Student_Details_File.mimetype
