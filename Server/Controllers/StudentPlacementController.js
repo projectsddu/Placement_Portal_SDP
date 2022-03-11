@@ -33,13 +33,14 @@ const addStudentPlacementViaCSV = async (req, res) => {
     try {
         // convert CSV file to JSON array
         const path = "./public/PlacementFiles/DDU_PLACEMENT.csv"
-        const studentPlacementData = await CSVToJSON().fromFile(path)
-        // console.log("from line 37")
-        // console.log(studentPlacementData)
+        const studentPlacementData = await CSVToJSON().fromStream(req.fileData)
+        // console.log(stud)
+        console.log("from line 37")
+        console.log(studentPlacementData)
         if (studentPlacementData) {
             for (let i = 0; i < studentPlacementData.length; i++) {
                 try {
-                    let studentStatus = await StudentPlacementService.createStudentPlacement(studentPlacementData[i])
+                    let studentStatus = await StudentPlacementService.createStudentPlacement(studentPlacementData[i], true)
 
                 } catch (error) {
                     log.error(error.toString())

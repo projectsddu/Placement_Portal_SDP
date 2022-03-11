@@ -1,7 +1,10 @@
 const logger = require("serverloggerjs/logger")
+const { sequelize } = require("../Models/index")
+const Sequelize = require("sequelize")
 const log = new logger(true)
 const db = require("../Models/index")
 const StudentPlacement = db.student_placements
+const Company = db.companies
 const CompanyService = require("./CompanyService")
 const StudentService = require("./StudentService")
 
@@ -47,7 +50,11 @@ async function checkExists(id) {
     return studentplacement.length > 0 ? true : false
 }
 
-const createStudentPlacement = async (studentplacementdata) => {
+
+
+
+const createStudentPlacement = async (studentplacementdata, fromFile = false) => {
+    console.log("Create service callsed")
     try {
         const status = await isFirstPlacement(studentplacementdata.Student_ID)
         if (status) {
@@ -61,6 +68,18 @@ const createStudentPlacement = async (studentplacementdata) => {
 
         }
         const student_details = await StudentService.getOneStudent(studentplacementdata.Student_ID)
+        if (fromFile) {
+            console.log("Company ID")
+            // let company = Company.findOne({ where: [Sequelize.where(Sequelize.fn("lower", "Company_name"), studentplacementdata["Company_ID"].toLowerCase())] })
+            let [res1, res2] = await sequelize.query("SELECT Company_ID FROM Companies WHERE LOWER(Company_name)='" + studentplacementdata["Company_ID"].toLowerCase() + "'")
+            console.log("Break1")
+            console.log("Here in company")
+            console.log(res2)
+            if (res2[0]["Company_ID"] == 0) {
+                throw "Company not found"
+            }
+            studentplacementdata["Company_ID"] = res2[0]["Company_ID"]
+        }
         studentplacementdata["Passed_out_year"] = student_details.Passed_out_year
         await StudentPlacement.create(studentplacementdata)
         return true

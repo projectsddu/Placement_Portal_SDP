@@ -5,7 +5,7 @@ const multer = require('multer');
 const AdminAuthenticate = require("../Middlewares/Admin/AdminAuthenticate")
 const FileUploadMiddleware = require("../Middlewares/FileUpload/FileUpload")
 const ResolveUser = require("../Middlewares/General/ResloveUser")
-
+// const FileUploadMiddleware = require("../Middlewares/FileUpload/FileUpload")
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -36,7 +36,7 @@ const fileStorage1 = multer.diskStorage({
 const upload1 = multer({ storage: fileStorage1 })
 
 router.post("/addStudentPlacement", [AdminAuthenticate.AdminAuthenticate, FileUploadMiddleware.jobFileUploadMiddleWare], StudentPlacementController.addStudentPlacement)
-router.post("/addStudentPlacementWithCSV", [upload.single("Student_Placement_Details_File"), AdminAuthenticate.AdminAuthenticate], StudentPlacementController.addStudentPlacementViaCSV)
+router.post("/addStudentPlacementWithCSV", [AdminAuthenticate.AdminAuthenticate, FileUploadMiddleware.csvFileUploadMiddleWare], StudentPlacementController.addStudentPlacementViaCSV)
 router.get("/getStudentPlacement/:studentId", [ResolveUser.ResolveUserMiddleware], StudentPlacementController.getStudentPlacement)
 router.get("/getAllStudentPlacement", [AdminAuthenticate.AdminAuthenticate], StudentPlacementController.getAllStudentPlacement)
 router.post("/updateStudentPlacement/:id", [AdminAuthenticate.AdminAuthenticate, FileUploadMiddleware.jobFileUploadMiddleWare], StudentPlacementController.updateStudentPlacement)
