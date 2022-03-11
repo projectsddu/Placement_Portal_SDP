@@ -13,7 +13,7 @@ function CustomToolbar() {
     );
 }
 
-function unplacedInternship() {
+function UnplacedInternship() {
 
     const [studentDetails, setStudentDetails] = useState([]);
 
@@ -28,16 +28,13 @@ function unplacedInternship() {
     async function handleChange(e) {
         setBatchYear({ ...batchYear, Passed_out_year: e.target.value });
 
-        if (e.target.value.length == 4) 
-        {
+        if (e.target.value.length == 4) {
             let response = undefined;
             response = await UsePost('/reports/unplacedInternship', { Passed_out_year: e.target.value }, 'POST');
 
-            if (response != undefined) 
-            {
+            if (response != undefined) {
                 // console.log(response["data"]);
-                for(let i = 0; i < response["data"].length; i++)
-                {
+                for (let i = 0; i < response["data"].length; i++) {
                     response["data"][i]["id"] = i;
                 }
 
@@ -131,4 +128,4 @@ function unplacedInternship() {
     )
 }
 
-export default unplacedInternship
+export default UnplacedInternship

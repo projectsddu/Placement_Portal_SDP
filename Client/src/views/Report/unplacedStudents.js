@@ -13,7 +13,7 @@ function CustomToolbar() {
     );
 }
 
-function unplacedStudents() {
+function UnplacedStudents() {
 
     const [studentDetails, setStudentDetails] = useState([]);
 
@@ -28,23 +28,20 @@ function unplacedStudents() {
     async function handleChange(e) {
         setBatchYear({ ...batchYear, Passed_out_year: e.target.value });
 
-        if(e.target.value.length == 4)
-        {
+        if (e.target.value.length == 4) {
             let response = undefined;
             response = await UsePost('/reports/unplacedStudents', { Passed_out_year: e.target.value }, 'POST');
 
-            if(response != undefined)
-            {
+            if (response != undefined) {
                 // console.log(response["data"]);
-                for(let i = 0; i < response["data"].length; i++)
-                {
+                for (let i = 0; i < response["data"].length; i++) {
                     response["data"][i]["id"] = i;
                 }
 
                 setCount(response["data"].length)
                 setStudentDetails(response["data"]);
                 setTableExist(true);
-            }   
+            }
         }
     }
 
@@ -133,4 +130,4 @@ function unplacedStudents() {
     )
 }
 
-export default unplacedStudents;
+export default UnplacedStudents;
