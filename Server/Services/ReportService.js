@@ -12,8 +12,7 @@ const StudentInternship = db.student_internships
 
 const getPlacementReportByBatchYear = async (batch_year) => {
 
-    try
-    {
+    try {
         let Passed_out_year = new Date(Date.now())
         Passed_out_year.setDate(0)
         Passed_out_year.setMonth(0)
@@ -22,9 +21,9 @@ const getPlacementReportByBatchYear = async (batch_year) => {
         // fetch the placement by batch year
 
         let placements = await StudentPlacement.findAll({
-            where:[ sequelize.where(sequelize.fn('YEAR', sequelize.col('Passed_out_year')), batch_year),
-            {IsFinal: 1}
-        ]
+            where: [sequelize.where(sequelize.fn('YEAR', sequelize.col('Passed_out_year')), batch_year),
+            { IsFinal: 1 }
+            ]
         })
 
         placements = JSON.parse(JSON.stringify(placements))
@@ -41,16 +40,13 @@ const getPlacementReportByBatchYear = async (batch_year) => {
 
         let salaries = []
 
-        for(let i = 0; i < placements.length; i++)
-        {
+        for (let i = 0; i < placements.length; i++) {
             let student = await StudentService.getOneStudent(placements[i]["Student_ID"])
 
-            if(student["Gender"].toLowerCase() == "male" || student["Gender"].toLowerCase() == "m")
-            {
+            if (student["Gender"].toLowerCase() == "male" || student["Gender"].toLowerCase() == "m") {
                 placementsMetadata["Male"]++;
             }
-            else if(student["Gender"].toLowerCase() == "female" || student["Gender"].toLowerCase() == "f")
-            {
+            else if (student["Gender"].toLowerCase() == "female" || student["Gender"].toLowerCase() == "f") {
                 placementsMetadata["Female"]++;
             }
 
@@ -62,14 +58,12 @@ const getPlacementReportByBatchYear = async (batch_year) => {
             placementsMetadata["Total_Salary"] += placements[i]["Salary"]
 
             // max salary
-            if(placementsMetadata["Max_Salary"] < placements[i]["Salary"])
-            {
+            if (placementsMetadata["Max_Salary"] < placements[i]["Salary"]) {
                 placementsMetadata["Max_Salary"] = placements[i]["Salary"]
             }
 
             // min salary
-            if(placementsMetadata["Min_Salary"] > placements[i]["Salary"])
-            {
+            if (placementsMetadata["Min_Salary"] > placements[i]["Salary"]) {
                 placementsMetadata["Min_Salary"] = placements[i]["Salary"]
             }
 
@@ -86,8 +80,7 @@ const getPlacementReportByBatchYear = async (batch_year) => {
         placementsMetadata["Average_Salary"] = placementsMetadata["Total_Salary"] / placements.length
 
         // even
-        if(salaries.length % 2 == 0)
-        {
+        if (salaries.length % 2 == 0) {
             placementsMetadata["Median_Salary"] = (salaries[parseInt(salaries.length / 2)] + salaries[parseInt(salaries.length / 2) - 1]) / 2
         }
         else {
@@ -105,9 +98,8 @@ const getPlacementReportByBatchYear = async (batch_year) => {
     }
 }
 
-const multiplePlacements = async(batch_year) => {
-    try
-    {
+const multiplePlacements = async (batch_year) => {
+    try {
         batch_year = parseInt(batch_year)
 
         let placements_1 = await StudentPlacement.findAll({
@@ -118,66 +110,59 @@ const multiplePlacements = async(batch_year) => {
         let placementTaken = {}
         let placeToFinal = {}
 
-        for(let i=0;i<placements_1.length;i++)
-        {
+        for (let i = 0; i < placements_1.length; i++) {
             const curPlacementObj = placements_1[i]
-            if(studentTaken.hasOwnProperty(curPlacementObj["Student_ID"]))
-            {
+            if (studentTaken.hasOwnProperty(curPlacementObj["Student_ID"])) {
                 studentTaken[curPlacementObj["Student_ID"]] += 1
             }
-            else
-            {
+            else {
                 studentTaken[curPlacementObj["Student_ID"]] = 1
             }
 
-            if(placementTaken.hasOwnProperty(curPlacementObj["Student_ID"]))
-            {
-                 placementTaken[curPlacementObj["Student_ID"]].push(
-                   curPlacementObj
-                 );
-                 placeToFinal[curPlacementObj["Student_ID"]] =
-                   placementTaken[curPlacementObj["Student_ID"]];
+            if (placementTaken.hasOwnProperty(curPlacementObj["Student_ID"])) {
+                placementTaken[curPlacementObj["Student_ID"]].push(
+                    curPlacementObj
+                );
+                placeToFinal[curPlacementObj["Student_ID"]] =
+                    placementTaken[curPlacementObj["Student_ID"]];
             }
-            else
-            {
+            else {
                 placementTaken[curPlacementObj["Student_ID"]] = []
                 placementTaken[curPlacementObj["Student_ID"]].push(
-                  curPlacementObj
+                    curPlacementObj
                 );
             }
         }
         let keys = Object.keys(placeToFinal)
-        for(let i in keys)
-        {
+        for (let i in keys) {
             let studentId = keys[i]
             let student_data = await StudentService.getOneStudent(
-              studentId
+                studentId
             );
             let studentName = student_data["FirstName"] + " " + student_data["MiddleName"] + " " + student_data["LastName"]
 
             let allPlacements = placeToFinal[studentId]
             let companiesData = []
-            for(let j=0;j<allPlacements.length;j++)
-            {
+            for (let j = 0; j < allPlacements.length; j++) {
                 let companyDetails = await CompanyService.getCompany(
-                  allPlacements[j]["Company_ID"]
+                    allPlacements[j]["Company_ID"]
                 );
                 companiesData.push(companyDetails["Company_name"])
             }
             placeToFinal[studentId] = {
-                "Student_Information":{"Student_Name":studentName},
-                "Companies":companiesData,
+                "Student_Information": { "Student_Name": studentName },
+                "Companies": companiesData,
                 // "PlacementsDetails":allPlacements
             }
         }
 
-                // let student_data = await StudentService.getOneStudent(placements_1[i]["Student_ID"])
+        // let student_data = await StudentService.getOneStudent(placements_1[i]["Student_ID"])
 
 
 
-                // // set name
-                // student["Name"] = student_data["FirstName"] + " " + student_data["MiddleName"] + " " + student_data["LastName"]
-        
+        // // set name
+        // student["Name"] = student_data["FirstName"] + " " + student_data["MiddleName"] + " " + student_data["LastName"]
+
 
         return placeToFinal
     }
@@ -189,24 +174,21 @@ const multiplePlacements = async(batch_year) => {
 
 const placedStudentsByCompany = async (batch_year) => {
 
-    try
-    {
+    try {
         // console.log("from the service")
         batch_year = parseInt(batch_year)
         // console.log(batch_year)
 
         let placements = undefined
 
-        if(batch_year == 1)
-        {
+        if (batch_year == 1) {
             console.log("inside all")
             // use according name of the table by lloking at ppmyadmin
             const [results, placementsData] = await sequelize.query("SELECT Company_ID, Count(Student_ID) AS Student_Count FROM StudentPlacements GROUP BY (Company_ID)");
 
             placements = placementsData
         }
-        else
-        {
+        else {
             console.log("inside the else")
             const [results, placementsData] = await sequelize.query("SELECT Company_ID, Count(Student_ID) AS Student_Count FROM StudentPlacements WHERE year(Passed_out_year) = " + batch_year + " GROUP BY (Company_ID)");
 
@@ -218,8 +200,7 @@ const placedStudentsByCompany = async (batch_year) => {
 
         let company_list = []
 
-        for(let i = 0; i < placements.length; i++)
-        {
+        for (let i = 0; i < placements.length; i++) {
             let companyDetails = await CompanyService.getCompany(placements[i]["Company_ID"])
 
             let data = {};
@@ -272,7 +253,7 @@ const placedStudentsByCompany = async (batch_year) => {
 //                     Company: []
 //                 }
 
-                
+
 
 //                 let student_data = await StudentService.getOneStudent(placements_1[i]["Student_ID"])
 
@@ -304,7 +285,7 @@ const placedStudentsByCompany = async (batch_year) => {
 //         // placements = JSON.parse(JSON.stringify(placements))
 
 //         // let students = {}
-        
+
 
 //         // // const students = await StudentService
 
@@ -323,9 +304,8 @@ const placedStudentsByCompany = async (batch_year) => {
 
 // }
 
-const studentsInterestedInHigherStudies = async(Passed_out_year) => {
-    try
-    {
+const studentsInterestedInHigherStudies = async (Passed_out_year) => {
+    try {
         Passed_out_year = parseInt(Passed_out_year)
 
         let batchYearData = await Student.findAll({
@@ -336,16 +316,14 @@ const studentsInterestedInHigherStudies = async(Passed_out_year) => {
 
         let higherStudiesData = []
 
-        for(let i = 0; i < batchYearData.length; i++)
-        {
+        for (let i = 0; i < batchYearData.length; i++) {
             const studentData = batchYearData[i]
 
             const Career_Preference = JSON.stringify(studentData["Career_Preference"])
 
             // console.log("Student-",i,Career_Preference)
-            
-            if(Career_Preference.toLowerCase().includes("higher") || Career_Preference.toLowerCase().includes("study"))
-            {
+
+            if (Career_Preference.toLowerCase().includes("higher") || Career_Preference.toLowerCase().includes("study")) {
                 higherStudiesData.push(studentData)
             }
         }
@@ -361,7 +339,7 @@ const studentsInterestedInHigherStudies = async(Passed_out_year) => {
     }
 }
 
-const unplacedStudents = async(Passed_out_year) => {
+const unplacedStudents = async (Passed_out_year) => {
     try {
 
         Passed_out_year = parseInt(Passed_out_year)
@@ -376,8 +354,7 @@ const unplacedStudents = async(Passed_out_year) => {
 
         let unplacedStudentsData = []
 
-        for(let i = 0; i < batchYearData.length; i++)
-        {
+        for (let i = 0; i < batchYearData.length; i++) {
             const studentData = batchYearData[i]
 
             const id = studentData["Student_ID"]
@@ -392,8 +369,7 @@ const unplacedStudents = async(Passed_out_year) => {
 
             // console.log("Student - ", i, data)
 
-            if(!data.length && Career_Preference.toLowerCase().includes("placement"))
-            {
+            if (!data.length && Career_Preference.toLowerCase().includes("placement")) {
                 unplacedStudentsData.push(studentData)
             }
         }
@@ -401,7 +377,7 @@ const unplacedStudents = async(Passed_out_year) => {
         console.log("Count of Student unplaced: ", unplacedStudentsData.length)
 
         return unplacedStudentsData
-        
+
     } catch (error) {
         log.error(error.toString())
         return false
@@ -419,8 +395,7 @@ const unplacedInternship = async (Passed_out_year) => {
 
         let unplacedInternshipData = []
 
-        for(let i = 0; i < batchYearData.length; i++)
-        {
+        for (let i = 0; i < batchYearData.length; i++) {
             const studentData = batchYearData[i]
 
             const id = studentData["Student_ID"]
@@ -429,8 +404,7 @@ const unplacedInternship = async (Passed_out_year) => {
 
             const data = await StudentInternship.findAll({ where: { Student_ID: id } })
 
-            if(!data.length)
-            {
+            if (!data.length) {
                 unplacedInternshipData.push(studentData)
             }
         }
@@ -438,7 +412,7 @@ const unplacedInternship = async (Passed_out_year) => {
         console.log("Count of unplaced Internship: ", unplacedInternshipData.length)
 
         return unplacedInternshipData
-        
+
     } catch (error) {
         log.error(error.toString())
         return false

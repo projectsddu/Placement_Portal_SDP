@@ -49,10 +49,16 @@ async function checkExists(id) {
 
 const createStudentPlacement = async (studentplacementdata) => {
     try {
-        await isFinalPlacementPresent(studentplacementdata.Student_ID)
         const status = await isFirstPlacement(studentplacementdata.Student_ID)
         if (status) {
             studentplacementdata["IsFinal"] = true
+        }
+        else {
+            if (studentplacementdata["IsFinal"] == true) {
+
+                await isFinalPlacementPresent(studentplacementdata.Student_ID)
+            }
+
         }
         const student_details = await StudentService.getOneStudent(studentplacementdata.Student_ID)
         studentplacementdata["Passed_out_year"] = student_details.Passed_out_year

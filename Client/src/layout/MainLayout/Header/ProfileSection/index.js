@@ -37,6 +37,8 @@ import { LOGOUT } from './../../../../store/actions';
 // assets
 import { IconLogout, IconSearch, IconSettings } from '@tabler/icons';
 import User1 from './../../../../assets/images/users/user-round.svg';
+import { useHistory } from 'react-router';
+import UsePost from "../../../../Utilities/UsePost"
 
 // style const
 const useStyles = makeStyles((theme) => ({
@@ -123,6 +125,7 @@ const ProfileSection = () => {
     const customization = useSelector((state) => state.customization);
     const account = useSelector((state) => state.account);
     const dispatcher = useDispatch();
+    const history = useHistory()
 
     const [sdm, setSdm] = React.useState(true);
     const [value, setValue] = React.useState('');
@@ -131,22 +134,24 @@ const ProfileSection = () => {
 
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
-    const handleLogout = () => {
-        console.log(account.token);
-        axios
-            .post(configData.API_SERVER + 'users/logout', { token: `${account.token}` }, { headers: { Authorization: `${account.token}` } })
-            .then(function (response) {
-
-                // Force the LOGOUT
-                //if (response.data.success) {
-                dispatcher({ type: LOGOUT });
-                //} else {
-                //    console.log('response - ', response.data.msg);
-                //}
-            })
-            .catch(function (error) {
-                console.log('error - ', error);
-            });
+    const handleLogout = async () => {
+        const curLoc = history.location.pathname.split("/")
+        console.log(curLoc)
+        if (curLoc.indexOf("_student") != -1) {
+            // console.log("in student")
+            const res = await UsePost("/logout/student", {}, "POST")
+            if (res.data == "Successfully logged out!") {
+                localStorage.clear()
+                history.push("/")
+            }
+        }
+        else {
+            const res = await UsePost("/logout/admin", {}, "POST")
+            if (res.data == "Successfully logged out!") {
+                localStorage.clear()
+                history.push("/admin/login")
+            }
+        }
     };
     const handleToggle = () => {
         setOpen((prevOpen) => !prevOpen);
@@ -173,13 +178,13 @@ const ProfileSection = () => {
                 className={classes.profileChip}
                 icon={
                     <Avatar
-                        src={User1}
+                        // src={User1}
                         className={classes.headerAvatar}
                         ref={anchorRef}
                         aria-controls={open ? 'menu-list-grow' : undefined}
                         aria-haspopup="true"
                         color="inherit"
-                    />
+                    >A</Avatar>
                 }
                 label={<IconSettings stroke={1.5} size="1.5rem" color={theme.palette.primary.main} />}
                 variant="outlined"
@@ -215,16 +220,16 @@ const ProfileSection = () => {
                                     <CardContent className={classes.cardContent}>
                                         <Grid container direction="column" spacing={0}>
                                             <Grid item className={classes.flex}>
-                                                <Typography variant="h4">Welcome,</Typography>
+                                                <Typography variant="h4">{"Welcome, "}</Typography>
                                                 <Typography component="span" variant="h4" className={classes.name}>
-                                                    Rikin Chauhan
+                                                    Admin
                                                 </Typography>
                                             </Grid>
                                             <Grid item>
-                                                <Typography variant="subtitle2">Admin</Typography>
+                                                <Typography variant="subtitle2"></Typography>
                                             </Grid>
                                         </Grid>
-                                        <OutlinedInput
+                                        {/* <OutlinedInput
                                             className={classes.searchControl}
                                             id="input-search-profile"
                                             value={value}
@@ -239,11 +244,10 @@ const ProfileSection = () => {
                                             inputProps={{
                                                 'aria-label': 'weight'
                                             }}
-                                        />
-                                        <Divider />
+                                        /> */}
+                                        {/* <Divider /> */}
                                         <PerfectScrollbar className={classes.ScrollHeight}>
-                                            {/* <UpgradePlanCard /> */}
-                                            <Divider />
+                                            {/* <Divider />
                                             <Card className={classes.card}>
                                                 <CardContent>
                                                     <Grid container spacing={3} direction="column">
@@ -280,7 +284,7 @@ const ProfileSection = () => {
                                                         </Grid>
                                                     </Grid>
                                                 </CardContent>
-                                            </Card>
+                                            </Card> */}
                                             <Divider />
                                             <List component="nav" className={classes.navContainer}>
                                                 <ListItemButton
