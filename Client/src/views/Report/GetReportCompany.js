@@ -33,6 +33,9 @@ function GetReportCompany() {
             res = await UsePost('/reports/placedStudentsByCompany', { Passed_out_year: e.target.value }, 'POST');
 
             if (res != undefined) {
+
+                console.log(res["data"])
+
                 for (let i = 0; i < res['data'].length; i++) {
                     res['data'][i]['id'] = i;
                 }
@@ -71,7 +74,7 @@ function GetReportCompany() {
                     >
                         View Details
                     </Button>
-                    
+
                 );
             }
         },
@@ -88,18 +91,18 @@ function GetReportCompany() {
                 onInput={(e) => {
                     handleChange(e);
                 }}
-                // value={batchYear['Passed_out_year']}
-                // onChange={(e) => {
-                //     setBatchYear({ ...batchYear, Passed_out_year: e.target.value });
-                // }}
+            // value={batchYear['Passed_out_year']}
+            // onChange={(e) => {
+            //     setBatchYear({ ...batchYear, Passed_out_year: e.target.value });
+            // }}
             />
-            <br/>
-            <br/>
-            {!tableExist ? "" 
-            :
-            <>
-            
-            <div style={{ height: 400, width: '100%' }}>
+
+            <br />
+            <br />
+            {!tableExist ? ""
+                :
+                <>
+                    <div style={{ height: 400, width: '100%' }}>
                         <DataGrid
                             checkboxSelection
                             rows={companyDetails}
@@ -109,8 +112,8 @@ function GetReportCompany() {
                             }}
                         />
                     </div>
-            </>
-            
+                </>
+
             }
         </MainCard>
     );
