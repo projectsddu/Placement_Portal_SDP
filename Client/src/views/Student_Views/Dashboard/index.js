@@ -140,14 +140,14 @@ const Dashboard = () => {
             {student_spi === undefined ? "" : <Grid container spacing={gridSpacing}>
                 <Grid item xs={12}>
                     <Grid container spacing={gridSpacing}>
-                        <Grid item lg={4} md={6} sm={6} xs={12}>
-                            {studentDetails === undefined ? "" : <NameCard FirstName={studentDetails.FirstName} MiddleName={studentDetails.MiddleName} LastName={studentDetails.LastName} Email_ID={studentDetails.Email_ID} isLoading={isLoading} />
+                        <Grid item lg={6} md={6} sm={6} xs={12}>
+                            {studentDetails === undefined ? "" : <NameCard FirstName={studentDetails.FirstName} MiddleName={studentDetails.MiddleName[0]} LastName={studentDetails.LastName} Email_ID={studentDetails.Email_ID} isLoading={isLoading} />
                             }
                         </Grid>
-                        <Grid item lg={4} md={6} sm={6} xs={12}>
+                        <Grid item lg={6} md={6} sm={6} xs={12}>
                             <TotalSubscriptionsCard isLoading={isLoading} />
                         </Grid>
-                        <Grid item lg={4} md={12} sm={12} xs={12}>
+                        {/* <Grid item lg={4} md={12} sm={12} xs={12}>
                             <Grid container spacing={gridSpacing}>
                                 <Grid item sm={6} xs={12} md={6} lg={12}>
                                     <TotalIncomeDarkCard isLoading={isLoading} />
@@ -157,7 +157,7 @@ const Dashboard = () => {
                                 </Grid>
 
                             </Grid>
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
@@ -173,7 +173,7 @@ const Dashboard = () => {
                             </>}
 
                         </Grid>
-                        <Grid item xs={12} md={8}>
+                        <Grid item xs={12} md={12}>
                             <StudentDataBarChart isLoading={isLoading}
                                 student_spi_list={student_spi}
                             // Sem_1_SPI = {Sem_1_SPI}
@@ -186,9 +186,9 @@ const Dashboard = () => {
                             // Sem_8_SPI = {Sem_8_SPI}
                             />
                         </Grid>
-                        <Grid item xs={12} md={4}>
+                        {/* <Grid item xs={12} md={4}>
                             <PopularCard isLoading={isLoading} />
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                 </Grid>
             </Grid>

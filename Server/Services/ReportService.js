@@ -187,6 +187,58 @@ const multiplePlacements = async(batch_year) => {
     }
 }
 
+// const placedStudentsByCompany = async (batch_year) => {
+
+//     try
+//     {
+//         // console.log("from the service")
+//         batch_year = parseInt(batch_year)
+//         // console.log(batch_year)
+
+//         let placements = undefined
+
+//         if(batch_year == 1)
+//         {
+//             console.log("inside all")
+//             // use according name of the table by lloking at ppmyadmin
+//             const [results, placementsData] = await sequelize.query("SELECT Company_ID, Count(Student_ID) AS Student_Count FROM StudentPlacements WHERE IsFinal = 1 GROUP BY (Company_ID)");
+
+//             placements = placementsData
+//         }
+//         else
+//         {
+//             console.log("inside the else")
+//             const [results, placementsData] = await sequelize.query("SELECT Company_ID, Count(Student_ID) AS Student_Count FROM StudentPlacements WHERE IsFinal = 1 AND year(Passed_out_year) = " + batch_year + " GROUP BY (Company_ID)");
+
+//             placements = placementsData
+//         }
+
+
+//         // console.log(placements[1]["Count(Student_ID)"])
+
+//         let company_list = []
+
+//         for(let i = 0; i < placements.length; i++)
+//         {
+//             let companyDetails = await CompanyService.getCompany(placements[i]["Company_ID"])
+
+//             let data = {};
+//             data["Company_ID"] = placements[i]["Company_ID"]
+//             data["Company_name"] = companyDetails["Company_name"]
+//             data["Student_Count"] = placements[i]["Student_Count"]
+
+//             company_list.push(data)
+//         }
+
+//         return company_list
+//     }
+//     catch (err) {
+//         log.error(err.toString())
+//         return false
+//     }
+
+// }
+
 const placedStudentsByCompany = async (batch_year) => {
 
     try
@@ -201,18 +253,30 @@ const placedStudentsByCompany = async (batch_year) => {
         {
             console.log("inside all")
             // use according name of the table by lloking at ppmyadmin
-            const [results, placementsData] = await sequelize.query("SELECT Company_ID, Count(Student_ID) AS Student_Count FROM StudentPlacements GROUP BY (Company_ID)");
-
+            let placementsData = await StudentPlacement.findAll({
+                attributes: ['id', 'Company_ID', 'Designation', 'Salary', [sequelize.fn('count', sequelize.col('Student_ID')), 'student_count']],
+                where: {IsFinal: 1},
+                group : ['StudentPlacement.Company_ID'],
+                raw: true,
+            })
             placements = placementsData
         }
         else
         {
             console.log("inside the else")
-            const [results, placementsData] = await sequelize.query("SELECT Company_ID, Count(Student_ID) AS Student_Count FROM StudentPlacements WHERE year(Passed_out_year) = " + batch_year + " GROUP BY (Company_ID)");
+            let placementsData = await StudentPlacement.findAll({
+                attributes: ['id', 'Company_ID', 'Designation', 'Salary', [sequelize.fn('count', sequelize.col('Student_ID')), 'student_count']],
+                where:[ sequelize.where(sequelize.fn('YEAR', sequelize.col('Passed_out_year')), batch_year),
+                {IsFinal: 1}
+                ],
+                group : ['StudentPlacement.Company_ID'],
+                raw: true,
+            })
 
             placements = placementsData
         }
 
+        console.log(placements)
 
         // console.log(placements[1]["Count(Student_ID)"])
 
@@ -223,9 +287,9 @@ const placedStudentsByCompany = async (batch_year) => {
             let companyDetails = await CompanyService.getCompany(placements[i]["Company_ID"])
 
             let data = {};
-
+            data["Company_ID"] = placements[i]["Company_ID"]
             data["Company_name"] = companyDetails["Company_name"]
-            data["Student_Count"] = placements[i]["Student_Count"]
+            data["Student_Count"] = placements[i]["student_count"]
 
             company_list.push(data)
         }
@@ -237,6 +301,55 @@ const placedStudentsByCompany = async (batch_year) => {
         return false
     }
 
+}
+
+const singleCompanyDetails = async (company_id, batch_year) => {
+    try
+    {
+
+        let placements;
+
+        if(batch_year == "all" || batch_year == "ALL" || batch_year == "All")
+        {
+            placements = await StudentPlacement.findAll({
+                where: {
+                    IsFinal: 1, Company_ID: company_id
+                }
+            })
+        }
+        else {
+            placements = await StudentPlacement.findAll({
+                where: [ sequelize.where(sequelize.fn('YEAR', sequelize.col('Passed_out_year')), batch_year),
+                    {IsFinal: 1},
+                    {Company_ID: company_id}
+                ]
+            })
+        }
+        
+
+        placements = JSON.parse(JSON.stringify(placements))
+
+        let company_details = await CompanyService.getCompany(company_id)
+
+        let student_list = []
+
+        for(let i = 0; i < placements.length; i++)
+        {
+            let student_details = await StudentService.getOneStudent(placements[i]["Student_ID"])
+
+            student_list.push(student_details)
+        }
+
+        let data = {}
+        data["Company_details"] = company_details
+        data["Student_list"] = student_list
+
+        return data
+    }
+    catch (err) {
+        log.error(err.toString())
+        return false
+    }
 }
 // const multiplePlacements = async (batch_year) => {
 
@@ -451,5 +564,6 @@ module.exports = {
     placedStudentsByCompany,
     studentsInterestedInHigherStudies,
     unplacedStudents,
-    unplacedInternship
+    unplacedInternship,
+    singleCompanyDetails
 }

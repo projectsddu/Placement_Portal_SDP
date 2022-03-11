@@ -3,6 +3,7 @@ import MainCard from '../../ui-component/cards/MainCard';
 import { TextField, Button } from '@material-ui/core';
 import UsePost from '../../Utilities/UsePost';
 import { DataGrid, RowsProp, ColDef, GridToolbarContainer, GridToolbarExport } from '@material-ui/data-grid';
+import { useHistory } from 'react-router';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import HandleToast from '../../Utilities/HandleToast';
 import { ToastContainer, toast } from 'react-toastify';
@@ -22,6 +23,7 @@ function GetReportCompany() {
         Passed_out_year: ''
     });
     const [tableExist, setTableExist] = useState(false);
+    const history = useHistory();
 
     async function handleChange(e) {
         setBatchYear({ ...batchYear, Passed_out_year: e.target.value });
@@ -31,18 +33,21 @@ function GetReportCompany() {
             res = await UsePost('/reports/placedStudentsByCompany', { Passed_out_year: e.target.value }, 'POST');
 
             if (res != undefined) {
-                // console.log(res["data"])
                 for (let i = 0; i < res['data'].length; i++) {
                     res['data'][i]['id'] = i;
                 }
+                console.log(res["data"])
                 setCompanyDetails(res['data']);
                 setTableExist(true);
             }
         }
     }
 
+    let temp_id = '';
+
     const columns = [
         { field: 'id', headerName: 'ID', hide: true },
+        { field: 'Company_ID', headerName: 'Company ID', hide: true },
         { field: 'Company_name', headerName: 'Company Name', width: 220, editable: false },
         { field: 'Student_Count', headerName: 'Placed Students', width: 220, editable: false },
         {
@@ -51,16 +56,16 @@ function GetReportCompany() {
             sortable: false,
             width: 200,
             disableClickEventBubbling: true,
-            // valueGetter: (params) => {
-            //     temp_id = params.row.Company_ID;
-            // },
+            valueGetter: (params) => {
+                temp_id = params.row.Company_ID;
+            },
             renderCell: (id) => {
                 return (
                     <Button
                         variant="contained"
-                        // onClick={() => {
-                        //     history.push('/company/view_company/' + temp_id);
-                        // }}
+                        onClick={() => {
+                            history.push('/reports/single_company_details/' + temp_id + "/" + batchYear["Passed_out_year"]);
+                        }}
                         color="primary"
                         startIcon={<IconEye />}
                     >
@@ -93,6 +98,7 @@ function GetReportCompany() {
             {!tableExist ? "" 
             :
             <>
+            
             <div style={{ height: 400, width: '100%' }}>
                         <DataGrid
                             checkboxSelection

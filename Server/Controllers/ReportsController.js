@@ -93,6 +93,38 @@ const placedStudentsByCompany = async (req, res) => {
     }
 }
 
+const singleCompanyDetails = async (req, res) => {
+    try
+    {
+        let company_id = req.params.id
+        let batch_year = req.params.batch_year
+        console.log("Company id: ", company_id)
+        console.log("Batch yera: ", batch_year)
+
+        if(!company_id || !batch_year)
+        {
+            throw "Error!! Company Id and Batch year are required!"
+        }
+
+        let students = await ReportService.singleCompanyDetails(company_id, batch_year)
+
+        if(students)
+        {
+            return RESP(res, students.length == 0 ? false : true, students.length == 0 ? "No students data!" : students)
+        }
+        else {
+            throw "Error in report of single company!"
+        }
+    }
+    catch (e) {
+        log.error(e.toString())
+        // console.log(e.toString());
+        // return ERROR(res, "Oops! some unknown error occured getting placements!")
+        return ERROR(res, e.toString())
+        // res.json({ status: false, data: e.toString() })
+    }
+}
+
 const studentsInterestedInHigherStudies = async (req, res) => {
     try {
         let Passed_out_year = req.body.Passed_out_year
@@ -161,6 +193,7 @@ module.exports = {
     getPlacementReportByBatchYear,
     multiplePlacements,
     placedStudentsByCompany,
+    singleCompanyDetails,
     studentsInterestedInHigherStudies,
     unplacedStudents,
     unplacedInternship

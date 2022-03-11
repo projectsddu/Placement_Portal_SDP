@@ -88,12 +88,6 @@ export default function ViewStudent() {
 
     }
 
-    // const { required_data, loading } = UseFetch('/student/getAllStudents', 'GET');
-
-    // let students_list = [];
-    function handleClick(idx) {
-        console.log(idx);
-    }
     // if (!loading) {
     //     // console.log(required_data);
     //     if (required_data['data'] != 'No Student data!') {
@@ -215,6 +209,7 @@ export default function ViewStudent() {
         { field: 'Pin_Code', headerName: 'Pin Code', width: 155, editable: false, hide: true },
         { field: 'Current_semester', headerName: 'Current Semester', width: 200, editable: false, hide: true },
         { field: 'Career_Preference', headerName: 'Career Preference', width: 200, editable: false, hide: true },
+        { field: 'Skills', headerName: 'Skills', width: 200, editable: false, hide: true},
 
 
     ]);
