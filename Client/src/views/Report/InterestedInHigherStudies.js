@@ -4,6 +4,13 @@ import MainCard from '../../ui-component/cards/MainCard';
 import { TextField } from '@material-ui/core';
 import { DataGrid, RowsProp, ColDef, GridToolbarContainer, GridToolbarExport } from '@material-ui/data-grid';
 import UsePost from '../../Utilities/UsePost';
+import ChipCard from "../../ui-component/cards/GenericCards/ChipCard"
+import { withStyles } from '@material-ui/styles';
+const WhiteTextTypography = withStyles({
+    root: {
+        color: '#FFFFFF'
+    }
+})(Typography);
 
 function CustomToolbar() {
     return (
@@ -17,6 +24,8 @@ function InterestedInHigherStudies() {
 
     const [studentDetails, setStudentDetails] = useState([]);
 
+    const [studentDetailsCopy, setStudentDetailsCopy] = useState([]);
+
     const [batchYear, setBatchYear] = useState({
         Passed_out_year: ''
     });
@@ -28,21 +37,19 @@ function InterestedInHigherStudies() {
     async function handleChange(e) {
         setBatchYear({ ...batchYear, Passed_out_year: e.target.value });
 
-        if (e.target.value.length == 4) 
-        {
+        if (e.target.value.length == 4) {
             let response = undefined;
             response = await UsePost('/reports/studentsInterestedInHigherStudies', { Passed_out_year: e.target.value }, 'POST');
 
-            if (response != undefined) 
-            {
+            if (response != undefined) {
                 // console.log(response["data"]);
-                for(let i = 0; i < response["data"].length; i++)
-                {
+                for (let i = 0; i < response["data"].length; i++) {
                     response["data"][i]["id"] = i;
                 }
 
                 setCount(response["data"].length);
                 setStudentDetails(response["data"]);
+                setStudentDetailsCopy(response["data"]);
                 setTableExist(true);
             }
         }
@@ -54,21 +61,26 @@ function InterestedInHigherStudies() {
         console.log(e.target.value);
         setSearch(e.target.value);
 
-        let temp = [];
-        for (let i = 0; i < studentDetails.length; i++) {
-            let keys = Object.keys(studentDetails[i]);
-            // console.log(keys);
-            for (let j = 0; j < keys.length; j++) {
-                let key = keys[j];
-                let value = studentDetails[i][key].toString().toLowerCase();
-                if (value.includes(e.target.value.toString().toLowerCase())) {
-                    temp.push(studentDetails[i]);
-                    break;
+        if (e.target.value != "") {
+            let temp = [];
+            for (let i = 0; i < studentDetails.length; i++) {
+                let keys = Object.keys(studentDetails[i]);
+                // console.log(keys);
+                for (let j = 0; j < keys.length; j++) {
+                    let key = keys[j];
+                    let value = studentDetails[i][key].toString().toLowerCase();
+                    if (value.includes(e.target.value.toString().toLowerCase())) {
+                        temp.push(studentDetails[i]);
+                        break;
+                    }
                 }
-            }
 
+            }
+            setStudentDetailsCopy(temp);
         }
-        setStudentDetails(temp);
+        else {
+            setStudentDetailsCopy(studentDetails)
+        }
     }
 
     const columns = [
@@ -95,12 +107,19 @@ function InterestedInHigherStudies() {
             <br />
             {!tableExist ? "" :
                 <>
-                    <Typography
-                        variant="h1"
-                        color="primary"
+                    <ChipCard
+                        data={
+
+                            <WhiteTextTypography
+                                variant="h1"
+                                color="secondary"
+                            >
+                                Total students who are interested in higher studies : {count == "undefined" ? "" : count}
+                            </WhiteTextTypography>
+                        }
                     >
-                        Total students who are interested in higher studies : {count == "undefined" ? "" : count}
-                    </Typography>
+
+                    </ChipCard>
                     <br />
                     <br />
                     <TextField
@@ -118,7 +137,7 @@ function InterestedInHigherStudies() {
                         <DataGrid
                             checkboxSelection
                             editMode="row"
-                            rows={studentDetails}
+                            rows={studentDetailsCopy}
                             columns={columns}
                             components={{
                                 Toolbar: CustomToolbar
