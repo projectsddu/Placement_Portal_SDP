@@ -20,6 +20,7 @@ const AdminLoginRouter = require("./Routers/AdminLoginRouter")
 const StudentProjectRouter = require("./Routers/StudentProjectRouter")
 const StudentAchievementsInternshipsRouter = require("./Routers/StudentAchievementsInternshipsRouter")
 const ReportsRouter = require("./Routers/ReportsRouter")
+const LogoutRouter = require("./Routers/LogoutRouter")
 const fileupload = require("express-fileupload");
 
 
@@ -75,6 +76,7 @@ try {
     app.use("/studentproject", StudentProjectRouter)
     app.use("/StudentAchievementsInternships", StudentAchievementsInternshipsRouter)
     app.use("/reports", ReportsRouter)
+    app.use("/logout", LogoutRouter)
 
     if (process.env.NODE_ENV === "production") {
         console.log("Here")
