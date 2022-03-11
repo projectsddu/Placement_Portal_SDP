@@ -106,7 +106,7 @@ const addStudent = async (req, res) => {
 // to get all students info
 const getAllStudents = async (req, res) => {
     try {
-        let students = await StudentService.getAllStudents()
+        let students = await StudentService.getAllStudents(true)
         if (students) {
 
             return res.json({ status: students.length == 0 ? false : true, data: students.length == 0 ? "No Student data!" : students })

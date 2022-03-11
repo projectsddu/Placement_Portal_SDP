@@ -32,6 +32,8 @@ import EmptyStudent from './JSX/EmptyStudent';
 import EmptySkills from './JSX/EmptySkills';
 import EmptyInternships from './JSX/EmptyInternships';
 import EmptyProjects from './JSX/EmptyProjects';
+import StudentInternshipCard from './JSX/StudentInternshipCard';
+import StudentProjectCard from './JSX/StudentProjectCard';
 
 
 function ViewStudentProfile() {
@@ -219,29 +221,24 @@ function ViewStudentProfile() {
                                                 'Wait Loading....'
                                             ) : (
                                                 <>
-                                                    <a
-                                                        target="blank"
-                                                        style={{ 'text-decoration': 'none', cursor: 'pointer' }}
-                                                        href={
-                                                            'http://localhost:8000' +
-                                                            student_details['CV_Upload'].split('.')[1] +
-                                                            '.' +
-                                                            student_details['CV_Upload'].split('.')[2]
-                                                        }
-                                                    >
-                                                        {student_details === undefined ? (
-                                                            'Wait Loading....'
-                                                        ) : (
-                                                            <>
-                                                                <Chip
-                                                                    label={'View CV'}
-                                                                    // variant="outlined"
-                                                                    color="primary"
-                                                                    clickable
-                                                                />
-                                                            </>
-                                                        )}
-                                                    </a>
+                                                    <a target='blank'
+                                                    style={{ "text-decoration": "none", "cursor": "pointer" }}
+                                                    href={
+                                                        "https://drive.google.com/file/d/" + student_details["CV_Upload"] + "/view?usp=drivesdk"
+                                                    }>
+
+                                                    {student_details === undefined ? "Wait Loading...." : <>
+                                                        <Chip
+                                                            label={"View CV"}
+                                                            // variant="outlined"
+                                                            color='primary'
+                                                            clickable
+                                                        />
+
+                                                    </>
+                                                    }
+
+                                                </a>
                                                 </>
                                             )}
                                         </TableCell>
@@ -255,29 +252,24 @@ function ViewStudentProfile() {
                                                 'Wait Loading....'
                                             ) : (
                                                 <>
-                                                    <a
-                                                        target="blank"
-                                                        style={{ 'text-decoration': 'none', cursor: 'pointer' }}
-                                                        href={
-                                                            'http://localhost:8000' +
-                                                            student_details['Student_Photo'].split('.')[1] +
-                                                            '.' +
-                                                            student_details['Student_Photo'].split('.')[2]
-                                                        }
-                                                    >
-                                                        {student_details === undefined ? (
-                                                            'Wait Loading....'
-                                                        ) : (
-                                                            <>
-                                                                <Chip
-                                                                    label={'View Photo'}
-                                                                    // variant="outlined"
-                                                                    color="primary"
-                                                                    clickable
-                                                                />
-                                                            </>
-                                                        )}
-                                                    </a>
+                                                    <a target='blank'
+                                                    style={{ "text-decoration": "none", "cursor": "pointer" }}
+                                                    href={
+                                                        "https://drive.google.com/file/d/" + student_details["Student_Photo"] + "/view?usp=drivesdk"
+
+                                                    }>
+
+                                                    {student_details === undefined ? "Wait Loading...." : <>
+                                                        <Chip
+                                                            label={"View Photo"}
+                                                            // variant="outlined"
+                                                            color='primary'
+                                                            clickable
+                                                        />
+                                                    </>
+                                                    }
+
+                                                </a>
                                                 </>
                                             )}
                                         </TableCell>
@@ -320,48 +312,8 @@ function ViewStudentProfile() {
                             studentInternships.map((e) => {
                                 return (
                                     <>
-                                        <SubCard>
-                                            
-                                            <Grid container spacing={1}>
-                                                <Grid item xs={12} md={12}>
-                                                    <Grid container spacing={1}>
-                                                        <Grid item xs = {6} md={2}>
-                                                        <Typography variant='h4'>Company:  </Typography>
-                                                        </Grid>
-                                                        <Grid item xs = {6} md={10}>
-                                                        <Typography> {e.Company_Name}</Typography>
-                                                        </Grid>
-                                                    </Grid>
-                                                </Grid>
-                                                    
-                                            </Grid>
-                                            <br/>
-                                            <Grid container spacimg={1}>
-                                                <Grid item xs={12} md={12}>
-                                                    <Grid container spacing={1}>
-                                                        <Grid item xs={6} md={2}>
-                                                        <Typography variant='h4'>Start Date:  </Typography>
-                                                        </Grid>
-                                                        <Grid item xs={6} md={10}>
-                                                        <Typography> {ParseDate( e.Start_Date)}</Typography>
-                                                        </Grid>
-                                                    </Grid>
-                                                </Grid>
-                                            </Grid>
-                                            <br/>
-                                            <Grid container spacing={1}>
-                                                <Grid item xs={12} md={12}>
-                                                    <Grid container spacing={1}>
-                                                        <Grid item xs={6} md={2}>
-                                                        <Typography variant='h4'>End Date:  </Typography>
-                                                        </Grid>
-                                                        <Grid item xs={6} md={10}>
-                                                        <Typography> {ParseDate(e.End_Date)}</Typography>
-                                                        </Grid>
-                                                    </Grid>
-                                                </Grid>
-                                            </Grid>
-                                        </SubCard>
+                                        <ChipCard data={<StudentInternshipCard e={e} />}/>
+                                        
                                         <br/>
                                     </>
                                 )
@@ -381,7 +333,8 @@ function ViewStudentProfile() {
                             studentProjects.map((e) => {
                                 return (
                                     <>
-                                        <SubCard>
+                                        <ChipCard data={<StudentProjectCard e={e} />}/>
+                                        {/* <SubCard>
                                             
                                             <Grid container spacing={1}>
                                                 <Grid item md={12} xs={12}>
@@ -435,7 +388,7 @@ function ViewStudentProfile() {
                                                     </Grid>
                                                 </Grid>
                                             </Grid>
-                                        </SubCard>
+                                        </SubCard> */}
                                     </>
                                 )
                             })

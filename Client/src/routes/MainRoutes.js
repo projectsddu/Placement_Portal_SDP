@@ -85,6 +85,7 @@ const S_AddProject = Loadable(lazy(() => import('../views/Student_Views/Project/
 const MultiplePlacement = Loadable(lazy(() => import('../views/Report/MultiplePlacement')));
 const GetPlacementReport = Loadable(lazy(() => import('../views/Report/GetPlacementReport')));
 const GetReportCompany = Loadable(lazy(() => import('../views/Report/GetReportCompany')));
+const SingleCompanyDetails = Loadable(lazy(() => import('../views/Report/SingleCompanyDetails')));
 const UnplacedStudents = Loadable(lazy(() => import('../views/Report/unplacedStudents')));
 const UnplacedInternship = Loadable(lazy(() => import('../views/Report/unplacedInternship')));
 const InterestedInHigherStudies = Loadable(lazy(() => import('../views/Report/InterestedInHigherStudies')));
@@ -208,6 +209,7 @@ const MainRoutes = () => {
                 "/reports/multiple_placement_report",
                 "/reports/get_placement_report",
                 "/reports/report_company",
+                "/reports/single_company_details/:id/:batch_year",
                 "/reports/unplaced_students_report",
                 "/reports/unplaced_internship_report",
                 "/reports/interested_in_higher_studies_report"
@@ -285,6 +287,7 @@ const MainRoutes = () => {
                     <Route path="/reports/multiple_placement_report" component={MultiplePlacement} />
                     <Route path="/reports/get_placement_report" component={GetPlacementReport} />
                     <Route path="/reports/report_company" component={GetReportCompany} />
+                    <Route path="/reports/single_company_details/:id" component={SingleCompanyDetails} />
                     <Route path="/reports/unplaced_students_report" component={UnplacedStudents} />
                     <Route path="/reports/unplaced_internship_report" component={UnplacedInternship} />
                     <Route path="/reports/interested_in_higher_studies_report" component={InterestedInHigherStudies} />

@@ -4,6 +4,7 @@ const log = new logger(true)
 const db = require("../Models/index")
 const Student = db.students
 const FirstTimePasswordService = require("./FirstTimePasswordService")
+const SkillsAndAchievementsService = require("./SkillsAndAchievementsService")
 
 async function checkExists(id) {
     const students = await Student.findAll({ where: { Student_ID: id } })
@@ -41,9 +42,28 @@ const createStudent = async (studentData) => {
     return true
 }
 
-const getAllStudents = async () => {
+const getAllStudents = async (skills = false) => {
     try {
         let students = await Student.findAll({})
+        students = JSON.parse(JSON.stringify(students))
+        if(skills)
+        {
+            for(let i = 0; i < students.length; i++)
+            {
+                let skillDetails = await SkillsAndAchievementsService.getSkillsAndAchievements(students[i]["Student_ID"])
+                // console.log(skillDetails)
+                if(skillDetails.length != 0)
+                {
+                    skillDetails = JSON.parse(JSON.stringify(skillDetails))
+                    students[i]["Skills"] = skillDetails[0]["Skills"]
+                }
+                else
+                {
+                    students[i]["Skills"] = ""
+                }
+            }
+        }
+        // console.log("from stduenr service: ", students)
         return students
     }
     catch (err) {

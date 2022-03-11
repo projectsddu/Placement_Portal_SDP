@@ -9,6 +9,8 @@ router.post("/multiplePlacements", ReportController.multiplePlacements)
 
 router.post("/placedStudentsByCompany", ReportController.placedStudentsByCompany)
 
+router.get("/singleCompanyDetails/:id/:batch_year", ReportController.singleCompanyDetails)
+
 router.post("/studentsInterestedInHigherStudies", ReportController.studentsInterestedInHigherStudies)
 
 router.post("/unplacedStudents", ReportController.unplacedStudents)

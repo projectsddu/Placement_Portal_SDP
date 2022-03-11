@@ -7,6 +7,9 @@ import { DataGrid, RowsProp, ColDef, GridToolbarContainer, GridToolbarExport } f
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import HandleToast from '../../Utilities/HandleToast';
 import { ToastContainer, toast } from 'react-toastify';
+import ChipCard from '../../ui-component/cards/GenericCards/ChipCard';
+import ListCard from '../../ui-component/cards/GenericCards/ListCard';
+import PlacementDetailsCard from './JSX/PlacementDetailsCard'
 
 
 function CustomToolbar() {
@@ -111,116 +114,7 @@ function GetPlacementReport() {
                 ''
             ) : (
                 <>
-                    <SubCard>
-                        <Grid container spacing={1}>
-                            <Grid item xs={12} md={12}>
-                                <Grid container spacing={1}>
-                                    <Grid item xs={6} md={3}>
-                                        <Typography variant="h4">Total Placed Students: </Typography>
-                                    </Grid>
-                                    <Grid item xs={6} md={9}>
-                                        <Typography variant="h5">
-                                            {placementDetails == undefined ? '' : placementDetails['Total_Placed']}
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        <br />
-                        <Grid container spacing={1}>
-                            <Grid item xs={12} md={12}>
-                                <Grid container spacing={1}>
-                                    <Grid item xs={6} md={3}>
-                                        <Typography variant="h4">Male: </Typography>
-                                    </Grid>
-                                    <Grid item xs={6} md={9}>
-                                        <Typography variant="h5">
-                                            {placementDetails == undefined ? '' : placementDetails['Male']}
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        <br />
-                        <Grid container spacing={1}>
-                            <Grid item xs={12} md={12}>
-                                <Grid container spacing={1}>
-                                    <Grid item xs={6} md={3}>
-                                        <Typography variant="h4">Female: </Typography>
-                                    </Grid>
-                                    <Grid item xs={6} md={9}>
-                                        <Typography variant="h5">
-                                            {placementDetails == undefined ? '' : placementDetails['Female']}
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        <br />
-                        <Grid container spacing={1}>
-                            <Grid item xs={12} md={12}>
-                                <Grid container spacing={1}>
-                                    <Grid item xs={6} md={3}>
-                                        <Typography variant="h4">Average Salary: </Typography>
-                                    </Grid>
-                                    <Grid item xs={6} md={9}>
-                                        <Typography variant="h5">
-                                            {placementDetails == undefined ? '' : placementDetails['Average_Salary']}
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        <br />
-                        <Grid container spacing={1}>
-                            <Grid item xs={12} md={12}>
-                                <Grid container spacing={1}>
-                                    <Grid item xs={6} md={3}>
-                                        <Typography variant="h4">Median Salary: </Typography>
-                                    </Grid>
-                                    <Grid item xs={6} md={9}>
-                                        <Typography variant="h5">
-                                            {placementDetails == undefined ? '' : placementDetails['Median_Salary']}
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        <br />
-                        <Grid container spacing={1}>
-                            <Grid item xs={12} md={12}>
-                                <Grid container spacing={1}>
-                                    <Grid item xs={6} md={3}>
-                                        <Typography variant="h4">Maximum Salary: </Typography>
-                                    </Grid>
-                                    <Grid item xs={6} md={9}>
-                                        <Typography variant="h5">
-                                            {placementDetails == undefined ? '' : placementDetails['Max_Salary']}
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        <br />
-                        <Grid container spacing={1}>
-                            <Grid item xs={12} md={12}>
-                                <Grid container spacing={1}>
-                                    <Grid item xs={6} md={3}>
-                                        <Typography variant="h4">Minimum Salary: </Typography>
-                                    </Grid>
-                                    <Grid item xs={6} md={9}>
-                                        <Typography variant="h5">
-                                            {placementDetails == undefined
-                                                ? ''
-                                                : placementDetails['Min_Salary'] == 100000000
-                                                ? '0'
-                                                : placementDetails['Min_Salary']}
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </SubCard>
+                    <ListCard data={<PlacementDetailsCard placementDetails={placementDetails} />}/>
                     <br />
                     <div style={{ height: 400, width: '100%' }}>
                         <DataGrid
