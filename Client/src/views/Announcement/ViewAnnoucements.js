@@ -14,7 +14,7 @@ import EditIcon from '@material-ui/icons/Edit';
 // import usePost from '../../Utilities/UsePost';
 import ParseDate from '../../Utilities/ParseDate';
 // import HandleToast from '../../Utilities/HandleToast';
-// import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 // import UseFetch from '../../Utilities/UseFetch';
 import { useHistory } from 'react-router-dom';
@@ -23,6 +23,8 @@ import { DataGrid, RowsProp, ColDef, GridToolbarContainer, GridToolbarExport } f
 import { IconEye, IconCirclePlus } from '@tabler/icons';
 import ChipCard from '../../ui-component/cards/GenericCards/ChipCard';
 import EmptyAnnouncement from './JSX/EmptyAnnouncement';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Modal from '@mui/material/Modal';
 
 const useStyles = makeStyles((theme) => ({
     applyBtn: {
@@ -67,6 +69,8 @@ function CustomToolbar() {
     );
 }
 
+const axios = require("axios")
+
 function ViewAnnoucements() {
     const classes = useStyles();
 
@@ -104,6 +108,22 @@ function ViewAnnoucements() {
     //     console.log(annoucements);
     // }
 
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        // border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+    };
+
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
     const [search, setSearch] = useState('');
     const [announcement_list_original, setAnnouncement_list_original] = useState([]);
     const [announcement_list_copy, setAnnouncement_list_copy] = useState([]);
@@ -129,7 +149,7 @@ function ViewAnnoucements() {
 
                     jsonData["data"][i]["Registration_Deadline"] = ParseDate.ParseDate(jsonData["data"][i]["Registration_Deadline"], true);
 
-                    
+
                     jsonData["data"][i]["title"] = jsonData['data'][i]['Company_details']['Company_name'] +
                         '-' +
                         jsonData['data'][i]['Job_Role'] +
@@ -161,7 +181,7 @@ function ViewAnnoucements() {
             // console.log(keys)
             for (let j = 0; j < keys.length; j++) {
                 let key = keys[j];
-                // console.log(company_list_original[i])
+                // console.log(announcement_list_original[i])
                 // console.log(key)
                 let value;
                 if (announcement_list_original[i][key] != undefined) {
@@ -210,9 +230,36 @@ function ViewAnnoucements() {
     //     }
     // }
 
+    async function handleDelete(id) {
+        console.log("hello here in delete")
+        console.log(id)
+        let Resp = await axios({
+            method: 'post',
+            url: "/annoucement/deleteAnnoucement/" + id,
+        });
+
+        console.log(Resp)
+        const params1 = {
+            data: Resp.data,
+            HandleToast: {
+                toast: toast,
+                flag: false
+            }
+        };
+        responsePipelineHandler(params1, 1);
+
+        let updatedDetails = announcement_list_original.filter((e) => {
+            return id != e.Announcement_ID
+        })
+        setAnnouncement_list_original([].concat(updatedDetails))
+        setAnnouncement_list_copy([].concat(updatedDetails))
+        handleClose()
+    }
+
     let Announcement_ID = '';
     const rows = [];
-    const [columns, setcolumns] = useState([
+    // const [columns, setcolumns] = useState([
+    const columns = [
         {
             field: 'view',
             headerName: 'Edit & View',
@@ -229,15 +276,48 @@ function ViewAnnoucements() {
                     // </Button>
                     <>
                     <IconButton color="primary" 
-                        onClick={() => handleEdit(Announcement_ID)}
-                        aria-label="upload picture" component="span">
+                        component="span"
+                        onClick={handleOpen}
+                        aria-label="upload picture">
+                        <DeleteIcon />
+                    </IconButton>
+                        <Modal
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                        >
+                            <Box sx={style}>
+                                <Typography style={{ "color": "#616161" }} id="modal-modal-title" variant="h3" component="h1">
+                                    Are, you really sure want to delete this announcement?
+                                </Typography><br />
+                                <Grid container spacing={2} justifyContent={""}>
+                                    <Grid md={6} item>
+                                        <Button fullWidth style={{ color: "white", backgroundColor: "#00C853" }} variant="contained"
+                                            onClick={() => handleDelete(Announcement_ID)}
+                                        >
+                                            Confirm
+                                        </Button>
+                                    </Grid>
+                                    <Grid md={6} item>
+                                        <Button fullWidth color='error' variant="contained" onClick={handleClose}>
+                                            Cancel
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+
+                            </Box>
+                        </Modal>
+                        <IconButton color="primary"
+                            onClick={() => handleEdit(Announcement_ID)}
+                            aria-label="upload picture" component="span">
                             <EditIcon />
                         </IconButton>
-                    <IconButton color="primary"
-                    onClick={() => handleRedirect(Announcement_ID)}
-                    aria-label="upload picture" component="span">
-                        <VisibilityIcon />
-                    </IconButton>
+                        <IconButton color="primary"
+                            onClick={() => handleRedirect(Announcement_ID)}
+                            aria-label="upload picture" component="span">
+                            <VisibilityIcon />
+                        </IconButton>
                     </>
                 );
             }
@@ -252,13 +332,14 @@ function ViewAnnoucements() {
         // { field: 'Announcement_ID', headerName: 'Announcement ID', width: 200, editable: false },
         // { field: 'Company_ID', headerName: 'Company ID', width: 200, editable: false },
         { field: 'Date_of_announcement', headerName: 'Date of announcement', width: 230, editable: false, hide: true },
-        { field: 'Eligible_Branches', headerName: 'Eligible Branches', width: 200, editable: false, hide: true,
-        renderCell: (id) => {
-            console.log(id)
-        }
-    
-    
-    },
+        {
+            field: 'Eligible_Branches', headerName: 'Eligible Branches', width: 200, editable: false, hide: true,
+            renderCell: (id) => {
+                console.log(id)
+            }
+
+
+        },
         { field: 'Passed_out_year', headerName: 'Passed out year', width: 200, editable: false, hide: true },
         { field: 'Job_Role', headerName: 'Job Role', width: 200, editable: false, hide: true },
         { field: 'Job_Location', headerName: 'Job Location', width: 200, editable: false, hide: true },
@@ -266,7 +347,8 @@ function ViewAnnoucements() {
         { field: 'Other_Details', headerName: 'Other Details', width: 200, editable: false, hide: true },
         { field: 'Eligibility', headerName: 'Eligibility', width: 185, editable: false, hide: true },
         { field: 'IsOpen', headerName: 'IsOpen', width: 165, editable: false, hide: true }
-    ]);
+    // ]);
+    ];
 
     const [editRowsModel, setEditRowsModel] = React.useState({});
 
