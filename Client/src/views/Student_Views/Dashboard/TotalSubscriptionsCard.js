@@ -169,7 +169,7 @@ const TotalSubscriptionsCard = ({ isLoading }) => {
                                             </Avatar> */}
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <Typography className={classes.subHeading}>Total Subscriptions</Typography>
+                                            <Typography className={classes.subHeading}>Total Announcements Applied</Typography>
                                         </Grid>
                                     </Grid>
                                 </Grid>

@@ -3,6 +3,7 @@ const logger = require("serverloggerjs/logger")
 const log = new logger(true)
 const StudentInternship = db.student_internships
 const StudentInternshipService = require("../Services/StudentInternshipService")
+const CSVToJSON = require('csvtojson')
 
 async function checkExists(id) {
     const studnentinternship = await StudentInternship.findAll({ where: { id }})
@@ -25,6 +26,30 @@ const addStudentInternship = async (req, res) => {
     } catch (error) {
         log.error(error.toString())
         return res.json({ data: error.toString(), status: false})
+    }
+}
+
+const addStudentInternshipViaCSV = async (req, res) => {
+    try {
+        const path = "./public/InternshipFiles/DDU_INTERNSHIP.csv"
+        const studentInternshipData = await CSVToJSON().fromStream(req.fileData)
+        if(studentInternshipData)
+        {
+            for(let i = 0; i < studentInternshipData.length; i++)
+            {
+                try {
+                    let studentStatus = await StudentInternshipService.createStudentInternship(studentInternshipData[i], true)
+                    
+                } catch (error) {
+                    log.error(error.toString())
+                    throw "Error adding student internship data via csv"
+                }
+            }
+        }
+        return res.json({ status: true, data: "Student internship data added" })
+    } catch (error) {
+        log.error(error.toString())
+        return res.json({ data: "Error adding student internship data", status: false })
     }
 }
 
@@ -96,5 +121,6 @@ module.exports = {
     getAllStudentInternship,
     getStudentInternship,
     updateStudentInternship,
-    deleteStudentInternship
+    deleteStudentInternship,
+    addStudentInternshipViaCSV
 }
