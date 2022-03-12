@@ -66,7 +66,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
                 <LogoSection />
             </Box>
             {/* smDown = this defines size for laptop and tablet*/}
-            <Hidden smDown>
+            <Hidden smDown style={{ "padding-right": "2%" }}>
                 <Typography fontSize='2rem' fontWeight='bold'>
                     Dharmsinh Desai University
                 </Typography>

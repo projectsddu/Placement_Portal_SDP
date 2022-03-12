@@ -153,71 +153,83 @@ const NotificationSection = () => {
     if (!loading) {
         console.log(required_data);
     }
+    // const history = useHistory()
+    const current_path = history.location.pathname
     return (
 
         <React.Fragment>
-            <Box component="span" className={classes.box}>
-                <ButtonBase sx={{ borderRadius: '12px' }}>
-                    <Avatar
-                        variant="rounded"
-                        className={classes.headerAvatar}
-                        ref={anchorRef}
-                        aria-controls={open ? 'menu-list-grow' : undefined}
-                        aria-haspopup="true"
-                        onClick={handleToggle}
-                        color="inherit"
+            {current_path.indexOf("/_student") == -1 ? <Box component="span" className={classes.Box}><ButtonBase
+                disableRipple
+                style={{ "background": "white" }}
+                sx={{ borderRadius: '12px' }}>
+                <div style={{ "width": "2%", "color": "white", "background": "white" }}>
+                    asdfgsssss
+                </div>
+            </ButtonBase></Box> :
+                <>
+                    <Box component="span" className={classes.box}>
+
+                        <ButtonBase sx={{ borderRadius: '12px' }}>
+                            <Avatar
+                                variant="rounded"
+                                className={classes.headerAvatar}
+                                ref={anchorRef}
+                                aria-controls={open ? 'menu-list-grow' : undefined}
+                                aria-haspopup="true"
+                                onClick={handleToggle}
+                                color="inherit"
+                            >
+                                <IconBell stroke={1.5} size="1.3rem" />
+                            </Avatar>
+                        </ButtonBase>
+                    </Box>
+                    <Popper
+                        placement={matchesXs ? 'bottom' : 'bottom-end'}
+                        open={open}
+                        anchorEl={anchorRef.current}
+                        role={undefined}
+                        transition
+                        disablePortal
+                        popperOptions={{
+                            modifiers: [
+                                {
+                                    name: 'offset',
+                                    options: {
+                                        offset: [matchesXs ? 5 : 0, 20]
+                                    }
+                                }
+                            ]
+                        }}
                     >
-                        <IconBell stroke={1.5} size="1.3rem" />
-                    </Avatar>
-                </ButtonBase>
-            </Box>
-            <Popper
-                placement={matchesXs ? 'bottom' : 'bottom-end'}
-                open={open}
-                anchorEl={anchorRef.current}
-                role={undefined}
-                transition
-                disablePortal
-                popperOptions={{
-                    modifiers: [
-                        {
-                            name: 'offset',
-                            options: {
-                                offset: [matchesXs ? 5 : 0, 20]
-                            }
-                        }
-                    ]
-                }}
-            >
-                {({ TransitionProps }) => (
-                    <Transitions in={open} {...TransitionProps}>
-                        <Paper>
-                            <ClickAwayListener onClickAway={handleClose}>
-                                <MainCard border={false} elevation={16} content={false} boxShadow shadow={theme.shadows[16]}>
-                                    <CardContent className={classes.cardContent}>
-                                        <Grid container direction="column" spacing={2}>
-                                            <Grid item xs={12}>
-                                                <div className={classes.bodyPPacing}>
-                                                    <Grid container alignItems="center" justifyContent="space-between">
-                                                        <Grid item>
-                                                            <Stack direction="row" spacing={2}>
-                                                                <Typography variant="subtitle1">All Notification</Typography>
-                                                                {loading ? "" : <Chip size="small" label={required_data["data"].length >= 3 ? "3+" : required_data["data"].length} className={classes.notificationChip} />}
-                                                            </Stack>
-                                                        </Grid>
-                                                        {/* <Grid item>
+                        {({ TransitionProps }) => (
+                            <Transitions in={open} {...TransitionProps}>
+                                <Paper>
+                                    <ClickAwayListener onClickAway={handleClose}>
+                                        <MainCard border={false} elevation={16} content={false} boxShadow shadow={theme.shadows[16]}>
+                                            <CardContent className={classes.cardContent}>
+                                                <Grid container direction="column" spacing={2}>
+                                                    <Grid item xs={12}>
+                                                        <div className={classes.bodyPPacing}>
+                                                            <Grid container alignItems="center" justifyContent="space-between">
+                                                                <Grid item>
+                                                                    <Stack direction="row" spacing={2}>
+                                                                        <Typography variant="subtitle1">All Notification</Typography>
+                                                                        {loading ? "" : <Chip size="small" label={required_data["data"].length >= 3 ? "3+" : required_data["data"].length} className={classes.notificationChip} />}
+                                                                    </Stack>
+                                                                </Grid>
+                                                                {/* <Grid item>
                                                             <Typography component={Link} to="#" variant="subtitle2" color="primary">
                                                                 Mark as all read
                                                             </Typography>
                                                         </Grid> */}
+                                                            </Grid>
+                                                        </div>
                                                     </Grid>
-                                                </div>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <PerfectScrollbar className={classes.ScrollHeight}>
-                                                    <Grid container direction="column" spacing={2}>
-                                                        <Grid item xs={12}>
-                                                            {/* <div className={classes.textBoxSpacing}>
+                                                    <Grid item xs={12}>
+                                                        <PerfectScrollbar className={classes.ScrollHeight}>
+                                                            <Grid container direction="column" spacing={2}>
+                                                                <Grid item xs={12}>
+                                                                    {/* <div className={classes.textBoxSpacing}>
                                                                 <TextField
                                                                     id="outlined-select-currency-native"
                                                                     select
@@ -235,33 +247,35 @@ const NotificationSection = () => {
                                                                     ))}
                                                                 </TextField>
                                                             </div> */}
-                                                        </Grid>
-                                                        <Grid item xs={12} p={0}>
-                                                            <Divider className={classes.divider} />
-                                                        </Grid>
-                                                        <Grid item xs={12}>
-                                                            {loading ? "Loading...." : <NotificationList data={required_data["data"]} />}
-                                                        </Grid>
+                                                                </Grid>
+                                                                <Grid item xs={12} p={0}>
+                                                                    <Divider className={classes.divider} />
+                                                                </Grid>
+                                                                <Grid item xs={12}>
+                                                                    {loading ? "Loading...." : <NotificationList data={required_data["data"]} />}
+                                                                </Grid>
+                                                            </Grid>
+                                                        </PerfectScrollbar>
                                                     </Grid>
-                                                </PerfectScrollbar>
-                                            </Grid>
-                                        </Grid>
-                                    </CardContent>
-                                    <Divider />
-                                    <CardActions className={classes.cardAction}>
+                                                </Grid>
+                                            </CardContent>
+                                            <Divider />
+                                            <CardActions className={classes.cardAction}>
 
-                                        <Button onClick={() => { history.push("/_student/notifications/all") }} size="small" disableElevation>
-                                            View All
-                                        </Button>
+                                                <Button onClick={() => { history.push("/_student/notifications/all") }} size="small" disableElevation>
+                                                    View All
+                                                </Button>
 
-                                    </CardActions>
-                                </MainCard>
-                            </ClickAwayListener>
-                        </Paper>
-                    </Transitions>
-                )}
-            </Popper>
-        </React.Fragment>
+                                            </CardActions>
+                                        </MainCard>
+                                    </ClickAwayListener>
+                                </Paper>
+                            </Transitions>
+                        )}
+                    </Popper>
+                </>
+            }
+        </React.Fragment >
     );
 };
 
