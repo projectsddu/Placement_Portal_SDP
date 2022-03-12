@@ -29,6 +29,14 @@ const useStyles = makeStyles((theme) => ({
             color: theme.palette.background.paper
         }
     },
+    applyDeadlineBtn: {
+        background: theme.palette.error.light,
+        color: theme.palette.error.dark,
+        '&:hover': {
+            background: theme.palette.error.main,
+            color: theme.palette.background.paper
+        }
+    },
     crd: {
         background: theme.palette.primary.light,
         color: theme.palette.grey[700]
@@ -126,6 +134,18 @@ function S_ViewAnnoucements() {
                                     <SubCard title={e.Company_details["Company_name"] + "-" + e.Job_Role + " for " + ParseDate.getYear(e.Passed_out_year) + " Batch"}>
                                         <Typography variant="h5"></Typography>
                                         <Grid container spacing={1}>
+                                        <Grid item xs={12} md={12}>
+                                                <Grid container spacing={1}>
+                                                <Grid item xs={6} md={4}>
+                                                    <Typography variant="h4" style={{color: "rgb(97, 97, 97)"}}>Deadline: </Typography>
+                                                </Grid>
+                                                <Grid item xs={6} md={8}>
+                                                    <Typography variant="h5" style={{color: "#828282"}}>
+                                                    {ParseDate.ParseDate(e.Registration_Deadline, true)}
+                                                    </Typography>
+                                                </Grid>
+                                                </Grid>
+                                            </Grid>
                                             <Grid item xs={12} md={12}>
                                                 <Grid container spacing={1}>
                                                 <Grid item xs={6} md={4}>
@@ -150,6 +170,7 @@ function S_ViewAnnoucements() {
                                                 </Grid>
                                                 </Grid>
                                             </Grid>
+                                            
                                             <Grid item xs={12} md={12}>
                                                 <Grid container spacing={1}>
                                                 <Grid item xs={6} md={4}>
@@ -182,7 +203,15 @@ function S_ViewAnnoucements() {
                                             <ListItem>Branches: {e.Eligible_Branches}</ListItem>
                                         </List> */}
                                         <br/>
-                                        <Button onClick={() => handleRedirect(e.Announcement_ID)} size='large' fullWidth className={classes.applyBtn}>View Full Announcement</Button>
+                                        {
+                                            new Date(Date.now()).getTime() > new Date(e.Registration_Deadline).getTime()
+                                            ? 
+                                            <Button 
+                                            onClick={() => handleRedirect(e.Announcement_ID)} 
+                                            color='error' size='large' fullWidth className={classes.applyDeadlineBtn}>View Full Announcement</Button>
+                                            :
+                                            <Button onClick={() => handleRedirect(e.Announcement_ID)} size='large' fullWidth className={classes.applyBtn}>View Full Announcement</Button>
+                                        }
                                     </SubCard>
                                 </Grid>
                             ))}

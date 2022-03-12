@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from '@material-ui/core';
+import { Button, Box } from '@material-ui/core';
 // assets
 import {
     Avatar,
@@ -45,6 +45,9 @@ import HandleToast from '../../../Utilities/HandleToast'
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../../Utilities/ResponsePipelineHandler';
 import AddComment from '../Comment/S_AddComment';
+import ChipCard from "../../../ui-component/cards/GenericCards/ChipCard"
+import DeadlineCard from './JSX/DeadlineCard'
+import Modal from '@mui/material/Modal';
 // import Fetch
 
 export default function S_ViewSingleAnnouncement() {
@@ -148,6 +151,7 @@ export default function S_ViewSingleAnnouncement() {
         announcement_details = required_data["data"][0];
         console.log(announcement_details)
 
+
         let branches = ""
         for (let i = 0; i < announcement_details["Eligible_Branches"].length; i++) {
             branches += (announcement_details["Eligible_Branches"][i]["BranchName"] + " ")
@@ -180,6 +184,7 @@ export default function S_ViewSingleAnnouncement() {
 
 
     const [subscribeStatus, setsubscribeStatus] = useState(undefined);
+    const [deadline, setDeadline] = useState(undefined);
 
     // const subscribedata = fetch("/subscribeannouncement/getSubscribedStatus/" + id, "GET")
 
@@ -206,6 +211,22 @@ export default function S_ViewSingleAnnouncement() {
     //     setsubscribeStatus(subscribedata["required_data"]["status"])
     // }
 
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        // border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+    };
+
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
 
     async function handleSubscribe() {
         const res = await UsePost("/subscribeannouncement/subscribe/" + id, {}, "POST")
@@ -219,6 +240,7 @@ export default function S_ViewSingleAnnouncement() {
         }
         console.log(res);
         responsePipelineHandler(params1, 1)
+        handleClose()
     }
 
     async function handleUnsubscribe() {
@@ -244,8 +266,47 @@ export default function S_ViewSingleAnnouncement() {
                 >
                     <Grid item>
                         {subscribeStatus === undefined ? "Loading" : subscribeStatus == true ? <>
-                            <Button onClick={handleUnsubscribe} variant="contained" color="error"> Withdraw Announcement</Button>
+                            <Button 
+                            // onClick={handleUnsubscribe} 
+                            onClick={handleOpen}
+                            variant="contained" color="error"> Withdraw Announcement</Button>
+                            <Modal
+                                open={open}
+                                onClose={handleClose}
+                                aria-labelledby="modal-modal-title"
+                                aria-describedby="modal-modal-description"
+                            >
+                                <Box sx={style}>
+                                    <Typography style={{ "color": "#616161" }} id="modal-modal-title" variant="h3" component="h1">
+                                        Are, you really sure want to withdraw from announcement?
+                                    </Typography><br />
+                                    <Grid container spacing={2} justifyContent={""}>
+                                        <Grid md={6} item>
+                                            <Button fullWidth style={{ color: "white", backgroundColor: "#00C853" }} variant="contained"
+                                                // onClick={() => handleDelete()}
+                                                onClick={handleUnsubscribe}
+                                            >
+                                                Confirm
+                                            </Button>
+                                        </Grid>
+                                        <Grid md={6} item>
+                                            <Button fullWidth color='error' variant="contained" onClick={handleClose}>
+                                                Cancel
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+
+                                </Box>
+                            </Modal>
                         </> :
+                        announcement_details == undefined 
+                        ? "" 
+                        :
+                        new Date(Date.now()).getTime() > new Date(announcement_details["Registration_Deadline"]).getTime() 
+                        ? 
+                            <ChipCard data={
+                                <DeadlineCard />} loading={false} type={"error"} />
+                        :
                             <>
                                 <Button onClick={handleSubscribe} style={{ "color": "white" }} variant="contained" color="success"> Apply Announcement</Button>
                                 <Tooltip title="Keep recieving constant updates" style={{ "margin-left": "10px" }}>
@@ -255,8 +316,6 @@ export default function S_ViewSingleAnnouncement() {
                                 </Tooltip>
                             </>
                         }
-
-
                         <br />
                         <br />
                     </Grid>
