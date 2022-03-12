@@ -4,8 +4,10 @@ import { useTheme } from '@material-ui/styles';
 import MainCard from './../../ui-component/cards/MainCard';
 import SubCard from './../../ui-component/cards/SubCard';
 import { makeStyles } from '@material-ui/styles';
+import { styled } from '@mui/material/styles';
 import { withStyles } from '@material-ui/styles';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { color } from '@material-ui/system';
 import { ClassNames } from '@emotion/react';
@@ -21,6 +23,7 @@ import { IconDashboard, IconCirclePlus, IconDeviceAnalytics, IconSpeakerphone, I
 import { DataGrid, RowsProp, ColDef, GridToolbarContainer, GridToolbarExport } from '@material-ui/data-grid';
 import ChipCard from '../../ui-component/cards/GenericCards/ChipCard';
 import EmptyCompany from './JSX/EmptyCompany';
+import Modal from '@mui/material/Modal';
 
 // import SubCard from '../../ui-component/cards/SubCard';
 
@@ -68,6 +71,11 @@ const LightBlueTextTypography = withStyles({
     }
 });
 
+const axios = require("axios")
+const Input = styled('input')({
+    display: 'none'
+});
+
 function ViewCompany() {
     const icons = {
         IconDashboard: IconDashboard,
@@ -79,6 +87,22 @@ function ViewCompany() {
     const history = useHistory();
     const classes = useStyles();
 
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        // border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+    };
+
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     // const { required_data, loading } = UseFetch('/company/getCompany', 'GET');
 
@@ -127,6 +151,32 @@ function ViewCompany() {
         history.push("/company/edit_company/" + id)
     }
 
+    async function handleDelete(id)
+    {
+        console.log(id)
+        let Resp = await axios({
+            method: 'post',
+            url: "/company/deleteCompany/" + id,
+        });
+
+        console.log(Resp)
+        const params1 = {
+            data: Resp.data,
+            HandleToast: {
+                toast: toast,
+                flag: false
+            }
+        };
+        responsePipelineHandler(params1, 1);
+
+        let updatedDetails = company_list_original.filter((e) => {
+            return id != e.Company_ID
+        })
+        setCompany_list_original([].concat(updatedDetails))
+        setCompany_list_copy([].concat(updatedDetails))
+        handleClose()
+    }
+
 
     let temp_id = '';
 
@@ -156,6 +206,39 @@ function ViewCompany() {
                     //     View Full Company
                     // </Button>
                     <>
+                    <IconButton color="primary" 
+                        component="span"
+                        onClick={handleOpen}
+                        aria-label="upload picture">
+                        <DeleteIcon />
+                    </IconButton>
+                    <Modal
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                        >
+                            <Box sx={style}>
+                                <Typography style={{ "color": "#616161" }} id="modal-modal-title" variant="h3" component="h1">
+                                    Are, you really sure want to delete this company?
+                                </Typography><br />
+                                <Grid container spacing={2} justifyContent={""}>
+                                    <Grid md={6} item>
+                                        <Button fullWidth style={{ color: "white", backgroundColor: "#00C853" }} variant="contained"
+                                            onClick={() => handleDelete(temp_id)}
+                                        >
+                                            Confirm
+                                        </Button>
+                                    </Grid>
+                                    <Grid md={6} item>
+                                        <Button fullWidth color='error' variant="contained" onClick={handleClose}>
+                                            Cancel
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+
+                            </Box>
+                        </Modal>
                     <IconButton color="primary" 
                         onClick={() => handleRedirect(temp_id)}
                         aria-label="upload picture" component="span">
