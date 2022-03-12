@@ -27,7 +27,7 @@ export const PlacementMenu = {
             icon: icons['IconBriefcase'],
             children: [{
                 id: 'AddPlacement',
-                title: 'Add Placement',
+                title: 'View / Add Placement',
                 type: 'item',
                 url: '/placement/add_placement',
                 icon: icons['IconCirclePlus'],

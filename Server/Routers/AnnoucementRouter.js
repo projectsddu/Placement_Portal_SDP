@@ -41,6 +41,7 @@ router.get("/getAnnoucement/:annoucementId", [ResolveUsers.ResolveUserMiddleware
 router.post("/updateAnnoucement/:annoucementId", [AdminAuthenticate.AdminAuthenticate, fileUpload.jobFileUploadMiddleWare], AnnouncementController.updateAnnoucement)
 
 router.post("/deleteAnnoucement/:annoucementId", [AdminAuthenticate.AdminAuthenticate], AnnouncementController.deleteAnnoucement)
+
 router.get("/requiredAnnoucementDetails", [AdminAuthenticate.AdminAuthenticate], AnnouncementController.requiredAnnoucementDetails)
 
 // related to comments

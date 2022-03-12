@@ -25,7 +25,7 @@ export const InternshipMenu = {
             icon: icons['IconArtboard'],
             children: [{
                 id: 'AddInternship',
-                title: 'Add Internship',
+                title: 'View / Add Internship',
                 type: 'item',
                 url: '/internship/add_internship',
                 icon: icons['IconCirclePlus'],
