@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         Job_Description_File: {
             type: DataTypes.TEXT,
-            allowNull: false
+            allowNull: true
         },
         Registration_Deadline: {
             type: DataTypes.DATE,
