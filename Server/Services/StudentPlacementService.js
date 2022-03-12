@@ -161,10 +161,30 @@ const deleteStudentPlacement = async (id) => {
     }
 }
 
+const deleteAllPlacementOfStudent = async(id) => {
+    try {
+        const temp = await StudentPlacement.findAll({ where: {Student_ID: id } })
+        const status = temp.length > 0 ? true : false
+        if(!status)
+        {
+            throw "Placement record doesn't exist for the particular Student_ID"
+        }
+        else
+        {
+            await StudentPlacement.destroy({ where: {Student_ID: id} })
+            return true
+        }
+    } catch (error) {
+        log.error(error.toString())
+        return false
+    }
+}
+
 module.exports = {
     createStudentPlacement,
     getStudentPlacement,
     getAllStudentPlacement,
     updateStudentPlacement,
-    deleteStudentPlacement
+    deleteStudentPlacement,
+    deleteAllPlacementOfStudent
 }

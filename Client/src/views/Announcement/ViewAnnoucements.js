@@ -262,9 +262,9 @@ function ViewAnnoucements() {
     const columns = [
         {
             field: 'view',
-            headerName: 'Edit & View',
+            headerName: 'Delete | Edit | View',
             sortable: false,
-            width: 145,
+            width: 172,
             disableClickEventBubbling: true,
             valueGetter: (params) => {
                 Announcement_ID = params.row.Announcement_ID;

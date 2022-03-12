@@ -18,6 +18,8 @@ import ChipCard from '../../ui-component/cards/GenericCards/ChipCard';
 import EmptyStudent from './JSX/EmptyStudent';
 import { TextField } from '@material-ui/core';
 import { getYear, ParseDate } from '../../Utilities/ParseDate';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Modal from '@mui/material/Modal';
 
 function CustomToolbar() {
     return (
@@ -26,12 +28,31 @@ function CustomToolbar() {
         </GridToolbarContainer>
     );
 }
+
+const axios = require("axios")
+
 export default function ViewStudent() {
     const icons = {
         IconDashboard: IconDashboard,
         IconDeviceAnalytics,
         IconSpeakerphone
     };
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        // border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+    };
+
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const history = useHistory();
     const [search, setSearch] = useState('');
@@ -104,10 +125,37 @@ export default function ViewStudent() {
     //     }
     // }
 
+    async function handleDelete(id) {
+        console.log("hello here in delete")
+        console.log(id)
+        let Resp = await axios({
+            method: 'post',
+            url: "/student/deleteStudent/" + id,
+        });
+
+        console.log(Resp)
+        const params1 = {
+            data: Resp.data,
+            HandleToast: {
+                toast: toast,
+                flag: false
+            }
+        };
+        responsePipelineHandler(params1, 1);
+
+        let updatedDetails = student_list_original.filter((e) => {
+            return id != e.Student_ID
+        })
+        setStudent_list_original([].concat(updatedDetails))
+        setStudent_list_copy([].concat(updatedDetails))
+        handleClose()
+    }
+
     let temp_id = "";
 
     const rows = [];
-    const [columns, setcolumns] = useState([
+    // const [columns, setcolumns] = useState([
+    const columns = [
         // {
         //     field: 'edit',
         //     headerName: 'Edit',
@@ -130,9 +178,9 @@ export default function ViewStudent() {
         // },
         {
             field: 'edit',
-            headerName: 'Edit & View',
+            headerName: 'Delete | Edit | View',
             sortable: false,
-            width: 130,
+            width: 172,
             disableClickEventBubbling: true,
             valueGetter: (params) => {
                 temp_id = params.row.Student_ID;
@@ -150,6 +198,39 @@ export default function ViewStudent() {
                         startIcon={<EditIcon />}
                     >
                     </Button> */}
+                    <IconButton color="primary" 
+                        component="span"
+                        onClick={handleOpen}
+                        aria-label="upload picture">
+                        <DeleteIcon />
+                    </IconButton>
+                    <Modal
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                        >
+                            <Box sx={style}>
+                                <Typography style={{ "color": "#616161" }} id="modal-modal-title" variant="h3" component="h1">
+                                    Are, you really sure want to delete this student?
+                                </Typography><br />
+                                <Grid container spacing={2} justifyContent={""}>
+                                    <Grid md={6} item>
+                                        <Button fullWidth style={{ color: "white", backgroundColor: "#00C853" }} variant="contained"
+                                            onClick={() => handleDelete(temp_id)}
+                                        >
+                                            Confirm
+                                        </Button>
+                                    </Grid>
+                                    <Grid md={6} item>
+                                        <Button fullWidth color='error' variant="contained" onClick={handleClose}>
+                                            Cancel
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+
+                            </Box>
+                        </Modal>
                         <IconButton color="primary"
                             onClick={() => {
                                 history.push('/student/edit_student/' + temp_id);
@@ -215,7 +296,8 @@ export default function ViewStudent() {
         { field: 'Skills', headerName: 'Skills', width: 200, editable: false, hide: true },
 
 
-    ]);
+    // ]);
+    ]
     const [editRowsModel, setEditRowsModel] = React.useState({});
 
     const handleEditRowsModelChange = React.useCallback((model) => {

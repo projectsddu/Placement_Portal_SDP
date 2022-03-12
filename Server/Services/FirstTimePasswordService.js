@@ -123,9 +123,29 @@ const sendPasswords = async (dateYear) => {
     }
 }
 
+const deleteAllFirstTimePasswordOfStudent = async(id) => {
+    try {
+        const temp = await FirstTimeModel.findAll({ where: {StudentId: id } })
+        const status = temp.length > 0 ? true : false
+        if(!status)
+        {
+            throw "First Time Password record doesn't exist for the particular Student_ID"
+        }
+        else
+        {
+            await FirstTimeModel.destroy({ where: {StudentId: id} })
+            return true
+        }
+    } catch (error) {
+        log.error(error.toString())
+        return false
+    }
+}
+
 module.exports = {
     getAllFirstTimePasswords,
     getFirstTimePassword,
     AddFirstTimePassword,
-    sendPasswords
+    sendPasswords,
+    deleteAllFirstTimePasswordOfStudent
 }

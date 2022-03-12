@@ -5,6 +5,22 @@ const db = require("../Models/index")
 const Student = db.students
 const FirstTimePasswordService = require("./FirstTimePasswordService")
 const SkillsAndAchievementsService = require("./SkillsAndAchievementsService")
+// const UserLogin = db.userLogin
+const StudentProject = db.student_projects
+const StudentPlacement = db.student_placements
+const StudentInternship = db.student_internships
+const StudentAchievementsInternships = db.student_achievements_internships
+// const SkillsAndAchievements = db.skills_and_achievements
+const Notifications = db.notifications
+const LoginTokens = db.LoginTokens
+// const FirstTimeModel = db.FirstTimeLogin
+// const StudentProjectService = require("./StudentProjectService")
+// const StudentPlacementService = require("./StudentPlacementService")
+// const StudentInternshipService = require("./StudentInternshipService")
+// const StudentAchievementsInternshipsServices = require("./StudentAchievementsInternshipsServices")
+// const NotificationService = require("./NotificationService")
+// const LoginTokensService = require("./LoginTokensService")
+
 
 async function checkExists(id) {
     const students = await Student.findAll({ where: { Student_ID: id } })
@@ -123,6 +139,21 @@ const deleteStudent = async (id) => {
         }
         else {
             await Student.destroy({ where: { Student_ID: id } })
+            UserLoginService.deleteAllUserLoginOfStudent(id)
+            // StudentProjectService.deleteAllProjectOfStudent(id)
+            await StudentProject.destroy({ where: { Student_ID: id } })
+            // StudentPlacementService.deleteAllPlacementOfStudent(id)
+            await StudentPlacement.destroy({ where: {Student_ID: id} })
+            // StudentInternshipService.deleteAllInternshipOfStudent(id)
+            await StudentInternship.destroy({ where: { Student_ID: id } })
+            // StudentAchievementsInternshipsServices.deleteAllAchievementInternshipsOfStudent(id)
+            await StudentAchievementsInternships.destroy({ where: { Student_ID: id } })
+            SkillsAndAchievementsService.deleteAllSkillsAndAchievementsOfStudent(id)
+            // NotificationService.deleteAllNotificationsOfStudent(id)
+            await Notifications.destroy({ where: { userId: id } })
+            // LoginTokensService.deleteAllLoginTokensOfStudent(id)
+            await LoginTokens.destroy({ where: { LoginId: id } })
+            FirstTimePasswordService.deleteAllFirstTimePasswordOfStudent(id)
             return true
         }
     }

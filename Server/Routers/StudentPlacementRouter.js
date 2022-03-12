@@ -41,5 +41,6 @@ router.get("/getStudentPlacement/:studentId", [ResolveUser.ResolveUserMiddleware
 router.get("/getAllStudentPlacement", [AdminAuthenticate.AdminAuthenticate], StudentPlacementController.getAllStudentPlacement)
 router.post("/updateStudentPlacement/:id", [AdminAuthenticate.AdminAuthenticate, FileUploadMiddleware.jobFileUploadMiddleWare], StudentPlacementController.updateStudentPlacement)
 router.post("/deleteStudentPlacement/:id", [AdminAuthenticate.AdminAuthenticate], StudentPlacementController.deleteStudentPlacement)
+router.post("/deleteAllPlacementOfStudent/:id", [AdminAuthenticate.AdminAuthenticate], StudentPlacementController.deleteAllPlacementOfStudent)
 
 module.exports = router

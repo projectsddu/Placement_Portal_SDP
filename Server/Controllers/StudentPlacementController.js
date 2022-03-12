@@ -121,11 +121,30 @@ const deleteStudentPlacement = async (req, res) => {
     }
 }
 
+const deleteAllPlacementOfStudent = async (req, res) => {
+    try {
+        const id = req.params.id
+        const studentPlacementDetails = await StudentPlacementService.deleteAllPlacementOfStudent(id)
+        if(studentPlacementDetails)
+        {
+            return res.json({ status: true, data: "Student placement record deleted successfully" })
+        }
+        else
+        {
+            throw "Error deleting all placement of a student"
+        }
+    } catch (error) {
+        log.error(error.toString())
+        return res.json({status: false, data: "Error deleting all placement of a student"})
+    }
+}
+
 module.exports = {
     addStudentPlacement,
     addStudentPlacementViaCSV,
     getStudentPlacement,
     getAllStudentPlacement,
     updateStudentPlacement,
-    deleteStudentPlacement
+    deleteStudentPlacement,
+    deleteAllPlacementOfStudent
 }

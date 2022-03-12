@@ -24,5 +24,6 @@ router.get("/getAllStudentInternship", StudentInternshipController.getAllStudent
 router.get("/getStudentInternship/:id", StudentInternshipController.getStudentInternship)
 router.post("/updateStudentInternship/:id", StudentInternshipController.updateStudentInternship)
 router.post("/deleteStudentInternship/:id", StudentInternshipController.deleteStudentInternship)
+router.post("/deleteAllInternshipOfStudent/:id", StudentInternshipController.deleteAllInternshipOfStudent)
 
 module.exports = router

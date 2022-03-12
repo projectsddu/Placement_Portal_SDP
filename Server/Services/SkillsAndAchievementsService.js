@@ -87,10 +87,30 @@ const deleteSkillsAndAchievements = async (id) => {
     }
 }
 
+const deleteAllSkillsAndAchievementsOfStudent = async(id) => {
+    try {
+        const temp = await SkillsAndAchievements.findAll({ where: { Student_ID: id } })
+        const status = temp.length > 0 ? true : false
+        if(status)
+        {
+            await SkillsAndAchievements.destroy({ where: { Student_ID: id } })
+            return true
+        }
+        else
+        {
+            throw "Skills And Achievements record doesn't exist for the particular Student_ID"
+        }
+    } catch (error) {
+        log.error(error.toString())
+        return false
+    }
+}
+
 module.exports = {
     createSkillsAndAchievements,
     getAllSkillsAndAchievements,
     getSkillsAndAchievements,
     updateSkillsAndAchievements,
-    deleteSkillsAndAchievements
+    deleteSkillsAndAchievements,
+    deleteAllSkillsAndAchievementsOfStudent
 }
