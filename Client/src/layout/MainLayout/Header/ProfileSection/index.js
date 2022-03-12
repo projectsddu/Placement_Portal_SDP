@@ -164,12 +164,43 @@ const ProfileSection = () => {
         setOpen(false);
     };
     const prevOpen = React.useRef(open);
-    React.useEffect(() => {
+
+    const [studentDetails, setStudentDetails] = React.useState(undefined)
+
+    React.useEffect(async () => {
         if (prevOpen.current === true && open === false) {
             anchorRef.current.focus();
         }
 
         prevOpen.current = open;
+
+        if (history.location.pathname.indexOf("/_student") != -1) {
+
+            let resp = undefined
+            resp = await axios.get("/student/getOneStudent")
+            console.log("In profile section")
+            if (resp) {
+                let data = undefined
+                data = await resp.data.data
+                if (data) {
+                    console.log(data)
+                    let student_obj = data
+                    let studentName = student_obj.FirstName
+                    let studentMetaName = studentName[0] + student_obj.LastName[0]
+                    setStudentDetails({
+                        studentName
+                        , studentMetaName
+                    })
+
+                }
+            }
+        }
+        else {
+            setStudentDetails({
+                studentName: "Admin"
+                , studentMetaName: "A"
+            })
+        }
     }, [open]);
     return (
         <React.Fragment>
@@ -184,7 +215,7 @@ const ProfileSection = () => {
                         aria-controls={open ? 'menu-list-grow' : undefined}
                         aria-haspopup="true"
                         color="inherit"
-                    >FC</Avatar>
+                    >{studentDetails === undefined ? "" : studentDetails["studentMetaName"]}</Avatar>
                 }
                 label={<IconSettings stroke={1.5} size="1.5rem" color={theme.palette.primary.main} />}
                 variant="outlined"
@@ -222,7 +253,7 @@ const ProfileSection = () => {
                                             <Grid item className={classes.flex}>
                                                 <Typography variant="h4">{"Welcome, "}</Typography>
                                                 <Typography component="span" variant="h4" className={classes.name}>
-                                                    Admin
+                                                    {studentDetails === undefined ? "" : studentDetails["studentName"]}
                                                 </Typography>
                                             </Grid>
                                             <Grid item>

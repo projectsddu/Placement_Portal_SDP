@@ -137,9 +137,9 @@ export default function ViewStudent() {
     async function HandleSendPasswords() {
         handleOpen()
         const dateNow = new Date(date).getFullYear().toString();
-        let yearNew = dateNow[2] + dateNow[3]
-        console.log(yearNew)
-        const resp = await UsePost("/student/sendPasswords", { curYear: yearNew }, "POST")
+        // let yearNew = dateNow[2] + dateNow[3]
+        // console.log(yearNew)
+        const resp = await UsePost("/student/sendPasswords", { curYear: dateNow }, "POST")
         console.log(resp)
         const params1 = {
             data: resp,
@@ -165,10 +165,10 @@ export default function ViewStudent() {
                 <CircularProgress style={style} color="primary" />
             </Modal>
             <Grid container spacing={2} >
-                <Grid item xs={12} md={10}>
+                <Grid item xs={12} md={12}>
                     <TextField label="Search" value={search} onInput={(e) => handleSearch(e)} fullWidth></TextField>
                 </Grid>
-                <Grid item xs={12} md={2}>
+                <Grid item xs={12} md={12}>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <DatePicker
                             views={['year']}
