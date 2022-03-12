@@ -62,13 +62,13 @@ const addAnnoucement = async (req, res) => {
                 return res.json({ data: "Announcement Created", status: true })
             }
             else {
-                throw "Error from createdAnnoucement controller"
+                throw "Error from createdAnnoucement controller. Status returned false."
             }
         }
     }
     catch (e) {
         console.log(e.toString());
-        res.json({ status: false, data: e.toString() })
+        res.json({ status: false, data: "Error! While adding announcement!" })
     }
 }
 
@@ -82,13 +82,13 @@ const getAllAnnoucements = async (req, res) => {
             // return res.json({ status: announcements.length == 0 ? false : true, data: announcements.length == 0 ? "No Student data!" : announcements })
         }
         else {
-            throw "Error in getAllAnnoucements"
+            throw "Error in getAllAnnoucements. Status returned false."
         }
     }
     catch (e) {
         log.error(e.toString())
         // console.log(e.toString());
-        return ERROR(res, "Oops! Some unknown error occured in fetching announcements")
+        return ERROR(res, "Error! While fething announcements!")
         // res.json({ status: false, data: e.toString() })
     }
 
@@ -114,13 +114,13 @@ const getAnnoucement = async (req, res) => {
             // return res.json({ status: announcement.length == 0 ? false : true, data: announcement.length == 0 ? "Annoucement Not Found!" : announcement_data })
         }
         else {
-            throw "Error in getAnnouncement"
+            throw "Error in getAnnouncement. Status returned false."
         }
     }
     catch (e) {
         log.error(e.toString())
         // console.log(e.toString());
-        return ERROR(res, "Oops! some error occured in getting this announcement. ")
+        return ERROR(res, "Error! While fething this announcement!")
         // res.json({ status: false, data: e.toString() })
     }
 
@@ -132,18 +132,19 @@ const updateAnnoucement = async (req, res) => {
         console.log(req.fileName)
         const annoucement = await AnnouncementService.updateAnnoucement(req.body, id, true, req.fileName)
         if (annoucement) {
-            return OK(res, "Announcement Updated!!")
+            return OK(res, "Announcement Updated!")
             // return res.json({ status: true, data: "Announcement Updated!!" })
         }
         else {
-            return ERROR(res, "Error updating Announcement !!!")
+            // return ERROR(res, "Error updating Announcement !!!")
+            throw "Error updating Announcement. Status returned false."
             // return res.json({ status: false, data: "Error updating Announcement !!!" })
         }
     }
     catch (e) {
         // console.log(e.toString());
         log.error(e.toString())
-        return ERROR(res, "Error updating Announcement !!!")
+        return ERROR(res, "Error! While updating announcement!")
         // res.json({ status: false, data: "Error updating announcement !!" })
     }
 }
@@ -153,16 +154,16 @@ const deleteAnnoucement = async (req, res) => {
         let id = req.params.annoucementId
         const status = await AnnouncementService.deleteAnnoucement(id)
         if (status) {
-            return OK(res, "Announcement Deleted Successfully!!")
+            return OK(res, "Announcement Deleted Successfully!")
             // return res.json({ status: true, data: "Announcement Deleted Successfully!!" })
         }
         else {
-            throw "Error deleting announcement"
+            throw "Error deleting announcement. Status returned false."
         }
     }
     catch (e) {
         log.error(e.toString())
-        res.json({ status: false, data: e.toString() })
+        res.json({ status: false, data: "Error! While deleting announcement!" })
     }
 }
 
@@ -175,7 +176,7 @@ const requiredAnnoucementDetails = async (req, res) => {
     catch (e) {
         log.error(e.toString())
         // console.log(e.toString());
-        return ERROR(res, "Oops Some error occured fetching announcement deatils!")
+        return ERROR(res, "Error! While fethcing required details for announcements!")
         // res.json({ status: false, data: e.toString() })
     }
 }
@@ -204,13 +205,13 @@ const addComment = async (req, res) => {
             // return res.json({ data: "Comment Created", status: true })
         }
         else {
-            throw "Error from createdAnnoucement controller (Add Comment method)"
+            throw "Error from add comment announcement controller. Status returned false."
         }
     }
     catch (e) {
         log.error(e.toString())
         // console.log(e.toString());
-        return ERROR(res, "Oops! some unknown error occured adding comment!")
+        return ERROR(res, "Error! While adding comment!")
         // res.json({ status: false, data: e.toString() })
     }
 }
@@ -224,14 +225,14 @@ const getAllComments = async (req, res) => {
             // return res.json({ status: comments.length == 0 ? false : true, data: comments.length == 0 ? "No Comment data!" : comments })
         }
         else {
-            throw "Error in getAllComments";
+            throw "Error in getAllComments. Status returned false.";
         }
     }
     catch (e) {
         log.error(e.toString())
         // console.log(e.toString());
         // res.json({ status: false, data: e.toString() })
-        return ERROR(res, "Oops! some error occured fetching comments.")
+        return ERROR(res, "Error! While fetching comments!")
     }
 }
 
