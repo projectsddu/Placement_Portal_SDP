@@ -45,6 +45,7 @@ const AddPlacementViaCSV = Loadable(lazy(() => import('../views/Placement/AddPla
 
 // internship starts
 const AddInternship = Loadable(lazy(() => import('../views/Internship/AddInternship')));
+const AddInternshipViaCSV = Loadable(lazy(() => import('../views/Internship/AddInternshipViaCSV')));
 
 // internship ends
 
@@ -172,6 +173,7 @@ const MainRoutes = () => {
 
                 // internship starts
                 "/internship/add_internship",
+                "/internship/add_internship_via_csv",
                 // internship ends
 
                 // Company Routes
@@ -252,6 +254,7 @@ const MainRoutes = () => {
 
                     {/* internship routes */}
                     <Route path="/internship/add_internship" component={AddInternship} />
+                    <Route path="/internship/add_internship_via_csv" component={AddInternshipViaCSV} />
 
 
                     {/* Company Routes */}

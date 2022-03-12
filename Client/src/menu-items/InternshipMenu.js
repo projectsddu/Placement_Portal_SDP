@@ -1,5 +1,5 @@
 // assets
-import { IconDashboard, IconDeviceAnalytics, IconSpeakerphone, IconLayoutGridAdd, IconCirclePlus, IconEye, IconArtboard } from '@tabler/icons';
+import { IconDashboard, IconDeviceAnalytics, IconSpeakerphone, IconLayoutGridAdd, IconCirclePlus, IconEye, IconArtboard, IconFileUpload } from '@tabler/icons';
 
 // constant
 const icons = {
@@ -10,7 +10,8 @@ const icons = {
     IconLayoutGridAdd,
     IconEye,
     IconCirclePlus,
-    IconArtboard
+    IconArtboard, 
+    IconFileUpload
 };
 
 export const InternshipMenu = {
@@ -30,7 +31,16 @@ export const InternshipMenu = {
                 url: '/internship/add_internship',
                 icon: icons['IconCirclePlus'],
                 breadcrumbs: false
-            }]
+            },
+            {
+                id: 'AddInternshipViaCSV',
+                title: 'Add Internship Via CSV',
+                type: 'item',
+                url: '/internship/add_internship_via_csv',
+                icon: icons['IconFileUpload'],
+                breadcrumbs: false
+            }
+        ]
         }
     ]
 };

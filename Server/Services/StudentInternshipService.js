@@ -3,6 +3,9 @@ const log = new logger(true)
 const db = require("../Models/index")
 const StudentInternship = db.student_internships
 const CompanyService = require("./CompanyService")
+const StudentService = require("./StudentService")
+const { sequelize } = require("../Models/index")
+const Sequelize = require("sequelize")
 
 async function checkExists(id) {
     const studentinternships = await StudentInternship.findAll({ 
@@ -11,8 +14,21 @@ async function checkExists(id) {
     return studentinternships.length > 0 ? true : false
 }
 
-const createStudentInternship = async (data) => {
+const createStudentInternship = async (data, viaCSV = false) => {
     try {
+        const studentDetails = await StudentService.getOneStudent(data.Student_ID)
+        if(viaCSV)
+        {
+            let [res1, res2] = await sequelize.query("SELECT Company_ID FROM Companies WHERE LOWER(Company_name)='" + data["Company_ID"].toLowerCase() + "'")
+            console.log(data["Company_ID"])
+            console.log("from line 23",res2)
+            if(res2[0]["Company_ID"] == 0)
+            {
+                throw "Company not found"
+            }
+            data["Company_ID"] = res2[0]["Company_ID"]
+        }
+        data["Passed_out_year"] = studentDetails.Passed_out_year
         await StudentInternship.create(data)
         return true
     } catch (error) {

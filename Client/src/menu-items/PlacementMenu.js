@@ -1,5 +1,5 @@
 // assets
-import { IconDashboard, IconDeviceAnalytics, IconSpeakerphone, IconLayoutGridAdd, IconCirclePlus, IconEye, IconMan, IconUserPlus, IconBriefcase } from '@tabler/icons';
+import { IconDashboard, IconDeviceAnalytics, IconSpeakerphone, IconLayoutGridAdd, IconCirclePlus, IconEye, IconMan, IconUserPlus, IconBriefcase, IconFileUpload } from '@tabler/icons';
 
 // constant
 const icons = {
@@ -12,7 +12,8 @@ const icons = {
     IconCirclePlus,
     IconMan,
     IconUserPlus,
-    IconBriefcase
+    IconBriefcase,
+    IconFileUpload
 };
 
 export const PlacementMenu = {
@@ -38,7 +39,7 @@ export const PlacementMenu = {
                 title: 'Add Placement Via CSV',
                 type: 'item',
                 url: '/placement/add_placement_via_csv',
-                icon: icons['IconCirclePlus'],
+                icon: icons['IconFileUpload'],
                 breadcrumbs: false
             }
             ]
