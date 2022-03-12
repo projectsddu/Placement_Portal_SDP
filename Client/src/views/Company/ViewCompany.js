@@ -186,9 +186,9 @@ function ViewCompany() {
         { field: 'Company_ID', headerName: 'Company ID', width: 200, editable: false, hide: true },
         {
             field: 'View',
-            headerName: 'Edit & View',
+            headerName: 'Delete | Edit | View',
             sortable: false,
-            width: 145,
+            width: 172,
             disableClickEventBubbling: true,
             valueGetter: (params) => {
                 temp_id = params.row.Company_ID;

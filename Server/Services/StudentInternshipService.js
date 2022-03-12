@@ -99,10 +99,30 @@ const deleteStudentInternship = async (id) => {
     }
 }
 
+const deleteAllInternshipOfStudent = async (id) => {
+    try {
+        const temp = await StudentInternship.findAll({ where: { Student_ID: id } })
+        const status = temp.length > 0 ? true : false
+        if(!status)
+        {
+            throw "Internship record doesn't exist for the particular Student_ID"
+        }
+        else
+        {
+            await StudentInternship.destroy({ where: { Student_ID: id } })
+            return true
+        }
+    } catch (error) {
+        log.error(error.toString())
+        return false
+    }
+}
+
 module.exports = {
     createStudentInternship,
     getAllStudentInternship,
     getStudentInternship,
     updateStudentInternship,
-    deleteStudentInternship
+    deleteStudentInternship,
+    deleteAllInternshipOfStudent
 }

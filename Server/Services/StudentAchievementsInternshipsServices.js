@@ -98,10 +98,30 @@ const deleteStudentAchievementsInternships = async (id) => {
     }
 }
 
+const deleteAllAchievementInternshipsOfStudent = async (id) => {
+    try {
+        const temp = await StudentAchievementsInternships.findAll({ where: { Student_ID: id } })
+        const status = temp.length > 0 ? true : false
+        if(status)
+        {
+            await StudentAchievementsInternships.destroy({ where: { Student_ID: id } })
+            return true
+        }
+        else
+        {
+            throw "Internship (that student added) record doesn't exist for the particular Student_ID"
+        }
+    } catch (error) {
+        log.error(error.toString())
+        return false
+    }
+}
+
 module.exports = {
     createStudentAchievementsInternships,
     updateStudentAchievementsInternships,
     getAllStudentsAchievementsInternships,
     getStudentAchievementsInternshipsByStudentID,
-    deleteStudentAchievementsInternships
+    deleteStudentAchievementsInternships,
+    deleteAllAchievementInternshipsOfStudent
 }

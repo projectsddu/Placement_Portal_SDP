@@ -144,10 +144,31 @@ const broadcastNotification = async (message) => {
     }
 }
 
+const deleteAllNotificationsOfStudent = async(id) => {
+    try {
+        const temp = await Notifications.findAll({ where: { userId: id } })
+        const status = temp.length > 0 ? true : false
+        if(status)
+        {
+            await Notifications.destroy({ where: { userId: id } })
+            return true
+        }
+        else
+        {
+            throw "Notification record doesn't exist for the particular Student_ID"
+        }
+
+    } catch (error) {
+        log.error(error.toString())
+        return false
+    }
+}
+
 module.exports = {
     adminToBatchDifferentNotification,
     adminToBatchNotification,
     adminToSingleUserNotification,
     getUserNotifications,
-    broadcastNotification
+    broadcastNotification,
+    deleteAllNotificationsOfStudent
 }

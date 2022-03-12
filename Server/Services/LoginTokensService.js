@@ -23,7 +23,27 @@ const addToken = async (loginId) => {
     }
 }
 
+const deleteAllLoginTokensOfStudent = async (id) => {
+    try {
+        const temp = await LoginTokens.findAll({ where: { LoginId: id } })
+        const status = temp.length > 0 ? true : false
+        if(status)
+        {
+            await LoginTokens.destroy({ where: { LoginId: id } })
+            return true
+        }
+        else
+        {
+            throw "Login Token record doesn't exist for the particular Student_ID"
+        }
+    } catch (error) {
+        log.error(error.toString())
+        return false
+    }
+}
+
 
 module.exports = {
-    addToken
+    addToken,
+    deleteAllLoginTokensOfStudent
 }

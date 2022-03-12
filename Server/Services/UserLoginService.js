@@ -201,11 +201,31 @@ const changePasswordFirstTime = async (studentId, oldPassword, newPassword) => {
 
 }
 
+const deleteAllUserLoginOfStudent = async (id) => {
+    try {
+        const temp = await UserLogin.findAll({ where: { LoginId: id } })
+        const status = temp.length > 0 ? true : false
+        if(status)
+        {
+            await UserLogin.destroy({ where: { LoginId: id } })
+            return true
+        }
+        else
+        {
+            throw "User Login record doesn't exist for the particular Student_ID"
+        }
+    } catch (error) {
+        log.error(error.toString())
+        return false
+    }
+}
+
 module.exports = {
     addFreshPassword,
     changePassword,
     createUserLogin,
     changePasswordFirstTime,
     loginUser,
-    verifyUser
+    verifyUser,
+    deleteAllUserLoginOfStudent
 }

@@ -4,6 +4,7 @@ const log = new logger(true)
 const StudentInternship = db.student_internships
 const StudentInternshipService = require("../Services/StudentInternshipService")
 const CSVToJSON = require('csvtojson')
+const ResponseService = require("../Services/ResponseService")
 
 async function checkExists(id) {
     const studnentinternship = await StudentInternship.findAll({ where: { id }})
@@ -116,11 +117,31 @@ const deleteStudentInternship = async (req, res) => {
     }
 }
 
+const deleteAllInternshipOfStudent = async(req, res) => {
+    try {
+        const id = req.params.id
+        const status = await StudentInternshipService.deleteAllInternshipOfStudent(id)
+        // console.log("line 124 :", status)
+        if(status)
+        {
+            return ResponseService.OK(res, "Student internship record deleted successfully")
+        }
+        else
+        {
+            throw "Error deleting all internship of a student"
+        }
+    } catch (error) {
+        log.error(error.toString())
+        return res.json({ status: false, data: error.toString() })
+    }
+}
+
 module.exports = {
     addStudentInternship,
     getAllStudentInternship,
     getStudentInternship,
     updateStudentInternship,
     deleteStudentInternship,
-    addStudentInternshipViaCSV
+    addStudentInternshipViaCSV,
+    deleteAllInternshipOfStudent
 }
