@@ -31,9 +31,9 @@ import HandleToast from '../../Utilities/HandleToast'
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 
+import CircularProgress from '@mui/material/CircularProgress';
 
-
-
+import { Modal } from '@material-ui/core';
 
 
 function AddCompany() {
@@ -76,6 +76,7 @@ function AddCompany() {
 
     async function handleSubmit() {
 
+        handleOpen()
         const res = await UsePost("/company/addCompany", data, "POST")
         const params1 = {
             data: res,
@@ -85,13 +86,34 @@ function AddCompany() {
             }
         }
         console.log(res);
+        handleClose()
         responsePipelineHandler(params1, 1)
         // END OF POSTING DATA EXAMPLE
     }
-
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     return (
         <MainCard title="Add Company" >
+            <Modal
+                open={open}
+                onClose={handleClose}
+                style={{ "border": "0px solid white" }}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <CircularProgress style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    bgcolor: 'background.paper',
+                    // boxShadow: 24,
+                    border: "0px solid white",
+                    p: 4,
+                    borderWidth: "0"
+                }} color="primary" />
+            </Modal>
             <form enctype="multipart/form-data">
                 <TextField
                     // required

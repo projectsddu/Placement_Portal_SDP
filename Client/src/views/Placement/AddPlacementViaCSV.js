@@ -13,8 +13,11 @@ import { styled } from '@mui/material/styles';
 import UsePostFile from '../../Utilities/UsePostFile'
 import HandleToast from '../../Utilities/HandleToast'
 import { ToastContainer, toast } from 'react-toastify';
-import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
+// import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import UseFetch from '../../Utilities/UseFetch';
+import CircularProgress from '@mui/material/CircularProgress';
+import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
+import Modal from '@mui/material/Modal';
 
 const Input = styled('input')({
     display: 'none',
@@ -23,7 +26,9 @@ const Input = styled('input')({
 
 
 export default function AddPlacementViaCSV() {
-
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     const [data, setData] = useState({
     });
     useEffect(() => { }, [data]);
@@ -37,8 +42,18 @@ export default function AddPlacementViaCSV() {
         temp["Student_Details_File"] = file_data
         setData(temp)
     };
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        bgcolor: 'background.paper',
+        // boxShadow: 24,
+        p: 4,
+        border: "0px solid white"
+    };
 
     async function handleSubmit() {
+        handleOpen()
         const res = await UsePostFile("/studentplacement/addStudentPlacementWithCSV", data, "POST")
         const params1 = {
             data: res,
@@ -48,12 +63,21 @@ export default function AddPlacementViaCSV() {
             }
         }
         // console.log(res);
+        handleClose()
         responsePipelineHandler(params1, 1)
         // END OF POSTING DATA EXAMPLE
     }
 
     return (
         <MainCard title="Add Student Placement Details">
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <CircularProgress style={style} color="primary" />
+            </Modal>
             <form enctype="multipart/form-data">
                 <label htmlFor="contained-button-file">
                     <Input

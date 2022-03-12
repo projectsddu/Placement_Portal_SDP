@@ -17,7 +17,7 @@ import responsePipelineHandler from '../../../Utilities/ResponsePipelineHandler'
 import UseFetch from '../../../Utilities/UseFetch';
 import CircularProgress from '@mui/material/CircularProgress';
 import { gridSpacing } from '../../../store/constant';
-
+import { Modal } from '@material-ui/core';
 const Input = styled('input')({
     display: 'none',
 });
@@ -25,6 +25,9 @@ const Input = styled('input')({
 
 
 export default function UploadResumeCard({ CV_Upload }) {
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const [uploadingData, setuploadingData] = useState(undefined)
     const [data, setData] = useState({
@@ -43,6 +46,7 @@ export default function UploadResumeCard({ CV_Upload }) {
 
     async function handleSubmit() {
 
+        handleOpen()
         setuploadingData(true)
         const res = await UsePostFile("/student/addCV", data, "POST")
         setuploadingData(false)
@@ -55,12 +59,31 @@ export default function UploadResumeCard({ CV_Upload }) {
             }
         }
         // console.log(res);
+        handleClose()
         responsePipelineHandler(params1, 1)
         // END OF POSTING DATA EXAMPLE
     }
 
     return (
         <MainCard title="Add Student CV">
+            <Modal
+                open={open}
+                onClose={handleClose}
+                style={{ "border": "0px solid white" }}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <CircularProgress style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    bgcolor: 'background.paper',
+                    // boxShadow: 24,
+                    border: "0px solid white",
+                    p: 4,
+                    borderWidth: "0"
+                }} color="primary" />
+            </Modal>
             <Grid container spacing={gridSpacing}>
                 <Grid item>
                     <form enctype="multipart/form-data" id="CVForm">
@@ -111,9 +134,9 @@ export default function UploadResumeCard({ CV_Upload }) {
                     }
 
                 </Grid>
-                {uploadingData === undefined ? "" : uploadingData == true ? <Grid item>
+                {/* {uploadingData === undefined ? "" : uploadingData == true ? <Grid item>
                     <CircularProgress />
-                </Grid> : ""}
+                </Grid> : ""} */}
 
 
 

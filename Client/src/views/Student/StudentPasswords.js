@@ -16,7 +16,10 @@ import ChipCard from '../../ui-component/cards/GenericCards/ChipCard';
 import EmptyStudent from './JSX/EmptyStudent';
 import { TextField } from '@material-ui/core';
 import UsePost from '../../Utilities/UsePost';
-
+import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
+import Modal from '@mui/material/Modal';
+import CircularProgress from '@mui/material/CircularProgress';
+import { ToastContainer, toast } from 'react-toastify';
 function CustomToolbar() {
     return (
         <GridToolbarContainer>
@@ -30,7 +33,14 @@ export default function ViewStudent() {
         IconDeviceAnalytics,
         IconSpeakerphone
     };
-
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        bgcolor: 'background.paper',
+        boxShadow: 24,
+        p: 4,
+    };
     const history = useHistory();
     const [search, setSearch] = useState('');
     const curDate = new Date(Date.now()).getFullYear()
@@ -120,18 +130,40 @@ export default function ViewStudent() {
         })
         setStudent_list_copy(filteredList)
     }
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     async function HandleSendPasswords() {
+        handleOpen()
         const dateNow = new Date(date).getFullYear().toString();
         let yearNew = dateNow[2] + dateNow[3]
         console.log(yearNew)
         const resp = await UsePost("/student/sendPasswords", { curYear: yearNew }, "POST")
         console.log(resp)
+        const params1 = {
+            data: resp,
+            HandleToast: {
+                toast: toast,
+                flag: false,
+            }
+        }
+        // console.log(res);
+        handleClose()
+        responsePipelineHandler(params1, 1)
 
     }
 
     return (
         <MainCard title="Student First Time Passwords">
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <CircularProgress style={style} color="primary" />
+            </Modal>
             <Grid container spacing={2} >
                 <Grid item xs={12} md={10}>
                     <TextField label="Search" value={search} onInput={(e) => handleSearch(e)} fullWidth></TextField>
@@ -156,6 +188,12 @@ export default function ViewStudent() {
             <Grid container>
                 <Grid item>
                     <Button variant="contained" onClick={() => HandleSendPasswords()} color='success' style={{ "color": "white" }}>Send Passwords</Button>
+                </Grid>
+                <Grid item padding={1}>
+                    <Typography variant="h6">
+
+                        {"Note : sending passwords might take a while"}
+                    </Typography>
                 </Grid>
 
             </Grid>

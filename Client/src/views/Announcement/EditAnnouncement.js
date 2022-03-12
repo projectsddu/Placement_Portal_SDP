@@ -22,6 +22,8 @@ import {
     Checkbox
 } from '@material-ui/core';
 // import SecondaryAction from './../../ui-component/cards/CardSecondaryAction';
+import Modal from '@mui/material/Modal';
+import CircularProgress from '@mui/material/CircularProgress';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
@@ -82,6 +84,9 @@ const Input = styled('input')({
 });
 
 function AddAnnoucement() {
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     const [Branches, setBranches] = useState([
         {
             value: 'CE',
@@ -144,6 +149,7 @@ function AddAnnoucement() {
     };
 
     async function handleSubmit() {
+        handleOpen()
         const temp = data
         delete temp["Company_Details"]
         console.log(data)
@@ -157,6 +163,7 @@ function AddAnnoucement() {
             }
         }
         // console.log(res);
+        handleClose()
         responsePipelineHandler(params1, 1)
         // if(response.)
     }
@@ -192,9 +199,25 @@ function AddAnnoucement() {
         // console.log(Branches)
         // console.log(data)
     }
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        bgcolor: 'background.paper',
+        boxShadow: 24,
+        p: 4,
+    };
     return (
 
         <MainCard title="Edit Announcement" >
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <CircularProgress style={style} color="primary" />
+            </Modal>
             {data === undefined ? "" : console.log(data)}
             <form enctype="multipart/form-data">
 
@@ -206,7 +229,7 @@ function AddAnnoucement() {
                     label="Company Name"
                     id="companies"
                     // helperText="Enter Job Role"
-                    value={data === undefined ? "" : data["Company_Details"]['Company_name']}
+                    value={data === undefined ? "" : data["Company_Details"] === undefined ? "" : data["Company_Details"]['Company_name']}
                     onChange={(e) => {
                         setData({ ...data, Job_Role: e.target.value });
                     }}

@@ -8,12 +8,17 @@ import UseFetch from '../../Utilities/UseFetch';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { IconCirclePlus } from '@tabler/icons';
 import Grid from '@mui/material/Grid';
+import { Modal } from '@material-ui/core';
 import ChipCard from "../../ui-component/cards/GenericCards/ChipCard"
 import Student_details from '../Placement/JSX/Student_details'
 import NoStudent from '../Placement/JSX/NoStudent'
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 function AddInternship() {
-
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     const [studentData, setStudentData] = useState('');
     const [StudentDetails, setStudentDetails] = useState(undefined);
     const [studentInternship, setStudentInternship] = useState(undefined)
@@ -87,6 +92,7 @@ function AddInternship() {
         setStudentData(e.target.value)
 
         if (e.target.value.length === 10) {
+            handleOpen()
             console.log("called")
             let response = undefined
             response = await fetch("/student/getOneStudentInAdmin/" + e.target.value.toUpperCase(), { method: "GET" })
@@ -151,14 +157,41 @@ function AddInternship() {
             setStudentDetails(undefined)
             console.log("Here")
         }
+        handleClose()
 
     }
-
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        bgcolor: 'background.paper',
+        // boxShadow: 24,
+        p: 4,
+        borderWidth: "0"
+    };
 
 
     return (
         <>
             <MainCard title="Add Internship">
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    style={{ "border": "0px solid white" }}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <CircularProgress style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        bgcolor: 'background.paper',
+                        // boxShadow: 24,
+                        border: "0px solid white",
+                        p: 4,
+                        borderWidth: "0"
+                    }} color="primary" />
+                </Modal>
                 <TextField
                     fullWidth
                     // required

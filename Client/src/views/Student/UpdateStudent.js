@@ -13,6 +13,8 @@ import { styled } from '@mui/material/styles';
 import UsePostFile from '../../Utilities/UsePostFile'
 import HandleToast from '../../Utilities/HandleToast'
 import { ToastContainer, toast } from 'react-toastify';
+import Modal from '@mui/material/Modal';
+import CircularProgress from '@mui/material/CircularProgress';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import UseFetch from '../../Utilities/UseFetch';
 
@@ -23,7 +25,17 @@ const Input = styled('input')({
 
 
 export default function UpdateStudent() {
-
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        bgcolor: 'background.paper',
+        boxShadow: 24,
+        p: 4,
+    };
     const [data, setData] = useState({
     });
     useEffect(() => { }, [data]);
@@ -38,7 +50,7 @@ export default function UpdateStudent() {
     };
 
     async function handleSubmit() {
-
+        handleOpen()
         const res = await UsePostFile("/student/updateStudent/", data, "POST")
         const params1 = {
             data: res,
@@ -47,6 +59,7 @@ export default function UpdateStudent() {
                 flag: false,
             }
         }
+        handleClose()
         // console.log(res);
         responsePipelineHandler(params1, 1)
         // END OF POSTING DATA EXAMPLE
@@ -54,6 +67,14 @@ export default function UpdateStudent() {
 
     return (
         <MainCard title="Update Student Details">
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <CircularProgress style={style} color="primary" />
+            </Modal>
             <form enctype="multipart/form-data">
                 <label htmlFor="contained-button-file">
                     <Input

@@ -18,6 +18,9 @@ import UseFetch from '../../../Utilities/UseFetch';
 
 import { gridSpacing } from '../../../store/constant';
 import CircularProgress from '@mui/material/CircularProgress';
+import { Modal } from '@material-ui/core';
+
+
 const Input = styled('input')({
     display: 'none',
 });
@@ -25,6 +28,9 @@ const Input = styled('input')({
 
 
 export default function UploadPhotoCard({ Student_Photo }) {
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     const [uploadingData, setuploadingData] = useState(undefined)
     const [data, setData] = useState({
     });
@@ -43,6 +49,7 @@ export default function UploadPhotoCard({ Student_Photo }) {
     };
 
     async function handleSubmit() {
+        handleOpen()
         setuploadingData(true)
         const res = await UsePostFile("/student/uploadPhoto", data, "POST")
         setuploadingData(false)
@@ -54,6 +61,7 @@ export default function UploadPhotoCard({ Student_Photo }) {
                 flag: false,
             }
         }
+        handleClose()
         // console.log(res);
         responsePipelineHandler(params1, 1)
         // END OF POSTING DATA EXAMPLE
@@ -61,6 +69,25 @@ export default function UploadPhotoCard({ Student_Photo }) {
 
     return (
         <MainCard title="Add Student Photo">
+            <Modal
+                open={open}
+                onClose={handleClose}
+                style={{ "border": "0px solid white" }}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <CircularProgress style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    bgcolor: 'background.paper',
+                    // boxShadow: 24,
+                    border: "0px solid white",
+                    p: 4,
+                    borderWidth: "0"
+                }} color="primary" />
+            </Modal>
+
             <Grid container spacing={gridSpacing}>
                 <Grid item>
                     <form enctype="multipart/form-data" id="PhotoForm">
@@ -120,9 +147,9 @@ export default function UploadPhotoCard({ Student_Photo }) {
                     }
 
                 </Grid>
-                {uploadingData === undefined ? "" : uploadingData == true ? <Grid item>
+                {/* {uploadingData === undefined ? "" : uploadingData == true ? <Grid item>
                     <CircularProgress />
-                </Grid> : ""}
+                </Grid> : ""} */}
 
 
             </Grid>
