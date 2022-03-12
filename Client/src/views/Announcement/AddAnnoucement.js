@@ -32,6 +32,8 @@ import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import HandleToast from '../../Utilities/HandleToast';
 import { ToastContainer, toast } from 'react-toastify';
 import UseFetch from '../../Utilities/UseFetch';
+import Modal from '@mui/material/Modal';
+import CircularProgress from '@mui/material/CircularProgress';
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -78,6 +80,9 @@ const Input = styled('input')({
 });
 
 function AddAnnoucement() {
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     const [selectedFile, setSelectedFile] = useState();
     const [isFilePicked, setIsFilePicked] = useState(false);
 
@@ -123,6 +128,7 @@ function AddAnnoucement() {
     };
 
     async function handleSubmit() {
+        handleOpen()
         const res = await UsePostFile('/annoucement/addAnnoucement', data, 'POST');
         const params1 = {
             data: res,
@@ -131,22 +137,12 @@ function AddAnnoucement() {
                 flag: false
             }
         };
+        handleClose()
         console.log(res);
         responsePipelineHandler(params1, 1);
         // END OF POSTING DATA EXAMPLE
     }
 
-    // const saveData = async function() {
-    //     // console.log("hello from save data");
-    //     const { res, waiting } = usePost("/annoucement/addAnnoucement", data, "POST")
-    //     const params1 = {
-    //         data: res,
-    //         HandleToast: {
-    //             toast: toast,
-    //             flag: false,
-    //         }
-    //     }
-    // }
 
     function handleCheckBox(branchName, c) {
         for (let i = 0; i < Branches.length; i++) {
@@ -172,8 +168,24 @@ function AddAnnoucement() {
         console.log(data)
     }
 
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        bgcolor: 'background.paper',
+        boxShadow: 24,
+        p: 4,
+    };
     return (
         <MainCard title="Add Announcement">
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <CircularProgress style={style} color="primary" />
+            </Modal>
             <form enctype="multipart/form-data">
                 {/* <TextField
                     fullWidth

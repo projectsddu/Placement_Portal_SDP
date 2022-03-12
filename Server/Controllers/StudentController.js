@@ -69,12 +69,13 @@ const addStudent = async (req, res) => {
         const studentData = await CSVToJSON().fromStream(req.fileData)
         console.log("Here1")
         // console.log(studentData.length);
+        // console.log(JSON.parse(JSON.stringify(studentData)))
 
         if (studentData) {
             for (let i = 0; i < studentData.length; i++) {
 
                 // console.log(studentData[i]);
-
+                console.log(i)
                 try {
 
                     let studentStatus = await StudentService.createStudent(studentData[i]);
@@ -88,20 +89,16 @@ const addStudent = async (req, res) => {
             }
         }
         return res.json({ status: true, data: "Student Added" })
-
-        // if (studentStatus) {
-        //     return res.json({ status: true, data: "Student Added" })
-        // }
-        // else {
-        //     throw "Error from create student controller"
-        // }
-
     }
     catch (err) {
         log.error(err.toString())
         return res.json({ status: false, data: "Error adding Student !!!" })
     }
 }
+
+
+
+
 
 // to get all students info
 const getAllStudents = async (req, res) => {

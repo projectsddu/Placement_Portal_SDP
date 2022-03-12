@@ -3,7 +3,6 @@ import MainCard from '../../ui-component/cards/MainCard';
 import { TextField } from '@material-ui/core';
 import CompanyPlacementCard from './CompanyPlacementCard';
 import { ToastContainer, toast } from 'react-toastify';
-import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import UseFetch from '../../Utilities/UseFetch';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { IconCirclePlus } from '@tabler/icons';
@@ -11,12 +10,26 @@ import Grid from '@mui/material/Grid';
 import SubCard from '../../ui-component/cards/SubCard';
 import { Typography } from '@material-ui/core';
 import { ParseDate } from '../../Utilities/ParseDate';
+import Modal from '@mui/material/Modal';
 import ChipCard from "../../ui-component/cards/GenericCards/ChipCard"
 import Student_details from './JSX/Student_details';
 import NoStudent from "./JSX/NoStudent"
+import CircularProgress from '@mui/material/CircularProgress';
+import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 
 function AddPlacement() {
-
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        bgcolor: 'background.paper',
+        // boxShadow: 24,
+        p: 4,
+        border: "0px solid white"
+    };
     const [studentData, setStudentData] = useState('');
     const [StudentDetails, setStudentDetails] = useState(undefined);
     const [studentPlacement, setStudentPlacement] = useState(undefined)
@@ -40,13 +53,6 @@ function AddPlacement() {
     function changeStateFromChild(seed, operation) {
         let placement_card_copy = placementCard
         if (operation == "delete") {
-            // for (let i = 0; i < placementCard.length; i++) {
-            //     let propDetails = placementCard[i].props.seed
-            //     if(seed==propDetails)
-            //     {
-
-            //     }
-            // }
             let filteredList = placement_card_copy.filter((elem) => {
                 return elem.props.seed != seed
             })
@@ -62,6 +68,7 @@ function AddPlacement() {
         setStudentData(e.target.value)
 
         if (e.target.value.length === 10) {
+            handleOpen()
             let response = undefined
             response = await fetch("/student/getOneStudentInAdmin/" + e.target.value.toUpperCase(), { method: "GET" })
 
@@ -123,6 +130,7 @@ function AddPlacement() {
             setStudentDetails(undefined)
             console.log("Here")
         }
+        handleClose()
 
     }
 
@@ -162,6 +170,14 @@ function AddPlacement() {
     return (
         <>
             <MainCard title="Add Placement">
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <CircularProgress style={style} color="primary" />
+                </Modal>
                 <TextField
                     fullWidth
                     // required

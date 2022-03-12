@@ -12,7 +12,8 @@ import UsePost from '../../Utilities/UsePost'
 import HandleToast from '../../Utilities/HandleToast'
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
-
+import Modal from '@mui/material/Modal';
+import CircularProgress from '@mui/material/CircularProgress';
 const useStyles = makeStyles({
     helperTextColor: {
         color: 'red'
@@ -20,6 +21,9 @@ const useStyles = makeStyles({
 });
 
 function EditSingleStudent() {
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     const classes = useStyles();
 
     const student_id = useLocation().pathname.split('/')[3];
@@ -36,6 +40,7 @@ function EditSingleStudent() {
 
 
     async function handleSubmit() {
+        handleOpen()
         const response = await UsePost("/student/updateOneStudent/" + student_id, studentDetails, "POST")
         console.log(response)
         const params1 = {
@@ -46,13 +51,29 @@ function EditSingleStudent() {
             }
         }
         // console.log(res);
+        handleClose()
         responsePipelineHandler(params1, 1)
         // if(response.)
     }
-
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        bgcolor: 'background.paper',
+        boxShadow: 24,
+        p: 4,
+    };
     return (
         <>
             <MainCard title="Edit Student">
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <CircularProgress style={style} color="primary" />
+                </Modal>
                 {studentDetails == undefined ? (
                     ''
                 ) : (

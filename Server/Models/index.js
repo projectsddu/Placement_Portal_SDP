@@ -37,7 +37,7 @@ db.student_projects = require("./StudentProjectModel")(sequelize, DataTypes)
 db.student_achievements_internships = require(".//StudentAchievementsInternshipsModel")(sequelize, DataTypes)
 
 
-db.sequelize.sync({ force: false }).then(() => {
+db.sequelize.sync({ force: true }).then(() => {
     console.log("Resyncing Done.....")
 })
 

@@ -7,7 +7,8 @@ import { Typography } from '@material-ui/core';
 import MainCard from '../../ui-component/cards/MainCard';
 
 import { Button } from '@material-ui/core'
-
+import Modal from '@mui/material/Modal';
+import CircularProgress from '@mui/material/CircularProgress';
 import { styled } from '@mui/material/styles';
 
 import UsePostFile from '../../Utilities/UsePostFile'
@@ -23,7 +24,17 @@ const Input = styled('input')({
 
 
 export default function AddStudent() {
-
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        bgcolor: 'background.paper',
+        boxShadow: 24,
+        p: 4,
+    };
     const [data, setData] = useState({
     });
     useEffect(() => { }, [data]);
@@ -39,7 +50,7 @@ export default function AddStudent() {
     };
 
     async function handleSubmit() {
-
+        handleOpen()
         const res = await UsePostFile("/student/addStudent", data, "POST")
         const params1 = {
             data: res,
@@ -48,6 +59,7 @@ export default function AddStudent() {
                 flag: false,
             }
         }
+        handleClose()
         // console.log(res);
         responsePipelineHandler(params1, 1)
         // END OF POSTING DATA EXAMPLE
@@ -55,6 +67,14 @@ export default function AddStudent() {
 
     return (
         <MainCard title="Add Student Details">
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <CircularProgress style={style} color="primary" />
+            </Modal>
             <form enctype="multipart/form-data">
                 <label htmlFor="contained-button-file">
                     <Input

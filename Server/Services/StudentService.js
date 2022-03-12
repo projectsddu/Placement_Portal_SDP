@@ -22,10 +22,7 @@ const createStudent = async (studentData) => {
         // console.log("line 21 student Id:")
         // console.log(id)
         if (await checkExists(id)) {
-            // console.log("line 25")
             const data = await Student.update(studentData, { where: { Student_ID: id } })
-            // console.log(id)
-            // return student
         }
         else {
             studentData["Student_Photo"] = "./public/student_details/Photo/default_image.jpg"
@@ -46,19 +43,15 @@ const getAllStudents = async (skills = false) => {
     try {
         let students = await Student.findAll({})
         students = JSON.parse(JSON.stringify(students))
-        if(skills)
-        {
-            for(let i = 0; i < students.length; i++)
-            {
+        if (skills) {
+            for (let i = 0; i < students.length; i++) {
                 let skillDetails = await SkillsAndAchievementsService.getSkillsAndAchievements(students[i]["Student_ID"])
                 // console.log(skillDetails)
-                if(skillDetails.length != 0)
-                {
+                if (skillDetails.length != 0) {
                     skillDetails = JSON.parse(JSON.stringify(skillDetails))
                     students[i]["Skills"] = skillDetails[0]["Skills"]
                 }
-                else
-                {
+                else {
                     students[i]["Skills"] = ""
                 }
             }
@@ -101,6 +94,8 @@ const updateStudent = async (data, id) => {
         return false
     }
 }
+
+
 
 const CV_Upload = async (data, id) => {
     try {

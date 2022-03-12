@@ -75,6 +75,9 @@ export default function ViewStudent() {
                 let key = keys[j];
                 // console.log(company_list_original[i])
                 // console.log(key)
+                if (student_list_original[i][key] === undefined) {
+                    continue;
+                }
                 let value = student_list_original[i][key].toString().toLowerCase();
                 if (value.includes(e.target.value.toString().toLowerCase())) {
                     temp.push(student_list_original[i])
@@ -137,7 +140,7 @@ export default function ViewStudent() {
             renderCell: (id) => {
                 return (
                     <>
-                    {/* <Button
+                        {/* <Button
                         variant="contained"
                         // style={{'padding' : "0px", "width" : "50%"}}
                         onClick={() => {
@@ -147,18 +150,18 @@ export default function ViewStudent() {
                         startIcon={<EditIcon />}
                     >
                     </Button> */}
-                        <IconButton color="primary" 
-                        onClick={() => {
-                            history.push('/student/edit_student/' + temp_id);
-                        }}
-                        aria-label="upload picture" component="span">
+                        <IconButton color="primary"
+                            onClick={() => {
+                                history.push('/student/edit_student/' + temp_id);
+                            }}
+                            aria-label="upload picture" component="span">
                             <EditIcon />
                         </IconButton>
                         <IconButton color="primary"
-                        onClick={() => {
-                            history.push('/student/view_student_profile/' + temp_id);
-                        }}
-                        aria-label="upload picture" component="span">
+                            onClick={() => {
+                                history.push('/student/view_student_profile/' + temp_id);
+                            }}
+                            aria-label="upload picture" component="span">
                             <VisibilityIcon />
                         </IconButton>
                     </>
@@ -209,7 +212,7 @@ export default function ViewStudent() {
         { field: 'Pin_Code', headerName: 'Pin Code', width: 155, editable: false, hide: true },
         { field: 'Current_semester', headerName: 'Current Semester', width: 200, editable: false, hide: true },
         { field: 'Career_Preference', headerName: 'Career Preference', width: 200, editable: false, hide: true },
-        { field: 'Skills', headerName: 'Skills', width: 200, editable: false, hide: true},
+        { field: 'Skills', headerName: 'Skills', width: 200, editable: false, hide: true },
 
 
     ]);
@@ -231,7 +234,7 @@ export default function ViewStudent() {
             <br />
             <br />
             {/* <code>Editing: {JSON.stringify(editRowsModel)}</code> */}
-            <div style={{ height: 400, width: '100%' }}>
+            <div style={{ height: 500, width: '100%' }}>
                 {student_list_original.length == 0 ? (
                     <>
                         <ChipCard loading={false} data={<EmptyStudent />} />
