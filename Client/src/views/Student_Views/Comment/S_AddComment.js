@@ -41,6 +41,8 @@ import UsePost from '../../../Utilities/UsePost'
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../../Utilities/ResponsePipelineHandler';
 import ViewComment from './S_ViewComment';
+import ChipCard from "../../../ui-component/cards/GenericCards/ChipCard"
+import NoComment from './JSX/NoComment'
 
 function S_AddComment(props) {
 
@@ -149,8 +151,11 @@ function S_AddComment(props) {
                     {/* <Button onClick={handleComment} fullWidth variant='contained' size='large' color="primary">Post Comment</Button> */}
                 </form>
                 <br /><br />
-                {/* // comments */}
-                {allComments === undefined ? <h1>No Comments yet!!!</h1> : <ViewComment data={allComments} />}
+                {allComments === undefined ? <>
+                    <ChipCard data={<NoComment />} isLoading={false} />
+                </>
+                    : <ViewComment data={allComments} />}
+                {/* {allComments === undefined ? <h1>No Comments yet!!!</h1> : <ViewComment data={allComments} />} */}
             </MainCard>
 
 

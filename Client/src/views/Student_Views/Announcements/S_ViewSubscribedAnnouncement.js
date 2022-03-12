@@ -121,12 +121,64 @@ function S_ViewSubscribedAnnouncement() {
                             <Grid item xs={12} md={6} id={e.Announcement_ID}>
                                 <SubCard title={e.Company_details["Company_name"] + "-" + e.Job_Role + " for " + ParseDate.getYear(e.Passed_out_year) + " Batch"}>
                                     <Typography variant="h5"></Typography>
-                                    <List dense={false}>
+                                    <Grid container spacing={1}>
+                                            <Grid item xs={12} md={12}>
+                                                <Grid container spacing={1}>
+                                                <Grid item xs={6} md={4}>
+                                                    <Typography variant="h4">Posted On: </Typography>
+                                                </Grid>
+                                                <Grid item xs={6} md={8}>
+                                                    <Typography variant="h5">
+                                                    {ParseDate.ParseDate(e.Date_of_announcement)}
+                                                    </Typography>
+                                                </Grid>
+                                                </Grid>
+                                            </Grid>
+                                            <Grid item xs={12} md={12}>
+                                                <Grid container spacing={1}>
+                                                <Grid item xs={6} md={4}>
+                                                    <Typography variant="h4">Visiting On: </Typography>
+                                                </Grid>
+                                                <Grid item xs={6} md={8}>
+                                                    <Typography variant="h5">
+                                                    {ParseDate.ParseDate(e.Date_of_Visit)}
+                                                    </Typography>
+                                                </Grid>
+                                                </Grid>
+                                            </Grid>
+                                            <Grid item xs={12} md={12}>
+                                                <Grid container spacing={1}>
+                                                <Grid item xs={6} md={4}>
+                                                    <Typography variant="h4">Job Location: </Typography>
+                                                </Grid>
+                                                <Grid item xs={6} md={8}>
+                                                    <Typography variant="h5">
+                                                    {e.Job_Location}
+                                                    </Typography>
+                                                </Grid>
+                                                </Grid>
+                                            </Grid>
+                                            <Grid item xs={12} md={12}>
+                                                <Grid container spacing={1}>
+                                                <Grid item xs={6} md={4}>
+                                                    <Typography variant="h4">Job Role: </Typography>
+                                                </Grid>
+                                                <Grid item xs={6} md={8}>
+                                                    <Typography variant="h5">
+                                                    {e.Job_Role}
+                                                    </Typography>
+                                                </Grid>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    {/* <List dense={false}>
                                         <ListItem>Posted On: {ParseDate.ParseDate(e.Date_of_announcement)}</ListItem>
                                         <ListItem>Visiting On: {ParseDate.ParseDate(e.Date_of_Visit)}</ListItem>
                                         <ListItem>Job Location: {e.Job_Location}</ListItem>
                                         <ListItem>Branches: {e.Eligible_Branches}</ListItem>
-                                    </List>
+                                    </List> */}
+
+                                    <br/>
 
                                     <Button onClick={() => handleRedirect(e.Announcement_ID)} size='large' fullWidth className={classes.applyBtn}>View Full Announcement</Button>
                                 </SubCard>
