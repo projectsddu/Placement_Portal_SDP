@@ -211,6 +211,7 @@ function ViewSingleAnnoucement() {
 
                             </Grid>
                             <Grid item xs={6} md={9}>
+
                                 <Button onClick={() => handleSubscribedStudents(announcement_details["Announcement_ID"])} variant="contained" size="large" style={{ "backgroundColor": red["A400"] }}>
                                     See Applied Students
                                 </Button>
@@ -256,7 +257,9 @@ function ViewSingleAnnoucement() {
                                                 <a target='blank'
                                                     style={{ "text-decoration": "none", "cursor": "pointer" }}
                                                     href={
-                                                        "https://drive.google.com/file/d/" + announcement_details["Job_Description_File"] + "/view?usp=drivesdk"
+                                                        process.env.NODE_ENV == "production" ?
+                                                            "http://csiddu.tech" + announcement_details["Job_Description_File"]
+                                                            : "http://localhost:8000" + announcement_details["Job_Description_File"]
                                                     }>
 
                                                     {announcement_details === undefined ? "Wait Loading...." : <>

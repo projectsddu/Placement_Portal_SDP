@@ -22,6 +22,54 @@ async function checkExists(id) {
 
 
 const addAnnoucement = async (req, res) => {
+    // try {
+    //     console.log("Here in body")
+    //     console.log(req.body);
+
+    //     const { Company_ID, Date_of_Visit, Date_of_announcement,
+    //         Eligible_Branches, Passed_out_year, Job_Role, Salary, Job_Location, Bond_Details, Other_Details, Job_Description_File, Registration_Deadline, Eligibility, IsOpen } = req.body;
+
+    //     if (req.emptyField) {
+    //         throw req.empty_arr[0] + " cannot be empty!!"
+    //     }
+    //     // valid
+    //     else {
+    //         let annoucement = {
+    //             Company_ID: Company_ID,
+    //             Date_of_Visit: Date_of_Visit,
+    //             Date_of_announcement: Date_of_announcement,
+    //             Eligible_Branches: Eligible_Branches,
+    //             Passed_out_year: Passed_out_year,
+    //             Job_Role: Job_Role,
+    //             Salary: Salary,
+    //             Job_Location: Job_Location,
+    //             Bond_Details: Bond_Details,
+    //             Other_Details: Other_Details,
+    //             Job_Description_File: Job_Description_File,
+    //             Registration_Deadline: Registration_Deadline,
+    //             Eligibility: Eligibility,
+    //             IsOpen: IsOpen
+    //         }
+    //         // console.log(annoucement);
+    //         // console.log("Req.file: ", req);
+    //         // const job_description_file = req.file
+
+    //         const annoucementStatus = await AnnouncementService.createdAnnoucement(req.body, req.fileName)
+    //         const company_name = await CompanyService.getCompany(Company_ID)
+    //         const status = await NotificationService.broadcastNotification(company_name.Company_name + " opened a new " + Job_Role + " position check out announcement in your dashboard!")
+    //         console.log(status);
+    //         if (annoucementStatus) {
+    //             return res.json({ data: "Announcement Created", status: true })
+    //         }
+    //         else {
+    //             throw "Error from createdAnnoucement controller. Status returned false."
+    //         }
+    //     }
+    // }
+    // catch (e) {
+    //     console.log(e.toString());
+    //     res.json({ status: false, data: "Error! While adding announcement!" })
+    // }
     try {
 
         // console.log(req);
@@ -62,13 +110,13 @@ const addAnnoucement = async (req, res) => {
                 return res.json({ data: "Announcement Created", status: true })
             }
             else {
-                throw "Error from createdAnnoucement controller. Status returned false."
+                throw "Error from createdAnnoucement controller"
             }
         }
     }
     catch (e) {
         console.log(e.toString());
-        res.json({ status: false, data: "Error! While adding announcement!" })
+        res.json({ status: false, data: e.toString() })
     }
 }
 

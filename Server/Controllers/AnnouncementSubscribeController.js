@@ -100,34 +100,59 @@ const getSubscribedStudentsOfAnnouncement = async (req, res) => {
 }
 
 const downloadSubscribedStudentZip = async (req, res) => {
+    // try {
+    //     const announcement_id = req.params.announcementId
+    //     let announcement_details = await AnnouncementService.getAnnoucement(announcement_id)
+    //     // console.log(JSON.parse(JSON.stringify(announcement_details)));
+    //     const zipName = announcement_id + "_" + announcement_details[0]["Company_details"]["Company_name"] + "_" + announcement_details[0]["Job_Role"]
+    //     // console.log(zipName);
+    //     const subscribedStudents = await AnnouncementSubscribeService.getSubscribedStudentsOfAnnouncement(announcement_id)
+    //     const subscribedStudentList = []
+    //     const filesList = []
+    //     subscribedStudents.map((student) => {
+    //         subscribedStudentList.push(
+    //             student["Student_ID"])
+
+    //         filesList.push(student["CV_Upload"])
+    //     })
+    //     // console.log("ehjk");
+    //     // console.log(subscribedStudentList);
+    //     // const data = await ZippingService.downloadZipFile("../public/student_details/CV/", zipName, subscribedStudentList)
+
+    //     const resp = await ZippingService.createSharedFolderLink(subscribedStudentList, filesList, zipName)
+
+    //     return OK(res, resp);
+    // }
+    // catch (err) {
+    //     console.log(err.toString());
+    //     log.error(err.toString())
+    //     return res.json({ status: false, data: "Error Fetching student data!" })
+    // }
     try {
         const announcement_id = req.params.announcementId
         let announcement_details = await AnnouncementService.getAnnoucement(announcement_id)
         // console.log(JSON.parse(JSON.stringify(announcement_details)));
-        const zipName = announcement_id + "_" + announcement_details[0]["Company_details"]["Company_name"] + "_" + announcement_details[0]["Job_Role"]
+        const zipName = announcement_id + "_" + announcement_details[0]["Company_details"]["Company_name"]
         // console.log(zipName);
         const subscribedStudents = await AnnouncementSubscribeService.getSubscribedStudentsOfAnnouncement(announcement_id)
         const subscribedStudentList = []
-        const filesList = []
         subscribedStudents.map((student) => {
-            subscribedStudentList.push(
-                student["Student_ID"])
-
-            filesList.push(student["CV_Upload"])
+            subscribedStudentList.push(student["Student_ID"])
         })
-        // console.log("ehjk");
-        // console.log(subscribedStudentList);
-        // const data = await ZippingService.downloadZipFile("../public/student_details/CV/", zipName, subscribedStudentList)
+        const data = await ZippingService.downloadZipFile("../public/student_details/CV/", zipName, subscribedStudentList)
 
-        const resp = await ZippingService.createSharedFolderLink(subscribedStudentList, filesList, zipName)
-
-        return OK(res, resp);
+        res.set('Content-Type', 'application/octet-stream');
+        res.set('Content-Disposition', `attachment; filename=${zipName
+            }.zip`);
+        res.set('Content-Length', data.length);
+        return res.send(data);
     }
     catch (err) {
         console.log(err.toString());
         log.error(err.toString())
         return res.json({ status: false, data: "Error Fetching student data!" })
     }
+
 
 }
 

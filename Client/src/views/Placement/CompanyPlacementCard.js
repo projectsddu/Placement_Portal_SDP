@@ -266,7 +266,12 @@ function CompanyPlacementCard(props) {
                     {studentPlacementStateDetails.Company_details === undefined ? "" :
                         <Grid justifyContent={"flex-start"} md={2} style={{ "padding-top": "1%" }} >
                             <a target="_blank" href={
-                                "https://drive.google.com/file/d/" + studentPlacementStateDetails.Offer_Letter + "/view?usp=drivesdk"
+
+                                process.env.NODE_ENV == "production" ?
+                                    "http://csiddu.tech" + studentPlacementStateDetails.Offer_Letter
+                                    : "http://localhost:8000" + studentPlacementStateDetails.Offer_Letter
+
+
                             } style={{ "text-decoration": "none" }}>
 
                                 <Button variant="contained">View File</Button>

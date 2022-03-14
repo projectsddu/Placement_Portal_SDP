@@ -35,11 +35,11 @@ const fileStorage1 = multer.diskStorage({
 
 const upload1 = multer({ storage: fileStorage1 })
 
-router.post("/addStudentPlacement", [AdminAuthenticate.AdminAuthenticate, FileUploadMiddleware.jobFileUploadMiddleWare], StudentPlacementController.addStudentPlacement)
+router.post("/addStudentPlacement", [AdminAuthenticate.AdminAuthenticate, upload1.single("Job_Description_File")], StudentPlacementController.addStudentPlacement)
 router.post("/addStudentPlacementWithCSV", [AdminAuthenticate.AdminAuthenticate, FileUploadMiddleware.csvFileUploadMiddleWare], StudentPlacementController.addStudentPlacementViaCSV)
 router.get("/getStudentPlacement/:studentId", [ResolveUser.ResolveUserMiddleware], StudentPlacementController.getStudentPlacement)
 router.get("/getAllStudentPlacement", [AdminAuthenticate.AdminAuthenticate], StudentPlacementController.getAllStudentPlacement)
-router.post("/updateStudentPlacement/:id", [AdminAuthenticate.AdminAuthenticate, FileUploadMiddleware.jobFileUploadMiddleWare], StudentPlacementController.updateStudentPlacement)
+router.post("/updateStudentPlacement/:id", [AdminAuthenticate.AdminAuthenticate, upload1.single("Job_Description_File")], StudentPlacementController.updateStudentPlacement)
 router.post("/deleteStudentPlacement/:id", [AdminAuthenticate.AdminAuthenticate], StudentPlacementController.deleteStudentPlacement)
 router.post("/deleteAllPlacementOfStudent/:id", [AdminAuthenticate.AdminAuthenticate], StudentPlacementController.deleteAllPlacementOfStudent)
 

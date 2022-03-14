@@ -4,7 +4,7 @@
   "description": "A placement portal for the students of Dharmsinh desai university\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[U",
   "main": "index.js",
   "scripts": {
-    "start": "node Server/server.js",
+    "start": "cd Client&&npm i&&npm run build&&cd ..&&cd Server&&npm i&&node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix Client && npm run build  --prefix Client && npm install --prefix Server"
   },

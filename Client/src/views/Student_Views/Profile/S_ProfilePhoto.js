@@ -20,7 +20,12 @@ export default function S_ProfilePhoto(props) {
                 <Grid item>
                     <img
                         style={{ "object-fit": "cover", aspectRatio: "1/1", "max-width": '200px', "max-height": '200px', borderRadius: '50%', border: "1px solid grey" }}
-                        src={'https://drive.google.com/uc?export=view&id=' + props.student_photo}
+                        src={
+
+                            process.env.NODE_ENV == "production" ?
+                                "http://csiddu.tech" + props.student_photo : "http://localhost:8000" + props.student_photo
+
+                        }
                         alt="logo"
                         className={classes.logo}
                     />

@@ -37,6 +37,27 @@ function ViewSubscribedStudents() {
             students_list.push(obj);
         }
 
+
+
+
+
+
+
+
+
+        // <a
+        //     target="_blank"
+        //     style={{ "text-decoration": "none" }}
+        //     href={
+
+        //         process.env.NODE_ENV == "production" ?
+        //             process.env.React_App_DOMAIN + "/subscribeannouncement/downloadSubscribedStudentZip/" + announcement_details["Announcement_ID"] : "http://localhost:8000" + "/subscribeannouncement/downloadSubscribedStudentZip/" + announcement_details["Announcement_ID"]
+
+
+        //     }>
+
+
+
         // sort the array based on CPI of the student
         students_list.sort(function (a, b) {
             console.log(a.Current_CPI + " " + b.Current_CPI)
@@ -87,6 +108,8 @@ function ViewSubscribedStudents() {
     const [folderLink, setfolderLink] = React.useState(undefined)
 
     const history = useHistory();
+    // const id = history.location.pathname.split("/")
+    console.log(id)
 
 
     async function handleClick() {
@@ -105,9 +128,20 @@ function ViewSubscribedStudents() {
 
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={2}>
-                        <Button variant="contained" onClick={() => handleClick()} size="large" color="primary">
-                            See All CV's
-                        </Button>
+                        <a
+                            target="self"
+                            style={{ "text-decoration": "none" }}
+                            href={
+
+                                process.env.NODE_ENV == "production" ?
+                                    "http://csiddu.tech" + "/subscribeannouncement/downloadSubscribedStudentZip/" + id : "http://localhost:8000" + "/subscribeannouncement/downloadSubscribedStudentZip/" + id
+
+
+                            }>
+                            <Button variant="contained" onClick={() => handleClick()} size="large" color="primary">
+                                See All CV's
+                            </Button>
+                        </a>
                     </Grid>
                     {folderData === undefined ?
                         "" :

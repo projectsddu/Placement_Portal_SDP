@@ -17,20 +17,20 @@ const fileStorage = multer.diskStorage({
         cb(null, "./public")
     },
     filename: (req, file, cb) => {
-        const dat = Date.parse(req.body.Date_of_Visit)
+        const dat = Date.now()
         // console.log(typeof req.body.Date_of_Visit)'
         const extension = file.originalname.split(".")[1]
         console.log(req.body)
         cb(null, req.body.Company_ID + "-" + dat.toString() + "." + extension)
         console.log(req.body);
-        req.fileName = "./" + req.body.Company_ID + "-" + dat.toString() + "." + extension
+        req.fileName = "/" + req.body.Company_ID + "-" + dat.toString() + "." + extension
     }
 
 })
 
 const upload = multer({ storage: fileStorage })
 
-router.post("/addAnnoucement", [AdminAuthenticate.AdminAuthenticate, fileUpload.jobFileUploadMiddleWare], AnnouncementController.addAnnoucement)
+router.post("/addAnnoucement", [AdminAuthenticate.AdminAuthenticate, upload.single("Job_Description_File")], AnnouncementController.addAnnoucement)
 
 router.post("/deleteAnnoucement/:annoucementId", [AdminAuthenticate.AdminAuthenticate], AnnouncementController.deleteAnnoucement)
 
@@ -38,7 +38,7 @@ router.get("/getAllAnnoucements", [ResolveUsers.ResolveUserMiddleware], Announce
 
 router.get("/getAnnoucement/:annoucementId", [ResolveUsers.ResolveUserMiddleware], AnnouncementController.getAnnoucement)
 
-router.post("/updateAnnoucement/:annoucementId", [AdminAuthenticate.AdminAuthenticate, fileUpload.jobFileUploadMiddleWare], AnnouncementController.updateAnnoucement)
+router.post("/updateAnnoucement/:annoucementId", [AdminAuthenticate.AdminAuthenticate, upload.single("Job_Description_File")], AnnouncementController.updateAnnoucement)
 
 router.post("/deleteAnnoucement/:annoucementId", [AdminAuthenticate.AdminAuthenticate], AnnouncementController.deleteAnnoucement)
 

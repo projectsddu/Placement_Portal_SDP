@@ -128,11 +128,13 @@ export default function UploadPhotoCard({ Student_Photo }) {
 
                     {Student_Photo === undefined ? "Wait Loading...." : <>
                         {/* {console.log(Student_Photo)} */}
-                        {Student_Photo.length == 33 ?
+                        {Student_Photo != "image1.png" || Student_Photo != "" ?
                             <a target='blank'
                                 style={{ "text-decoration": "none", "cursor": "pointer" }}
                                 href={
-                                    'https://drive.google.com/uc?export=view&id=' + Student_Photo}
+                                    process.env.NODE_ENV == "production" ?
+                                        "http://csiddu.tech" + Student_Photo : "http://localhost:8000" + Student_Photo
+                                }
                             >
                                 <Button variant="contained" size="large" color="primary">
                                     View Photo

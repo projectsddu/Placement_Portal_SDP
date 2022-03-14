@@ -27,7 +27,7 @@ const fileupload = require("express-fileupload");
 require("dotenv").config();
 
 // Middlewares
-
+console.log(`App running in ${process.env.NODE_ENV}`)
 
 try {
 
@@ -36,7 +36,7 @@ try {
     app.use(express.urlencoded({ extended: true }))
     app.use(express.static(__dirname + '/public'));
     app.use(cookieParser());
-    app.use(fileupload());
+    // app.use(fileupload());
 
 
     // Testing API
@@ -80,9 +80,9 @@ try {
 
     if (process.env.NODE_ENV === "production") {
         console.log("Here")
-        app.use(express.static(path.join(__dirname, "../Client/build")))
+        app.use(express.static(path.join(__dirname, "./build")))
         app.get("*", (req, res) => {
-            res.sendFile(path.resolve(__dirname, "../Client/build", "index.html"))
+            res.sendFile(path.resolve(__dirname, "./build", "index.html"))
         })
     }
     else {

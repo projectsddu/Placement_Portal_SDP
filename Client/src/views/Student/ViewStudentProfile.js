@@ -9,7 +9,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
-import {getYear, ParseDate} from '../../Utilities/ParseDate'
+import { getYear, ParseDate } from '../../Utilities/ParseDate'
 import {
     Avatar,
     Card,
@@ -131,12 +131,10 @@ function ViewStudentProfile() {
 
                 console.log(data)
 
-                if(data == "No Student Skills And Achievements Record found")
-                {
+                if (data == "No Student Skills And Achievements Record found") {
                     setSkillDetails(undefined)
                 }
-                else
-                {
+                else {
 
                     setSkillDetails(data[0]);
                 }
@@ -145,44 +143,36 @@ function ViewStudentProfile() {
                 let response1 = undefined
                 response1 = await fetch("/StudentAchievementsInternships/getStudentAchievementsInternshipsByStudentIDInAdmin/" + student_id)
 
-                if(response1 != undefined)
-                {
+                if (response1 != undefined) {
                     let internshipsData = undefined
                     internshipsData = await response1.json()
                     console.log(internshipsData)
 
-                    if(internshipsData != undefined)
-                    {
+                    if (internshipsData != undefined) {
                         let data = internshipsData["data"]
                         console.log(data)
-                        if(data == "Student Internship Record Not Found!")
-                        {
+                        if (data == "Student Internship Record Not Found!") {
                             setStudentInternships(undefined)
                         }
-                        else
-                        {
+                        else {
                             setStudentInternships(data)
                         }
 
                         let response3 = undefined
                         response3 = await fetch("/studentproject/getOneStudentProjectInAdmin/" + student_id)
 
-                        if(response3 != undefined)
-                        {
+                        if (response3 != undefined) {
                             let projectsData = undefined
                             projectsData = await response3.json()
                             // console.log(projectsData)
 
-                            if(projectsData != undefined)
-                            {
+                            if (projectsData != undefined) {
                                 let data = projectsData["data"]
                                 console.log(data)
-                                if(data == "Student project record not found")
-                                {
+                                if (data == "Student project record not found") {
                                     setStudentProjects(undefined)
                                 }
-                                else
-                                {
+                                else {
                                     setStudentProjects(data)
                                 }
                             }
@@ -200,7 +190,7 @@ function ViewStudentProfile() {
                     ''
                 ) : (
                     <>
-                        
+
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 200 }} aria-label="simple table">
                                 <TableBody>
@@ -222,23 +212,26 @@ function ViewStudentProfile() {
                                             ) : (
                                                 <>
                                                     <a target='blank'
-                                                    style={{ "text-decoration": "none", "cursor": "pointer" }}
-                                                    href={
-                                                        "https://drive.google.com/file/d/" + student_details["CV_Upload"] + "/view?usp=drivesdk"
-                                                    }>
+                                                        style={{ "text-decoration": "none", "cursor": "pointer" }}
+                                                        href={
 
-                                                    {student_details === undefined ? "Wait Loading...." : <>
-                                                        <Chip
-                                                            label={"View CV"}
-                                                            // variant="outlined"
-                                                            color='primary'
-                                                            clickable
-                                                        />
+                                                            process.env.NODE_ENV == "production" ?
+                                                                "http://csiddu.tech" + student_details["CV_Upload"] : "http://localhost:8000" + student_details["CV_Upload"]
 
-                                                    </>
-                                                    }
+                                                        }>
 
-                                                </a>
+                                                        {student_details === undefined ? "Wait Loading...." : <>
+                                                            <Chip
+                                                                label={"View CV"}
+                                                                // variant="outlined"
+                                                                color='primary'
+                                                                clickable
+                                                            />
+
+                                                        </>
+                                                        }
+
+                                                    </a>
                                                 </>
                                             )}
                                         </TableCell>
@@ -253,23 +246,25 @@ function ViewStudentProfile() {
                                             ) : (
                                                 <>
                                                     <a target='blank'
-                                                    style={{ "text-decoration": "none", "cursor": "pointer" }}
-                                                    href={
-                                                        "https://drive.google.com/file/d/" + student_details["Student_Photo"] + "/view?usp=drivesdk"
+                                                        style={{ "text-decoration": "none", "cursor": "pointer" }}
+                                                        href={
+                                                            process.env.NODE_ENV == "production" ?
+                                                                "http://csiddu.tech" + student_details["Student_Photo"] : "http://localhost:8000" + student_details["Student_Photo"]
 
-                                                    }>
 
-                                                    {student_details === undefined ? "Wait Loading...." : <>
-                                                        <Chip
-                                                            label={"View Photo"}
-                                                            // variant="outlined"
-                                                            color='primary'
-                                                            clickable
-                                                        />
-                                                    </>
-                                                    }
+                                                        }>
 
-                                                </a>
+                                                        {student_details === undefined ? "Wait Loading...." : <>
+                                                            <Chip
+                                                                label={"View Photo"}
+                                                                // variant="outlined"
+                                                                color='primary'
+                                                                clickable
+                                                            />
+                                                        </>
+                                                        }
+
+                                                    </a>
                                                 </>
                                             )}
                                         </TableCell>
@@ -277,64 +272,64 @@ function ViewStudentProfile() {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        <br/>
+                        <br />
                         <MainCard title="Student Skills">
                             <Grid direction="row" spacing={1}>
                                 {skillDetails == undefined
-                                    ? 
-                                        <>
-                                            <ChipCard loading={false} data={<EmptySkills />} />
-                                        </>
+                                    ?
+                                    <>
+                                        <ChipCard loading={false} data={<EmptySkills />} />
+                                    </>
                                     : skillDetails['Skills'] == ''
-                                    ? ''
-                                    : skillDetails['Skills'].split(',').map((elem) => {
-                                          return (
-                                              <Chip
-                                                  style={{ margin: '1%' }}
-                                                  icon={IconInfoCircle}
-                                                  variant="outlined"
-                                                  color="primary"
-                                                //   onDelete={() => handleDelete(elem)}
-                                                  label={elem}
-                                              />
-                                          );
-                                      })}
+                                        ? ''
+                                        : skillDetails['Skills'].split(',').map((elem) => {
+                                            return (
+                                                <Chip
+                                                    style={{ margin: '1%' }}
+                                                    icon={IconInfoCircle}
+                                                    variant="outlined"
+                                                    color="primary"
+                                                    //   onDelete={() => handleDelete(elem)}
+                                                    label={elem}
+                                                />
+                                            );
+                                        })}
                             </Grid>
                         </MainCard>
                         <br />
                         <MainCard title="Internships">
                             {studentInternships == undefined
-                            ? 
+                                ?
                                 <>
                                     <ChipCard loading={false} data={<EmptyInternships />} />
                                 </>
-                            :
-                            studentInternships.map((e) => {
-                                return (
-                                    <>
-                                        <ChipCard data={<StudentInternshipCard e={e} />}/>
-                                        
-                                        <br/>
-                                    </>
-                                )
-                            })
+                                :
+                                studentInternships.map((e) => {
+                                    return (
+                                        <>
+                                            <ChipCard data={<StudentInternshipCard e={e} />} />
+
+                                            <br />
+                                        </>
+                                    )
+                                })
 
                             }
-                            
+
                         </MainCard>
-                        <br/>
+                        <br />
                         <MainCard title="Projects">
                             {studentProjects == undefined
-                            ? 
+                                ?
                                 <>
                                     <ChipCard loading={false} data={<EmptyProjects />} />
                                 </>
-                            :
-                            studentProjects.map((e) => {
-                                return (
-                                    <>
-                                        <ChipCard data={<StudentProjectCard e={e} />}/>
-                                        {/* <SubCard>
+                                :
+                                studentProjects.map((e) => {
+                                    return (
+                                        <>
+                                            <ChipCard data={<StudentProjectCard e={e} />} />
+                                            {/* <SubCard>
                                             
                                             <Grid container spacing={1}>
                                                 <Grid item md={12} xs={12}>
@@ -389,12 +384,12 @@ function ViewStudentProfile() {
                                                 </Grid>
                                             </Grid>
                                         </SubCard> */}
-                                    </>
-                                )
-                            })
+                                        </>
+                                    )
+                                })
 
                             }
-                            
+
                         </MainCard>
                     </>
                 )}

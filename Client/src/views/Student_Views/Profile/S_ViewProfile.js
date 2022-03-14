@@ -471,7 +471,9 @@ export default function S_ViewProfile() {
                                                 <a target='blank'
                                                     style={{ "text-decoration": "none", "cursor": "pointer" }}
                                                     href={
-                                                        "https://drive.google.com/file/d/" + student_details["CV_Upload"] + "/view?usp=drivesdk"
+
+                                                        process.env.NODE_ENV == "production" ?
+                                                            "http://csiddu.tech" + student_details["CV_Upload"] : "http://localhost:8000" + student_details["CV_Upload"]
                                                     }>
 
                                                     {student_details === undefined ? "Wait Loading...." : <>
@@ -504,7 +506,9 @@ export default function S_ViewProfile() {
                                                 <a target='blank'
                                                     style={{ "text-decoration": "none", "cursor": "pointer" }}
                                                     href={
-                                                        "https://drive.google.com/file/d/" + student_details["Student_Photo"] + "/view?usp=drivesdk"
+                                                        process.env.NODE_ENV == "production" ?
+                                                            "http://csiddu.tech" + student_details["Student_Photo"] : "http://localhost:8000" + student_details["Student_Photo"]
+
 
                                                     }>
 

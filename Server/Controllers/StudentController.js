@@ -65,8 +65,8 @@ const addStudent = async (req, res) => {
 
         // convert students.csv file to JSON array
         // const path = "./public/student_details/DDU.csv"
-        console.log("Here")
-        const studentData = await CSVToJSON().fromStream(req.fileData)
+        const path = "./public/student_details/DDU.csv"
+        const studentData = await CSVToJSON().fromFile(path)
         console.log("Here1")
         // console.log(studentData.length);
         // console.log(JSON.parse(JSON.stringify(studentData)))
@@ -230,8 +230,10 @@ const updateOneStudent = async (req, res) => {
 
 const CV_Upload = async (req, res) => {
     try {
+        console.log("Req")
+        console.log(req.body)
         let id = req.userId;
-        const studentData = await StudentService.CV_Upload(req.fileName, id)
+        const studentData = await StudentService.CV_Upload(req.filename, id)
         if (studentData) {
             return res.json({ status: true, data: "Student CV uploaded" })
         }
@@ -268,7 +270,7 @@ const deleteStudent = async (req, res) => {
 const Photo_Upload = async (req, res) => {
     try {
         let id = req.userId
-        const studentData = await StudentService.Photo_Upload(req.fileName, id)
+        const studentData = await StudentService.Photo_Upload(req.filename, id)
         if (studentData) {
             return res.json({ status: true, data: "Student Photo uploaded" })
         }

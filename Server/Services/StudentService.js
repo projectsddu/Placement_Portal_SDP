@@ -41,7 +41,7 @@ const createStudent = async (studentData) => {
             const data = await Student.update(studentData, { where: { Student_ID: id } })
         }
         else {
-            
+
             studentData["Student_Photo"] = "1RPoL_siSFnel9DQktfrZzt1lRfjLRfXs"
             const student = await Student.create(studentData)
             const password = await FirstTimePasswordService.AddFirstTimePassword(student.Student_ID)
@@ -117,6 +117,7 @@ const updateStudent = async (data, id) => {
 const CV_Upload = async (data, id) => {
     try {
         if (await checkExists(id)) {
+            console.log(data)
             const student = await Student.update({ CV_Upload: data }, { where: { Student_ID: id } })
             // console.log(id)
             return student
@@ -143,7 +144,7 @@ const deleteStudent = async (id) => {
             // StudentProjectService.deleteAllProjectOfStudent(id)
             await StudentProject.destroy({ where: { Student_ID: id } })
             // StudentPlacementService.deleteAllPlacementOfStudent(id)
-            await StudentPlacement.destroy({ where: {Student_ID: id} })
+            await StudentPlacement.destroy({ where: { Student_ID: id } })
             // StudentInternshipService.deleteAllInternshipOfStudent(id)
             await StudentInternship.destroy({ where: { Student_ID: id } })
             // StudentAchievementsInternshipsServices.deleteAllAchievementInternshipsOfStudent(id)

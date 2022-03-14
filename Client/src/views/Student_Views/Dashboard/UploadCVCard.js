@@ -114,11 +114,13 @@ export default function UploadResumeCard({ CV_Upload }) {
                 <Grid item>
 
                     {CV_Upload === undefined ? "Wait Loading...." : <>
-                        {CV_Upload.length == 33 ?
+                        {CV_Upload != "image.png" ?
                             <a target='blank'
                                 style={{ "text-decoration": "none", "cursor": "pointer" }}
                                 href={
-                                    "https://drive.google.com/file/d/" + CV_Upload + "/view?usp=drivesdk"
+
+                                    process.env.NODE_ENV == "production" ?
+                                        "http://csiddu.tech" + CV_Upload : "http://localhost:8000" + CV_Upload
                                 }
                             >
                                 <Button variant="contained" size="large" color="primary">

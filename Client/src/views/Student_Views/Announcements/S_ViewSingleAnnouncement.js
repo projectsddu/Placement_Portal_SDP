@@ -266,10 +266,10 @@ export default function S_ViewSingleAnnouncement() {
                 >
                     <Grid item>
                         {subscribeStatus === undefined ? "Loading" : subscribeStatus == true ? <>
-                            <Button 
-                            // onClick={handleUnsubscribe} 
-                            onClick={handleOpen}
-                            variant="contained" color="error"> Withdraw Announcement</Button>
+                            <Button
+                                // onClick={handleUnsubscribe} 
+                                onClick={handleOpen}
+                                variant="contained" color="error"> Withdraw Announcement</Button>
                             <Modal
                                 open={open}
                                 onClose={handleClose}
@@ -299,22 +299,22 @@ export default function S_ViewSingleAnnouncement() {
                                 </Box>
                             </Modal>
                         </> :
-                        announcement_details == undefined 
-                        ? "" 
-                        :
-                        new Date(Date.now()).getTime() > new Date(announcement_details["Registration_Deadline"]).getTime() 
-                        ? 
-                            <ChipCard data={
-                                <DeadlineCard />} loading={false} type={"error"} />
-                        :
-                            <>
-                                <Button onClick={handleSubscribe} style={{ "color": "white" }} variant="contained" color="success"> Apply Announcement</Button>
-                                <Tooltip title="Keep recieving constant updates" style={{ "margin-left": "10px" }}>
-                                    <IconButton>
-                                        <IconInfoCircle />
-                                    </IconButton>
-                                </Tooltip>
-                            </>
+                            announcement_details == undefined
+                                ? ""
+                                :
+                                new Date(Date.now()).getTime() > new Date(announcement_details["Registration_Deadline"]).getTime()
+                                    ?
+                                    <ChipCard data={
+                                        <DeadlineCard />} loading={false} type={"error"} />
+                                    :
+                                    <>
+                                        <Button onClick={handleSubscribe} style={{ "color": "white" }} variant="contained" color="success"> Apply Announcement</Button>
+                                        <Tooltip title="Keep recieving constant updates" style={{ "margin-left": "10px" }}>
+                                            <IconButton>
+                                                <IconInfoCircle />
+                                            </IconButton>
+                                        </Tooltip>
+                                    </>
                         }
                         <br />
                         <br />
@@ -362,8 +362,8 @@ export default function S_ViewSingleAnnouncement() {
                                                 <a target='blank'
                                                     style={{ "text-decoration": "none", "cursor": "pointer" }}
                                                     href={
-
-                                                        "https://drive.google.com/file/d/" + announcement_details["Job_Description_File"] + "/view?usp=drivesdk"
+                                                        process.env.NODE_ENV == "production" ?
+                                                            "http://csiddu.tech" + announcement_details["Job_Description_File"] : "http://localhost:8000" + announcement_details["Job_Description_File"]
 
                                                     }>
 
