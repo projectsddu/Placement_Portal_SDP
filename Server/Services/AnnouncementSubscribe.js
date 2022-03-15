@@ -12,6 +12,7 @@ const CompanyService = require("./CompanyService")
 
 const Subscribers = db.subscribes
 const NotificationService = require("./NotificationService")
+const SkillsAndAchievementsService = require("./SkillsAndAchievementsService")
 
 async function checkExists(id) {
     const announcements = await Announcement.findAll({
@@ -114,7 +115,7 @@ const removeSubscribedStatus = async (student_id, announcement_id) => {
 }
 
 // return students of particular announcements
-const getSubscribedStudentsOfAnnouncement = async (announcement_id) => {
+const getSubscribedStudentsOfAnnouncement = async (announcement_id, skills = false) => {
     try {
         let data = await Subscribers.findAll({
             where: { Announcement_ID: announcement_id }
@@ -130,7 +131,26 @@ const getSubscribedStudentsOfAnnouncement = async (announcement_id) => {
                 students.push(await StudentService.getOneStudent(data[i]["Student_ID"]))
             }
             
-            return JSON.parse(JSON.stringify(students))
+            students = JSON.parse(JSON.stringify(students))
+
+            if(skills)
+            {
+                for (let i = 0; i < students.length; i++) {
+                    let skillDetails = await SkillsAndAchievementsService.getSkillsAndAchievements(students[i]["Student_ID"])
+                    // console.log(skillDetails)
+                    if (skillDetails.length != 0) {
+                        skillDetails = JSON.parse(JSON.stringify(skillDetails))
+                        students[i]["Skills"] = skillDetails[0]["Skills"]
+                    }
+                    else {
+                        students[i]["Skills"] = ""
+                    }
+                }
+            }
+
+
+            return students
+
         }
     }
     catch (err) {

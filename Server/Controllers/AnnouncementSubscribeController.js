@@ -86,7 +86,7 @@ const getSubscribedAnnouncements = async (req, res) => {
 const getSubscribedStudentsOfAnnouncement = async (req, res) => {
     try {
         const announcement_id = req.params.announcementId
-        const data = await Subscibe.getSubscribedStudentsOfAnnouncement(announcement_id)
+        const data = await Subscibe.getSubscribedStudentsOfAnnouncement(announcement_id, true)
         if (data) {
             return res.json({ status: true, data: data })
         }
