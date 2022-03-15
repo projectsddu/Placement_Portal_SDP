@@ -33,7 +33,8 @@ const addStudentPlacementViaCSV = async (req, res) => {
     try {
         // convert CSV file to JSON array
         const path = "./public/PlacementFiles/DDU_PLACEMENT.csv"
-        const studentPlacementData = await CSVToJSON().fromStream(req.fileData)
+        // const studentPlacementData = await CSVToJSON().fromStream(req.fileData)
+        const studentPlacementData = await CSVToJSON().fromFile(path)
         // console.log(stud)
         console.log("from line 37")
         console.log(studentPlacementData)
@@ -125,17 +126,15 @@ const deleteAllPlacementOfStudent = async (req, res) => {
     try {
         const id = req.params.id
         const studentPlacementDetails = await StudentPlacementService.deleteAllPlacementOfStudent(id)
-        if(studentPlacementDetails)
-        {
+        if (studentPlacementDetails) {
             return res.json({ status: true, data: "Student placement record deleted successfully" })
         }
-        else
-        {
+        else {
             throw "Error deleting all placement of a student"
         }
     } catch (error) {
         log.error(error.toString())
-        return res.json({status: false, data: "Error deleting all placement of a student"})
+        return res.json({ status: false, data: "Error deleting all placement of a student" })
     }
 }
 
