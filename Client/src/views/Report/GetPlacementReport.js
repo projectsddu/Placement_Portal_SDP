@@ -65,7 +65,7 @@ function GetPlacementReport() {
                 }
                 else
                 {
-                    // console.log(res['data'][0]);
+                    console.log(res['data'][0]);
                     setPlacementTableDetails(res['data'][0]);
                     setPlacementDetails(res['data'][1]);
                     setDetailsCard(true);
@@ -87,6 +87,7 @@ function GetPlacementReport() {
     const columns = [
         { field: 'row_id', headerName: 'ID', hide: true },
         { field: 'Student_ID', headerName: 'Student ID', width: 150, editable: false },
+        { field: 'Student_Name', headerName: 'Student Name', width: 200, editable: false },
         { field: 'Company_name', headerName: 'Company Name', width: 220, editable: false },
         { field: 'Designation', headerName: 'Designation', width: 220, editable: false },
         { field: 'Salary', headerName: 'Salary', width: 180, editable: false }

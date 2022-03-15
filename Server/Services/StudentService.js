@@ -42,7 +42,7 @@ const createStudent = async (studentData) => {
         }
         else {
 
-            studentData["Student_Photo"] = "1RPoL_siSFnel9DQktfrZzt1lRfjLRfXs"
+            studentData["Student_Photo"] = "./public/student_details/Photo/Placement_Portal_Default_Image.jpg"
             const student = await Student.create(studentData)
             const password = await FirstTimePasswordService.AddFirstTimePassword(student.Student_ID)
             await UserLoginService.createUserLogin(student.Student_ID, password)

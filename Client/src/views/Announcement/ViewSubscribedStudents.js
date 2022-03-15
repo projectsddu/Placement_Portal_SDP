@@ -37,14 +37,6 @@ function ViewSubscribedStudents() {
             students_list.push(obj);
         }
 
-
-
-
-
-
-
-
-
         // <a
         //     target="_blank"
         //     style={{ "text-decoration": "none" }}
@@ -64,7 +56,7 @@ function ViewSubscribedStudents() {
             return b.Current_CPI - a.Current_CPI
         });
 
-        // console.log(students_list);
+        console.log(students_list);
     }
 
     const icons = {
@@ -85,20 +77,41 @@ function ViewSubscribedStudents() {
         { field: 'Current_CPI', headerName: 'Current CPI', width: 200, editable: false },
         { field: 'Email_ID', headerName: 'Email ID', width: 200, editable: false },
         { field: 'Contact_No_1', headerName: 'Contact No 1', width: 200, editable: false },
-        { field: 'Contact_No_2', headerName: 'Contact No 2', width: 200, editable: false }
-        // { field: 'id', headerName: 'ID', hide: true },
-        // { field: 'Student_ID', headerName: 'Student_ID', width: 200, editable: false },
-        // { field: 'FirstName', headerName: 'First Name', width: 200, editable: false },
-        // { field: 'MiddleName', headerName: 'Middle Name', width: 200, editable: false },
-        // { field: 'LastName', headerName: 'Last Name', width: 200, editable: false },
-        // { field: 'Sem_1_SPI', headerName: 'Sem 1 SPI', type: 'number', width: 200, editable: false },
-        // { field: 'Sem_2_SPI', headerName: 'Sem 2 SPI', type: 'number', width: 200, editable: false },
-        // { field: 'Sem_3_SPI', headerName: 'Sem 3 SPI', type: 'number', width: 200, editable: false },
-        // { field: 'Sem_4_SPI', headerName: 'Sem 4 SPI', type: 'number', width: 200, editable: false },
-        // { field: 'Sem_5_SPI', headerName: 'Sem 5 SPI', type: 'number', width: 200, editable: false },
-        // { field: 'Sem_6_SPI', headerName: 'Sem 6 SPI', type: 'number', width: 200, editable: false },
-        // { field: 'Sem_7_SPI', headerName: 'Sem 7 SPI', type: 'number', width: 200, editable: false },
-        // { field: 'Sem_8_SPI', headerName: 'Sem 8 SPI', type: 'number', width: 200, editable: false }
+        { field: 'Contact_No_2', headerName: 'Contact No 2', width: 200, editable: false },
+        // hidden columns
+        { field: 'Admission_type', headerName: 'Admission Type', width: 185, editable: false, hide: true },
+        { field: 'Cast_category', headerName: 'Cast Category', width: 175, editable: false, hide: true },
+        { field: 'Gender', headerName: 'Gender', width: 135, editable: false, hide: true },
+        { field: 'DOB', headerName: 'Date of Birth', width: 170, editable: false, hide: true },
+        { field: 'SSC_Percentile', headerName: 'SSC Percentile', width: 180, editable: false, hide: true },
+        { field: 'SSC_Board', headerName: 'SSC Board', width: 155, editable: false, hide: true },
+        { field: 'SSC_School', headerName: 'SSC School', width: 200, editable: false, hide: true },
+        { field: 'HSC_Percentile', headerName: 'HSC Percentile', width: 180, editable: false, hide: true },
+        { field: 'HSC_Board', headerName: 'HSC Board', width: 155, editable: false, hide: true },
+        { field: 'HSC_School', headerName: 'HSC School', width: 200, editable: false, hide: true },
+        { field: 'IsD2D', headerName: 'Is D2D', width: 145, editable: false, hide: true },
+        { field: 'Diploma_Result_CPI', headerName: 'Diploma Result CPI', width: 220, editable: false, hide: true },
+        { field: 'Diploma_Result_Percentage', headerName: 'Diploma Result Percentage', width: 220, editable: false, hide: true },
+        { field: 'Diploma_College_Name', headerName: 'Diploma College Name', width: 200, editable: false, hide: true },
+        { field: 'Diploma_University', headerName: 'Diploma University', width: 230, editable: false, hide: true },
+        { field: 'Sem_1_SPI', headerName: 'Sem - 1 SPI', width: 165, editable: false, hide: true },
+        { field: 'Sem_2_SPI', headerName: 'Sem - 2 SPI', width: 165, editable: false, hide: true },
+        { field: 'Sem_3_SPI', headerName: 'Sem - 3 SPI', width: 165, editable: false, hide: true },
+        { field: 'Sem_4_SPI', headerName: 'Sem - 4 SPI', width: 165, editable: false, hide: true },
+        { field: 'Sem_5_SPI', headerName: 'Sem - 5 SPI', width: 165, editable: false, hide: true },
+        { field: 'Sem_6_SPI', headerName: 'Sem - 6 SPI', width: 165, editable: false, hide: true },
+        { field: 'Sem_7_SPI', headerName: 'Sem - 7 SPI', width: 165, editable: false, hide: true },
+        { field: 'Sem_8_SPI', headerName: 'Sem - 8 SPI', width: 165, editable: false, hide: true },
+        { field: 'Enrollment_year', headerName: 'Enrollment Year', width: 200, editable: false, hide: true },
+        { field: 'Passed_out_year', headerName: 'Passed Out Year', width: 200, editable: false, hide: true },
+        { field: 'Address', headerName: 'Address', width: 200, editable: false, hide: true },
+        { field: 'City', headerName: 'City', width: 200, editable: false, hide: true },
+        { field: 'Pin_Code', headerName: 'Pin Code', width: 155, editable: false, hide: true },
+        { field: 'Current_semester', headerName: 'Current Semester', width: 200, editable: false, hide: true },
+        { field: 'Career_Preference', headerName: 'Career Preference', width: 200, editable: false, hide: true },
+        { field: 'Skills', headerName: 'Skills', width: 200, editable: false, hide: true },
+
+        
     ];
     const [editRowsModel, setEditRowsModel] = React.useState({});
     const handleEditRowsModelChange = React.useCallback((model) => {

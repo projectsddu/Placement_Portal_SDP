@@ -43,6 +43,8 @@ const getPlacementReportByBatchYear = async (batch_year) => {
         for (let i = 0; i < placements.length; i++) {
             let student = await StudentService.getOneStudent(placements[i]["Student_ID"])
 
+            placements[i]["Student_Name"] = student["FirstName"] + " "+ student["LastName"]
+
             if (student["Gender"].toLowerCase() == "male" || student["Gender"].toLowerCase() == "m") {
                 placementsMetadata["Male"]++;
             }

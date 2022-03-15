@@ -269,7 +269,7 @@ export default function S_ViewSingleAnnouncement() {
                             <Button
                                 // onClick={handleUnsubscribe} 
                                 onClick={handleOpen}
-                                variant="contained" color="error"> Withdraw Announcement</Button>
+                                variant="contained" color="error"> Withdraw Application</Button>
                             <Modal
                                 open={open}
                                 onClose={handleClose}
@@ -308,12 +308,12 @@ export default function S_ViewSingleAnnouncement() {
                                         <DeadlineCard />} loading={false} type={"error"} />
                                     :
                                     <>
-                                        <Button onClick={handleSubscribe} style={{ "color": "white" }} variant="contained" color="success"> Apply Announcement</Button>
-                                        <Tooltip title="Keep recieving constant updates" style={{ "margin-left": "10px" }}>
+                                        <Button onClick={handleSubscribe} style={{ "color": "white" }} variant="contained" color="success"> Apply</Button>
+                                        {/* <Tooltip title="Keep recieving constant updates" style={{ "margin-left": "10px" }}>
                                             <IconButton>
                                                 <IconInfoCircle />
                                             </IconButton>
-                                        </Tooltip>
+                                        </Tooltip> */}
                                     </>
                         }
                         <br />

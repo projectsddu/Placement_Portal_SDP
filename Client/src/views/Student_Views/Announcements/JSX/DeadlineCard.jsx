@@ -13,7 +13,7 @@ export default function DeadlineCard() {
             <Grid item>
 
                 <WhiteTextTypography variant="h3">
-                    Deadline is missed!
+                The Deadline to apply for this recruitment is over!
                 </WhiteTextTypography>
             </Grid>
 
