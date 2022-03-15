@@ -27,7 +27,7 @@ function EmptyStudent() {
                 </Grid>
                 <Grid item xs={12} md={2}>
                     <Button
-                        style={{backgroundColor: color}}
+                        style={{ backgroundColor: color }}
                         variant="contained"
                         size="large"
                         startIcon={<IconCirclePlus />}

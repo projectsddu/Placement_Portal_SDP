@@ -6,6 +6,7 @@ import { Grid, Button } from '@material-ui/core';
 import { IconCirclePlus } from '@tabler/icons';
 import { grey, red } from '@mui/material/colors';
 import { blue, lightBlue } from '@material-ui/core/colors';
+import ViewConfig from "../../../Config/ViewConfig"
 
 const WhiteTextTypography = withStyles({
     root: {
@@ -23,7 +24,7 @@ function EmptyInternships() {
         <>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={10}>
-                    <WhiteTextTypography variant="h1">No student internships added yet</WhiteTextTypography>
+                    <WhiteTextTypography variant={ViewConfig.admin.student.student_profile.internships.no_internship_message.variant}>{ViewConfig.admin.student.student_profile.internships.no_internship_message.message}</WhiteTextTypography>
                 </Grid>
                 {/* <Grid item xs={12} md={2}>
                     <Button

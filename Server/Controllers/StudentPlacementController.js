@@ -42,8 +42,10 @@ const addStudentPlacementViaCSV = async (req, res) => {
             for (let i = 0; i < studentPlacementData.length; i++) {
                 try {
                     let studentStatus = await StudentPlacementService.createStudentPlacement(studentPlacementData[i], true)
-                    if(!studentStatus)
-                    {
+                    if (studentStatus == 'empty') {
+                        continue;
+                    }
+                    else if (!studentStatus) {
                         return res.json({ status: false, data: "Error from create student placement using file" })
                     }
 

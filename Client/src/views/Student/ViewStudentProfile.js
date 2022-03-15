@@ -34,6 +34,7 @@ import EmptyInternships from './JSX/EmptyInternships';
 import EmptyProjects from './JSX/EmptyProjects';
 import StudentInternshipCard from './JSX/StudentInternshipCard';
 import StudentProjectCard from './JSX/StudentProjectCard';
+import ViewConfig from '../../Config/ViewConfig';
 
 
 function ViewStudentProfile() {
@@ -185,7 +186,7 @@ function ViewStudentProfile() {
 
     return (
         <>
-            <MainCard title="Student Profile">
+            <MainCard title={ViewConfig.admin.student.student_profile.header}>
                 {loading ? (
                     ''
                 ) : (
@@ -222,7 +223,7 @@ function ViewStudentProfile() {
 
                                                         {student_details === undefined ? "Wait Loading...." : <>
                                                             <Chip
-                                                                label={"View CV"}
+                                                                label={ViewConfig.admin.student.student_profile.view_cv}
                                                                 // variant="outlined"
                                                                 color='primary'
                                                                 clickable
@@ -256,7 +257,7 @@ function ViewStudentProfile() {
 
                                                         {student_details === undefined ? "Wait Loading...." : <>
                                                             <Chip
-                                                                label={"View Photo"}
+                                                                label={ViewConfig.admin.student.student_profile.view_photo}
                                                                 // variant="outlined"
                                                                 color='primary'
                                                                 clickable

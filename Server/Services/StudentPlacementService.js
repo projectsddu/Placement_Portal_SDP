@@ -68,12 +68,13 @@ const createStudentPlacement = async (studentplacementdata, fromFile = false) =>
 
         }
         const student_details = await StudentService.getOneStudent(studentplacementdata.Student_ID)
+
         if (fromFile) {
             // console.log("from line 72",studentplacementdata)
-            if(studentplacementdata["Company_ID"] == '' || studentplacementdata["Designation"] == '')
-            {
-                return false
+            if (studentplacementdata["Company_ID"] == '' || studentplacementdata["Designation"] == '') {
+                return "empty"
             }
+            studentplacementdata["Offer_Letter"] = ""
             // console.log("Company ID")
             // let company = Company.findOne({ where: [Sequelize.where(Sequelize.fn("lower", "Company_name"), studentplacementdata["Company_ID"].toLowerCase())] })
             let [res1, res2] = await sequelize.query("SELECT Company_ID FROM Companies WHERE LOWER(Company_name)='" + studentplacementdata["Company_ID"].toLowerCase() + "'")
@@ -89,6 +90,7 @@ const createStudentPlacement = async (studentplacementdata, fromFile = false) =>
         await StudentPlacement.create(studentplacementdata)
         return true
     } catch (error) {
+        console.log(JSON.parse(JSON.stringify(studentplacementdata)))
         log.error(error.toString())
         return false
     }
@@ -166,17 +168,15 @@ const deleteStudentPlacement = async (id) => {
     }
 }
 
-const deleteAllPlacementOfStudent = async(id) => {
+const deleteAllPlacementOfStudent = async (id) => {
     try {
-        const temp = await StudentPlacement.findAll({ where: {Student_ID: id } })
+        const temp = await StudentPlacement.findAll({ where: { Student_ID: id } })
         const status = temp.length > 0 ? true : false
-        if(!status)
-        {
+        if (!status) {
             throw "Placement record doesn't exist for the particular Student_ID"
         }
-        else
-        {
-            await StudentPlacement.destroy({ where: {Student_ID: id} })
+        else {
+            await StudentPlacement.destroy({ where: { Student_ID: id } })
             return true
         }
     } catch (error) {

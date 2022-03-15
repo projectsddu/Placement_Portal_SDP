@@ -16,6 +16,7 @@ import HandleToast from '../../Utilities/HandleToast'
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import UseFetch from '../../Utilities/UseFetch';
+import ViewConfig from '../../Config/ViewConfig';
 
 const Input = styled('input')({
     display: 'none',
@@ -66,7 +67,7 @@ export default function AddStudent() {
     }
 
     return (
-        <MainCard title="Add Student Details">
+        <MainCard title={ViewConfig.admin.student.add_student.add_student}>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -85,7 +86,7 @@ export default function AddStudent() {
                         multiple type="file"
                     />
                     <Button variant="outlined" component="span">
-                        Browse File
+                        {ViewConfig.admin.student.add_student.browse_file}
                     </Button> <label id="fileUploadDetails" />
                 </label>
                 <br />

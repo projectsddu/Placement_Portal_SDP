@@ -14,6 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import Modal from '@mui/material/Modal';
 import CircularProgress from '@mui/material/CircularProgress';
+import ViewConfig from '../../Config/ViewConfig';
 const useStyles = makeStyles({
     helperTextColor: {
         color: 'red'
@@ -65,7 +66,7 @@ function EditSingleStudent() {
     };
     return (
         <>
-            <MainCard title="Edit Student">
+            <MainCard title={ViewConfig.admin.student.edit_student.header}>
                 <Modal
                     open={open}
                     onClose={handleClose}
@@ -662,7 +663,7 @@ function EditSingleStudent() {
                             size="large"
                             color="primary"
                         >
-                            Update
+                            {ViewConfig.admin.student.edit_student.update}
                         </Button>
                     </>
                 )}
