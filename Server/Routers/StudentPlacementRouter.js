@@ -36,7 +36,7 @@ const fileStorage1 = multer.diskStorage({
 const upload1 = multer({ storage: fileStorage1 })
 
 router.post("/addStudentPlacement", [AdminAuthenticate.AdminAuthenticate, upload1.single("Job_Description_File")], StudentPlacementController.addStudentPlacement)
-router.post("/addStudentPlacementWithCSV", [AdminAuthenticate.AdminAuthenticate, FileUploadMiddleware.csvFileUploadMiddleWare], StudentPlacementController.addStudentPlacementViaCSV)
+router.post("/addStudentPlacementWithCSV", [AdminAuthenticate.AdminAuthenticate, upload.single("Student_Placement_Details_File")], StudentPlacementController.addStudentPlacementViaCSV)
 router.get("/getStudentPlacement/:studentId", [ResolveUser.ResolveUserMiddleware], StudentPlacementController.getStudentPlacement)
 router.get("/getAllStudentPlacement", [AdminAuthenticate.AdminAuthenticate], StudentPlacementController.getAllStudentPlacement)
 router.post("/updateStudentPlacement/:id", [AdminAuthenticate.AdminAuthenticate, upload1.single("Job_Description_File")], StudentPlacementController.updateStudentPlacement)
