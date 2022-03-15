@@ -69,12 +69,17 @@ const createStudentPlacement = async (studentplacementdata, fromFile = false) =>
         }
         const student_details = await StudentService.getOneStudent(studentplacementdata.Student_ID)
         if (fromFile) {
-            console.log("Company ID")
+            // console.log("from line 72",studentplacementdata)
+            if(studentplacementdata["Company_ID"] == '' || studentplacementdata["Designation"] == '')
+            {
+                return false
+            }
+            // console.log("Company ID")
             // let company = Company.findOne({ where: [Sequelize.where(Sequelize.fn("lower", "Company_name"), studentplacementdata["Company_ID"].toLowerCase())] })
             let [res1, res2] = await sequelize.query("SELECT Company_ID FROM Companies WHERE LOWER(Company_name)='" + studentplacementdata["Company_ID"].toLowerCase() + "'")
-            console.log("Break1")
-            console.log("Here in company")
-            console.log(res2)
+            // console.log("Break1")
+            // console.log("Here in company")
+            // console.log(res2)
             if (res2[0]["Company_ID"] == 0) {
                 throw "Company not found"
             }
