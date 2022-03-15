@@ -96,7 +96,7 @@ export default function UploadPhotoCard({ Student_Photo }) {
                             size='large'
                             component="label"
                         >
-                            Upload Photo
+                            Browse File
                             <input
                                 onChange={(e) => changeHandler1(e)}
                                 required

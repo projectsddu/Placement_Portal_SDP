@@ -87,8 +87,8 @@ export default function AddPlacementViaCSV() {
                         id="contained-button-file"
                         multiple type="file"
                     />
-                    <Button variant="contained" component="span">
-                        Upload Student Placement Details
+                    <Button variant="outlined" component="span">
+                        Browse File
                     </Button> <label id="fileUploadDetails" />
                 </label>
                 <br />
