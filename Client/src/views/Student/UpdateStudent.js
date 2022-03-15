@@ -84,8 +84,8 @@ export default function UpdateStudent() {
                         id="contained-button-file"
                         multiple type="file"
                     />
-                    <Button variant="contained" component="span">
-                        Upload Student Details
+                    <Button variant="outlined" component="span">
+                        Browse File
                     </Button> <label id="fileUploadDetails" />
                 </label>
                 <br />

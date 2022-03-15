@@ -96,7 +96,7 @@ export default function UploadResumeCard({ CV_Upload }) {
                                 multiple type="file"
                             />
                             <Button variant="outlined" size="large" component="span">
-                                Upload CV
+                                Browse File
                             </Button>
                             <b><label id="fileUploadName2"> </label></b>
                         </label>

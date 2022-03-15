@@ -63,8 +63,8 @@ export default function AddInternshipViaCSV() {
                         id="contained-button-file"
                         multiple type="file"
                     />
-                    <Button variant="contained" component="span">
-                        Upload Student Internship Details
+                    <Button variant="outlined" component="span">
+                        Browse File
                     </Button> <label id="fileUploadDetails" />
                 </label>
                 <br />

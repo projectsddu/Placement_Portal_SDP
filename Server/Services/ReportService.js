@@ -474,7 +474,7 @@ const unplacedStudents = async (Passed_out_year) => {
 
             // console.log("Student - ", i, id)
 
-            const Career_Preference = JSON.stringify(studentData["Career_Preference"])
+            // const Career_Preference = JSON.stringify(studentData["Career_Preference"])
 
             // console.log("Student - ", i, Career_Preference)
 
@@ -482,7 +482,8 @@ const unplacedStudents = async (Passed_out_year) => {
 
             // console.log("Student - ", i, data)
 
-            if (!data.length && Career_Preference.toLowerCase().includes("placement")) {
+            // if (!data.length && Career_Preference.toLowerCase().includes("placement")) {
+            if (!data.length) {
                 unplacedStudentsData.push(studentData)
             }
         }

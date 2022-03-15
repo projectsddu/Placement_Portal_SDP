@@ -662,7 +662,7 @@ function EditSingleStudent() {
                             size="large"
                             color="primary"
                         >
-                            Update Student
+                            Update
                         </Button>
                     </>
                 )}
