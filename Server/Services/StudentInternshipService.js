@@ -17,8 +17,16 @@ async function checkExists(id) {
 const createStudentInternship = async (data, viaCSV = false) => {
     try {
         const studentDetails = await StudentService.getOneStudent(data.Student_ID)
+        if(!studentDetails)
+        {
+            return "No student found"
+        }
         if(viaCSV)
         {
+            if(data["Company_ID"] == "" || data["Student_ID"] == "")
+            {
+                return "Empty"
+            }
             let [res1, res2] = await sequelize.query("SELECT Company_ID FROM Companies WHERE LOWER(Company_name)='" + data["Company_ID"].toLowerCase() + "'")
             console.log(data["Company_ID"])
             console.log("from line 23",res2)
