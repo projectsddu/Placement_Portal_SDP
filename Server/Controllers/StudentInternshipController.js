@@ -5,6 +5,7 @@ const StudentInternship = db.student_internships
 const StudentInternshipService = require("../Services/StudentInternshipService")
 const CSVToJSON = require('csvtojson')
 const ResponseService = require("../Services/ResponseService")
+const ERROR = ResponseService.ERROR
 
 async function checkExists(id) {
     const studnentinternship = await StudentInternship.findAll({ where: { id }})
@@ -33,13 +34,22 @@ const addStudentInternship = async (req, res) => {
 const addStudentInternshipViaCSV = async (req, res) => {
     try {
         const path = "./public/InternshipFiles/DDU_INTERNSHIP.csv"
-        const studentInternshipData = await CSVToJSON().fromStream(req.fileData)
+        const studentInternshipData = await CSVToJSON().fromFile(path)
         if(studentInternshipData)
         {
             for(let i = 0; i < studentInternshipData.length; i++)
             {
                 try {
                     let studentStatus = await StudentInternshipService.createStudentInternship(studentInternshipData[i], true)
+
+                    if(studentStatus == "Empty")
+                    {
+                        continue;
+                    }
+                    else if(studentStatus == "No student found")
+                    {
+                        return ERROR(res, "No student with ID: " + studentInternshipData[i]["Student_ID"])
+                    }
                     
                 } catch (error) {
                     log.error(error.toString())

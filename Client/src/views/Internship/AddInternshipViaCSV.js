@@ -34,7 +34,7 @@ export default function AddInternshipViaCSV() {
         const file_data = event.target.files[0]
         console.log(file_data);
         let temp = data
-        temp["Student_Details_File"] = file_data
+        temp["Student_Internship_Details_File"] = file_data
         setData(temp)
     };
 
