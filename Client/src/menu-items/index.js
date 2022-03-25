@@ -13,6 +13,7 @@ import { InternshipMenu } from './InternshipMenu';
 import { ReportMenu } from './ReportMenu';
 import { AchievementsMenu } from './Student/AchievementsMenu';
 import { AdminDashboard } from './AdminDashboard';
+import { AboutMenu } from './Student/AboutMenu';
 import { useLocation } from 'react-router';
 
 
@@ -26,7 +27,7 @@ if (current_location[3] == "_student" || current_location[3] == "") {
     console.log(current_location)
     console.log("Here in student")
     menuItems = {
-        items: [TempMenu, AchievementsMenu, AnnouncementStudentMenu]
+        items: [TempMenu, AchievementsMenu, AnnouncementStudentMenu, AboutMenu]
     }
 }
 
