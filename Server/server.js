@@ -79,11 +79,20 @@ try {
     app.use("/logout", LogoutRouter)
 
     if (process.env.NODE_ENV === "production") {
-        console.log("Here")
-        app.use(express.static(path.join(__dirname, "./build")))
-        app.get("*", (req, res) => {
-            res.sendFile(path.resolve(__dirname, "./build", "index.html"))
-        })
+        if (process.env.HOSTENV == "heroku") {
+            app.use(express.static(path.join(__dirname, "../Client", "/build")))
+            app.get("*", (req, res) => {
+                res.sendFile(path.resolve(__dirname, "../Client", "./build", "index.html"))
+            })
+        }
+        else {
+
+            console.log("Here")
+            app.use(express.static(path.join(__dirname, "./build")))
+            app.get("*", (req, res) => {
+                res.sendFile(path.resolve(__dirname, "./build", "index.html"))
+            })
+        }
     }
     else {
         app.get("/", (req, res) => {
