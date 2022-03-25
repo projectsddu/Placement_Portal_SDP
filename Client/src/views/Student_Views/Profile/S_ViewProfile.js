@@ -441,14 +441,14 @@ export default function S_ViewProfile() {
                         <br /><br />
                         {/* <SubCard> */}
                         <TableContainer component={Paper}
-                        style={{width: "50%"}}
-                            sx={{ minWidth: 350 }} 
+                            style={{ width: "50%" }}
+                            sx={{ minWidth: 1100 }}
                         >
-                            <Table 
-                            // sx={{ minWidth: 500 }} 
-                            aria-label="simple table" 
-                            // width="100%"
-                            // style={{width: "100%"}}
+                            <Table
+                                // sx={{ minWidth: 500 }} 
+                                aria-label="simple table"
+                                width="100%"
+                            // style={{ width: "100%" }}
                             >
 
                                 <TableBody>
