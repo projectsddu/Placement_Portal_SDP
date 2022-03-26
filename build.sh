@@ -1,22 +1,23 @@
+VERSION_DIR="Production_Versions"
 BUILD_FOLDER_NAME="build"
+MODULES_DIR="node_modules"
+OUTRO='\033[0;36m'
+echo -e "#################### Placement Portal Build Script ####################\n\n"
 if [ -z "$1" ]
   then
-    echo "> No FileName was provided"
+    echo "> No FileName was provided filename would be taken as build"
 else
     BUILD_FOLDER_NAME=$1
 
 fi
-echo $BUILD_FOLDER_NAME
 
-MODULES_DIR="node_modules"
-
-echo "> Client: Build folder creating"
+echo -e "> Client: Build folder creating"
 cd "./Client"
 
 if [ -d "$MODULES_DIR" ]; then
-    echo "> ${MODULES_DIR} installed"
+    echo "> Client: ${MODULES_DIR} already installed"
 else
-    echo "> Installing ${MODULES_DIR} please wait"
+    echo "> Client: Installing ${MODULES_DIR} please wait"
     npm i
 fi
 npm run build
@@ -42,19 +43,20 @@ tar -cvf "$BUILD_FOLDER_NAME.tar" "."
 echo "> Server: Installing node modules back"
 npm i
 
-echo "> Moving Zipped File"
+echo "> Root: Moving Zipped File"
 cd ".."
 
-VERSION_DIR="Versions"
-
-
 if [ -d "$VERSION_DIR" ]; then
-    echo "> ${VERSION_DIR} exits"
+    echo "> Root: ${VERSION_DIR} exits"
 else
-    echo "> Making folder $VERSION_DIR"
+    echo "> Root: Making folder $VERSION_DIR"
     mkdir "./${VERSION_DIR}"
 fi
 mv "./Server/${BUILD_FOLDER_NAME}.tar" "./${VERSION_DIR}"
 
-echo "> All process completed successfully"
-echo "> Written and developed by : Jenil Gandhi <jenilgandhi2111@gmail.com>"
+echo "> Root: All process completed successfully"
+echo "> Root: Checkout the file named: ${BUILD_FOLDER_NAME}.tar in ${VERSION_DIR}"
+echo -e "${OUTRO}Written and developed by : Jenil Gandhi <jenilgandhi2111@gmail.com>"
+
+read ip
+exit 0

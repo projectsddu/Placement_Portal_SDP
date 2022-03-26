@@ -62,20 +62,30 @@ const addFreshPassword = async (studentId, password) => {
 
 const changePassword = async (studentId, oldPassword, newPassword) => {
     try {
-        const userLoginObj = await getUserLoginObj(studentId);
+
+        let userLoginObj = await getUserLoginObj(studentId);
+        userLoginObj = (JSON.parse(JSON.stringify(userLoginObj)))[0]
         if (userLoginObj) {
             const oldPasswordHash = SHA256(oldPassword).toString()
+            console.log(userLoginObj.Password, oldPasswordHash)
+            console.log("OK till here")
             if (oldPasswordHash == userLoginObj.Password) {
-                const status = await UserLogin.update({ Password: SHA256(newPassword).toString() }, { where: { studentId } })
-                if (status) {
-                    return true
+                const passStatus = passwordFormatChecker(newPassword)
+                if (passStatus == "OK") {
+                    const status = await UserLogin.update({ Password: SHA256(newPassword).toString() }, { where: { LoginId: studentId } })
+                    if (status) {
+                        return true
+                    }
+                    else {
+                        return false
+                    }
                 }
                 else {
-                    return false
+                    return passStatus
                 }
             }
             else {
-                return false
+                return "Your old password is not correct"
             }
         }
         else {
@@ -205,13 +215,11 @@ const deleteAllUserLoginOfStudent = async (id) => {
     try {
         const temp = await UserLogin.findAll({ where: { LoginId: id } })
         const status = temp.length > 0 ? true : false
-        if(status)
-        {
+        if (status) {
             await UserLogin.destroy({ where: { LoginId: id } })
             return true
         }
-        else
-        {
+        else {
             throw "User Login record doesn't exist for the particular Student_ID"
         }
     } catch (error) {

@@ -70,7 +70,43 @@ const changePasswordFirstTime = async (req, res) => {
     }
 }
 
+
+
+const changePassword = async (req, res) => {
+    try {
+        const oldPassword = req.body.oldPassword
+        const newPassword = req.body.newPassword
+        const newPasswordConfirm = req.body.newPasswordConfirm
+        console.log(oldPassword, newPassword, newPasswordConfirm)
+        if (newPassword != newPasswordConfirm) {
+            return ERROR(res, "New passwords do not match")
+        }
+        else if (oldPassword == newPassword) {
+            return ERROR(res, "New password cannot be same as old password")
+        }
+        else {
+            const status = await UserLoginService.changePassword(req.userId, oldPassword, newPasswordConfirm)
+            if (status == true) {
+                await res.clearCookie('LoginToken');
+                await res.clearCookie('UserId');
+                return OK(res, "Password updated successfully. Please login again")
+            }
+            else if (status == "Too small password! password must be atleast 8 characters long." || status == "Your old password is not correct") {
+                return ERROR(res, status)
+            }
+            else {
+                return ERROR(res, "There was some error updating the password.")
+            }
+        }
+    }
+    catch (err) {
+        console.log(err)
+        return ERROR(res, "Cannot set your password!")
+    }
+}
+
 module.exports = {
     loginUser,
-    changePasswordFirstTime
+    changePasswordFirstTime,
+    changePassword
 }
