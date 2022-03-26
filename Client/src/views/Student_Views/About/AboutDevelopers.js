@@ -1,7 +1,7 @@
 import React from 'react'
 import MainCard from '../../../ui-component/cards/MainCard'
 import "./About.css"
-import { Grid, Paper } from '@material-ui/core'
+import { Grid, Paper, Typography } from '@material-ui/core'
 import GithubSVG from "./Assets/github.png"
 import LinkedInSVG from "./Assets/linkedin.png"
 import GmailSVG from "./Assets/gmail.png"
@@ -64,6 +64,12 @@ export default function AboutDevelopers() {
     let rikinContent = ""
     return (
         <MainCard>
+            <h1 className='AboutTitle'>Designed and Developed by CE Department</h1>
+            <br/>
+            <br/>
+            <h2 className='AboutTitle'>Developer Team</h2>
+            <br/>
+            <br/>
             <Grid container spacing={2} justifyContent={"flex-start"}>
 
                 <Grid xs={12} md={4} item>
@@ -98,28 +104,6 @@ export default function AboutDevelopers() {
                         GithubLink={CardConfig.Rikin.GithubLink}
                         LinkedInLink={CardConfig.Rikin.LinkedInLink}
                         GmailLink={CardConfig.Rikin.GmailLink}
-                    />
-                </Grid>
-                <Grid xs={12} md={4} item>
-                    <AboutCard
-                        HeadImage={CardConfig.JHBSir.Image}
-                        Name={CardConfig.JHBSir.Name}
-                        Role={CardConfig.JHBSir.Role}
-                        MainContent={CardConfig.JHBSir.MainContent}
-                        GithubLink={CardConfig.JHBSir.GithubLink}
-                        LinkedInLink={CardConfig.JHBSir.LinkedInLink}
-                        GmailLink={CardConfig.JHBSir.GmailLink}
-                    />
-                </Grid>
-                <Grid xs={12} md={4} item>
-                    <AboutCard
-                        HeadImage={CardConfig.SPSSir.Image}
-                        Name={CardConfig.SPSSir.Name}
-                        Role={CardConfig.SPSSir.Role}
-                        MainContent={CardConfig.SPSSir.MainContent}
-                        GithubLink={CardConfig.SPSSir.GithubLink}
-                        LinkedInLink={CardConfig.SPSSir.LinkedInLink}
-                        GmailLink={CardConfig.SPSSir.GmailLink}
                     />
                 </Grid>
             </Grid>
