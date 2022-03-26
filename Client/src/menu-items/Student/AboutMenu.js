@@ -22,7 +22,7 @@ export const AboutMenu = {
     children: [
         {
             id: 'Developers',
-            title: 'Developers',
+            title: 'About Us',
             type: 'item',
             url: '/_student/about/',
             icon: icons['IconTool'],
