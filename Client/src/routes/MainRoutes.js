@@ -77,6 +77,7 @@ const S_AllNotifications = Loadable(lazy(() => import('../views/Student_Views/No
 const S_ViewProfile = Loadable(lazy(() => import('../views/Student_Views/Profile/S_ViewProfile')));
 const S_AddInternship = Loadable(lazy(() => import('../views/Student_Views/Achievements/S_AddInternship')));
 const S_AddProject = Loadable(lazy(() => import('../views/Student_Views/Project/S_AddProject')));
+const S_ChangePassword = Loadable(lazy(() => import('../views/Student_Views/ChangePassword/ChangePassword')));
 const AboutDevelopers = Loadable(lazy(() => import('../views/Student_Views/About/AboutDevelopers')));
 
 // const S_AddProject = Loadable(lazy(() => import('../views/Student_Views/Achievements/S_AddProject')));
@@ -207,6 +208,7 @@ const MainRoutes = () => {
                 "/_student/achievements/add_internship",
                 "/_student/achievements/add_projects",
                 "/_student/about/",
+                "/_student/changePassword",
 
                 // "/_student/achievements/add_project"
 
@@ -286,6 +288,7 @@ const MainRoutes = () => {
                     <Route path="/_student/achievements/add_internship" component={S_AddInternship} />
                     <Route path="/_student/achievements/add_projects" component={S_AddProject} />
                     <Route path="/_student/about/" component={AboutDevelopers} />
+                    <Route path="/_student/changePassword" component={S_ChangePassword} />
                     {/* <Route path="/_student/achievements/add_project" component={S_AddProject} /> */}
 
 

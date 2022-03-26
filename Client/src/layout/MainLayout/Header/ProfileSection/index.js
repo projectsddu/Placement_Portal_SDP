@@ -35,7 +35,7 @@ import UpgradePlanCard from './UpgradePlanCard';
 import { LOGOUT } from './../../../../store/actions';
 
 // assets
-import { IconLogout, IconSearch, IconSettings } from '@tabler/icons';
+import { IconLogout, IconSearch, IconSettings, IconKey } from '@tabler/icons';
 import User1 from './../../../../assets/images/users/user-round.svg';
 import { useHistory } from 'react-router';
 import UsePost from "../../../../Utilities/UsePost"
@@ -202,6 +202,13 @@ const ProfileSection = () => {
             })
         }
     }, [open]);
+
+
+    function handleChangePassword() {
+        history.push("/_student/changePassword")
+    }
+
+
     return (
         <React.Fragment>
             <Chip
@@ -318,6 +325,16 @@ const ProfileSection = () => {
                                             </Card> */}
                                             <Divider />
                                             <List component="nav" className={classes.navContainer}>
+                                                <ListItemButton
+                                                    className={classes.listItem}
+                                                    sx={{ borderRadius: customization.borderRadius + 'px' }}
+                                                    onClick={handleChangePassword}
+                                                >
+                                                    <ListItemIcon>
+                                                        <IconKey stroke={1.5} size="1.3rem" />
+                                                    </ListItemIcon>
+                                                    <ListItemText primary={<Typography variant="body2">Change Password</Typography>} />
+                                                </ListItemButton>
                                                 <ListItemButton
                                                     className={classes.listItem}
                                                     sx={{ borderRadius: customization.borderRadius + 'px' }}

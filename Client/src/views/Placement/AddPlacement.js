@@ -68,6 +68,8 @@ function AddPlacement() {
         setStudentData(e.target.value)
 
         if (e.target.value.length === 10) {
+            setPlacementCard([])
+
             handleOpen()
             let response = undefined
             response = await fetch("/student/getOneStudentInAdmin/" + e.target.value.toUpperCase(), { method: "GET" })
