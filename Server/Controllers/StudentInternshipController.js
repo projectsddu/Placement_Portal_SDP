@@ -95,6 +95,24 @@ const getStudentInternship = async (req, res) => {
     }
 }
 
+const getStudentInternshipInStudent = async (req, res) => {
+    try
+    {
+        const student_id = req.userId
+        let studentinternship = await StudentInternshipService.getStudentInternship(student_id)
+        if(studentinternship) {
+            return res.json({ status: studentinternship.length == 0 ? false : true, data: studentinternship.length == 0 ? "Student Internship Record Not Found!" : studentinternship })   
+        }
+        else {
+            throw "Error! While fetching internships"
+        }
+    }
+    catch (error) {
+        log.error(error.toString())
+        return res.json({ data: error.toString(), status: false})
+    }
+}
+
 const updateStudentInternship = async (req, res) => {
     try {
         const id = req.params.id
@@ -153,5 +171,6 @@ module.exports = {
     updateStudentInternship,
     deleteStudentInternship,
     addStudentInternshipViaCSV,
-    deleteAllInternshipOfStudent
+    deleteAllInternshipOfStudent,
+    getStudentInternshipInStudent
 }

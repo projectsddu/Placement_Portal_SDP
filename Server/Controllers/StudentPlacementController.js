@@ -78,6 +78,24 @@ const getStudentPlacement = async (req, res) => {
     }
 }
 
+const getStudentPlacementInStudent = async (req, res) => {
+    try
+    {
+        const student_id = req.userId
+        let studentplacement = await StudentPlacementService.getStudentPlacement(student_id)
+        if (studentplacement) {
+            return res.json({ status: studentplacement.length == 0 ? false : true, data: studentplacement.length == 0 ? "Student Placement Record Not Found!" : studentplacement })
+        }
+        else {
+            throw "Error! While fetching student placements!"
+        }
+    }
+    catch (error) {
+        log.error(error.toString())
+        return res.json({ status: false, data: "Error!! While fetching student placements!" })
+    }
+}
+
 const getAllStudentPlacement = async (req, res) => {
     try {
         let studentplacements = await StudentPlacementService.getAllStudentPlacement()
@@ -151,5 +169,6 @@ module.exports = {
     getAllStudentPlacement,
     updateStudentPlacement,
     deleteStudentPlacement,
-    deleteAllPlacementOfStudent
+    deleteAllPlacementOfStudent,
+    getStudentPlacementInStudent
 }

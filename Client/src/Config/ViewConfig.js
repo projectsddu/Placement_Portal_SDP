@@ -54,7 +54,22 @@ const ViewConfig = {
         }
     },
     "student": {
-
+        "Profile": {
+            "placements": {
+                "Header": "Placements from college",
+                "no_placements_message": {
+                    "message": "No student placements added yet",
+                    "variant": "h1"
+                }
+            },
+            "internships": {
+                "Header": "Internships from college",
+                "no_internships_message": {
+                    "message": "No student internships added yet",
+                    "variant": "h1"
+                }
+            }
+        }
     }
 }
 
