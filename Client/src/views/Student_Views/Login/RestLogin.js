@@ -212,7 +212,7 @@ const RestLogin = (props, { ...others }) => {
                 <Typography
                     variant="subtitle1"
                     component={Link}
-                    to={props.login ? '/pages/forgot-password/forgot-password' + props.login : '#'}
+                    to={"/_student/forgotPassword"}
                     color="secondary"
                     sx={{ textDecoration: 'none' }}
                 >

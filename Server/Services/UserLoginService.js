@@ -60,6 +60,35 @@ const addFreshPassword = async (studentId, password) => {
     }
 }
 
+
+const changePasswordForce = async (studentId, newPassword) => {
+    try {
+        let userLoginObj = await getUserLoginObj(studentId);
+        userLoginObj = (JSON.parse(JSON.stringify(userLoginObj)))[0]
+        if (userLoginObj) {
+            const status1 = passwordFormatChecker(newPassword)
+            if (status1 == "OK") {
+
+                const status = await UserLogin.update({ Password: SHA256(newPassword).toString() }, { where: { LoginId: studentId } })
+                if (status) {
+                    return "Your password has been updated successfully"
+                }
+                else {
+                    return "Some error occured while updating your password"
+                }
+            }
+            else {
+                return status1
+            }
+        }
+    }
+    catch (err) {
+        log.error(err)
+        return "Oops some error occured while changing your password!"
+    }
+}
+
+
 const changePassword = async (studentId, oldPassword, newPassword) => {
     try {
 
@@ -235,5 +264,6 @@ module.exports = {
     changePasswordFirstTime,
     loginUser,
     verifyUser,
+    changePasswordForce,
     deleteAllUserLoginOfStudent
 }

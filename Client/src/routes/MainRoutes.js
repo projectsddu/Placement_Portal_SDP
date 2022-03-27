@@ -106,7 +106,7 @@ const SamplePage = Loadable(lazy(() => import('../views/sample-page')));
 const MainRoutes = () => {
     const location = useLocation();
     const history = useHistory();
-    const exemptRoutes = ["/admin/login", "/_student/login"]
+    const exemptRoutes = ["/admin/login", "/_student/login", "/_student/forgotPassword"]
 
     const isAdminRoute = function (location) {
         console.log(location.split("/")[2])
@@ -120,7 +120,7 @@ const MainRoutes = () => {
 
     useEffect(() => {
         console.log(location.pathname)
-        if (location.pathname != "/admin/login" && location.pathname != "/_student/login" && location.pathname != "/_student/firstTimeLogin") {
+        if (location.pathname != "/admin/login" && location.pathname != "/_student/login" && location.pathname != "/_student/firstTimeLogin" && location.pathname != "/_student/forgotPassword") {
             console.log("here")
 
             const isAdmin = isAdminRoute(location.pathname)
@@ -289,6 +289,7 @@ const MainRoutes = () => {
                     <Route path="/_student/achievements/add_projects" component={S_AddProject} />
                     <Route path="/_student/about/" component={AboutDevelopers} />
                     <Route path="/_student/changePassword" component={S_ChangePassword} />
+                    {/* <Route path="/_student/forgotPassword" component={S_ForgotPassword} /> */}
                     {/* <Route path="/_student/achievements/add_project" component={S_AddProject} /> */}
 
 

@@ -34,6 +34,7 @@ db.BranchAnnouncement = require("./BranchAnnouncementModel")(sequelize, DataType
 db.adminLogins = require("./AdminLoginModel")(sequelize, DataTypes)
 db.FirstTimeLogin = require("./FirstTimePasswordsModel")(sequelize, DataTypes)
 db.student_projects = require("./StudentProjectModel")(sequelize, DataTypes)
+db.Otps = require("./OtpModel")(sequelize, DataTypes)
 db.student_achievements_internships = require(".//StudentAchievementsInternshipsModel")(sequelize, DataTypes)
 
 
