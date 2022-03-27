@@ -3,6 +3,7 @@ const router = require('express').Router()
 const EmptyFieldCheck = require("../Middlewares/General/EmptyFieldCheck")
 const multer = require('multer');
 const AdminAuthenticate = require("../Middlewares/Admin/AdminAuthenticate")
+const StudentAuthenticate = require("../Middlewares/StudentLogin/Authenticate")
 const FileUploadMiddleware = require("../Middlewares/FileUpload/FileUpload")
 const ResolveUser = require("../Middlewares/General/ResloveUser")
 // const FileUploadMiddleware = require("../Middlewares/FileUpload/FileUpload")
@@ -38,6 +39,10 @@ const upload1 = multer({ storage: fileStorage1 })
 router.post("/addStudentPlacement", [AdminAuthenticate.AdminAuthenticate, upload1.single("Job_Description_File")], StudentPlacementController.addStudentPlacement)
 router.post("/addStudentPlacementWithCSV", [AdminAuthenticate.AdminAuthenticate, upload.single("Student_Placement_Details_File")], StudentPlacementController.addStudentPlacementViaCSV)
 router.get("/getStudentPlacement/:studentId", [ResolveUser.ResolveUserMiddleware], StudentPlacementController.getStudentPlacement)
+
+router.get("/getStudentPlacementInStudent/", [StudentAuthenticate], StudentPlacementController.getStudentPlacementInStudent)
+
+
 router.get("/getAllStudentPlacement", [AdminAuthenticate.AdminAuthenticate], StudentPlacementController.getAllStudentPlacement)
 router.post("/updateStudentPlacement/:id", [AdminAuthenticate.AdminAuthenticate, upload1.single("Job_Description_File")], StudentPlacementController.updateStudentPlacement)
 router.post("/deleteStudentPlacement/:id", [AdminAuthenticate.AdminAuthenticate], StudentPlacementController.deleteStudentPlacement)

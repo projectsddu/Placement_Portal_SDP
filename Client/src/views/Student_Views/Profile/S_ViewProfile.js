@@ -47,9 +47,15 @@ import AddComment from '../Comment/S_AddComment';
 // import Fetch
 import ProfilePhoto from './S_ProfilePhoto';
 import SubCard from '../../../ui-component/cards/SubCard';
+import ChipCard from '../../../ui-component/cards/GenericCards/ChipCard';
 // import ChipInput from 'material-ui-chip-input'
 import Modal from '@mui/material/Modal';
 import S_AddProject from '../Project/S_AddProject';
+import S_PlacementCard from './S_PlacementCard';
+import EmptyPlacement from './JSX/EmptyPlacement';
+import ViewConfig from '../../../Config/ViewConfig';
+import S_InternshipCard from './S_InternshipCard';
+import EmptyInternship from './JSX/EmptyInternship';
 
 export default function S_ViewProfile() {
     const useStyles = makeStyles((theme) => ({
@@ -217,6 +223,9 @@ export default function S_ViewProfile() {
     const [skillDetails, setSkillDetails] = useState(undefined);
     const [skillExist, setSkillExist] = useState(false);
 
+    const [placementCard, setPlacementCard] = useState([]);
+    const [internshipCard, setInternshipCard] = useState([]);
+
     useEffect(async () => {
         let response = undefined;
         response = await fetch('/skillsandachievements/getSkillsAndAchievements/', { method: 'GET' });
@@ -242,8 +251,54 @@ export default function S_ViewProfile() {
                     // exist
                     setSkillDetails(data[0]);
                     setSkillExist(true);
+
+                    
                 }
                 console.log(data[0]);
+
+                let response1 = undefined
+                response1 = await fetch("/studentplacement/getStudentPlacementInStudent/")
+                if(response1 != undefined)
+                {
+                    let placementData = undefined
+                    placementData = await response1.json()
+                    let studentPlacementCardCopy = placementCard
+                    if(placementData != undefined && placementData["data"] != "Student Placement Record Not Found!")
+                    {
+                        // console.log(placementData["data"])
+                        for(let i = 0; i < placementData["data"].length; i++)
+                        {
+                            console.log(placementData["data"][i])
+                            studentPlacementCardCopy.unshift(
+                                <S_PlacementCard details={placementData["data"][i]}/>
+                            )
+                        }
+                        setPlacementCard([].concat(studentPlacementCardCopy))
+                    }
+                        // console.log(placementData)
+
+                    let response2 = undefined
+                    response2 = await fetch("/studentinternship/getStudentInternshipInStudent/")
+
+                    if(response2 != undefined)
+                    {
+                        let internshipsData = undefined
+                        internshipsData = await response2.json()
+                        let internshipCardCopy = internshipCard
+                        console.log(internshipsData["data"])
+                        if(internshipsData != undefined && internshipsData["data"] != "Student Internship Record Not Found!")
+                        {
+                            for(let i = 0; i < internshipsData["data"].length; i++)
+                            {
+                                console.log(internshipsData["data"][i])
+                                internshipCardCopy.unshift(
+                                    <S_InternshipCard details={internshipsData["data"][i]}/>
+                                )
+                            }
+                            setInternshipCard([].concat(internshipCardCopy))
+                        }
+                    }
+                }
             }
         }
 
@@ -441,8 +496,9 @@ export default function S_ViewProfile() {
                         <br /><br />
                         {/* <SubCard> */}
                         <TableContainer component={Paper}
-                            style={{ width: "50%" }}
-                            sx={{ minWidth: 1100 }}
+                            style={{ width: "100%" }}
+                            // md={{minWidth: "50%"}}
+                            // sx={{ minWidth: 500 }}
                         >
                             <Table
                                 // sx={{ minWidth: 500 }} 
@@ -538,6 +594,38 @@ export default function S_ViewProfile() {
                                 </TableBody>
                             </Table>
                         </TableContainer>
+                        <br/>
+                        <br/>
+                        <MainCard title={ViewConfig.student.Profile.placements.Header}>
+                            {
+                                placementCard.length == 0 ? 
+                                    <>
+                                        <ChipCard loading={false} data={<EmptyPlacement />} />
+                                    </>
+                                : 
+                                placementCard.map((e) => {
+                                    return(<>
+                                        {e}
+                                    </>)
+                                })
+                            }                        
+                        </MainCard>
+                        <br/>
+                        <MainCard title={ViewConfig.student.Profile.internships.Header}>
+                            {
+                                internshipCard.length == 0 ? 
+                                    <>
+                                        <ChipCard loading={false} data={<EmptyInternship />} />
+                                </>
+                                :
+                                internshipCard.map((e) => {
+                                    return(<>
+                                        {e}
+                                    </>)
+                                })
+                            }
+                        </MainCard>
+                        
                         {/* </SubCard> */}
 
 
