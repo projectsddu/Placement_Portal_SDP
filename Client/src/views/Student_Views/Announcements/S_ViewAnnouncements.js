@@ -19,6 +19,7 @@ import { useHistory } from "react-router-dom";
 import SearchSection from '../../../layout/MainLayout/Header/SearchSection';
 import ChipCard from '../../../ui-component/cards/GenericCards/ChipCard';
 import EmptyAnnouncement from './JSX/EmptyAnnouncement';
+import handleNull from '../../../Utilities/HandleNull';
 
 const useStyles = makeStyles((theme) => ({
     applyBtn: {
@@ -131,86 +132,81 @@ function S_ViewAnnoucements() {
 
                             {annoucements.map((e) => (
                                 <Grid item xs={12} md={6} id={e.Announcement_ID}>
-                                    <SubCard title={e.Company_details["Company_name"] + "-" + e.Job_Role + " for " + ParseDate.getYear(e.Passed_out_year) + " Batch"}>
+                                    <SubCard title={e.Company_details["Company_name"] + " " + (e.Passed_out_year == null || e.Passed_out_year == undefined ? e.Job_Role + " for all" : "-" + e.Job_Role + " for " + ParseDate.getYear(e.Passed_out_year) + " Batch")}>
                                         <Typography variant="h5"></Typography>
                                         <Grid container spacing={1}>
-                                        <Grid item xs={12} md={12}>
+                                            <Grid item xs={12} md={12}>
                                                 <Grid container spacing={1}>
-                                                <Grid item xs={6} md={4}>
-                                                    <Typography variant="h4" style={{color: "rgb(97, 97, 97)"}}>Deadline: </Typography>
-                                                </Grid>
-                                                <Grid item xs={6} md={8}>
-                                                    <Typography variant="h5" style={{color: "#828282"}}>
-                                                    {ParseDate.ParseDate(e.Registration_Deadline, true)}
-                                                    </Typography>
-                                                </Grid>
+                                                    <Grid item xs={6} md={4}>
+                                                        <Typography variant="h4" style={{ color: "rgb(97, 97, 97)" }}>Deadline: </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6} md={8}>
+                                                        <Typography variant="h5" style={{ color: "#828282" }}>
+                                                            {ParseDate.ParseDate(e.Registration_Deadline, true)}
+                                                        </Typography>
+                                                    </Grid>
                                                 </Grid>
                                             </Grid>
                                             <Grid item xs={12} md={12}>
                                                 <Grid container spacing={1}>
-                                                <Grid item xs={6} md={4}>
-                                                    <Typography variant="h4" style={{color: "rgb(97, 97, 97)"}}>Posted On: </Typography>
-                                                </Grid>
-                                                <Grid item xs={6} md={8}>
-                                                    <Typography variant="h5" style={{color: "#828282"}}>
-                                                    {ParseDate.ParseDate(e.Date_of_announcement)}
-                                                    </Typography>
-                                                </Grid>
-                                                </Grid>
-                                            </Grid>
-                                            <Grid item xs={12} md={12}>
-                                                <Grid container spacing={1}>
-                                                <Grid item xs={6} md={4}>
-                                                    <Typography variant="h4" style={{color: "rgb(97, 97, 97)"}}>Visiting On: </Typography>
-                                                </Grid>
-                                                <Grid item xs={6} md={8}>
-                                                    <Typography variant="h5" style={{color: "#828282"}}>
-                                                    {ParseDate.ParseDate(e.Date_of_Visit)}
-                                                    </Typography>
-                                                </Grid>
-                                                </Grid>
-                                            </Grid>
-                                            
-                                            <Grid item xs={12} md={12}>
-                                                <Grid container spacing={1}>
-                                                <Grid item xs={6} md={4}>
-                                                    <Typography variant="h4" style={{color: "rgb(97, 97, 97)"}}>Job Location: </Typography>
-                                                </Grid>
-                                                <Grid item xs={6} md={8}>
-                                                    <Typography variant="h5" style={{color: "#828282"}}>
-                                                    {e.Job_Location}
-                                                    </Typography>
-                                                </Grid>
+                                                    <Grid item xs={6} md={4}>
+                                                        <Typography variant="h4" style={{ color: "rgb(97, 97, 97)" }}>Posted On: </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6} md={8}>
+                                                        <Typography variant="h5" style={{ color: "#828282" }}>
+                                                            {ParseDate.ParseDate(e.Date_of_announcement, true)}
+                                                        </Typography>
+                                                    </Grid>
                                                 </Grid>
                                             </Grid>
                                             <Grid item xs={12} md={12}>
                                                 <Grid container spacing={1}>
-                                                <Grid item xs={6} md={4}>
-                                                    <Typography variant="h4" style={{color: "rgb(97, 97, 97)"}}>Job Role: </Typography>
+                                                    <Grid item xs={6} md={4}>
+                                                        <Typography variant="h4" style={{ color: "rgb(97, 97, 97)" }}>Visiting On: </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6} md={8}>
+                                                        <Typography variant="h5" style={{ color: "#828282" }}>
+                                                            {handleNull(ParseDate.ParseDate(e.Date_of_Visit))}
+                                                        </Typography>
+                                                    </Grid>
                                                 </Grid>
-                                                <Grid item xs={6} md={8}>
-                                                    <Typography variant="h5" style={{color: "#828282"}}>
-                                                    {e.Job_Role}
-                                                    </Typography>
+                                            </Grid>
+
+                                            <Grid item xs={12} md={12}>
+                                                <Grid container spacing={1}>
+                                                    <Grid item xs={6} md={4}>
+                                                        <Typography variant="h4" style={{ color: "rgb(97, 97, 97)" }}>Job Location: </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6} md={8}>
+                                                        <Typography variant="h5" style={{ color: "#828282" }}>
+                                                            {handleNull(e.Job_Location)}
+                                                        </Typography>
+                                                    </Grid>
                                                 </Grid>
+                                            </Grid>
+                                            <Grid item xs={12} md={12}>
+                                                <Grid container spacing={1}>
+                                                    <Grid item xs={6} md={4}>
+                                                        <Typography variant="h4" style={{ color: "rgb(97, 97, 97)" }}>Job Role: </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6} md={8}>
+                                                        <Typography variant="h5" style={{ color: "#828282" }}>
+                                                            {handleNull(e.Job_Role)}
+                                                        </Typography>
+                                                    </Grid>
                                                 </Grid>
                                             </Grid>
                                         </Grid>
-                                        {/* <List dense={false}>
-                                            <ListItem>Posted On: {ParseDate.ParseDate(e.Date_of_announcement)}</ListItem>
-                                            <ListItem>Visiting On: {ParseDate.ParseDate(e.Date_of_Visit)}</ListItem>
-                                            <ListItem>Job Location: {e.Job_Location}</ListItem>
-                                            <ListItem>Branches: {e.Eligible_Branches}</ListItem>
-                                        </List> */}
-                                        <br/>
+
+                                        <br />
                                         {
                                             new Date(Date.now()).getTime() > new Date(e.Registration_Deadline).getTime()
-                                            ? 
-                                            <Button 
-                                            onClick={() => handleRedirect(e.Announcement_ID)} 
-                                            color='error' size='large' fullWidth className={classes.applyDeadlineBtn}>View Full Announcement</Button>
-                                            :
-                                            <Button onClick={() => handleRedirect(e.Announcement_ID)} size='large' fullWidth className={classes.applyBtn}>View Full Announcement</Button>
+                                                ?
+                                                <Button
+                                                    onClick={() => handleRedirect(e.Announcement_ID)}
+                                                    color='error' size='large' fullWidth className={classes.applyDeadlineBtn}>View Full Announcement</Button>
+                                                :
+                                                <Button onClick={() => handleRedirect(e.Announcement_ID)} size='large' fullWidth className={classes.applyBtn}>View Full Announcement</Button>
                                         }
                                     </SubCard>
                                 </Grid>

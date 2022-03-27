@@ -109,116 +109,107 @@ export default function ChangePassword() {
 
     return (
         <MainCard title="Change Password">
-            {/* <TextField
-                onChange={(e) => {
-                    setPasswords({ ...passwords, oldPassword: e.target.value });
-                }}
-                value={passwords.oldPassword}
-                fullWidth
-                label="Old Password" /> */}
 
-            <OutlinedInput
-                fullWidth
-                id="password"
-                name="password"
-                label="password"
-                type={showPassword ? 'text' : 'password'}
-                onChange={(e) => {
-                    setPasswords({ ...passwords, oldPassword: e.target.value });
-                }}
-                value={passwords.oldPassword}
-                endAdornment={
-                    <InputAdornment position="end">
-                        <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                        >
-                            {showPassword ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                    </InputAdornment>
-                }
-                inputProps={{
-                    classes: {
-                        notchedOutline: classes.notchedOutline
+            <FormControl fullWidth
+                className={classes.loginInput}>
+                <InputLabel htmlFor="outlined-adornment-email-login">Old Password</InputLabel>
+                <OutlinedInput
+                    fullWidth
+                    id="password"
+                    name="password"
+                    label="password"
+                    type={showPassword ? 'text' : 'password'}
+                    onChange={(e) => {
+                        setPasswords({ ...passwords, oldPassword: e.target.value });
+                    }}
+                    value={passwords.oldPassword}
+                    endAdornment={
+                        <InputAdornment position="end">
+                            <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                            >
+                                {showPassword ? <Visibility /> : <VisibilityOff />}
+                            </IconButton>
+                        </InputAdornment>
                     }
-                }}
-            />
+                    inputProps={{
+                        classes: {
+                            notchedOutline: classes.notchedOutline
+                        }
+                    }}
+                />
+            </FormControl>
             <br />
             <br />
-            {/* <TextField
-                onChange={(e) => {
-                    setPasswords({ ...passwords, newPassword: e.target.value });
-                }}
-                value={passwords.newPassword}
-                fullWidth
-                label="New Password" /> */}
-            <OutlinedInput
-                fullWidth
-                id="password1"
-                name="password"
-                label="password"
-                type={showPassword1 ? 'text' : 'password'}
-                onChange={(e) => {
-                    setPasswords({ ...passwords, newPassword: e.target.value });
-                }}
-                value={passwords.newPassword}
-                endAdornment={
-                    <InputAdornment position="end">
-                        <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword1}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                        >
-                            {showPassword1 ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                    </InputAdornment>
-                }
-                inputProps={{
-                    classes: {
-                        notchedOutline: classes.notchedOutline
+            <FormControl fullWidth
+                className={classes.loginInput}>
+                <InputLabel htmlFor="outlined-adornment-email-login">New Password</InputLabel>
+                <OutlinedInput
+                    fullWidth
+                    id="password1"
+                    name="password"
+                    label="password"
+                    type={showPassword1 ? 'text' : 'password'}
+                    onChange={(e) => {
+                        setPasswords({ ...passwords, newPassword: e.target.value });
+                    }}
+                    value={passwords.newPassword}
+                    endAdornment={
+                        <InputAdornment position="end">
+                            <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword1}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                            >
+                                {showPassword1 ? <Visibility /> : <VisibilityOff />}
+                            </IconButton>
+                        </InputAdornment>
                     }
-                }}
-            />
+                    inputProps={{
+                        classes: {
+                            notchedOutline: classes.notchedOutline
+                        }
+                    }}
+                />
+            </FormControl>
             <br />
             <br />
-            {/* <TextField
-                onChange={(e) => {
-                    setPasswords({ ...passwords, newPasswordConfirm: e.target.value });
-                }}
-                value={passwords.newPasswordConfirm}
-                fullWidth
-                label="New Password Confirm" /> */}
-            <OutlinedInput
-                fullWidth
-                id="password2"
-                name="password"
-                label="password"
-                type={showPassword2 ? 'text' : 'password'}
-                onChange={(e) => {
-                    setPasswords({ ...passwords, newPasswordConfirm: e.target.value });
-                }}
-                value={passwords.newPasswordConfirm}
-                endAdornment={
-                    <InputAdornment position="end">
-                        <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword2}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                        >
-                            {showPassword2 ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                    </InputAdornment>
-                }
-                inputProps={{
-                    classes: {
-                        notchedOutline: classes.notchedOutline
+            <FormControl fullWidth
+                className={classes.loginInput}>
+                <InputLabel htmlFor="outlined-adornment-email-login">Confirm New Password</InputLabel>
+                <OutlinedInput
+                    fullWidth
+                    id="password2"
+                    name="password"
+                    label="password"
+                    type={showPassword2 ? 'text' : 'password'}
+                    onChange={(e) => {
+                        setPasswords({ ...passwords, newPasswordConfirm: e.target.value });
+                    }}
+                    value={passwords.newPasswordConfirm}
+                    endAdornment={
+                        <InputAdornment position="end">
+                            <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword2}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                            >
+                                {showPassword2 ? <Visibility /> : <VisibilityOff />}
+                            </IconButton>
+                        </InputAdornment>
                     }
-                }}
-            />
+                    inputProps={{
+                        classes: {
+                            notchedOutline: classes.notchedOutline
+                        }
+                    }}
+                />
+            </FormControl>
             <br />
             <br />
 

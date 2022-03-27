@@ -4,29 +4,18 @@ const log = new logger(true)
 const db = require("../Models/index")
 const nodemailer = require('nodemailer')
 const { google } = require("googleapis")
-const CLIENT_ID = process.env.CLIENT_ID
-const CLIENT_SECRET = process.env.CLIENT_SECRET
-const REDIRECT_URI = process.env.REDIRECT_URI
-const REFRESH_TOKEN = "1//04v41n0pPJYJNCgYIARAAGAQSNwF-L9IrDeLZFk-mYVho5MP3nSpv_Rvhol_tCNa_S9yp1ctE1dUltQH6BMGkt_oYDNcarxqcBlg"
-console.log(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, REFRESH_TOKEN)
+const EmailId = process.env.EMAIL_ID
+const EmailPassword = process.env.EMAIL_PASSWORD
+const EmailService = process.env.EMAIL_SERVICE
 
 async function sendMail(mailDetails) {
 
-    // console.log("> ")
     try {
-
-        const OAuthClient = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
-        OAuthClient.setCredentials({ refresh_token: REFRESH_TOKEN })
-        const accessToken = await OAuthClient.getAccessToken()
         let mailTransporter = nodemailer.createTransport({
-            service: "gmail",
+            service: EmailService,
             auth: {
-                type: "OAuth2",
-                user: "abcxyz1814@gmail.com",
-                clientId: CLIENT_ID,
-                clientSecret: CLIENT_SECRET,
-                refreshToken: REFRESH_TOKEN,
-                accessToken: accessToken
+                user: EmailId,
+                pass: EmailPassword
             }
         });
         let result = await mailTransporter.sendMail(mailDetails)
@@ -76,7 +65,7 @@ async function sendMail(mailDetails) {
 const notificationMail = async (notificationData, to) => {
     try {
         let mailDetails = {
-            from: 'abcxyz1814@gmail.com',
+            from: 'placementportal@csiddu.tech',
             to: to,
             subject: notificationData.subject,
             html: `<!DOCTYPE html>

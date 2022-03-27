@@ -94,6 +94,7 @@ const sendPasswords = async (dateYear) => {
 
         student = JSON.parse(JSON.stringify(student))
         for (let i = 0; i < student.length; i++) {
+            console.log("here in sending mail")
 
             let current_student = student[i]
             let password = allPasswords[current_student["Student_ID"]]
@@ -123,17 +124,15 @@ const sendPasswords = async (dateYear) => {
     }
 }
 
-const deleteAllFirstTimePasswordOfStudent = async(id) => {
+const deleteAllFirstTimePasswordOfStudent = async (id) => {
     try {
-        const temp = await FirstTimeModel.findAll({ where: {StudentId: id } })
+        const temp = await FirstTimeModel.findAll({ where: { StudentId: id } })
         const status = temp.length > 0 ? true : false
-        if(!status)
-        {
+        if (!status) {
             throw "First Time Password record doesn't exist for the particular Student_ID"
         }
-        else
-        {
-            await FirstTimeModel.destroy({ where: {StudentId: id} })
+        else {
+            await FirstTimeModel.destroy({ where: { StudentId: id } })
             return true
         }
     } catch (error) {

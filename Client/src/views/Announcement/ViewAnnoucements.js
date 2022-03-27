@@ -153,9 +153,11 @@ function ViewAnnoucements() {
                     jsonData["data"][i]["title"] = jsonData['data'][i]['Company_details']['Company_name'] +
                         '-' +
                         jsonData['data'][i]['Job_Role'] +
-                        ' for ' +
-                        ParseDate.getYear(jsonData['data'][i]['Passed_out_year']) +
-                        ' Batch';
+                        (
+                            jsonData['data'][i]['Passed_out_year'] == null || jsonData['data'][i]['Passed_out_year'] == undefined ? " for all" :
+                                ' for ' +
+                                ParseDate.getYear(jsonData['data'][i]['Passed_out_year']) +
+                                ' Batch');
 
 
                 }
@@ -275,12 +277,12 @@ function ViewAnnoucements() {
                     //     View Full Announcement
                     // </Button>
                     <>
-                    <IconButton color="primary" 
-                        component="span"
-                        onClick={handleOpen}
-                        aria-label="upload picture">
-                        <DeleteIcon />
-                    </IconButton>
+                        <IconButton color="primary"
+                            component="span"
+                            onClick={handleOpen}
+                            aria-label="upload picture">
+                            <DeleteIcon />
+                        </IconButton>
                         <Modal
                             open={open}
                             onClose={handleClose}
@@ -347,7 +349,7 @@ function ViewAnnoucements() {
         { field: 'Other_Details', headerName: 'Other Details', width: 200, editable: false, hide: true },
         { field: 'Eligibility', headerName: 'Eligibility', width: 185, editable: false, hide: true },
         { field: 'IsOpen', headerName: 'IsOpen', width: 165, editable: false, hide: true }
-    // ]);
+        // ]);
     ];
 
     const [editRowsModel, setEditRowsModel] = React.useState({});

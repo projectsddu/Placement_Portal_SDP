@@ -48,6 +48,7 @@ import AddComment from '../Comment/S_AddComment';
 import ChipCard from "../../../ui-component/cards/GenericCards/ChipCard"
 import DeadlineCard from './JSX/DeadlineCard'
 import Modal from '@mui/material/Modal';
+import handleNull from "../../../Utilities/HandleNull"
 // import Fetch
 
 export default function S_ViewSingleAnnouncement() {
@@ -160,18 +161,18 @@ export default function S_ViewSingleAnnouncement() {
         rows = [
             // createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
             createData("Date of Announcement", ParseDate.ParseDate(announcement_details["Date_of_announcement"])),
-            createData("Date of Visit", ParseDate.ParseDate(announcement_details["Date_of_Visit"])),
-            createData("Registration Deadline", ParseDate.ParseDate(announcement_details["Registration_Deadline"], true)),
+            createData("Date of Visit", handleNull(ParseDate.ParseDate(announcement_details["Date_of_Visit"]))),
+            createData("Registration Deadline", handleNull(ParseDate.ParseDate(announcement_details["Registration_Deadline"], true))),
             // createData("Eligible Branches", announcement_details["Eligible_Branches"]),
-            createData("Eligible Branches", branches),
-            createData("Passed out year", ParseDate.getYear(announcement_details["Passed_out_year"])),
-            createData("Job Role", announcement_details["Job_Role"]),
-            createData("Salary", announcement_details["Salary"]),
-            createData("Job Location", announcement_details["Job_Location"]),
-            createData("Bond Details", announcement_details["Bond_Details"]),
-            createData("Other Details", announcement_details["Other_Details"]),
+            createData("Eligible Branches", handleNull(branches)),
+            createData("Passed out year", handleNull(ParseDate.getYear(announcement_details["Passed_out_year"]))),
+            createData("Job Role", handleNull(announcement_details["Job_Role"])),
+            createData("Salary", handleNull(announcement_details["Salary"])),
+            createData("Job Location", handleNull(announcement_details["Job_Location"])),
+            createData("Bond Details", handleNull(announcement_details["Bond_Details"])),
+            createData("Other Details", handleNull(announcement_details["Other_Details"])),
 
-            createData("Eligibility", announcement_details["Eligibility"]),
+            createData("Eligibility", handleNull(announcement_details["Eligibility"])),
         ];
     }
 
