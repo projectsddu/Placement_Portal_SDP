@@ -3,8 +3,11 @@ const logger = require("serverloggerjs/logger")
 const log = new logger(true)
 const UserLoginService = require("../Services/UserLoginService")
 const ResponseService = require("../Services/ResponseService")
+const OTPService = require("../Services/OtpService")
 const ERROR = ResponseService.ERROR
 const OK = ResponseService.OK
+var CryptoJS = require("crypto-js")
+var AES = require("crypto-js/aes");
 
 const loginUser = async (req, res) => {
     try {
@@ -105,8 +108,88 @@ const changePassword = async (req, res) => {
     }
 }
 
+const sendOtpChangePassword = async (req, res) => {
+    try {
+        const studentId = req.params.studentId
+        console.log("Here ok")
+        const status = await OTPService.sendOtp(studentId)
+        if (status == "An OTP has been sent to your email-id.") {
+            return OK(res, status)
+        }
+        else {
+            return ERROR(res, status)
+        }
+    }
+    catch (err) {
+        log.error(err)
+        return ERROR(res, "Oops some error occured!")
+    }
+}
+
+const verifyOtp = async (req, res) => {
+    try {
+        const studentId = req.params.studentId
+        const otp = req.body.otp
+        const status = await OTPService.verifyOtp(otp, studentId)
+        if (status == "Valid OTP") {
+            const encDataCookie = CryptoJS.AES.encrypt("THISISVALIDPASSWORD" + studentId, process.env.ECRYPTION_KEY).toString()
+            console.log("Encrypted Cookie", encDataCookie)
+
+            await res.cookie("VerificationToken", encDataCookie, {
+                expires: new Date(Date.now() + 258920),
+                httpOnly: true,
+            })
+            return OK(res, status)
+        }
+        else {
+            return ERROR(res, status)
+        }
+    }
+    catch (err) {
+        log.error(err.toString())
+        return ERROR(res, "Oops some unknown error occured!")
+    }
+}
+
+const forgotChangePassword = async (req, res) => {
+    try {
+        console.log("Here in frgot chanded passw")
+        const newPassword = req.body.newPassword
+        const newPasswordConfirm = req.body.confirmNewPassword
+        const studentId = req.body.studentId
+        if (newPassword == newPasswordConfirm) {
+            const verificationToken = await req.cookies.VerificationToken
+            console.log("Here in forgotChangedPassword1")
+            const decryptedText = CryptoJS.AES.decrypt(verificationToken, process.env.ECRYPTION_KEY).toString(CryptoJS.enc.Utf8)
+            console.log("Decrypted Text:", decryptedText)
+            if (decryptedText == "THISISVALIDPASSWORD" + studentId) {
+                console.log("Here in forgotChangedPassword")
+                await res.clearCookie('VerificationToken');
+                const status = await UserLoginService.changePasswordForce(studentId, newPassword)
+                if (status == "Your password has been updated successfully") {
+                    return OK(res, status)
+                }
+                else {
+                    return ERROR(res, status)
+                }
+
+            }
+            else {
+                return ERROR(res, "You are not authenticated user to change the passowrd.")
+            }
+
+        }
+    }
+    catch (err) {
+        return ERROR(res, "Oops some error occured!")
+    }
+}
+
 module.exports = {
     loginUser,
     changePasswordFirstTime,
-    changePassword
+    changePassword,
+    sendOtpChangePassword,
+    verifyOtp,
+    forgotChangePassword
 }
