@@ -3,9 +3,9 @@ function getTime(date) {
 }
 
 const ParseDate = function (date, time_required = false) {
-    console.log(date)
+    // console.log(date)
     var new_date = new Date(date)
-    console.log(new_date.getDate() + "/" + new_date.getMonth() + "/" + new_date.getFullYear())
+    // console.log(new_date.getDate() + "/" + new_date.getMonth() + "/" + new_date.getFullYear())
     try {
         var return_date = ""
         var parse_date = date.split("T");
