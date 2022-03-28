@@ -13,6 +13,8 @@ const StudentAchievementsInternships = db.student_achievements_internships
 // const SkillsAndAchievements = db.skills_and_achievements
 const Notifications = db.notifications
 const LoginTokens = db.LoginTokens
+const Sequelize = require("sequelize")
+const Op = Sequelize.Op
 // const FirstTimeModel = db.FirstTimeLogin
 // const StudentProjectService = require("./StudentProjectService")
 // const StudentPlacementService = require("./StudentPlacementService")
@@ -29,6 +31,33 @@ async function checkExists(id) {
     }
     else {
         return true
+    }
+}
+
+const searchStudent = async (studentName) => {
+    try {
+        const searchedStudents = await Student.findAll({
+            attributes: ["Student_ID", 'FirstName', 'LastName', "Passed_out_year"],
+            where: {
+                [Op.or]: [
+                    {
+                        FirstName: {
+                            [Op.like]: "%" + studentName + "%"
+                        }
+                    },
+                    {
+                        LastName: {
+                            [Op.like]: "%" + studentName + "%"
+                        }
+                    }
+                ]
+            }
+        })
+        return JSON.parse(JSON.stringify(searchedStudents))
+    }
+    catch (err) {
+        log.error(err)
+        return false
     }
 }
 
@@ -186,5 +215,6 @@ module.exports = {
     updateStudent,
     CV_Upload,
     deleteStudent,
-    Photo_Upload
+    Photo_Upload,
+    searchStudent
 }

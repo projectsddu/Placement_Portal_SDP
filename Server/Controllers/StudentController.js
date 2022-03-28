@@ -310,6 +310,15 @@ const sendFirstTimePasswords = async (req, res) => {
     }
 }
 
+const searchStudent = async (req, res) => {
+    try {
+        const searchedStudents = await StudentService.searchStudent(req.params.name)
+        return OK(res, searchedStudents)
+    }
+    catch (err) {
+
+    }
+}
 
 module.exports = {
     addStudent,
@@ -322,5 +331,6 @@ module.exports = {
     getOneStudentInAdmin,
     updateOneStudent,
     getAllStudentPasswords,
-    sendFirstTimePasswords
+    sendFirstTimePasswords,
+    searchStudent
 }
