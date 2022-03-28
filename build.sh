@@ -1,5 +1,5 @@
-VERSION_DIR="Production_Versions"
-BUILD_FOLDER_NAME="build"
+VERSION_DIR="Production_Bundles"
+BUILD_FOLDER_NAME="PlacementPortalBundle"
 MODULES_DIR="node_modules"
 OUTRO='\033[0;36m'
 echo -e "#################### Placement Portal Build Script ####################\n\n"

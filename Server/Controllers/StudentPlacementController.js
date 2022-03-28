@@ -4,7 +4,9 @@ const log = new logger(true)
 const StudentPlacement = db.student_placements
 const StudentPlacementService = require("../Services/StudentPlacementService")
 const CSVToJSON = require('csvtojson');
-
+const ResponseService = require("../Services/ResponseService")
+const OK = ResponseService.OK
+const ERROR = ResponseService.ERROR
 async function checkExists(id) {
     const studentplacement = await StudentPlacement.findAll({ where: { id } })
     return studentplacement.length > 0 ? true : false
@@ -42,12 +44,18 @@ const addStudentPlacementViaCSV = async (req, res) => {
             for (let i = 0; i < studentPlacementData.length; i++) {
                 try {
                     let studentStatus = await StudentPlacementService.createStudentPlacement(studentPlacementData[i], true)
-                    if (studentStatus == 'empty') {
+                    if (studentStatus == "OK") {
                         continue;
                     }
-                    else if (!studentStatus) {
-                        return res.json({ status: false, data: "Error from create student placement using file" })
+                    else {
+                        return ERROR(res, studentStatus)
                     }
+                    // if (studentStatus == 'empty') {
+                    //     continue;
+                    // }
+                    // else if (!studentStatus) {
+                    //     return res.json({ status: false, data: "Error from create student placement using file" })
+                    // }
 
                 } catch (error) {
                     log.error(error.toString())
@@ -79,8 +87,7 @@ const getStudentPlacement = async (req, res) => {
 }
 
 const getStudentPlacementInStudent = async (req, res) => {
-    try
-    {
+    try {
         const student_id = req.userId
         let studentplacement = await StudentPlacementService.getStudentPlacement(student_id)
         if (studentplacement) {

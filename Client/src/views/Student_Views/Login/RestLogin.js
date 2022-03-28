@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -42,6 +42,7 @@ import { useHistory } from "react-router-dom";
 // const HandleCookies = require("../../../Utilities/HandleCookies")
 import SetClientStudentCookies
     from "../../../Utilities/HandleCookie/SetClientStudentCookies"
+import VerifyStudentCookies from "../../../Utilities/HandleCookie/VerifyStudentCookie"
 // style constant
 const useStyles = makeStyles((theme) => ({
     redButton: {
@@ -105,6 +106,15 @@ const RestLogin = (props, { ...others }) => {
     });
 
     const history = useHistory()
+
+    useEffect(() => {
+        const verificationStatus = VerifyStudentCookies()
+        if (verificationStatus) {
+            history.push("/_student/dashboard")
+        }
+
+    }, [])
+
 
     async function handleSubmit(event) {
 

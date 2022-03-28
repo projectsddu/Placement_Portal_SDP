@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-
 import configData from '../../config';
-
 // material-ui
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -41,6 +39,7 @@ import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import { useHistory } from "react-router-dom";
 // import HandleCookies from "../../Utilities/HandleCookies"
 import SetClientAdminCookies from "../../Utilities/HandleCookie/SetClientAdminCookies"
+import VerifyAdminCookies from "../../Utilities/HandleCookie/VerifyAdminCookie"
 
 
 // style constant
@@ -106,6 +105,15 @@ const RestLogin = (props, { ...others }) => {
     });
 
     const history = useHistory()
+
+    useEffect(() => {
+        const verificationStatus = VerifyAdminCookies()
+        console.log(verificationStatus)
+        if (verificationStatus) {
+            history.push("/dashboard/default")
+        }
+    }, [])
+
 
     async function handleSubmit(event) {
 

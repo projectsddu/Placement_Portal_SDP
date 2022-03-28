@@ -8,40 +8,85 @@ const { sequelize } = require("../Models/index")
 const Sequelize = require("sequelize")
 
 async function checkExists(id) {
-    const studentinternships = await StudentInternship.findAll({ 
-        where: { id } 
+    const studentinternships = await StudentInternship.findAll({
+        where: { id }
     })
     return studentinternships.length > 0 ? true : false
+}
+
+async function checkDuplicate(Student_ID, Company_ID, Stipend) {
+    try {
+        let internships = await StudentInternship.findAll({
+            where: {
+                Student_ID
+                    : Student_ID, Company_ID
+                    : Company_ID, Stipend
+                    : Stipend
+            }
+        })
+        internships = JSON.parse(JSON.stringify(internships))
+        if (internships.length == 0) {
+            return false
+        }
+        else {
+            return true
+        }
+
+    }
+    catch (err) {
+        log.error(err)
+        return false
+    }
 }
 
 const createStudentInternship = async (data, viaCSV = false) => {
     try {
         const studentDetails = await StudentService.getOneStudent(data.Student_ID)
-        if(!studentDetails)
-        {
+        if (!studentDetails) {
             return "No student found"
         }
-        if(viaCSV)
-        {
-            if(data["Company_ID"] == "" || data["Student_ID"] == "")
-            {
-                return "Empty"
+        if (viaCSV) {
+            if (data["Company_ID"] == "" || data["Student_ID"] == "") {
+                if (data["Company_ID"] == "") {
+                    return `Company name cannot be empty for internship record of Student: ${data["Student_ID"]}`
+                }
+                else if (data["Student_ID"] == "") {
+                    return `Student ID must be specified`
+                }
+                return "Empty data found."
             }
+
+
             let [res1, res2] = await sequelize.query("SELECT Company_ID FROM Companies WHERE LOWER(Company_name)='" + data["Company_ID"].toLowerCase() + "'")
+
             console.log(data["Company_ID"])
-            console.log("from line 23",res2)
-            if(res2[0]["Company_ID"] == 0)
-            {
-                throw "Company not found"
+            console.log("from line 23", res2)
+
+            let result = JSON.parse(JSON.stringify(res2))
+            if (result.length == 0) {
+                return `No company with name ${data["Company_ID"]} found while inserting record for student ID ${data["Student_ID"]}`
             }
-            data["Company_ID"] = res2[0]["Company_ID"]
+
+            if (res2[0]["Company_ID"] == 0) {
+                return "No company found"
+            }
+            else {
+                // data["Company_ID"] = res2[0]["Company_ID"]
+                data["Company_ID"] = res2[0]["Company_ID"]
+            }
+            data["Passed_out_year"] = studentDetails.Passed_out_year
+
+
         }
-        data["Passed_out_year"] = studentDetails.Passed_out_year
-        await StudentInternship.create(data)
-        return true
+        const duplicateStatus = await checkDuplicate(data["Student_ID"], data["Company_ID"], data["Stipend"])
+        if (!duplicateStatus) {
+
+            await StudentInternship.create(data)
+        }
+        return "OK"
     } catch (error) {
         log.error(error.toString())
-        return false   
+        return false
     }
 }
 
@@ -51,13 +96,13 @@ const getAllStudentInternship = async () => {
         return studentinternships
     } catch (error) {
         log.error(error.toString())
-        return false   
+        return false
     }
 }
 
 const getStudentInternship = async (id) => {
     try {
-        
+
         let studentinternship = await StudentInternship.findAll({
             where: { Student_ID: id }
         })
@@ -68,7 +113,7 @@ const getStudentInternship = async (id) => {
         }
         return studentinternship
 
-    } 
+    }
     catch (error) {
         log.error(error.toString())
         return false
@@ -78,7 +123,7 @@ const getStudentInternship = async (id) => {
 const updateStudentInternship = async (data, id) => {
     try {
         const status = await checkExists(id)
-        if(!status) {
+        if (!status) {
             throw "Student Internship record doesn't exist"
         }
         else {
@@ -94,7 +139,7 @@ const updateStudentInternship = async (data, id) => {
 const deleteStudentInternship = async (id) => {
     try {
         const status = await checkExists(id)
-        if(!status) {
+        if (!status) {
             throw "Student Internship record doesn't exist"
         }
         else {
@@ -111,12 +156,10 @@ const deleteAllInternshipOfStudent = async (id) => {
     try {
         const temp = await StudentInternship.findAll({ where: { Student_ID: id } })
         const status = temp.length > 0 ? true : false
-        if(!status)
-        {
+        if (!status) {
             throw "Internship record doesn't exist for the particular Student_ID"
         }
-        else
-        {
+        else {
             await StudentInternship.destroy({ where: { Student_ID: id } })
             return true
         }
