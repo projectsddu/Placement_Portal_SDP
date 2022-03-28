@@ -228,6 +228,26 @@ const updateOneStudent = async (req, res) => {
     }
 }
 
+const updateStudentDetailsFromStudentSide = async (req, res) => {
+    try {
+        const student_id = req.userId
+        console.log(student_id)
+        // console.log("Id from update one student")
+        const student = await StudentService.updateStudent(req.body, student_id)
+
+        if (student) {
+            return res.json({ status: true, data: "Student Details Updated!!" })
+        }
+        else {
+            return res.json({ status: false, data: "Error updating student data !!!" })
+        }
+    }
+    catch (err) {
+        log.error(err.toString())
+        return res.json({ status: false, data: "Error updating student data!!" })
+    }
+}
+
 const CV_Upload = async (req, res) => {
     try {
         console.log("Req")
@@ -322,5 +342,6 @@ module.exports = {
     getOneStudentInAdmin,
     updateOneStudent,
     getAllStudentPasswords,
-    sendFirstTimePasswords
+    sendFirstTimePasswords,
+    updateStudentDetailsFromStudentSide
 }
