@@ -6,7 +6,7 @@ import { other } from './other';
 import { StudentMenu } from './StudentMenu';
 import { CompanyMenu } from './CompanyMenu';
 import { AnnouncementMenu } from './AnnouncementMenu';
-import { TempMenu } from './Student/TempMenu';
+import { ProfileMenu } from './Student/ProfileMenu';
 import { AnnouncementStudentMenu } from './Student/AnnouncementStudentMenu';
 import { PlacementMenu } from './PlacementMenu';
 import { InternshipMenu } from './InternshipMenu';
@@ -27,7 +27,7 @@ if (current_location[3] == "_student" || current_location[3] == "") {
     console.log(current_location)
     console.log("Here in student")
     menuItems = {
-        items: [TempMenu, AchievementsMenu, AnnouncementStudentMenu, AboutMenu]
+        items: [ProfileMenu, AchievementsMenu, AnnouncementStudentMenu, AboutMenu]
     }
 }
 

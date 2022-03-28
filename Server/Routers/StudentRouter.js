@@ -70,6 +70,7 @@ router.get("/getAllStudents",
     StudentController.getAllStudents)
 router.get("/getOneStudent", [Authenticate], StudentController.getOneStudent)
 router.get("/getOneStudentInAdmin/:id", [AdminAuthenticate.AdminAuthenticate], StudentController.getOneStudentInAdmin)
+router.post("/updateStudentDetailsFromStudentSide", [Authenticate], StudentController.updateStudentDetailsFromStudentSide)
 router.post("/updateOneStudent/:id", [AdminAuthenticate.AdminAuthenticate], StudentController.updateOneStudent)
 router.post("/addCV", [Authenticate, upload1.single("Student_CV_File")], StudentController.CV_Upload)
 router.post("/updateStudent/", [AdminAuthenticate.AdminAuthenticate, upload.single("Student_Details_File")], StudentController.updateStudent)
