@@ -17,21 +17,21 @@ const ViewConfig = {
                     "header": "Student Skills",
                     "no_skill_message": {
                         "message": "No student skills added yet",
-                        "variant": "h1"
+                        "variant": "h2"
                     }
                 },
                 "internships": {
                     "header": "Internships",
                     "no_internship_message": {
                         "message": "No student internships added yet",
-                        "variant": "h1"
+                        "variant": "h2"
                     }
                 },
                 "projects": {
                     "header": "Projects",
                     "no_projects_message": {
                         "message": "No student projects added yet",
-                        "variant": "h1"
+                        "variant": "h2"
                     }
                 }
             }
@@ -59,14 +59,14 @@ const ViewConfig = {
                 "Header": "Placements from college",
                 "no_placements_message": {
                     "message": "No student placements added yet",
-                    "variant": "h1"
+                    "variant": "h2"
                 }
             },
             "internships": {
                 "Header": "Internships from college",
                 "no_internships_message": {
                     "message": "No student internships added yet",
-                    "variant": "h1"
+                    "variant": "h2"
                 }
             }
         }

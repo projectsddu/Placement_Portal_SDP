@@ -51,6 +51,30 @@ async function checkExists(id) {
 }
 
 
+const checkDuplicate = async (studentId, companyId, Designation) => {
+    try {
+        let status = await StudentPlacement.findAll({
+            where: {
+                Company_ID
+                    : companyId, Student_ID: studentId, Designation: Designation
+            }
+        })
+        status = JSON.parse(JSON.stringify(status))
+        console.log("Status")
+        console.log(status)
+        if (status.length == 0) {
+            console.log("Length is 0")
+            return false
+        }
+        else {
+            return true
+        }
+    }
+    catch (err) {
+        log.error(err)
+        return false
+    }
+}
 
 
 const createStudentPlacement = async (studentplacementdata, fromFile = false) => {
@@ -70,29 +94,50 @@ const createStudentPlacement = async (studentplacementdata, fromFile = false) =>
         const student_details = await StudentService.getOneStudent(studentplacementdata.Student_ID)
 
         if (fromFile) {
-            // console.log("from line 72",studentplacementdata)
+            // console.log("from line 72", studentplacementdata)
             if (studentplacementdata["Company_ID"] == '' || studentplacementdata["Designation"] == '') {
-                return "empty"
+
+                if (studentplacementdata["Company_ID"] == '') {
+                    return "Company name cannot be empty for record: " + studentplacementdata["Student_ID"]
+                }
             }
             studentplacementdata["Offer_Letter"] = ""
             // console.log("Company ID")
             // let company = Company.findOne({ where: [Sequelize.where(Sequelize.fn("lower", "Company_name"), studentplacementdata["Company_ID"].toLowerCase())] })
             let [res1, res2] = await sequelize.query("SELECT Company_ID FROM Companies WHERE LOWER(Company_name)='" + studentplacementdata["Company_ID"].toLowerCase() + "'")
-            // console.log("Break1")
+            console.log("Break1")
             // console.log("Here in company")
-            // console.log(res2)
+            let result = (JSON.parse(JSON.stringify(res2)))
+            if (result.length == 0) {
+                return `Company name ${studentplacementdata["Company_ID"]
+                    }  for record ${studentplacementdata["Student_ID"]}  does not exists`
+            }
             if (res2[0]["Company_ID"] == 0) {
-                throw "Company not found"
+                // console.log("Here on 0")
+                if (studentplacementdata["Company_ID"] == "" || studentplacementdata["Company_ID"] == undefined || studentplacementdata["Company_ID"] == null) {
+                    return "Company name for record:" + studentplacementdata["Student_ID"] + " cannot be empty"
+                }
+                return "No company named " + studentplacementdata["Company_ID"] + " found for record" + studentplacementdata["Student_ID"]
             }
             studentplacementdata["Company_ID"] = res2[0]["Company_ID"]
         }
         studentplacementdata["Passed_out_year"] = student_details.Passed_out_year
-        await StudentPlacement.create(studentplacementdata)
-        return true
+
+
+        console.log(studentplacementdata)
+
+        const status2 = await checkDuplicate(studentplacementdata["Student_ID"], studentplacementdata["Company_ID"], studentplacementdata["Designation"])
+        if (!status2) {
+            console.log("Creating data")
+            await StudentPlacement.create(studentplacementdata)
+        }
+        else {
+        }
+        return "OK"
     } catch (error) {
         console.log(JSON.parse(JSON.stringify(studentplacementdata)))
         log.error(error.toString())
-        return false
+        return "Oops some error occured while addin placement"
     }
 }
 

@@ -29,17 +29,25 @@ const generateRandomPassword = (length) => {
 
 const AddFirstTimePassword = async (studentId) => {
     try {
-        const rawPassword = generateRandomPassword(16)
-        console.log(rawPassword)
-        const password = AES.encrypt(rawPassword, process.env.ECRYPTION_KEY).toString()
-        console.log(password)
-        const payLoad = {
-            StudentId: studentId,
-            FirstTimePassword: password
-        }
-        await FirstTimeModel.create(payLoad)
+        const checkExists = await FirstTimeModel.findOne({
+            where: {
+                StudentId
+                    : studentId
+            }
+        })
+        if (!checkExists) {
+            const rawPassword = generateRandomPassword(16)
+            console.log(rawPassword)
+            const password = AES.encrypt(rawPassword, process.env.ECRYPTION_KEY).toString()
+            console.log(password)
+            const payLoad = {
+                StudentId: studentId,
+                FirstTimePassword: password
+            }
+            await FirstTimeModel.create(payLoad)
 
-        return rawPassword
+            return rawPassword
+        }
     }
     catch (err) {
         log.error(err.toString())

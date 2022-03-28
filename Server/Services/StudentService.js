@@ -35,13 +35,10 @@ async function checkExists(id) {
 const createStudent = async (studentData) => {
     try {
         const id = studentData["Student_ID"]
-        // console.log("line 21 student Id:")
-        // console.log(id)
         if (await checkExists(id)) {
             const data = await Student.update(studentData, { where: { Student_ID: id } })
         }
         else {
-
             studentData["Student_Photo"] = "./public/student_details/Photo/Placement_Portal_Default_Image.jpg"
             const student = await Student.create(studentData)
             const password = await FirstTimePasswordService.AddFirstTimePassword(student.Student_ID)

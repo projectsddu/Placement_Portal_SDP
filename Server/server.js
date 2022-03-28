@@ -2,7 +2,9 @@ const express = require("express")
 const multer = require('multer');
 const path = require('path');
 const http = require("http")
+const proc = require("process")
 const app = express()
+const fs = require("fs")
 const hostingConfig = require("./Config/hostingConfig")
 const StudentRouter = require("./Routers/StudentRouter")
 const AnnoucementRouter = require("./Routers/AnnoucementRouter")
@@ -25,6 +27,23 @@ const fileupload = require("express-fileupload");
 
 
 require("dotenv").config();
+
+if (process.env.NODE_ENV == "production") {
+
+    var writeStream = fs.createWriteStream('./Logs/test.log', {
+        encoding: 'utf8',
+        flags: 'w'
+    });
+    process.stdout = require('stream').Writable();
+    process.stdout._write = function (chunk, encoding, callback) {
+        writeStream.write(chunk, encoding, callback);
+    };
+    process.stderr = require('stream').Writable();
+    process.stderr._write = function (chunk, encoding, callback) {
+        writeStream.write(chunk, encoding, callback);
+    };
+    // process.stdout = require('stream').Writable();
+}
 
 // Middlewares
 console.log(`App running in ${process.env.NODE_ENV}`)
