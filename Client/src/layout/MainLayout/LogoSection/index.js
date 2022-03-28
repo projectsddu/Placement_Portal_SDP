@@ -21,7 +21,7 @@ const LogoSection = () => {
     return (
         <ButtonBase disableRipple component={Link} to={current_path.indexOf("/_student") == "-1" ? "/dashboard/default" : "/_student/Dashboard"}>
             {/* <Logo /> */}
-            <img style={{ width: "60%", height: "5%", marginLeft: "30%", marginTop: "-11%", marginBottom: "-25%" }}
+            <img style={{ width: "60%", height: "5%", marginLeft: "40%", marginTop: "-11%", marginBottom: "-25%" }}
                 src={Logo1}
                 alt='Dharamsinh Desai University logo'
                 loading="lazy"

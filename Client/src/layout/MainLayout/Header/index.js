@@ -66,15 +66,49 @@ const Header = ({ handleLeftDrawerToggle }) => {
                 <LogoSection />
             </Box>
             {/* smDown = this defines size for laptop and tablet*/}
-            <Hidden smDown style={{ "padding-right": "2%" }}>
-                <Typography fontSize='2rem' fontWeight='bold'>
-                    Dharmsinh Desai University
+            <Hidden
+                smDown
+                style={{
+                    // "padding-right": "-10%"
+                }}>
+                <Typography
+                    fontSize='2.5rem'
+                    // fontSize='150%'
+                    fontWeight='bold'
+                // marginLeft={"-16%"}
+                >
+                    Placement Portal
+                    <div
+                        style={{
+                            margin: '0%',
+                            fontSize: '15px',
+                            lineHeight: '0.2rem',
+                            textAlign: 'center'
+                        }}
+                    >
+                        &copy; Dharmsinh Desai University
+                    </div>
                 </Typography>
             </Hidden>
             {/* smUp = this defines size for mobile */}
             <Hidden smUp>
-                <Typography fontSize='2rem' fontWeight='bold'>
-                    DDU
+            <Typography
+                    fontSize='1.1rem'
+                    // fontSize='150%'
+                    fontWeight='bold'
+                // marginLeft={"-16%"}
+                >
+                    Placement Portal
+                    <div
+                        style={{
+                            margin: '0%',
+                            fontSize: '8px',
+                            lineHeight: '0.2rem',
+                            textAlign: 'center'
+                        }}
+                    >
+                        &copy; Dharmsinh Desai University
+                    </div>
                 </Typography>
             </Hidden>
             <div className={classes.grow} />
@@ -82,7 +116,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
             {/* notification & profile */}
             <NotificationSection />
             <ProfileSection />
-        </React.Fragment>
+        </React.Fragment >
     );
 };
 
