@@ -75,6 +75,7 @@ router.post("/updateOneStudent/:id", [AdminAuthenticate.AdminAuthenticate], Stud
 router.post("/addCV", [Authenticate, upload1.single("Student_CV_File")], StudentController.CV_Upload)
 router.post("/updateStudent/", [AdminAuthenticate.AdminAuthenticate, upload.single("Student_Details_File")], StudentController.updateStudent)
 router.post("/deleteStudent/:id", [AdminAuthenticate.AdminAuthenticate], StudentController.deleteStudent)
+router.post("/searchStudent/:name", [AdminAuthenticate.AdminAuthenticate], StudentController.searchStudent)
 router.post("/getAllStudentPasswords", [AdminAuthenticate.AdminAuthenticate], StudentController.getAllStudentPasswords)
 router.post("/sendPasswords", [AdminAuthenticate.AdminAuthenticate], StudentController.sendFirstTimePasswords)
 router.post("/uploadPhoto", [Authenticate, upload2.single("Student_Photo_File")], StudentController.Photo_Upload)

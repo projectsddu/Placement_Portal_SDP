@@ -16,6 +16,16 @@ import Student_details from './JSX/Student_details';
 import NoStudent from "./JSX/NoStudent"
 import CircularProgress from '@mui/material/CircularProgress';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
+import UsePost from '../../Utilities/UsePost';
+import { makeStyles, useTheme } from '@material-ui/styles';
+import { Card, CardContent, Divider, Button } from '@material-ui/core';
+
+// third-party
+import ApexCharts from 'apexcharts';
+import Chart from 'react-apexcharts';
+// import ParseDate from "../../Utilities/ParseDate"
+
+
 
 function AddPlacement() {
     const [open, setOpen] = React.useState(false);
@@ -167,10 +177,72 @@ function AddPlacement() {
         setfirst(str1 + oppo + "From GHere")
     }
 
+    const [searchName, setsearchName] = useState("")
+    const [namesResult, setNamesResult] = useState("jenil")
 
+    function changeResult(data) {
+        const recievedData = data
+        setNamesResult(recievedData)
+    }
+
+    const handleNamesChange = async (e) => {
+        try {
+            setsearchName(e.target.value)
+            if (e.target.value.length > 2) {
+                const url = "/student/searchStudent/" + e.target.value
+                const status = await UsePost(url, {}, "POST")
+                console.log(status)
+                changeResult(status.data)
+                // setNamesResult(status.data)
+                console.log(namesResult)
+            }
+            else {
+                console.log("Enter more")
+            }
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+    const useStyles = makeStyles((theme) => ({
+        card: {
+            backgroundColor: theme.palette.primary.light
+        },
+        content: {
+            padding: '0px !important'
+        },
+        contentContainer: {
+            padding: '16px',
+            paddingBottom: 0,
+            color: '#fff'
+        },
+        fontStyle: {
+            fontWeight: 400
+        },
+        divider: {
+            marginTop: '2%',
+            // marginBottom: '12px'
+        },
+    }));
+    const classes = useStyles();
+    const theme = useTheme();
+
+    const orangeDark = theme.palette.primary[800];
+
+    // React.useEffect(() => {
+    //     const newSupportChart = {
+    //         ...chartData.options,
+    //         colors: [orangeDark],
+    //         tooltip: {
+    //             theme: 'light'
+    //         }
+    //     };
+    //     ApexCharts.exec(`support-chart`, 'updateOptions', newSupportChart);
+    // }, [orangeDark]);
 
     return (
         <>
+            {/* {namesResult.toString()} */}
             <MainCard title="Add Placement">
                 <Modal
                     open={open}
@@ -180,6 +252,61 @@ function AddPlacement() {
                 >
                     <CircularProgress style={style} color="primary" />
                 </Modal>
+                <TextField
+                    type='text'
+                    fullWidth
+                    label="Student Name"
+                    value={searchName}
+                    onInput={(e) => {
+                        handleNamesChange(e)
+                    }}
+                    id="fullWidth"
+                />
+                <br /><br />
+
+
+                {namesResult == "jenil" || namesResult.length == 0 ? "" :
+                    <>
+                        <Grid style={{ "border": "1px solid #007FFF", "padding": "3%", "border-width": "1px", "borderColor": "#007FFF", "box-shadow": " 0 0 0 1px #0070C9", "borderRadius": "8px" }}>
+
+
+                            {namesResult.map((e) => {
+                                return (<>
+
+                                    <Grid item xs={12} style={{ "padding": "5px" }}>
+                                        <Grid container direction="column">
+                                            <Grid item>
+                                                <Grid container alignItems="center" justifyContent="space-between">
+                                                    <Grid item xs={9} md={9}>
+                                                        <p>
+                                                            {e.Student_ID + " " + e.FirstName + " " + e.LastName}
+                                                        </p>
+
+                                                    </Grid>
+                                                    <Grid item xs={2} md={2}>
+                                                        <Grid container alignItems="center" justifyContent="center">
+                                                            <Grid item>
+                                                                <Button
+                                                                    variant="contained"
+                                                                    size="small"
+                                                                >Select</Button>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                    {/* <Divider
+                                        className={classes.divider}
+                                    /> */}
+                                </>)
+                            })}
+                        </Grid>
+                    </>
+                }
+
+                <br />
                 <TextField
                     fullWidth
                     // required
