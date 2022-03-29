@@ -1,13 +1,13 @@
 // assets
 import { IconDashboard, IconDeviceAnalytics } from '@tabler/icons';
 
-import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';      
+// import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';      
 
 // constant
 const icons = {
     IconDashboard: IconDashboard,
     IconDeviceAnalytics,
-    DashboardOutlinedIcon
+    // DashboardOutlinedIcon
 };
 
 //-----------------------|| DASHBOARD MENU ITEMS ||-----------------------//
@@ -22,7 +22,7 @@ export const dashboard = {
             title: 'Dashboard',
             type: 'item',
             url: '/dashboard/default',
-            icon: icons['DashboardOutlinedIcon'],
+            // icon: icons['DashboardOutlinedIcon'],
             breadcrumbs: false
         }
     ]
