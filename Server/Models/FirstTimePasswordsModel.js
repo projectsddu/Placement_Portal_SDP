@@ -16,7 +16,12 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
 
-        }
+        },
+        Passed_out_year: {
+            type: DataTypes.DATE,
+            allowNull: false
+        },
+
     },
         {
             timestamps: false

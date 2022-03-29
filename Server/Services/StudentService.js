@@ -14,6 +14,7 @@ const StudentAchievementsInternships = db.student_achievements_internships
 const Notifications = db.notifications
 const LoginTokens = db.LoginTokens
 const Sequelize = require("sequelize")
+const FirstTimeModel = db.FirstTimeLogin
 const Op = Sequelize.Op
 // const FirstTimeModel = db.FirstTimeLogin
 // const StudentProjectService = require("./StudentProjectService")
@@ -75,7 +76,7 @@ const createStudent = async (studentData) => {
         else {
             studentData["Student_Photo"] = "/public/student_details/Photo/Placement_Portal_Default_Image.jpg"
             const student = await Student.create(studentData)
-            const password = await FirstTimePasswordService.AddFirstTimePassword(student.Student_ID)
+            const password = await FirstTimePasswordService.AddFirstTimePassword(student.Student_ID, student.Passed_out_year)
             await UserLoginService.createUserLogin(student.Student_ID, password)
             // return true
         }
@@ -130,8 +131,12 @@ const updateStudent = async (data, id) => {
     try {
         if (await checkExists(id)) {
             const student = await Student.update(data, { where: { Student_ID: id } })
+            const status = await FirstTimeModel.update({ Passed_out_year: data["Passed_out_year"] }, { where: { StudentId: id } })
             console.log(id)
-            return student
+            if(status)
+            {
+                return student
+            }
         }
         else {
             return false
