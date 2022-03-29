@@ -1,6 +1,10 @@
 // assets
 import { IconDashboard, IconDeviceAnalytics, IconSpeakerphone, IconLayoutGridAdd, IconUser, IconCirclePlus, IconEye, IconMan, IconBrandGravatar, IconEdit, IconUserX, IconUserCheck, IconUserExclamation, IconUserOff } from '@tabler/icons';
 
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded';
+import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
+
 // constant
 const icons = {
     IconDashboard: IconDashboard,
@@ -16,7 +20,10 @@ const icons = {
     IconUserX,
     IconUserCheck,
     IconUserExclamation,
-    IconUserOff
+    IconUserOff,
+    DashboardIcon,
+    DashboardRoundedIcon,
+    DashboardOutlinedIcon
 };
 
 //-----------------------|| ANNOUNCEMENT DASHBOARD MENU ITEMS ||-----------------------//
@@ -31,7 +38,7 @@ export const ProfileMenu = {
             title: 'Dashboard',
             type: 'item',
             url: '/_student/Dashboard/',
-            icon: icons['IconDashboard'],
+            icon: icons['DashboardOutlinedIcon'],
             breadcrumbs: false
         },
         {
