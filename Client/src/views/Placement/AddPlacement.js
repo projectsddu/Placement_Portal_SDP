@@ -306,7 +306,7 @@ function AddPlacement() {
     return (
         <>
             {/* {namesResult.toString()} */}
-            <MainCard title="Add Placement">
+            <MainCard title="View / Add Student Placement">
                 <Modal
                     open={open}
                     onClose={handleClose}

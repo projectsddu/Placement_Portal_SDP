@@ -207,8 +207,8 @@ function S_AddInternshipsCard(props) {
                                 size="medium"
                                 component="span"
                             >
-                                {/* Add Internship */}
-                                Submit
+                                Add Internship
+                                {/* Submit */}
                             </Button>
                         </Grid>
                     </>

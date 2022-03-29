@@ -154,7 +154,7 @@ function ViewAnnoucements() {
                         '-' +
                         jsonData['data'][i]['Job_Role'] +
                         (
-                            jsonData['data'][i]['Passed_out_year'] == null || jsonData['data'][i]['Passed_out_year'] == undefined ? " for all" :
+                            jsonData['data'][i]['Passed_out_year'] == null || jsonData['data'][i]['Passed_out_year'] == undefined ? " for all batch year" :
                                 ' for ' +
                                 ParseDate.getYear(jsonData['data'][i]['Passed_out_year']) +
                                 ' Batch');

@@ -53,7 +53,7 @@ export default function AddInternshipViaCSV() {
     }
 
     return (
-        <MainCard title="Add Student Internship Details">
+        <MainCard title="Add Student Internship Via CSV">
             <form enctype="multipart/form-data">
                 <label htmlFor="contained-button-file">
                     <Input

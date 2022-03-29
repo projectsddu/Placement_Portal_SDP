@@ -18,7 +18,7 @@ export default function AboutDevelopers() {
             "Image": JenilImage,
             "Name": "Jenil J Gandhi",
             "Role": "Developer",
-            "MainContent": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+            "MainContent": "",
             "GithubLink": "https://github.com/jenilgandhi2111",
             "LinkedInLink": "https://www.linkedin.com/in/jenil-gandhi-5961591b0/",
             "GmailLink": "jenilgandhi2111@gmail.com"
@@ -27,7 +27,7 @@ export default function AboutDevelopers() {
             "Image": KevalImage,
             "Name": "Keval D Gandevia",
             "Role": "Developer",
-            "MainContent": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+            "MainContent": "",
             "GithubLink": "https://github.com/Keval-Gandevia",
             "LinkedInLink": "https://www.linkedin.com/in/keval-gandevia-8128041b5/",
             "GmailLink": "gandeviakeval05@gmail.com"
@@ -36,7 +36,7 @@ export default function AboutDevelopers() {
             "Image": RikinImage,
             "Name": "Rikin D Chauhan",
             "Role": "Developer",
-            "MainContent": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+            "MainContent": "",
             "GithubLink": "https://github.com/rikinchauhan01",
             "LinkedInLink": "https://www.linkedin.com/in/rikin-chauhan-b057641a7/",
             "GmailLink": "rikinchauhan01@gmail.com"
@@ -45,7 +45,7 @@ export default function AboutDevelopers() {
             "Image": JHBSirImage,
             "Name": "Jatayu H Baxi",
             "Role": "Mentor",
-            "MainContent": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+            "MainContent": "",
             "GithubLink": "https://github.com/jhbaxi",
             "LinkedInLink": "https://www.linkedin.com/in/jatayu-baxi-09397011/",
             "GmailLink": "jatayubaxi.ce@ddu.ac.in"
@@ -54,7 +54,7 @@ export default function AboutDevelopers() {
             "Image": SPSSirImage,
             "Name": "Siddharth P Shah",
             "Role": "Mentor",
-            "MainContent": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+            "MainContent": "",
             "GithubLink": "https://github.com/DeepLearner82",
             "LinkedInLink": "https://www.linkedin.com/in/siddharth-shah-63426190/",
             // "GmailLink": "mailto: siddharth.ce@ddu.ac.in"

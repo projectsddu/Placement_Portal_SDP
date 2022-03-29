@@ -4,6 +4,7 @@ const db = require("../Models/index")
 const OTPModel = db.Otps
 const StudentModel = db.students
 const MailerService = require("./MailerService")
+const UserLoginService = require("./UserLoginService")
 const OTP_LEN = 6
 const generateOtp = async (studentId) => {
     try {
@@ -68,6 +69,15 @@ const sendOtp = async (studentid) => {
             }
         })
         if (student) {
+            let userLogin = await UserLoginService.getUserLoginObj(studentid)
+            console.log("Userlogin.....")
+            console.log(userLogin)
+            userLogin = JSON.parse(JSON.stringify(userLogin))
+            if(userLogin[0].IsFirstTime)
+            {
+                console.log("Inside the first time")
+                return "Login using first time password!"
+            }
             const otp = await generateOtp(studentid)
             if (otp) {
                 const messagePayload = {

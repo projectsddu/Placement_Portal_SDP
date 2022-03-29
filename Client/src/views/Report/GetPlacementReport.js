@@ -49,7 +49,7 @@ function GetPlacementReport() {
         setBatchYear({ ...batchYear, Passed_out_year: e.target.value });
 
         if (e.target.value.length == 4) {
-
+            console.log(e.target.value)
             // let updated_details = studentPlacementStateDetails;
             let res = undefined;
             res = await UsePost('/reports/getPlacementReportByBatchYear', { Passed_out_year: e.target.value }, 'POST');
@@ -58,8 +58,9 @@ function GetPlacementReport() {
                 // for (let i = 0; i < res['data'][0].length; i++) {
                 //     res['data'][0][i]['row_id'] = i;
                 // }
+                console.log(res["data"])
                 if (res["data"][0].length == 0) {
-                    setPlacementDetails(res["data"][0])
+                    setPlacementTableDetails(res["data"][0])
                     setPlacementDetails(res['data'][1]);
                     setDetailsCard(true);
                 }
@@ -101,7 +102,7 @@ function GetPlacementReport() {
     ];
 
     return (
-        <MainCard title="Placement Report">
+        <MainCard title="View / Download Placement Report">
             <TextField
                 fullWidth
                 // required

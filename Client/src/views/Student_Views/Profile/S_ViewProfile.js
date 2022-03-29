@@ -223,8 +223,8 @@ export default function S_ViewProfile() {
     const [skillDetails, setSkillDetails] = useState(undefined);
     const [skillExist, setSkillExist] = useState(false);
 
-    const [placementCard, setPlacementCard] = useState([]);
-    const [internshipCard, setInternshipCard] = useState([]);
+    // const [placementCard, setPlacementCard] = useState([]);
+    // const [internshipCard, setInternshipCard] = useState([]);
 
     const [placementDetails, setPlacementDetails] = useState(undefined);
     const [internshipDetails, setInternshipDetails] = useState(undefined);
@@ -304,7 +304,7 @@ export default function S_ViewProfile() {
                         {
                             if(internshipsData["data"] == "Student Internship Record Not Found!")
                             {
-                                setInternshipDetails(internshipsData["data"])
+                                setInternshipDetails(undefined)
                             }
                             else
                             {
@@ -429,7 +429,7 @@ export default function S_ViewProfile() {
     }
     return (
         <>
-            <MainCard title="Student Details">
+            <MainCard title="Details">
                 {loading ? (
                     ''
                 ) : (

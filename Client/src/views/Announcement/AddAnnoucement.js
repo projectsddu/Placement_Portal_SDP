@@ -52,7 +52,7 @@ const Branches = [
     {
         value: 'CE',
         label: 'Computer Engineering',
-        checked: false
+        checked: true
     },
     {
         value: 'IT',
@@ -90,7 +90,7 @@ function AddAnnoucement() {
         Company_ID: '',
         Date_of_announcement: new Date(),
         Date_of_Visit: null,
-        Eligible_Branches: [],
+        Eligible_Branches: ["CE"],
         Passed_out_year: null,
         Job_Role: '',
         Salary: '',
@@ -269,6 +269,7 @@ function AddAnnoucement() {
                                 <>
                                     <div>
                                         <Checkbox
+                                            checked={e.checked}
                                             value={e.value}
                                             onClick={() => handleCheckBox(e.value, e)}
                                         /><label>{e.label}</label>

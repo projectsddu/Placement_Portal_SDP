@@ -69,7 +69,7 @@ export default function AddPlacementViaCSV() {
     }
 
     return (
-        <MainCard title="Add Student Placement Details">
+        <MainCard title="Add Student Placement Via CSV">
             <Modal
                 open={open}
                 onClose={handleClose}

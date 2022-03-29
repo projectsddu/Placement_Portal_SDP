@@ -15,6 +15,7 @@ import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import Modal from '@mui/material/Modal';
 import CircularProgress from '@mui/material/CircularProgress';
 import ViewConfig from '../../Config/ViewConfig';
+import MenuItem from '@mui/material/MenuItem';
 const useStyles = makeStyles({
     helperTextColor: {
         color: 'red'
@@ -167,6 +168,7 @@ function EditSingleStudent() {
                             <Grid item xs={12} md={6}>
                                 <TextField
                                     // required
+                                    id="select"
                                     fullWidth
                                     label="Gender"
                                     helperText="Enter the gender"
@@ -174,7 +176,11 @@ function EditSingleStudent() {
                                     onChange={(e) => {
                                         setStudentDetails({ ...studentDetails, Gender: e.target.value });
                                     }}
-                                />
+                                    select
+                                >
+                                    <MenuItem value="Male">Male</MenuItem>
+                                    <MenuItem value="Female">Female</MenuItem>
+                                </TextField>
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <TextField
@@ -566,6 +572,7 @@ function EditSingleStudent() {
                             <Grid item md={6} xs={12}>
                                 <TextField
                                     // required
+                                    id="select"
                                     fullWidth
                                     label="Career Preference"
                                     helperText="Enter the career preference"
@@ -573,7 +580,11 @@ function EditSingleStudent() {
                                     onChange={(e) => {
                                         setStudentDetails({ ...studentDetails, Career_Preference: e.target.value });
                                     }}
-                                />
+                                    select
+                                >
+                                    <MenuItem value="Placement">Placement</MenuItem>
+                                    <MenuItem value="Higher Study">Higher Study</MenuItem>
+                                </TextField>
                             </Grid>
                             <Grid item md={6} xs={12}>
                                 <TextField
@@ -596,6 +607,7 @@ function EditSingleStudent() {
                             <Grid item md={4} xs={12}>
                                 <TextField
                                     // required
+                                    id="select"
                                     fullWidth
                                     label="Is D2D Student"
                                     helperText="Enter the 'TRUE' if D2D student otherwise 'FALSE'"
@@ -603,7 +615,11 @@ function EditSingleStudent() {
                                     onChange={(e) => {
                                         setStudentDetails({ ...studentDetails, IsD2D: e.target.value });
                                     }}
-                                />
+                                    select
+                                >
+                                    <MenuItem value="TRUE">TRUE</MenuItem>
+                                    <MenuItem value="FALSE">FALSE</MenuItem>
+                                </TextField>
                             </Grid>
                             <Grid item md={4} xs={12}>
                                 <TextField
@@ -687,7 +703,9 @@ function EditSingleStudent() {
                                 <Button
                                     onClick={() => {
 
+
                                         history.push('/internship/add_internship/' + studentDetails["Student_ID"]);
+
                                     }}
                                     variant="contained"
                                     size="large"
