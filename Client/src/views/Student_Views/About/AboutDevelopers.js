@@ -64,10 +64,12 @@ export default function AboutDevelopers() {
     let rikinContent = ""
     return (
         <MainCard>
+
             <h1 className='AboutTitle'>Designed and Developed by CE Department</h1>
+
             <h2 className='AboutTitle'>Developer Team</h2>
-            <br/>
-            <br/>
+            <br />
+            <br />
             <Grid container spacing={2} justifyContent={"flex-start"}>
 
                 <Grid xs={12} md={4} item>

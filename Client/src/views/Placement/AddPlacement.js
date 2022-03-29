@@ -23,6 +23,7 @@ import { Card, CardContent, Divider, Button } from '@material-ui/core';
 // third-party
 import ApexCharts from 'apexcharts';
 import Chart from 'react-apexcharts';
+import { useLocation } from 'react-router';
 // import ParseDate from "../../Utilities/ParseDate"
 
 
@@ -239,6 +240,37 @@ function AddPlacement() {
     //     };
     //     ApexCharts.exec(`support-chart`, 'updateOptions', newSupportChart);
     // }, [orangeDark]);
+    const location = useLocation()
+    useEffect(async () => {
+        const studId = location.pathname.split("/")
+        const lastElem = studId.slice("-1")
+        console.log(lastElem)
+        if (!isNaN(parseInt(lastElem[0] + lastElem[1]))) {
+            const payLoad = {
+                target: {
+                    value: lastElem[0]
+                }
+            }
+            await handleChange(payLoad)
+        }
+
+    }, [])
+
+
+    async function selectName(id) {
+        try {
+            const payLoad = {
+                target: {
+                    value: id
+                }
+            }
+            await handleChange(payLoad)
+            setNamesResult("jenil")
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
 
     return (
         <>
@@ -267,14 +299,31 @@ function AddPlacement() {
 
                 {namesResult == "jenil" || namesResult.length == 0 ? "" :
                     <>
-                        <Grid style={{ "border": "1px solid #007FFF", "padding": "3%", "border-width": "1px", "borderColor": "#007FFF", "box-shadow": " 0 0 0 1px #0070C9", "borderRadius": "8px" }}>
+                        <Grid style={{ "padding": "1%", "box-shadow": "rgb(213 213 213 / 72%) 0px 0px 2px 2px", "borderRadius": "8px" }}>
 
 
                             {namesResult.map((e) => {
                                 return (<>
 
-                                    <Grid item xs={12} style={{ "padding": "5px" }}>
-                                        <Grid container direction="column">
+                                    <Grid item xs={12} style={{ "padding": "1%" }} container>
+                                        <Grid xs={9} md={9}>
+
+                                            {e.Student_ID + " " + e.FirstName + " " + e.LastName}
+
+                                        </Grid>
+                                        <Grid xs={3} md={3} justifyContent={"flex-end"}>
+                                            <div style={{ "display": "flex", "justifyContent": "center" }}>
+                                                {/* <Grid > */}
+                                                <Button
+                                                    onClick={() => { selectName(e.Student_ID) }}
+                                                    variant="contained"
+                                                    size="small"
+                                                >Select</Button>
+                                                {/* </Grid> */}
+                                            </div>
+                                        </Grid>
+                                        <Divider className={classes.divider} />
+                                        {/* <Grid container direction="column">
                                             <Grid item>
                                                 <Grid container alignItems="center" justifyContent="space-between">
                                                     <Grid item xs={9} md={9}>
@@ -287,6 +336,7 @@ function AddPlacement() {
                                                         <Grid container alignItems="center" justifyContent="center">
                                                             <Grid item>
                                                                 <Button
+                                                                    onClick={() => { selectName(e.Student_ID) }}
                                                                     variant="contained"
                                                                     size="small"
                                                                 >Select</Button>
@@ -295,7 +345,7 @@ function AddPlacement() {
                                                     </Grid>
                                                 </Grid>
                                             </Grid>
-                                        </Grid>
+                                        </Grid> */}
                                     </Grid>
                                     {/* <Divider
                                         className={classes.divider}
@@ -307,18 +357,19 @@ function AddPlacement() {
                 }
 
                 <br />
-                <TextField
+                {/* <TextField
                     fullWidth
                     // required
                     label="Student ID"
                     onInput={(e) => {
                         handleChange(e)
                     }}
+                    value={studentData}
                     id="fullWidth"
                     helperText="Enter Student ID"
-                />
-                <br />
-                <br />
+                /> */}
+                {/* <br /> */}
+                {/* <br /> */}
                 {StudentDetails === undefined ? "" :
                     StudentDetails == "No student found!" ?
                         <ChipCard data={

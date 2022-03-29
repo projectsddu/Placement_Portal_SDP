@@ -41,6 +41,11 @@ const searchStudent = async (studentName) => {
             where: {
                 [Op.or]: [
                     {
+                        Student_ID: {
+                            [Op.like]: "%" + studentName + "%"
+                        }
+                    },
+                    {
                         FirstName: {
                             [Op.like]: "%" + studentName + "%"
                         }

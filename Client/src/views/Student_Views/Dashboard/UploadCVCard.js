@@ -65,7 +65,9 @@ export default function UploadResumeCard({ CV_Upload }) {
     }
 
     return (
-        <MainCard title="Add CV">
+
+        <MainCard title="Add Your CV">
+
             <Modal
                 open={open}
                 onClose={handleClose}
