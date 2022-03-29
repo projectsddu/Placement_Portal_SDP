@@ -68,7 +68,7 @@ function S_EditProfile() {
     };
     return (
         <>
-            <MainCard title={ViewConfig.admin.student.edit_student.header}>
+            <MainCard title="Edit Details">
                 <Modal
                     open={open}
                     onClose={handleClose}
