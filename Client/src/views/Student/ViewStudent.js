@@ -22,6 +22,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Modal from '@mui/material/Modal';
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
+import ViewConfig from '../../Config/ViewConfig';
 
 function CustomToolbar() {
     return (
@@ -214,7 +215,7 @@ export default function ViewStudent() {
                         >
                             <Box sx={style}>
                                 <Typography style={{ "color": "#616161" }} id="modal-modal-title" variant="h3" component="h1">
-                                    Are, you really sure want to delete this student?
+                                    {ViewConfig.admin.student.view_student.delete_message}
                                 </Typography><br />
                                 <Grid container spacing={2} justifyContent={""}>
                                     <Grid md={6} item>
@@ -312,7 +313,7 @@ export default function ViewStudent() {
     }
 
     return (
-        <MainCard title="View Student">
+        <MainCard title={ViewConfig.admin.student.view_student.title}>
             <TextField label="Search" value={search} onInput={(e) => handleSearch(e)} fullWidth></TextField>
             <br />
             <br />

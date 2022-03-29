@@ -7,7 +7,23 @@ const ViewConfig = {
             },
             "edit_student": {
                 "header": "Edit Student",
-                "update": "update"
+                "update": "update",
+                "update_placement": "Update Placement",
+                "update_internship": "Update Internship"
+            },
+            "batch_update":{
+                "header": "Update Student Details",
+                "browse_file": "Browse File",
+                "update_student_btn": "Update Student"
+            },
+            "view_student":{
+                "title": "View Student",
+                "delete_message": "Are, you really sure want to delete this student?"
+            },
+            "student_passwords": {
+                "title": "Student First Time Passwords",
+                "btn_send_passwords": "Send Passwords",
+                "note": "Note: Sending passwords might take a while!"
             },
             "student_profile": {
                 "header": "Student Profile",
