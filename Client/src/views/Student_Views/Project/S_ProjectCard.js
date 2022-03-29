@@ -204,8 +204,8 @@ function S_ProjectCard(props) {
                                 <Button
                                     onClick={() => onButtonClick("add")}
                                     variant="contained" style={{ 'margin-top': '15%' }} size="medium" component="span">
-                                    {/* Add Project */}
-                                    Submit
+                                    Add Project
+                                    {/* Submit */}
                                 </Button>
                             </Grid>
                         ) : (

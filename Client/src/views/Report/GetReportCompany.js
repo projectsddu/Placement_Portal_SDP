@@ -81,7 +81,7 @@ function GetReportCompany() {
     ];
 
     return (
-        <MainCard title="Placed Students By Company">
+        <MainCard title="View / Download Placed Students By Company Report">
             <TextField
                 fullWidth
                 // required

@@ -429,7 +429,7 @@ export default function S_ViewProfile() {
     }
     return (
         <>
-            <MainCard title="Student Details">
+            <MainCard title="Details">
                 {loading ? (
                     ''
                 ) : (

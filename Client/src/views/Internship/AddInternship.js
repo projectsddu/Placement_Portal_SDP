@@ -173,7 +173,7 @@ function AddInternship() {
 
     return (
         <>
-            <MainCard title="Add Internship">
+            <MainCard title="View / Add Student Internship">
                 <Modal
                     open={open}
                     onClose={handleClose}
