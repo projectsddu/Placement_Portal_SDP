@@ -3,7 +3,7 @@ const ViewConfig = {
         "student": {
             "add_student": {
                 "browse_file": "Browse File",
-                "add_student": "Submit"
+                "add_student": "Add Student Details"
             },
             "edit_student": {
                 "header": "Edit Student",
@@ -17,7 +17,7 @@ const ViewConfig = {
                 "update_student_btn": "Submit"
             },
             "view_student":{
-                "title": "View Student",
+                "title": "View Student Details",
                 "delete_message": "Are, you really sure want to delete this student?"
             },
             "student_passwords": {

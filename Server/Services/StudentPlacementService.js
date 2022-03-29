@@ -95,8 +95,8 @@ const createStudentPlacement = async (studentplacementdata, fromFile = false) =>
 
         if (fromFile) {
             // console.log("from line 72", studentplacementdata)
-            if (studentplacementdata["Company_ID"] == '' || studentplacementdata["Designation"] == '') {
-
+            if (studentplacementdata["Company_ID"] == '' && studentplacementdata["Designation"] == '') {
+                return "SKIP"
                 // if (studentplacementdata["Company_ID"] == '') {
                 //     return "Company name cannot be empty for record: " + studentplacementdata["Student_ID"]
                 // }
