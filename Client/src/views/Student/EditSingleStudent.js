@@ -674,7 +674,7 @@ function EditSingleStudent() {
                                 <Button
                                     fullwidth
                                     onClick={() => {
-                                        history.push('/placement/add_placement');
+                                        history.push('/placement/add_placement/' + studentDetails["Student_ID"]);
                                     }}
                                     variant="contained"
                                     size="large"
@@ -685,19 +685,19 @@ function EditSingleStudent() {
                             </Grid>
                             <Grid item xs={12} md={3}>
                                 <Button
-                                onClick={() => {
-                                    
-                                    history.push('/internship/add_internship');
-                                }}
-                                variant="contained"
-                                size="large"
-                                color="primary"
+                                    onClick={() => {
+
+                                        history.push('/internship/add_internship/' + studentDetails["Student_ID"]);
+                                    }}
+                                    variant="contained"
+                                    size="large"
+                                    color="primary"
                                 >
                                     {ViewConfig.admin.student.edit_student.update_internship}
                                 </Button>
                             </Grid>
                         </Grid>
-                        
+
                     </>
                 )}
             </MainCard>
