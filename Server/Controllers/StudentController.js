@@ -67,15 +67,17 @@ const addStudent = async (req, res) => {
         // const path = "./public/student_details/DDU.csv"
         const path = "./public/student_details/DDU.csv"
         const studentData = await CSVToJSON().fromFile(path)
+        // console.log("from line 70", studentData)
         console.log("Here1")
         // console.log(studentData.length);
         // console.log(JSON.parse(JSON.stringify(studentData)))
+
 
         if (studentData) {
             for (let i = 0; i < studentData.length; i++) {
 
                 // console.log(studentData[i]);
-                console.log(i)
+                // console.log(i)
                 try {
 
                     let studentStatus = await StudentService.createStudent(studentData[i]);

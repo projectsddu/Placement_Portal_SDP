@@ -56,7 +56,7 @@ mv "./Server/${BUILD_FOLDER_NAME}.tar" "./${VERSION_DIR}"
 
 echo "> Root: All process completed successfully"
 echo "> Root: Checkout the file named: ${BUILD_FOLDER_NAME}.tar in ${VERSION_DIR}"
-echo -e "${OUTRO}Written and developed by : Jenil Gandhi <jenilgandhi2111@gmail.com>"
+echo -e "${OUTRO}Written and developed by : Jenil Gandhi | Rikin Chauhan | Keval Gandevia"
 
 read ip
 exit 0

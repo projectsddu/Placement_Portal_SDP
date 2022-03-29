@@ -44,7 +44,7 @@ const addStudentPlacementViaCSV = async (req, res) => {
             for (let i = 0; i < studentPlacementData.length; i++) {
                 try {
                     let studentStatus = await StudentPlacementService.createStudentPlacement(studentPlacementData[i], true)
-                    if (studentStatus == "OK") {
+                    if (studentStatus == "OK" || studentStatus == "SKIP") {
                         continue;
                     }
                     else {
