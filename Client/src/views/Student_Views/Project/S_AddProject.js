@@ -21,6 +21,11 @@ function S_AddProject() {
     const [projectCard, setProjectCard] = useState([]);
 
     useEffect(async () => {
+        await handleChange()
+    }, [])
+
+    async function handleChange()
+    {
         let response = undefined
         response = await fetch("/studentproject/getOneStudentProject/")
         if (response != undefined) {
@@ -29,7 +34,7 @@ function S_AddProject() {
             console.log(data)
             setStudentProject(data)
 
-            let project_card_copy = projectCard
+            let project_card_copy = []
 
             if (data.data != "Student project record not found" && data != undefined) {
                 for (let i = 0; i < data.data.length; i++) {
@@ -37,6 +42,7 @@ function S_AddProject() {
                     let x = Math.random();
                     project_card_copy.unshift(
                         <S_ProjectCard
+                            onChangeFunc={handleProjectChange}
                             callerFunc={changeStateFromChild}
                             source={"server"}
                             seed={x}
@@ -50,7 +56,13 @@ function S_AddProject() {
                 setProjectCard([].concat(project_card_copy))
             }
         }
-    }, [])
+    }
+
+    async function handleProjectChange()
+    {
+        setProjectCard([])
+        await handleChange()
+    }
 
     function changeStateFromChild(seed, operation) {
         let project_card_copy = projectCard
@@ -77,7 +89,9 @@ function S_AddProject() {
     function handleClick() {
         // console.log("rikin here line number 80")
         let project_card_copy = projectCard;
-        project_card_copy.push(<S_ProjectCard
+        project_card_copy.push(
+            <S_ProjectCard
+            onChangeFunc={handleProjectChange}
             callerFunc={changeStateFromChild}
             seed={Math.random()}
             from={"line 123"}

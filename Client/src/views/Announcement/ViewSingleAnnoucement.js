@@ -41,6 +41,7 @@ import { useHistory } from "react-router-dom";
 // import { ToastContainer, toast } from 'react-toastify';
 // import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import AddComment from '../Comment/AddComment';
+import HandleNull from '../../Utilities/HandleNull';
 
 function ViewSingleAnnoucement() {
 
@@ -159,17 +160,16 @@ function ViewSingleAnnoucement() {
         rows = [
             // createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
             createData("Date of Announcement", ParseDate.ParseDate(announcement_details["Date_of_announcement"])),
-            createData("Date of Visit", ParseDate.ParseDate(announcement_details["Date_of_Visit"])),
-            createData("Registration Deadline", ParseDate.ParseDate(announcement_details["Registration_Deadline"], true)),
+            createData("Date of Visit", HandleNull(ParseDate.ParseDate(announcement_details["Date_of_Visit"]))),
+            createData("Registration Deadline", HandleNull(ParseDate.ParseDate(announcement_details["Registration_Deadline"]), true)),
             createData("Eligible Branches", branches),
-            createData("Passed out year", ParseDate.getYear(announcement_details["Passed_out_year"])),
-            createData("Job Role", announcement_details["Job_Role"]),
-            createData("Salary", announcement_details["Salary"]),
-            createData("Job Location", announcement_details["Job_Location"]),
-            createData("Bond Details", announcement_details["Bond_Details"]),
-            createData("Other Details", announcement_details["Other_Details"]),
-
-            createData("Eligibility", announcement_details["Eligibility"]),
+            createData("Passed out year", HandleNull(ParseDate.getYear(announcement_details["Passed_out_year"]))),
+            createData("Job Role", HandleNull(announcement_details["Job_Role"])),
+            createData("Salary", HandleNull(announcement_details["Salary"])),
+            createData("Job Location", HandleNull(announcement_details["Job_Location"])),
+            createData("Bond Details", HandleNull(announcement_details["Bond_Details"])),
+            createData("Other Details", HandleNull(announcement_details["Other_Details"])),
+            createData("Eligibility", HandleNull(announcement_details["Eligibility"])),
         ];
     }
 

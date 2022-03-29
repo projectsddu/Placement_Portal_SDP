@@ -19,6 +19,7 @@ import { useHistory } from "react-router-dom";
 import SearchSection from '../../../layout/MainLayout/Header/SearchSection';
 import ChipCard from '../../../ui-component/cards/GenericCards/ChipCard';
 import EmptyAppliedAnnouncement from './JSX/EmptyAppliedAnnouncement';
+import HandleNull from '../../../Utilities/HandleNull';
 
 const useStyles = makeStyles((theme) => ({
     applyBtn: {
@@ -125,11 +126,11 @@ function S_ViewSubscribedAnnouncement() {
                                             <Grid item xs={12} md={12}>
                                                 <Grid container spacing={1}>
                                                 <Grid item xs={6} md={4}>
-                                                    <Typography variant="h4">Posted On: </Typography>
+                                                    <Typography style={{ color: "rgb(97, 97, 97)" }} variant="h4">Posted On: </Typography>
                                                 </Grid>
                                                 <Grid item xs={6} md={8}>
-                                                    <Typography variant="h5">
-                                                    {ParseDate.ParseDate(e.Date_of_announcement)}
+                                                    <Typography style={{ color: "#828282" }} variant="h5">
+                                                    {HandleNull(ParseDate.ParseDate(e.Date_of_announcement))}
                                                     </Typography>
                                                 </Grid>
                                                 </Grid>
@@ -137,11 +138,11 @@ function S_ViewSubscribedAnnouncement() {
                                             <Grid item xs={12} md={12}>
                                                 <Grid container spacing={1}>
                                                 <Grid item xs={6} md={4}>
-                                                    <Typography variant="h4">Visiting On: </Typography>
+                                                    <Typography style={{ color: "rgb(97, 97, 97)" }} variant="h4">Visiting On: </Typography>
                                                 </Grid>
                                                 <Grid item xs={6} md={8}>
-                                                    <Typography variant="h5">
-                                                    {ParseDate.ParseDate(e.Date_of_Visit)}
+                                                    <Typography style={{ color: "#828282" }} variant="h5">
+                                                    {HandleNull(ParseDate.ParseDate(e.Date_of_Visit))}
                                                     </Typography>
                                                 </Grid>
                                                 </Grid>
@@ -149,11 +150,11 @@ function S_ViewSubscribedAnnouncement() {
                                             <Grid item xs={12} md={12}>
                                                 <Grid container spacing={1}>
                                                 <Grid item xs={6} md={4}>
-                                                    <Typography variant="h4">Job Location: </Typography>
+                                                    <Typography style={{ color: "rgb(97, 97, 97)" }} variant="h4">Job Location: </Typography>
                                                 </Grid>
                                                 <Grid item xs={6} md={8}>
-                                                    <Typography variant="h5">
-                                                    {e.Job_Location}
+                                                    <Typography style={{ color: "#828282" }} variant="h5">
+                                                    {HandleNull(e.Job_Location)}
                                                     </Typography>
                                                 </Grid>
                                                 </Grid>
@@ -161,11 +162,11 @@ function S_ViewSubscribedAnnouncement() {
                                             <Grid item xs={12} md={12}>
                                                 <Grid container spacing={1}>
                                                 <Grid item xs={6} md={4}>
-                                                    <Typography variant="h4">Job Role: </Typography>
+                                                    <Typography style={{ color: "rgb(97, 97, 97)" }} variant="h4">Job Role: </Typography>
                                                 </Grid>
                                                 <Grid item xs={6} md={8}>
-                                                    <Typography variant="h5">
-                                                    {e.Job_Role}
+                                                    <Typography style={{ color: "#828282" }} variant="h5">
+                                                    {HandleNull(e.Job_Role)}
                                                     </Typography>
                                                 </Grid>
                                                 </Grid>

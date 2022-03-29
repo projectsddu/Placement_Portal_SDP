@@ -16,6 +16,7 @@ function S_AddInternship() {
         let internship_card_copy = internshipCard;
         internship_card_copy.push(
             <S_AddInternshipsCard
+                onChangeFunc={handleInternshipChange}
                 callerFunc={changeStateFromChild}
                 seed={Math.random()}
                 from={'line 19'}
@@ -51,16 +52,11 @@ function S_AddInternship() {
     }
 
     useEffect(async () => {
-        // const data = await fetch("/student/getOneStudent/", { method: 'GET' })
+        await handleChange()
+    }, []);
 
-        // let data1 = await data.json();
-        // let student_id = "";
-        // if(data1)
-        // {
-        //     student_id = data1["data"]["Student_ID"];
-        // }
-        // // console.log(student_id)
-
+    async function handleChange()
+    {
         let response = undefined
         response = await fetch("/StudentAchievementsInternships/getStudentAchievementsInternshipsByStudentID")
 
@@ -71,7 +67,7 @@ function S_AddInternship() {
             setStudentInternships(jsonData)
             console.log(jsonData)
 
-            let studentInternshipCardCopy = internshipCard
+            let studentInternshipCardCopy = []
 
             if (jsonData.data != "Student Internship Record Not Found!" && jsonData != undefined) {
                 // console.log(jsonData1.data.length)
@@ -81,6 +77,7 @@ function S_AddInternship() {
                     let x = Math.random();
                     studentInternshipCardCopy.unshift(
                         <S_AddInternshipsCard
+                            onChangeFunc={handleInternshipChange}
                             callerFunc={changeStateFromChild}
                             source={"server"}
                             seed={x}
@@ -94,9 +91,13 @@ function S_AddInternship() {
                 setInternshipCard([].concat(studentInternshipCardCopy))
             }
         }
-        
+    }
 
-    }, []);
+    async function handleInternshipChange()
+    {
+        setInternshipCard([])
+        await handleChange()
+    }
 
     return (
         <>
