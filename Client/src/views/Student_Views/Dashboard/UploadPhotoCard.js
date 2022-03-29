@@ -68,7 +68,7 @@ export default function UploadPhotoCard({ Student_Photo }) {
     }
 
     return (
-        <MainCard title="Add Student Photo">
+        <MainCard title="Add Your Photo">
             <Modal
                 open={open}
                 onClose={handleClose}

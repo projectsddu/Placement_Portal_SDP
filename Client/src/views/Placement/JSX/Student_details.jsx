@@ -12,6 +12,12 @@ export default function Student_details(props) {
         <Grid container justifyContent={"flex-start"} spacing={2}>
             <Grid item md={4} xs={12}>
                 <WhiteTextTypography variant="h3">
+                    Student ID
+                </WhiteTextTypography>
+                {props.details.Student_ID}
+            </Grid>
+            <Grid item md={4} xs={12}>
+                <WhiteTextTypography variant="h3">
                     Name
                 </WhiteTextTypography>
                 {props.details.FirstName + " " + props.details.MiddleName + " " + props.details.LastName}
