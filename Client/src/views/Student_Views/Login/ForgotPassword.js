@@ -116,6 +116,11 @@ function ForgotPassword() {
                         flag: false,
                     }
                 }
+                // console.log(res.data)
+                if(res.data["data"] == "Login using first time password!")
+                {
+                    history.push("/_student/login/")
+                }
                 if (res.data.status) {
                     setCurrentState({ state: "verifyOtp" })
                 }
