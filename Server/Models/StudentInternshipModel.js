@@ -10,34 +10,34 @@ module.exports = (sequelize, DataTypes) => {
         },
         Stipend: {
             type: DataTypes.DOUBLE,
-            allowNull: false
+            allowNull: true
         },
         Project_Title: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         Internal_Guide_ID: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         External_Guide_Name: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         External_Guide_Mobile_Number: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         External_Guide_Email_ID: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         Passed_out_year: {
             type: DataTypes.DATE,
             allowNull: false
         }
     }, {
-        timestamps: false   
+        timestamps: false
     })
     return StudentInternship
 }

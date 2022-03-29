@@ -74,10 +74,10 @@ const createStudentInternship = async (data, viaCSV = false) => {
                 // data["Company_ID"] = res2[0]["Company_ID"]
                 data["Company_ID"] = res2[0]["Company_ID"]
             }
-            data["Passed_out_year"] = studentDetails.Passed_out_year
 
 
         }
+        data["Passed_out_year"] = studentDetails.Passed_out_year
         const duplicateStatus = await checkDuplicate(data["Student_ID"], data["Company_ID"], data["Stipend"])
         if (!duplicateStatus) {
 
