@@ -1,9 +1,9 @@
 // assets
 import { IconDashboard, IconDeviceAnalytics, IconSpeakerphone, IconLayoutGridAdd, IconUser, IconCirclePlus, IconEye, IconMan, IconBrandGravatar, IconEdit, IconUserX, IconUserCheck, IconUserExclamation, IconUserOff } from '@tabler/icons';
 
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded';
-import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import DashboardRoundedIcon from '@material-ui/icons/DashboardRounded';
+import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 
 // constant
 const icons = {
