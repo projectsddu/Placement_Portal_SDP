@@ -290,7 +290,8 @@ function CompanyPlacementCard(props) {
                                 <Button
                                     onClick={() => onButtonClick("add")}
                                     variant="contained" style={{ 'margin-top': '15%' }} size="medium" component="span">
-                                    Add Placement
+                                    {/* Add Placement */}
+                                    Submit
                                 </Button>
                             </Grid>
                         ) : (

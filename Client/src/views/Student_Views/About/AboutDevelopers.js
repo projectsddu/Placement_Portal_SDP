@@ -65,8 +65,6 @@ export default function AboutDevelopers() {
     return (
         <MainCard>
             <h1 className='AboutTitle'>Designed and Developed by CE Department</h1>
-            <br/>
-            <br/>
             <h2 className='AboutTitle'>Developer Team</h2>
             <br/>
             <br/>

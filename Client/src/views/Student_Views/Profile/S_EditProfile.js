@@ -85,6 +85,7 @@ function S_EditProfile() {
                             <Grid item xs={12} md={4}>
                                 <TextField
                                     // required
+                                    disabled
                                     fullWidth
                                     label="First Name"
                                     helperText="Enter the first name"
@@ -97,6 +98,7 @@ function S_EditProfile() {
                             <Grid item xs={12} md={4}>
                                 <TextField
                                     // required
+                                    disabled
                                     fullWidth
                                     label="Middle Name"
                                     helperText="Enter the middle name"
@@ -109,6 +111,7 @@ function S_EditProfile() {
                             <Grid item xs={12} md={4}>
                                 <TextField
                                     // required
+                                    disabled
                                     fullWidth
                                     label="Last Name"
                                     helperText="Enter the last name"
@@ -170,14 +173,19 @@ function S_EditProfile() {
                             <Grid item xs={12} md={6}>
                                 <TextField
                                     // required
+                                    id="select"
                                     fullWidth
                                     label="Gender"
-                                    helperText="Enter the gender"
+                                    helperText="Select gender"
                                     value={studentDetails['Gender']}
                                     onChange={(e) => {
                                         setStudentDetails({ ...studentDetails, Gender: e.target.value });
                                     }}
-                                />
+                                    select
+                                >
+                                    <MenuItem value="Male">Male</MenuItem>
+                                    <MenuItem value="Female">Female</MenuItem>
+                                </TextField>
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <TextField
@@ -445,7 +453,6 @@ function S_EditProfile() {
                             <Grid item xs={12} md={4}>
                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                                     <DatePicker
-                                        disabled
                                         views={['year']}
                                         label="Enrollment Year"
                                         // required
@@ -461,7 +468,6 @@ function S_EditProfile() {
                             <Grid item xs={12} md={4}>
                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                                     <DatePicker
-                                        disabled
                                         views={['year']}
                                         label="Passed Out Year"
                                         fullwidth
@@ -586,7 +592,7 @@ function S_EditProfile() {
                                     id="select"
                                     label="Career Preference"
                                     // value="placement"
-                                    helperText="Enter the career preference"
+                                    helperText="Select career preference"
                                     value={studentDetails['Career_Preference']}
                                     onChange={(e) => {
                                         setStudentDetails({ ...studentDetails, Career_Preference: e.target.value });
@@ -600,7 +606,6 @@ function S_EditProfile() {
                             <Grid item md={6} xs={12}>
                                 <TextField
                                     // required
-                                    disabled
                                     fullWidth
                                     label="Branch"
                                     helperText="Enter the branch"
@@ -619,14 +624,19 @@ function S_EditProfile() {
                             <Grid item md={4} xs={12}>
                                 <TextField
                                     // required
+                                    id="select"
                                     fullWidth
                                     label="Is D2D Student"
-                                    helperText="Enter the 'TRUE' if D2D student otherwise 'FALSE'"
+                                    helperText="Select 'TRUE' if D2D student otherwise 'FALSE'"
                                     value={studentDetails['IsD2D']}
                                     onChange={(e) => {
                                         setStudentDetails({ ...studentDetails, IsD2D: e.target.value });
                                     }}
-                                />
+                                    select
+                                >
+                                    <MenuItem value="TRUE">TRUE</MenuItem>
+                                    <MenuItem value="FALSE">FALSE</MenuItem>
+                                </TextField>
                             </Grid>
                             <Grid item md={4} xs={12}>
                                 <TextField
