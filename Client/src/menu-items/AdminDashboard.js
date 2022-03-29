@@ -1,6 +1,8 @@
 // assets
 import { IconDashboard, IconDeviceAnalytics, IconSpeakerphone, IconLayoutGridAdd, IconCirclePlus, IconEye } from '@tabler/icons';
 
+import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
+
 // constant
 const icons = {
     IconDashboard: IconDashboard,
@@ -10,6 +12,7 @@ const icons = {
     IconLayoutGridAdd,
     IconEye,
     IconCirclePlus,
+    DashboardOutlinedIcon
 };
 
 //-----------------------|| ANNOUNCEMENT DASHBOARD MENU ITEMS ||-----------------------//
@@ -24,7 +27,7 @@ export const AdminDashboard = {
             title: 'Dashboard',
             type: 'item',
             url: '/dashboard/default',
-            icon: icons['IconDashboard'],
+            icon: icons['DashboardOutlinedIcon'],
             breadcrumbs: false
         }
     ]

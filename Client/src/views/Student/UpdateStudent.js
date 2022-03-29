@@ -93,7 +93,7 @@ export default function UpdateStudent() {
                 <br />
                 <br />
                 <Button onClick={handleSubmit} variant="contained" size="large" color="primary">
-                    Update Student
+                    Submit
                 </Button>
             </form>
         </MainCard>

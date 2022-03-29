@@ -96,7 +96,7 @@ export default function AddPlacementViaCSV() {
                 <br />
                 <br />
                 <Button onClick={handleSubmit} variant="contained" size="large" color="primary">
-                    Add Placement
+                    Submit
                 </Button>
             </form>
         </MainCard>
