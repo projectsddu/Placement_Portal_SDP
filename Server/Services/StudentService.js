@@ -73,7 +73,7 @@ const createStudent = async (studentData) => {
             const data = await Student.update(studentData, { where: { Student_ID: id } })
         }
         else {
-            studentData["Student_Photo"] = "./public/student_details/Photo/Placement_Portal_Default_Image.jpg"
+            studentData["Student_Photo"] = "/public/student_details/Photo/Placement_Portal_Default_Image.jpg"
             const student = await Student.create(studentData)
             const password = await FirstTimePasswordService.AddFirstTimePassword(student.Student_ID)
             await UserLoginService.createUserLogin(student.Student_ID, password)

@@ -33,7 +33,7 @@ function S_AddInternshipsCard(props) {
         };
         console.log(res);
         responsePipelineHandler(params1, 1);
-
+        props.onChangeFunc()
     }
 
     async function onUpdateInternship() {
@@ -51,6 +51,7 @@ function S_AddInternshipsCard(props) {
         };
         console.log(res);
         responsePipelineHandler(params1, 1);
+        props.onChangeFunc()
     }
 
     async function onDeleteInternship() 
@@ -71,7 +72,8 @@ function S_AddInternshipsCard(props) {
         responsePipelineHandler(params1, 1);
         handleClose()
         // console.log(props)
-        props.callerFunc(props.seed, "delete")
+        // props.callerFunc(props.seed, "delete")
+        props.onChangeFunc()
     }
 
     function onButtonClick(event) {
