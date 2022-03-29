@@ -94,7 +94,7 @@ export default function AddStudent() {
                 <br />
                 <br />
                 <Button onClick={handleSubmit} variant="contained" size="large" color="primary">
-                    Add Student
+                    Submit
                 </Button>
             </form>
         </MainCard>

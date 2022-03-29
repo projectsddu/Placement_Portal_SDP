@@ -65,7 +65,9 @@ export default function UploadResumeCard({ CV_Upload }) {
     }
 
     return (
+
         <MainCard title="Add Your CV">
+
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -107,7 +109,7 @@ export default function UploadResumeCard({ CV_Upload }) {
 
                 <Grid item>
                     <Button onClick={handleSubmit} variant="contained" size="large" color="primary">
-                        Add CV
+                        Submit
                     </Button>
                 </Grid>
 

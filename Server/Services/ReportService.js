@@ -20,6 +20,10 @@ const getPlacementReportByBatchYear = async (batch_year) => {
         batch_year = parseInt(batch_year)
         // fetch the placement by batch year
 
+        let studentCount = await Student.findAll({
+            where: sequelize.where(sequelize.fn('YEAR', sequelize.col('Passed_out_year')), Passed_out_year)
+        })
+
         let placements = await StudentPlacement.findAll({
             where: [sequelize.where(sequelize.fn('YEAR', sequelize.col('Passed_out_year')), batch_year),
             { IsFinal: 1 }
@@ -29,6 +33,7 @@ const getPlacementReportByBatchYear = async (batch_year) => {
         placements = JSON.parse(JSON.stringify(placements))
         let placementsMetadata = {
             Total_Placed: placements.length,
+            Placement: (placements.length / studentCount.length) * 100,
             Male: 0,
             Female: 0,
             Average_Salary: 0,

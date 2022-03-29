@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import MainCard from '../../ui-component/cards/MainCard';
+import MainCard from '../../../ui-component/cards/MainCard';
 import { TextField, Button } from '@mui/material';
 import { Grid } from '@material-ui/core';
 import DateTimePicker from '@mui/lab/DateTimePicker';
@@ -8,42 +8,43 @@ import DatePicker from '@mui/lab/DatePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { makeStyles } from '@material-ui/styles';
 import { useHistory, useLocation } from 'react-router';
-import UsePost from '../../Utilities/UsePost'
-import HandleToast from '../../Utilities/HandleToast'
+import UseFetch from '../../../Utilities/UseFetch';
+import UsePost from '../../../Utilities/UsePost'
+import HandleToast from '../../../Utilities/HandleToast'
 import { ToastContainer, toast } from 'react-toastify';
-import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
+import responsePipelineHandler from '../../../Utilities/ResponsePipelineHandler';
 import Modal from '@mui/material/Modal';
 import CircularProgress from '@mui/material/CircularProgress';
-import ViewConfig from '../../Config/ViewConfig';
+import ViewConfig from '../../../Config/ViewConfig';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
 const useStyles = makeStyles({
     helperTextColor: {
         color: 'red'
     }
 });
 
-function EditSingleStudent() {
+function S_EditProfile() {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const classes = useStyles();
 
-    const student_id = useLocation().pathname.split('/')[3];
+    const student_id = "";
     // console.log(student_id)
 
     const [studentDetails, setStudentDetails] = useState(undefined);
 
     useEffect(async () => {
-        const response = await fetch('/student/getOneStudentInAdmin/' + student_id, { method: 'GET' });
+        const response = await fetch('/student/getOneStudent/', { method: 'GET' });
         let data1 = await response.json();
         setStudentDetails(data1['data']);
-        console.log(studentDetails);
+        console.log("from line 40", studentDetails);
     }, []);
-
-    const history = useHistory();
 
     async function handleSubmit() {
         handleOpen()
-        const response = await UsePost("/student/updateOneStudent/" + student_id, studentDetails, "POST")
+        const response = await UsePost("/student/updateStudentDetailsFromStudentSide/", studentDetails, "POST")
         console.log(response)
         const params1 = {
             data: response,
@@ -84,6 +85,7 @@ function EditSingleStudent() {
                             <Grid item xs={12} md={4}>
                                 <TextField
                                     // required
+                                    disabled
                                     fullWidth
                                     label="First Name"
                                     helperText="Enter the first name"
@@ -96,6 +98,7 @@ function EditSingleStudent() {
                             <Grid item xs={12} md={4}>
                                 <TextField
                                     // required
+                                    disabled
                                     fullWidth
                                     label="Middle Name"
                                     helperText="Enter the middle name"
@@ -108,6 +111,7 @@ function EditSingleStudent() {
                             <Grid item xs={12} md={4}>
                                 <TextField
                                     // required
+                                    disabled
                                     fullWidth
                                     label="Last Name"
                                     helperText="Enter the last name"
@@ -125,6 +129,7 @@ function EditSingleStudent() {
                                 <TextField
                                     // required
                                     // inputProps={{ className: classes.helperTextColor }}
+                                    disabled
                                     fullWidth
                                     label="Student ID"
                                     helperText="Enter the Student ID"
@@ -136,6 +141,7 @@ function EditSingleStudent() {
                             </Grid>
                             <Grid item xs={12} md={4}>
                                 <TextField
+                                    disabled
                                     // required
                                     fullWidth
                                     label="Admission Type"
@@ -167,18 +173,24 @@ function EditSingleStudent() {
                             <Grid item xs={12} md={6}>
                                 <TextField
                                     // required
+                                    id="select"
                                     fullWidth
                                     label="Gender"
-                                    helperText="Enter the gender"
+                                    helperText="Select gender"
                                     value={studentDetails['Gender']}
                                     onChange={(e) => {
                                         setStudentDetails({ ...studentDetails, Gender: e.target.value });
                                     }}
-                                />
+                                    select
+                                >
+                                    <MenuItem value="Male">Male</MenuItem>
+                                    <MenuItem value="Female">Female</MenuItem>
+                                </TextField>
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <TextField
                                     // required
+                                    disabled
                                     fullWidth
                                     label="Cast Category"
                                     helperText="Enter the cast category"
@@ -278,7 +290,7 @@ function EditSingleStudent() {
                                 <TextField
                                     // required
                                     fullWidth
-                                    label="HSC_Board"
+                                    label="HSC Board"
                                     helperText="Enter the HSC board"
                                     value={studentDetails['HSC_Board']}
                                     onChange={(e) => {
@@ -307,6 +319,7 @@ function EditSingleStudent() {
                             <Grid item md={3} xs={6}>
                                 <TextField
                                     // required
+                                    disabled
                                     fullWidth
                                     label="Sem - 1 SPI"
                                     helperText="Enter the Semester 1 SPI"
@@ -320,6 +333,7 @@ function EditSingleStudent() {
                             <Grid item md={3} xs={6}>
                                 <TextField
                                     // required
+                                    disabled
                                     fullWidth
                                     label="Sem - 2 SPI"
                                     helperText="Enter the Semester 2 SPI"
@@ -333,6 +347,7 @@ function EditSingleStudent() {
                             <Grid item md={3} xs={6}>
                                 <TextField
                                     // required
+                                    disabled
                                     fullWidth
                                     label="Sem - 3 SPI"
                                     helperText="Enter the Semester 3 SPI"
@@ -346,6 +361,7 @@ function EditSingleStudent() {
                             <Grid item md={3} xs={6}>
                                 <TextField
                                     // required
+                                    disabled
                                     fullWidth
                                     label="Sem - 4 SPI"
                                     helperText="Enter the Semester 4 SPI"
@@ -363,6 +379,7 @@ function EditSingleStudent() {
                             <Grid item md={3} xs={6}>
                                 <TextField
                                     // required
+                                    disabled
                                     fullWidth
                                     label="Sem - 5 SPI"
                                     helperText="Enter the Semester 5 SPI"
@@ -376,6 +393,7 @@ function EditSingleStudent() {
                             <Grid item md={3} xs={6}>
                                 <TextField
                                     // required
+                                    disabled
                                     fullWidth
                                     label="Sem - 6 SPI"
                                     helperText="Enter the Semester 6 SPI"
@@ -389,6 +407,7 @@ function EditSingleStudent() {
                             <Grid item md={3} xs={6}>
                                 <TextField
                                     // required
+                                    disabled
                                     fullWidth
                                     label="Sem - 7 SPI"
                                     helperText="Enter the Semester 7 SPI"
@@ -402,6 +421,7 @@ function EditSingleStudent() {
                             <Grid item md={3} xs={6}>
                                 <TextField
                                     // required
+                                    disabled
                                     fullWidth
                                     label="Sem - 8 SPI"
                                     helperText="Enter the Semester 8 SPI"
@@ -419,6 +439,7 @@ function EditSingleStudent() {
                             <Grid item xs={12} md={4}>
                                 <TextField
                                     // required
+                                    disabled
                                     fullWidth
                                     label="Current CPI"
                                     helperText="Enter the current CPI"
@@ -493,7 +514,7 @@ function EditSingleStudent() {
                                 <TextField
                                     // required
                                     fullWidth
-                                    label="Contact Number - 1"
+                                    label="Contact Number - 2"
                                     helperText="Enter the contact number - 2"
                                     value={studentDetails['Contact_No_2']}
                                     onChange={(e) => {
@@ -564,16 +585,23 @@ function EditSingleStudent() {
                         <br />
                         <Grid container spacing={2}>
                             <Grid item md={6} xs={12}>
+                                {/* <InputLabel id="label">Career Preference</InputLabel> */}
                                 <TextField
                                     // required
                                     fullWidth
+                                    id="select"
                                     label="Career Preference"
-                                    helperText="Enter the career preference"
+                                    // value="placement"
+                                    helperText="Select career preference"
                                     value={studentDetails['Career_Preference']}
                                     onChange={(e) => {
                                         setStudentDetails({ ...studentDetails, Career_Preference: e.target.value });
                                     }}
-                                />
+                                    select
+                                >
+                                    <MenuItem value="Placement">Placement</MenuItem>
+                                    <MenuItem value="Higher Study">Higher Study</MenuItem>
+                                </TextField>
                             </Grid>
                             <Grid item md={6} xs={12}>
                                 <TextField
@@ -596,18 +624,24 @@ function EditSingleStudent() {
                             <Grid item md={4} xs={12}>
                                 <TextField
                                     // required
+                                    id="select"
                                     fullWidth
                                     label="Is D2D Student"
-                                    helperText="Enter the 'TRUE' if D2D student otherwise 'FALSE'"
+                                    helperText="Select 'TRUE' if D2D student otherwise 'FALSE'"
                                     value={studentDetails['IsD2D']}
                                     onChange={(e) => {
                                         setStudentDetails({ ...studentDetails, IsD2D: e.target.value });
                                     }}
-                                />
+                                    select
+                                >
+                                    <MenuItem value="TRUE">TRUE</MenuItem>
+                                    <MenuItem value="FALSE">FALSE</MenuItem>
+                                </TextField>
                             </Grid>
                             <Grid item md={4} xs={12}>
                                 <TextField
                                     // required
+                                    disabled
                                     fullWidth
                                     label="Diploma Result CPI"
                                     helperText="Enter the diploma result CPI"
@@ -658,46 +692,14 @@ function EditSingleStudent() {
                         />
                         <br />
                         <br />
-                        <Grid container spacing={1}>
-                            <Grid item xs={12} md={2}>
-                                <Button
-                                    fullwidth
-                                    onClick={handleSubmit}
-                                    variant="contained"
-                                    size="large"
-                                    color="primary"
-                                >
-                                    {ViewConfig.admin.student.edit_student.update}
-                                </Button>
-                            </Grid>
-                            <Grid item xs={12} md={3}>
-                                <Button
-                                    fullwidth
-                                    onClick={() => {
-                                        history.push('/placement/add_placement');
-                                    }}
-                                    variant="contained"
-                                    size="large"
-                                    color="primary"
-                                >
-                                    {ViewConfig.admin.student.edit_student.update_placement}
-                                </Button>
-                            </Grid>
-                            <Grid item xs={12} md={3}>
-                                <Button
-                                onClick={() => {
-                                    
-                                    history.push('/internship/add_internship');
-                                }}
-                                variant="contained"
-                                size="large"
-                                color="primary"
-                                >
-                                    {ViewConfig.admin.student.edit_student.update_internship}
-                                </Button>
-                            </Grid>
-                        </Grid>
-                        
+                        <Button
+                            onClick={handleSubmit}
+                            variant="contained"
+                            size="large"
+                            color="primary"
+                        >
+                            {ViewConfig.admin.student.edit_student.update}
+                        </Button>
                     </>
                 )}
             </MainCard>
@@ -705,4 +707,5 @@ function EditSingleStudent() {
     );
 }
 
-export default EditSingleStudent;
+export default S_EditProfile;
+

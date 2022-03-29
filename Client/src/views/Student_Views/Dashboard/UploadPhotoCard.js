@@ -68,7 +68,9 @@ export default function UploadPhotoCard({ Student_Photo }) {
     }
 
     return (
+
         <MainCard title="Add Your Photo">
+
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -118,7 +120,7 @@ export default function UploadPhotoCard({ Student_Photo }) {
                         size="large"
                         color="primary"
                     >
-                        Add Photo
+                        Submit
                     </Button>
                 </Grid>
 

@@ -72,7 +72,7 @@ export default function AddInternshipViaCSV() {
                 <br />
                 <br />
                 <Button onClick={handleSubmit} variant="contained" size="large" color="primary">
-                    Add Internship
+                    Submit
                 </Button>
             </form>
         </MainCard>

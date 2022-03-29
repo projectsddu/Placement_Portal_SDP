@@ -6,6 +6,7 @@ import { Grid, Button } from '@material-ui/core';
 import { IconCirclePlus } from '@tabler/icons';
 import { grey, red } from '@mui/material/colors';
 import { blue, lightBlue } from '@material-ui/core/colors';
+import ConvertToLPA from "../../../Utilities/ConvertToLPA"
 
 const WhiteTextTypography = withStyles({
     root: {
@@ -32,6 +33,19 @@ function PlacementDetailsCard({ placementDetails }) {
                         <Grid item xs={6} md={9}>
                             <WhiteTextTypography variant="h5">
                                 {placementDetails == undefined ? '' : placementDetails['Total_Placed']}
+                            </WhiteTextTypography>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid item xs={12} md={12}>
+                    <Grid container spacing={1}>
+                        <Grid item xs={6} md={3}>
+                            <WhiteTextTypography variant="h4">Placement: </WhiteTextTypography>
+                        </Grid>
+                        <Grid item xs={6} md={9}>
+                            <WhiteTextTypography variant="h5">
+                                {placementDetails == undefined ? '' : placementDetails['Placement'] == undefined ? 0 : placementDetails['Placement'].toFixed(2)}
+                                {" "}{"%"}
                             </WhiteTextTypography>
                         </Grid>
                     </Grid>
@@ -69,7 +83,8 @@ function PlacementDetailsCard({ placementDetails }) {
                         </Grid>
                         <Grid item xs={6} md={9}>
                             <WhiteTextTypography variant="h5">
-                                {placementDetails == undefined ? '' :  placementDetails['Average_Salary'] == null ? 0 : placementDetails['Average_Salary']}
+                                {placementDetails == undefined ? '' :  placementDetails['Average_Salary'] == null ? ConvertToLPA(0) : ConvertToLPA(placementDetails['Average_Salary'])}
+                                {/* {" "}{ "LPA"} */}
                             </WhiteTextTypography>
                         </Grid>
                     </Grid>
@@ -81,7 +96,8 @@ function PlacementDetailsCard({ placementDetails }) {
                         </Grid>
                         <Grid item xs={6} md={9}>
                             <WhiteTextTypography variant="h5">
-                                {placementDetails == undefined ? '' : placementDetails['Median_Salary'] == null ? 0 : placementDetails['Median_Salary']}
+                                {placementDetails == undefined ? '' : placementDetails['Median_Salary'] == null ? ConvertToLPA(0) : ConvertToLPA(placementDetails['Median_Salary'])}
+                                {/* {" "}{ "LPA"} */}
                             </WhiteTextTypography>
                         </Grid>
                     </Grid>
@@ -93,7 +109,8 @@ function PlacementDetailsCard({ placementDetails }) {
                         </Grid>
                         <Grid item xs={6} md={9}>
                             <WhiteTextTypography variant="h5">
-                                {placementDetails == undefined ? '' : placementDetails['Max_Salary']}
+                                {placementDetails == undefined ? '' : ConvertToLPA(placementDetails['Max_Salary'])}
+                                {/* {" "}{ "LPA"} */}
                             </WhiteTextTypography>
                         </Grid>
                     </Grid>
@@ -108,8 +125,9 @@ function PlacementDetailsCard({ placementDetails }) {
                                 {placementDetails == undefined
                                     ? ''
                                     : placementDetails['Min_Salary'] == 100000000
-                                    ? '0'
-                                    : placementDetails['Min_Salary']}
+                                    ? ConvertToLPA(0)
+                                    : ConvertToLPA(placementDetails['Min_Salary'])}
+                                    {/* {" "}{ "LPA"} */}
                             </WhiteTextTypography>
                         </Grid>
                     </Grid>

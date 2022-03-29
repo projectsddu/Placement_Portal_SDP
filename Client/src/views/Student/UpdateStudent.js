@@ -17,6 +17,7 @@ import Modal from '@mui/material/Modal';
 import CircularProgress from '@mui/material/CircularProgress';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import UseFetch from '../../Utilities/UseFetch';
+import ViewConfig from '../../Config/ViewConfig';
 
 const Input = styled('input')({
     display: 'none',
@@ -66,7 +67,7 @@ export default function UpdateStudent() {
     }
 
     return (
-        <MainCard title="Update Student Details">
+        <MainCard title={ViewConfig.admin.student.batch_update.header}>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -85,7 +86,7 @@ export default function UpdateStudent() {
                         multiple type="file"
                     />
                     <Button variant="outlined" component="span">
-                        Browse File
+                        {ViewConfig.admin.student.batch_update.browse_file}
                     </Button> <label id="fileUploadDetails" />
                 </label>
                 <br />
@@ -93,7 +94,7 @@ export default function UpdateStudent() {
                 <br />
                 <br />
                 <Button onClick={handleSubmit} variant="contained" size="large" color="primary">
-                    Update Student
+                    {ViewConfig.admin.student.batch_update.update_student_btn}
                 </Button>
             </form>
         </MainCard>

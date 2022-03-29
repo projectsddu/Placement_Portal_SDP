@@ -10,6 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import ChipCard from '../../ui-component/cards/GenericCards/ChipCard';
 import ListCard from '../../ui-component/cards/GenericCards/ListCard';
 import PlacementDetailsCard from './JSX/PlacementDetailsCard'
+import ConvertToLPA from '../../Utilities/ConvertToLPA';
 
 
 function CustomToolbar() {
@@ -48,7 +49,7 @@ function GetPlacementReport() {
         setBatchYear({ ...batchYear, Passed_out_year: e.target.value });
 
         if (e.target.value.length == 4) {
-            
+
             // let updated_details = studentPlacementStateDetails;
             let res = undefined;
             res = await UsePost('/reports/getPlacementReportByBatchYear', { Passed_out_year: e.target.value }, 'POST');
@@ -57,20 +58,18 @@ function GetPlacementReport() {
                 // for (let i = 0; i < res['data'][0].length; i++) {
                 //     res['data'][0][i]['row_id'] = i;
                 // }
-                if(res["data"][0].length == 0)
-                {
+                if (res["data"][0].length == 0) {
                     setPlacementDetails(res["data"][0])
                     setPlacementDetails(res['data'][1]);
                     setDetailsCard(true);
                 }
-                else
-                {
+                else {
                     console.log(res['data'][0]);
                     setPlacementTableDetails(res['data'][0]);
                     setPlacementDetails(res['data'][1]);
                     setDetailsCard(true);
                 }
-                
+
             }
             // const params1 = {
             //     data: res,
@@ -90,7 +89,15 @@ function GetPlacementReport() {
         { field: 'Student_Name', headerName: 'Student Name', width: 200, editable: false },
         { field: 'Company_name', headerName: 'Company Name', width: 220, editable: false },
         { field: 'Designation', headerName: 'Designation', width: 220, editable: false },
-        { field: 'Salary', headerName: 'Salary', width: 180, editable: false }
+        {
+            field: 'Salary', headerName: 'Salary', width: 180, editable: false,
+            renderCell: (id) => {
+                // console.log(id)
+
+                return ConvertToLPA(id.row.Salary)
+
+            }
+        },
     ];
 
     return (
@@ -104,10 +111,10 @@ function GetPlacementReport() {
                 onInput={(e) => {
                     handleChange(e);
                 }}
-                // value={batchYear['Passed_out_year']}
-                // onChange={(e) => {
-                //     setBatchYear({ ...batchYear, Passed_out_year: e.target.value });
-                // }}
+            // value={batchYear['Passed_out_year']}
+            // onChange={(e) => {
+            //     setBatchYear({ ...batchYear, Passed_out_year: e.target.value });
+            // }}
             />
             <br />
             <br />
@@ -115,7 +122,7 @@ function GetPlacementReport() {
                 ''
             ) : (
                 <>
-                    <ListCard data={<PlacementDetailsCard placementDetails={placementDetails} />}/>
+                    <ListCard data={<PlacementDetailsCard placementDetails={placementDetails} />} />
                     <br />
                     <div style={{ height: 400, width: '100%' }}>
                         <DataGrid

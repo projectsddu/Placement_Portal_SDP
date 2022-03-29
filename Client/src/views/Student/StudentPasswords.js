@@ -20,6 +20,9 @@ import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import Modal from '@mui/material/Modal';
 import CircularProgress from '@mui/material/CircularProgress';
 import { ToastContainer, toast } from 'react-toastify';
+import ViewConfig from '../../Config/ViewConfig';
+
+
 function CustomToolbar() {
     return (
         <GridToolbarContainer>
@@ -155,7 +158,7 @@ export default function ViewStudent() {
     }
 
     return (
-        <MainCard title="Student First Time Passwords">
+        <MainCard title={ViewConfig.admin.student.student_passwords.title}>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -187,12 +190,11 @@ export default function ViewStudent() {
             <br />
             <Grid container>
                 <Grid item>
-                    <Button variant="contained" onClick={() => HandleSendPasswords()} color='success' style={{ "color": "white" }}>Send Passwords</Button>
+                    <Button variant="contained" onClick={() => HandleSendPasswords()} color='success' style={{ "color": "white" }}>{ViewConfig.admin.student.student_passwords.btn_send_passwords}</Button>
                 </Grid>
                 <Grid item padding={1}>
                     <Typography variant="h6">
-
-                        {"Note : sending passwords might take a while"}
+                        {ViewConfig.admin.student.student_passwords.note}
                     </Typography>
                 </Grid>
 

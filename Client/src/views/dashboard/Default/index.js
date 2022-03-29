@@ -181,7 +181,7 @@ function Dashboard() {
 
                                 {annoucements.map((e) => (
                                     <Grid item xs={12} md={6} id={e.Announcement_ID}>
-                                        <SubCard title={e.Company_details["Company_name"] + " " + (e.Passed_out_year == null || e.Passed_out_year == undefined ? e.Job_Role + " for all" : "-" + e.Job_Role + " for " + ParseDate.getYear(e.Passed_out_year) + " Batch")}>
+                                        <SubCard title={e.Company_details["Company_name"] + " " + (e.Passed_out_year == null || e.Passed_out_year == undefined ? e.Job_Role + " for all batch year" : "- " + e.Job_Role + " for " + ParseDate.getYear(e.Passed_out_year) + " Batch")}>
                                             <Typography variant="h5"></Typography>
                                             <Grid container spacing={1}>
                                                 <Grid item xs={12} md={12}>

@@ -75,6 +75,7 @@ const S_ViewSubscribedAnnouncements = Loadable(lazy(() => import('../views/Stude
 
 const S_AllNotifications = Loadable(lazy(() => import('../views/Student_Views/Notifications/AllNotifications')));
 const S_ViewProfile = Loadable(lazy(() => import('../views/Student_Views/Profile/S_ViewProfile')));
+const S_EditProfile = Loadable(lazy(() => import('../views/Student_Views/Profile/S_EditProfile')));
 const S_AddInternship = Loadable(lazy(() => import('../views/Student_Views/Achievements/S_AddInternship')));
 const S_AddProject = Loadable(lazy(() => import('../views/Student_Views/Project/S_AddProject')));
 const S_ChangePassword = Loadable(lazy(() => import('../views/Student_Views/ChangePassword/ChangePassword')));
@@ -205,6 +206,7 @@ const MainRoutes = () => {
 
                 "/_student/notifications/all",
                 "/_student/Dashboard/profile",
+                "/_student/Dashboard/edit_profile",
                 "/_student/achievements/add_internship",
                 "/_student/achievements/add_projects",
                 "/_student/about/",
@@ -281,6 +283,7 @@ const MainRoutes = () => {
                     {/* Student View Routes */}
 
                     <Route path="/_student/Dashboard/profile" component={S_ViewProfile} />
+                    <Route path="/_student/Dashboard/edit_profile" component={S_EditProfile} />
                     <Route path="/_student/Dashboard/" component={Temp} />
                     <Route path="/_student/announcement/view_announcement/:idx" component={S_ViewSingleAnnouncement} />
                     <Route path="/_student/announcement/view_announcement" component={S_ViewAnnouncements} />
