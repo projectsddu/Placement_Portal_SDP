@@ -118,6 +118,7 @@ const getStudentInternshipInStudent = async (req, res) => {
 
 const updateStudentInternship = async (req, res) => {
     try {
+        console.log(req.body)
         const id = req.params.id
         const studentinternship = await StudentInternshipService.updateStudentInternship(req.body, id)
         if (studentinternship) {
