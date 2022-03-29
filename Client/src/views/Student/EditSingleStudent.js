@@ -690,7 +690,7 @@ function EditSingleStudent() {
                                 <Button
                                     fullwidth
                                     onClick={() => {
-                                        history.push('/placement/add_placement');
+                                        history.push('/placement/add_placement/' + studentDetails["Student_ID"]);
                                     }}
                                     variant="contained"
                                     size="large"
@@ -703,7 +703,9 @@ function EditSingleStudent() {
                                 <Button
                                     onClick={() => {
 
-                                        history.push('/internship/add_internship');
+
+                                        history.push('/internship/add_internship/' + studentDetails["Student_ID"]);
+
                                     }}
                                     variant="contained"
                                     size="large"

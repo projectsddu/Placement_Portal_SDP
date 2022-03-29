@@ -23,7 +23,8 @@ import { Card, CardContent, Divider, Button } from '@material-ui/core';
 // third-party
 import ApexCharts from 'apexcharts';
 import Chart from 'react-apexcharts';
-import { useLocation } from 'react-router';
+import { useLocation, useHistory } from 'react-router';
+
 // import ParseDate from "../../Utilities/ParseDate"
 
 
@@ -49,6 +50,28 @@ function AddPlacement() {
     const [placementData, setplacementData] = useState([])
 
     const [placementCard, setPlacementCard] = useState([]);
+    const [studentDetailsState, setstudentDetailsState] = useState("")
+
+    async function handleAddPlacementChange() {
+        // Just rerender the view.
+        // StudentDetails has got the student ID
+        console.log("Here in add placement changes")
+        console.log(studentDetailsState)
+        console.log(StudentDetails)
+        let idx
+
+        const studId = location.pathname.split("/")
+        const lastElem = studId.slice("-1")[0]
+        idx = lastElem
+        const payLoad = {
+            target: {
+                value: idx
+            }
+        }
+        setPlacementCard([])
+        await handleChange(payLoad)
+    }
+
 
     useEffect(async () => {
         let response = await fetch("/company/getCompany")
@@ -79,7 +102,7 @@ function AddPlacement() {
         setStudentData(e.target.value)
 
         if (e.target.value.length === 10) {
-            setPlacementCard([])
+            setPlacementCard([].concat([]))
 
             handleOpen()
             let response = undefined
@@ -98,16 +121,18 @@ function AddPlacement() {
 
                         setStudentDetails(jsonData["data"])
                         const student_Id = jsonData["data"]["Student_ID"]
-                        // console.log(student_Id)
+                        setstudentDetailsState(jsonData["data"]["Student_ID"])
+                        console.log(student_Id)
                         let response1 = undefined
                         response1 = await fetch("/studentplacement/getStudentPlacement/" + student_Id, { method: "GET" })
 
                         if (response1 != undefined) {
+                            console.log(placementCard)
                             let jsonData1 = undefined
                             jsonData1 = await response1.json()
                             console.log(jsonData1)
                             setStudentPlacement(jsonData1)
-                            let studentPlacementCardCopy = placementCard
+                            let studentPlacementCardCopy = []
                             console.log(jsonData1.data)
 
                             if (jsonData1.data != "Student Placement Record Not Found!" && jsonData1 != undefined) {
@@ -116,6 +141,7 @@ function AddPlacement() {
                                     let x = Math.random();
                                     studentPlacementCardCopy.unshift(
                                         <CompanyPlacementCard
+                                            onAddFunc={handleAddPlacementChange}
                                             callerFunc={changeStateFromChild}
                                             seed={x}
                                             from={"line 86"}
@@ -147,10 +173,13 @@ function AddPlacement() {
 
     }
 
+
+
     function handleClick() {
         // console.log("keval")
         let placement_card_copy = placementCard;
         placement_card_copy.push(<CompanyPlacementCard
+            onAddFunc={handleAddPlacementChange}
             callerFunc={changeStateFromChild}
             seed={Math.random()}
             from={"line 123"}
@@ -251,12 +280,13 @@ function AddPlacement() {
                     value: lastElem[0]
                 }
             }
+            setstudentDetailsState(lastElem[0])
             await handleChange(payLoad)
         }
 
     }, [])
 
-
+    const history = useHistory()
     async function selectName(id) {
         try {
             const payLoad = {
@@ -264,6 +294,7 @@ function AddPlacement() {
                     value: id
                 }
             }
+            history.push("/placement/add_placement/" + id)
             await handleChange(payLoad)
             setNamesResult("jenil")
         }
@@ -287,7 +318,7 @@ function AddPlacement() {
                 <TextField
                     type='text'
                     fullWidth
-                    label="Student Name"
+                    label="Student Name or ID"
                     value={searchName}
                     onInput={(e) => {
                         handleNamesChange(e)

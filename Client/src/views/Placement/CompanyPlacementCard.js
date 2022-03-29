@@ -59,6 +59,7 @@ function CompanyPlacementCard(props) {
         };
         console.log(res);
         responsePipelineHandler(params1, 1);
+        props.onAddFunc()
     }
 
     async function onUpdatePlacement() {
@@ -76,6 +77,7 @@ function CompanyPlacementCard(props) {
         };
         console.log(res);
         responsePipelineHandler(params1, 1);
+        props.onAddFunc()
     }
 
     async function onDeletePlacement() {
@@ -96,7 +98,8 @@ function CompanyPlacementCard(props) {
         responsePipelineHandler(params1, 1);
         handleClose()
         console.log(props)
-        props.callerFunc(props.seed, "delete")
+        // props.callerFunc(props.seed, "delete")
+        props.onAddFunc()
 
     }
 
@@ -291,7 +294,7 @@ function CompanyPlacementCard(props) {
                                     onClick={() => onButtonClick("add")}
                                     variant="contained" style={{ 'margin-top': '15%' }} size="medium" component="span">
                                     {/* Add Placement */}
-                                    Submit
+                                    Add Placement
                                 </Button>
                             </Grid>
                         ) : (

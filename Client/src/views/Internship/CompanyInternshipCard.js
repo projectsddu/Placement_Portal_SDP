@@ -46,6 +46,7 @@ function CompanyInternshipCard(props) {
         };
         console.log(res);
         responsePipelineHandler(params1, 1);
+        props.refreshData(studentInternshipStateDetails.Student_ID)
     }
 
     async function onUpdateInternship() {
@@ -63,6 +64,7 @@ function CompanyInternshipCard(props) {
         };
         console.log(res);
         responsePipelineHandler(params1, 1);
+        props.refreshData(studentInternshipStateDetails.Student_ID)
     }
 
     async function onDeleteInternship() {
@@ -83,7 +85,8 @@ function CompanyInternshipCard(props) {
         responsePipelineHandler(params1, 1);
         handleClose()
         console.log(props)
-        props.callerFunc(props.seed, "delete")
+        // props.callerFunc(props.seed, "delete")
+        props.refreshData(studentInternshipStateDetails.Student_ID)
 
     }
 
@@ -138,7 +141,7 @@ function CompanyInternshipCard(props) {
                 <br />
                 <br /> */}
 
-                {studentInternshipStateDetails.Company_details === undefined ? (
+                {props.show === undefined ? (
                     <TextField
                         fullWidth
                         id="companies"
@@ -253,7 +256,7 @@ function CompanyInternshipCard(props) {
                 </Grid>
                 <br />
                 <Grid container xs={12} justifyContent="flex-end">
-                    {studentInternshipStateDetails.Company_details === undefined ? (
+                    {props.show === "add" ? (
                         <Grid item>
                             <Button
                                 onClick={() => onButtonClick("add")}

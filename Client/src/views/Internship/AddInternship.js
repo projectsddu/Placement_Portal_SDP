@@ -8,11 +8,13 @@ import UseFetch from '../../Utilities/UseFetch';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { IconCirclePlus } from '@tabler/icons';
 import Grid from '@mui/material/Grid';
-import { Modal } from '@material-ui/core';
+import { Modal, Button } from '@material-ui/core';
 import ChipCard from "../../ui-component/cards/GenericCards/ChipCard"
 import Student_details from '../Placement/JSX/Student_details'
 import NoStudent from '../Placement/JSX/NoStudent'
 import CircularProgress from '@mui/material/CircularProgress';
+import UsePost from "../../Utilities/UsePost"
+import { useLocation } from 'react-router';
 
 
 function AddInternship() {
@@ -26,6 +28,8 @@ function AddInternship() {
 
     const [internshipCard, setInternshipCard] = useState([]);
 
+    // async function 
+
     useEffect(async () => {
         let response = await fetch("/company/getCompany")
         if (response) {
@@ -38,17 +42,12 @@ function AddInternship() {
         }
     }, [])
 
-    // function handleClick() {
-    //     // console.log("keval")
-    //     let internship_card_copy = internshipCard;
-    //     internship_card_copy.push(<CompanyInternshipCard />);
-    //     setInternshipCard([].concat(internship_card_copy));
-    // }
-
     function handleClick() {
         // console.log("keval")
         let internship_card_copy = internshipCard;
         internship_card_copy.push(<CompanyInternshipCard
+            show={"add"}
+            refreshData={refreshData}
             callerFunc={changeStateFromChild}
             seed={Math.random()}
             from={"line 123"}
@@ -92,6 +91,7 @@ function AddInternship() {
         setStudentData(e.target.value)
 
         if (e.target.value.length === 10) {
+            setStudentInternship([])
             handleOpen()
             console.log("called")
             let response = undefined
@@ -119,7 +119,7 @@ function AddInternship() {
                             jsonData1 = await response1.json()
                             console.log(jsonData1)
                             setStudentInternship(jsonData1)
-                            let studentInternshipCardCopy = internshipCard
+                            let studentInternshipCardCopy = []
                             console.log(jsonData1.data)
 
                             if (jsonData1.data != "Student Internship Record Not Found!" && jsonData1 != undefined) {
@@ -130,6 +130,8 @@ function AddInternship() {
                                     let x = Math.random();
                                     studentInternshipCardCopy.unshift(
                                         <CompanyInternshipCard
+                                            show={"update"}
+                                            refreshData={refreshData}
                                             callerFunc={changeStateFromChild}
                                             seed={x}
                                             from={"line 86"}
@@ -169,7 +171,73 @@ function AddInternship() {
         p: 4,
         borderWidth: "0"
     };
+    const [searchName, setsearchName] = useState("")
+    const [namesResult, setNamesResult] = useState("jenil")
+    function changeResult(data) {
+        const recievedData = data
+        setNamesResult(recievedData)
+    }
 
+    const handleNamesChange = async (e) => {
+        try {
+            setsearchName(e.target.value)
+            if (e.target.value.length > 2) {
+                const url = "/student/searchStudent/" + e.target.value
+                const status = await UsePost(url, {}, "POST")
+                console.log(status)
+                changeResult(status.data)
+                // setNamesResult(status.data)
+                console.log(namesResult)
+            }
+            else {
+                console.log("Enter more")
+            }
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+    async function selectName(id) {
+        try {
+            const payLoad = {
+                target: {
+                    value: id
+                }
+            }
+            await handleChange(payLoad)
+            setNamesResult("jenil")
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
+    const location = useLocation()
+    useEffect(async () => {
+        const studId = location.pathname.split("/")
+        const lastElem = studId.slice("-1")
+        console.log(lastElem)
+        if (!isNaN(parseInt(lastElem[0] + lastElem[1]))) {
+            const payLoad = {
+                target: {
+
+                    value: lastElem[0]
+                }
+            }
+            // setstudentDetailsState(lastElem[0])
+            await handleChange(payLoad)
+        }
+    }, [])
+
+    async function refreshData(studId) {
+        try {
+            console.log(studId)
+            handleChange({ target: { value: studId } })
+        }
+        catch (err) {
+
+        }
+    }
 
     return (
         <>
@@ -195,6 +263,7 @@ function AddInternship() {
                 <TextField
                     fullWidth
                     // required
+                    value={studentData}
                     label="Student ID"
                     id="fullWidth"
                     onInput={(e) => {
@@ -202,6 +271,48 @@ function AddInternship() {
                     }}
                     helperText="Enter Student ID"
                 />
+                <TextField
+                    type='text'
+                    fullWidth
+                    label="Student Name"
+                    value={searchName}
+                    onInput={(e) => {
+                        handleNamesChange(e)
+                    }}
+                    id="fullWidth"
+                />
+                {namesResult == "jenil" || namesResult.length == 0 ? "" :
+                    <>
+                        <Grid style={{ "padding": "1%", "box-shadow": "rgb(213 213 213 / 72%) 0px 0px 2px 2px", "borderRadius": "8px" }}>
+
+
+                            {namesResult.map((e) => {
+                                return (<>
+
+                                    <Grid item xs={12} style={{ "padding": "1%" }} container>
+                                        <Grid xs={9} md={9}>
+
+                                            {e.Student_ID + " " + e.FirstName + " " + e.LastName}
+
+                                        </Grid>
+                                        <Grid xs={3} md={3} justifyContent={"flex-end"}>
+                                            <div style={{ "display": "flex", "justifyContent": "center" }}>
+                                                {/* <Grid > */}
+                                                <Button
+                                                    onClick={() => { selectName(e.Student_ID) }}
+                                                    variant="contained"
+                                                    size="small"
+                                                >Select</Button>
+                                            </div>
+                                        </Grid>
+                                        {/* <Divider className={classes.divider} /> */}
+                                    </Grid>
+                                </>)
+                            })}
+                        </Grid>
+                    </>
+                }
+
                 <br />
                 <br />
                 {StudentDetails === undefined ? "" :
