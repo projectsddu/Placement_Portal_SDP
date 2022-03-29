@@ -1,7 +1,7 @@
 // assets
 import { IconDashboard, IconDeviceAnalytics } from '@tabler/icons';
 
-import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
+import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 
 // constant
 const icons = {
