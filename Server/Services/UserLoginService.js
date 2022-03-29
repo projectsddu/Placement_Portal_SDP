@@ -66,6 +66,7 @@ const changePasswordForce = async (studentId, newPassword) => {
         let userLoginObj = await getUserLoginObj(studentId);
         userLoginObj = (JSON.parse(JSON.stringify(userLoginObj)))[0]
         if (userLoginObj) {
+
             const status1 = passwordFormatChecker(newPassword)
             if (status1 == "OK") {
 
@@ -265,5 +266,6 @@ module.exports = {
     loginUser,
     verifyUser,
     changePasswordForce,
-    deleteAllUserLoginOfStudent
+    deleteAllUserLoginOfStudent,
+    getUserLoginObj
 }
