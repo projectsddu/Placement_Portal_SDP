@@ -121,12 +121,18 @@ export default function ViewStudent() {
 
     function HandleDateChanged(e) {
         const dateNow = new Date(e).getFullYear().toString();
-        let yearNew = dateNow[2] + dateNow[3]
-        console.log(yearNew)
+        // let yearNew = dateNow[2] + dateNow[3]
+        let yearNew = dateNow
+        // console.log("from line 126",yearNew)
         setDate(dateNow)
         const filteredList = student_list_original.filter((elem) => {
-            let year = elem.StudentId[0] + elem.StudentId[1]
-            year = year.toString()
+            // console.log("from line 129", elem)
+            let year = elem.Passed_out_year
+            // console.log("from line 131", year)
+            year = new Date(year).getFullYear().toString()
+            // console.log("from line 133", year)
+            // let year = elem.StudentId[0] + elem.StudentId[1]
+            // year = year.toString()
             if (yearNew.toString() == year) {
                 return elem
             }
@@ -175,7 +181,7 @@ export default function ViewStudent() {
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <DatePicker
                             views={['year']}
-                            label="Enrollment Year"
+                            label="Passed Out Year"
                             onChange={(e) => HandleDateChanged(e)}
                             // required
                             value={date}

@@ -21,7 +21,7 @@ export default function AboutDevelopers() {
             "MainContent": "",
             "GithubLink": "https://github.com/jenilgandhi2111",
             "LinkedInLink": "https://www.linkedin.com/in/jenil-gandhi-5961591b0/",
-            "GmailLink": "jenilgandhi2111@gmail.com"
+            "GmailLink": "https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=jenilgandhi2111@gmail.com&su=REGARDING PLACEMENT PORTAL @DHARMSINH DESAI UNIVERSITY"
         },
         "Keval": {
             "Image": KevalImage,
@@ -30,7 +30,7 @@ export default function AboutDevelopers() {
             "MainContent": "",
             "GithubLink": "https://github.com/Keval-Gandevia",
             "LinkedInLink": "https://www.linkedin.com/in/keval-gandevia-8128041b5/",
-            "GmailLink": "gandeviakeval05@gmail.com"
+            "GmailLink": "https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=gandeviakeval05@gmail.com&su=REGARDING PLACEMENT PORTAL @DHARMSINH DESAI UNIVERSITY"
         },
         "Rikin": {
             "Image": RikinImage,
@@ -39,7 +39,7 @@ export default function AboutDevelopers() {
             "MainContent": "",
             "GithubLink": "https://github.com/rikinchauhan01",
             "LinkedInLink": "https://www.linkedin.com/in/rikin-chauhan-b057641a7/",
-            "GmailLink": "rikinchauhan01@gmail.com"
+            "GmailLink": "https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=rikinchauhan01@email.com&su=REGARDING PLACEMENT PORTAL @DHARMSINH DESAI UNIVERSITY"
         },
         "JHBSir": {
             "Image": JHBSirImage,

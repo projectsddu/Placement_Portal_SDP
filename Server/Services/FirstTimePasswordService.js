@@ -27,7 +27,7 @@ const generateRandomPassword = (length) => {
 }
 
 
-const AddFirstTimePassword = async (studentId) => {
+const AddFirstTimePassword = async (studentId, studentPassedOutYear) => {
     try {
         const checkExists = await FirstTimeModel.findOne({
             where: {
@@ -42,7 +42,8 @@ const AddFirstTimePassword = async (studentId) => {
             console.log(password)
             const payLoad = {
                 StudentId: studentId,
-                FirstTimePassword: password
+                FirstTimePassword: password,
+                Passed_out_year: studentPassedOutYear
             }
             await FirstTimeModel.create(payLoad)
 
@@ -108,7 +109,7 @@ const sendPasswords = async (dateYear) => {
             let password = allPasswords[current_student["Student_ID"]]
             // console.log(current_student)
             await MailerService.notificationMail({
-                "header": "Your Access To Placement Portal", "body": `You can access the DDU placement portal via the following credentials<br/><b>Student Id:</b>${password.student_id}<br/><b>Password:</b> ${password.password}<br/>please visit ${process.env.DOMAIN}  to login`
+                "subject": "FIRST TIME PASSWORD - PLACEMENT PORTAL @DHARMSINH DESAI UNIVERSITY", "header": "Your Access To Placement Portal", "body": `You can access the DDU placement portal via the following credentials<br/><b>Student Id:</b>${password.student_id}<br/><b>Password:</b> ${password.password}<br/>please visit ${process.env.DOMAIN}  to login`
             }, current_student["Email_ID"]
             )
         }
