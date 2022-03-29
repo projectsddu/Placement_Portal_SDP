@@ -226,6 +226,9 @@ export default function S_ViewProfile() {
     const [placementCard, setPlacementCard] = useState([]);
     const [internshipCard, setInternshipCard] = useState([]);
 
+    const [placementDetails, setPlacementDetails] = useState(undefined);
+    const [internshipDetails, setInternshipDetails] = useState(undefined);
+
     useEffect(async () => {
         let response = undefined;
         response = await fetch('/skillsandachievements/getSkillsAndAchievements/', { method: 'GET' });
@@ -262,19 +265,30 @@ export default function S_ViewProfile() {
                 {
                     let placementData = undefined
                     placementData = await response1.json()
-                    let studentPlacementCardCopy = placementCard
-                    if(placementData != undefined && placementData["data"] != "Student Placement Record Not Found!")
+                    // let studentPlacementCardCopy = placementCard
+                    if(placementData != undefined)
                     {
-                        // console.log(placementData["data"])
-                        for(let i = 0; i < placementData["data"].length; i++)
+                        if(placementData["data"] == "Student Placement Record Not Found!")
                         {
-                            console.log(placementData["data"][i])
-                            studentPlacementCardCopy.unshift(
-                                <S_PlacementCard details={placementData["data"][i]}/>
-                            )
+                            setPlacementDetails(undefined)
                         }
-                        setPlacementCard([].concat(studentPlacementCardCopy))
+                        else
+                        {
+                            setPlacementDetails(placementData["data"])
+                        }
                     }
+                    // if(placementData != undefined && placementData["data"] != "Student Placement Record Not Found!")
+                    // {
+                    //     // console.log(placementData["data"])
+                    //     for(let i = 0; i < placementData["data"].length; i++)
+                    //     {
+                    //         console.log(placementData["data"][i])
+                    //         studentPlacementCardCopy.unshift(
+                    //             <S_PlacementCard details={placementData["data"][i]}/>
+                    //         )
+                    //     }
+                    //     setPlacementCard([].concat(studentPlacementCardCopy))
+                    // }
                         // console.log(placementData)
 
                     let response2 = undefined
@@ -284,19 +298,30 @@ export default function S_ViewProfile() {
                     {
                         let internshipsData = undefined
                         internshipsData = await response2.json()
-                        let internshipCardCopy = internshipCard
+                        // let internshipCardCopy = internshipCard
                         console.log(internshipsData["data"])
-                        if(internshipsData != undefined && internshipsData["data"] != "Student Internship Record Not Found!")
+                        if(internshipsData != undefined)
                         {
-                            for(let i = 0; i < internshipsData["data"].length; i++)
+                            if(internshipsData["data"] == "Student Internship Record Not Found!")
                             {
-                                console.log(internshipsData["data"][i])
-                                internshipCardCopy.unshift(
-                                    <S_InternshipCard details={internshipsData["data"][i]}/>
-                                )
+                                setInternshipDetails(internshipsData["data"])
                             }
-                            setInternshipCard([].concat(internshipCardCopy))
+                            else
+                            {
+                                setInternshipDetails(internshipsData["data"])
+                            }
                         }
+                        // if(internshipsData != undefined && internshipsData["data"] != "Student Internship Record Not Found!")
+                        // {
+                        //     for(let i = 0; i < internshipsData["data"].length; i++)
+                        //     {
+                        //         console.log(internshipsData["data"][i])
+                        //         internshipCardCopy.unshift(
+                        //             <S_InternshipCard details={internshipsData["data"][i]}/>
+                        //         )
+                        //     }
+                        //     setInternshipCard([].concat(internshipCardCopy))
+                        // }
                     }
                 }
             }
@@ -598,14 +623,16 @@ export default function S_ViewProfile() {
                         <br/>
                         <MainCard title={ViewConfig.student.Profile.placements.Header}>
                             {
-                                placementCard.length == 0 ? 
+                                placementDetails == undefined ? 
                                     <>
                                         <ChipCard loading={false} data={<EmptyPlacement />} />
                                     </>
                                 : 
-                                placementCard.map((e) => {
+                                placementDetails.map((e) => {
                                     return(<>
-                                        {e}
+                                        {/* {e} */}
+                                        <ChipCard data={<S_PlacementCard details={e} />} />
+                                        <br />
                                     </>)
                                 })
                             }                        
@@ -613,14 +640,15 @@ export default function S_ViewProfile() {
                         <br/>
                         <MainCard title={ViewConfig.student.Profile.internships.Header}>
                             {
-                                internshipCard.length == 0 ? 
+                                internshipDetails == undefined ? 
                                     <>
                                         <ChipCard loading={false} data={<EmptyInternship />} />
                                 </>
                                 :
-                                internshipCard.map((e) => {
+                                internshipDetails.map((e) => {
                                     return(<>
-                                        {e}
+                                        <ChipCard data={<S_InternshipCard details={e} />} />
+                                        <br />
                                     </>)
                                 })
                             }
