@@ -39,6 +39,7 @@ function EditSingleStudent() {
         console.log(studentDetails);
     }, []);
 
+    const history = useHistory();
 
     async function handleSubmit() {
         handleOpen()
@@ -657,14 +658,46 @@ function EditSingleStudent() {
                         />
                         <br />
                         <br />
-                        <Button
-                            onClick={handleSubmit}
-                            variant="contained"
-                            size="large"
-                            color="primary"
-                        >
-                            {ViewConfig.admin.student.edit_student.update}
-                        </Button>
+                        <Grid container spacing={1}>
+                            <Grid item xs={12} md={2}>
+                                <Button
+                                    fullwidth
+                                    onClick={handleSubmit}
+                                    variant="contained"
+                                    size="large"
+                                    color="primary"
+                                >
+                                    {ViewConfig.admin.student.edit_student.update}
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12} md={3}>
+                                <Button
+                                    fullwidth
+                                    onClick={() => {
+                                        history.push('/placement/add_placement');
+                                    }}
+                                    variant="contained"
+                                    size="large"
+                                    color="primary"
+                                >
+                                    {ViewConfig.admin.student.edit_student.update_placement}
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12} md={3}>
+                                <Button
+                                onClick={() => {
+                                    
+                                    history.push('/internship/add_internship');
+                                }}
+                                variant="contained"
+                                size="large"
+                                color="primary"
+                                >
+                                    {ViewConfig.admin.student.edit_student.update_internship}
+                                </Button>
+                            </Grid>
+                        </Grid>
+                        
                     </>
                 )}
             </MainCard>
