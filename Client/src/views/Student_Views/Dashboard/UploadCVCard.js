@@ -18,6 +18,7 @@ import UseFetch from '../../../Utilities/UseFetch';
 import CircularProgress from '@mui/material/CircularProgress';
 import { gridSpacing } from '../../../store/constant';
 import { Modal } from '@material-ui/core';
+import domainConfig from '../../../Config/domainConfig';
 const Input = styled('input')({
     display: 'none',
 });
@@ -122,7 +123,9 @@ export default function UploadResumeCard({ CV_Upload }) {
                                 href={
 
                                     process.env.NODE_ENV == "production" ?
-                                        "http://placement.csiddu.tech" + CV_Upload : "http://localhost:8000" + CV_Upload
+                                        domainConfig.domain + 
+                                        // "http://placement.csiddu.tech" + 
+                                        CV_Upload : "http://localhost:8000" + CV_Upload
                                 }
                             >
                                 <Button variant="contained" size="large" color="primary">

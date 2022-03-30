@@ -42,6 +42,7 @@ import { useHistory } from "react-router-dom";
 // import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import AddComment from '../Comment/AddComment';
 import HandleNull from '../../Utilities/HandleNull';
+import domainConfig from '../../Config/domainConfig';
 
 function ViewSingleAnnoucement() {
 
@@ -258,7 +259,10 @@ function ViewSingleAnnoucement() {
                                                     style={{ "text-decoration": "none", "cursor": "pointer" }}
                                                     href={
                                                         process.env.NODE_ENV == "production" ?
-                                                            "http://csiddu.tech" + announcement_details["Job_Description_File"]
+                                                            // "http://csiddu.tech" + 
+                                                            domainConfig.domain + 
+                                                            
+                                                            announcement_details["Job_Description_File"]
                                                             : "http://localhost:8000" + announcement_details["Job_Description_File"]
                                                     }>
 

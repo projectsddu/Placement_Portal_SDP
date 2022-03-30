@@ -35,6 +35,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 // import UseFetch from '../../Utilities/UseFetch';
 import { useLocation } from "react-router-dom";
+import domainConfig from '../../Config/domainConfig';
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -408,7 +409,9 @@ function AddAnnoucement() {
 
                             data === undefined ? "" :
                                 process.env.NODE_ENV == "production" ?
-                                    "http://csiddu.tech" + data["Job_Description_File"]
+                                    // "http://csiddu.tech" + 
+                                    domainConfig.domain + 
+                                    data["Job_Description_File"]
                                     : "http://localhost:8000" + data["Job_Description_File"]
                         }>
                             <Button variant="contained">View Job Description File</Button>

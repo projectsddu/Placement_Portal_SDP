@@ -49,6 +49,7 @@ import ChipCard from "../../../ui-component/cards/GenericCards/ChipCard"
 import DeadlineCard from './JSX/DeadlineCard'
 import Modal from '@mui/material/Modal';
 import handleNull from "../../../Utilities/HandleNull"
+import domainConfig from '../../../Config/domainConfig';
 // import Fetch
 
 export default function S_ViewSingleAnnouncement() {
@@ -364,7 +365,9 @@ export default function S_ViewSingleAnnouncement() {
                                                     style={{ "text-decoration": "none", "cursor": "pointer" }}
                                                     href={
                                                         process.env.NODE_ENV == "production" ?
-                                                            "http://placement.csiddu.tech" + announcement_details["Job_Description_File"] : "http://localhost:8000" + announcement_details["Job_Description_File"]
+                                                            domainConfig.domain +
+                                                            // "http://placement.csiddu.tech" + 
+                                                            announcement_details["Job_Description_File"] : "http://localhost:8000" + announcement_details["Job_Description_File"]
 
                                                     }>
 

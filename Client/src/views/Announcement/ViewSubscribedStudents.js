@@ -10,6 +10,7 @@ import { Button } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Grid } from '@material-ui/core';
 import axios from 'axios';
+import domainConfig from '../../Config/domainConfig';
 
 
 function CustomToolbar() {
@@ -147,7 +148,9 @@ function ViewSubscribedStudents() {
                             href={
 
                                 process.env.NODE_ENV == "production" ?
-                                    "http://csiddu.tech" + "/subscribeannouncement/downloadSubscribedStudentZip/" + id : "http://localhost:8000" + "/subscribeannouncement/downloadSubscribedStudentZip/" + id
+                                    // "http://csiddu.tech" + 
+                                    domainConfig.domain + 
+                                    "/subscribeannouncement/downloadSubscribedStudentZip/" + id : "http://localhost:8000" + "/subscribeannouncement/downloadSubscribedStudentZip/" + id
 
 
                             }>

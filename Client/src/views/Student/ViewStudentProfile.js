@@ -35,7 +35,7 @@ import EmptyProjects from './JSX/EmptyProjects';
 import StudentInternshipCard from './JSX/StudentInternshipCard';
 import StudentProjectCard from './JSX/StudentProjectCard';
 import ViewConfig from '../../Config/ViewConfig';
-
+import domainConfig from '../../Config/domainConfig';
 
 function ViewStudentProfile() {
     const style = {
@@ -217,7 +217,9 @@ function ViewStudentProfile() {
                                                         href={
 
                                                             process.env.NODE_ENV == "production" ?
-                                                                "http://csiddu.tech" + student_details["CV_Upload"] : "http://localhost:8000" + student_details["CV_Upload"]
+                                                                // "http://csiddu.tech" +
+                                                                domainConfig.domain +
+                                                                student_details["CV_Upload"] : "http://localhost:8000" + student_details["CV_Upload"]
 
                                                         }>
 
@@ -250,7 +252,10 @@ function ViewStudentProfile() {
                                                         style={{ "text-decoration": "none", "cursor": "pointer" }}
                                                         href={
                                                             process.env.NODE_ENV == "production" ?
-                                                                "http://csiddu.tech" + student_details["Student_Photo"] : "http://localhost:8000" + student_details["Student_Photo"]
+                                                                // "http://csiddu.tech" + 
+                                                                
+                                                                domainConfig.domain +
+                                                                student_details["Student_Photo"] : "http://localhost:8000" + student_details["Student_Photo"]
 
 
                                                         }>

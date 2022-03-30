@@ -56,6 +56,7 @@ import EmptyPlacement from './JSX/EmptyPlacement';
 import ViewConfig from '../../../Config/ViewConfig';
 import S_InternshipCard from './S_InternshipCard';
 import EmptyInternship from './JSX/EmptyInternship';
+import domainConfig from '../../../Config/domainConfig';
 
 export default function S_ViewProfile() {
     const useStyles = makeStyles((theme) => ({
@@ -562,7 +563,9 @@ export default function S_ViewProfile() {
                                                     href={
 
                                                         process.env.NODE_ENV == "production" ?
-                                                            "http://placement.csiddu.tech" + student_details["CV_Upload"] : "http://localhost:8000" + student_details["CV_Upload"]
+                                                            // "http://placement.csiddu.tech" + 
+                                                            domainConfig.domain + 
+                                                            student_details["CV_Upload"] : "http://localhost:8000" + student_details["CV_Upload"]
                                                     }>
 
                                                     {student_details === undefined ? "Wait Loading...." : <>
@@ -596,7 +599,9 @@ export default function S_ViewProfile() {
                                                     style={{ "text-decoration": "none", "cursor": "pointer" }}
                                                     href={
                                                         process.env.NODE_ENV == "production" ?
-                                                            "http://placement.csiddu.tech" + student_details["Student_Photo"] : "http://localhost:8000" + student_details["Student_Photo"]
+                                                            // "http://placement.csiddu.tech" + 
+                                                            domainConfig.domain + 
+                                                            student_details["Student_Photo"] : "http://localhost:8000" + student_details["Student_Photo"]
 
 
                                                     }>

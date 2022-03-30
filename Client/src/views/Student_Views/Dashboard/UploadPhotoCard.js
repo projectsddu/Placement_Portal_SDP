@@ -19,7 +19,7 @@ import UseFetch from '../../../Utilities/UseFetch';
 import { gridSpacing } from '../../../store/constant';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Modal } from '@material-ui/core';
-
+import domainConfig from '../../../Config/domainConfig';
 
 const Input = styled('input')({
     display: 'none',
@@ -135,7 +135,9 @@ export default function UploadPhotoCard({ Student_Photo }) {
                                 style={{ "text-decoration": "none", "cursor": "pointer" }}
                                 href={
                                     process.env.NODE_ENV == "production" ?
-                                        "http://placement.csiddu.tech" + Student_Photo : "http://localhost:8000" + Student_Photo
+                                        domainConfig.domain + 
+                                        // "http://placement.csiddu.tech" + 
+                                        Student_Photo : "http://localhost:8000" + Student_Photo
                                 }
                             >
                                 <Button variant="contained" size="large" color="primary">

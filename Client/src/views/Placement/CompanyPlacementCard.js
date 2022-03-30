@@ -12,6 +12,7 @@ import UsePostFile from '../../Utilities/UsePostFile';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import HandleToast from '../../Utilities/HandleToast';
 import { ToastContainer, toast } from 'react-toastify';
+import domainConfig from '../../Config/domainConfig';
 // import structuredClone from '@ungap/structured-clone';
 
 const axios = require("axios")
@@ -271,7 +272,9 @@ function CompanyPlacementCard(props) {
                             <a target="_blank" href={
 
                                 process.env.NODE_ENV == "production" ?
-                                    "http://csiddu.tech" + studentPlacementStateDetails.Offer_Letter
+                                    // "http://csiddu.tech" + 
+                                    domainConfig.domain + 
+                                    studentPlacementStateDetails.Offer_Letter
                                     : "http://localhost:8000" + studentPlacementStateDetails.Offer_Letter
 
 

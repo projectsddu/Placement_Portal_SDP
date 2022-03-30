@@ -81,18 +81,25 @@ function S_AddInternshipsCard(props) {
         const keys = Object.keys(studentInternshipStateDetails);
         // console.log(keys)
         let count = 0;
+        let flag = false;
         for (let i = 0; i < keys.length; i++) {
             let key = keys[i];
             // console.log(studentInternshipStateDetails[key]);
             if (studentInternshipStateDetails[key] == '' || studentInternshipStateDetails[key] == null) {
                 // alert("Please fill all fields.")
-                count++;
+                // count++;
+                flag = true;
+                break;
             }
         }
-        // console.log("Count: ", count)
-        if (count != 0) {
-            toast.error("All fields are required in internships!")
-        } 
+        console.log("Count: ", count)
+        // if (count != 0 ) {
+        //     toast.error("All fields are required in internships!")
+        // } 
+        if(flag)
+        {
+            toast.error("All fields are required in internships!") 
+        }
         else {
             if (event == 'add') {
                 onAddInternship();

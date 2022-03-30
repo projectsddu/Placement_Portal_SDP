@@ -4,6 +4,7 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import { Theme } from '@material-ui/core';
 import { Grid } from '@mui/material';
+import domainConfig from '../../../Config/domainConfig';
 
 export default function S_ProfilePhoto(props) {
     const useStyles = makeStyles({
@@ -23,7 +24,9 @@ export default function S_ProfilePhoto(props) {
                         src={
 
                             process.env.NODE_ENV == "production" ?
-                                "http://csiddu.tech" + props.student_photo : "http://localhost:8000" + props.student_photo
+                                // "http://csiddu.tech" + 
+                                domainConfig.domain + 
+                                props.student_photo : "http://localhost:8000" + props.student_photo
 
                         }
                         alt="logo"

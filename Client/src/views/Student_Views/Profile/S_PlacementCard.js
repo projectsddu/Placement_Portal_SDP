@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/styles';
 import { TextField, Typography, MenuItem, Button, Checkbox } from '@material-ui/core';
 import Grid from '@mui/material/Grid';
 import { red, blue } from '@mui/material/colors';
+import domainConfig from '../../../Config/domainConfig';
 
 const btn_color = blue[300];
 
@@ -69,7 +70,10 @@ function S_PlacementCard(props) {
                                 target="_blank"
                                 href={
                                     process.env.NODE_ENV == 'production'
-                                        ? 'http://csiddu.tech' + studentPlacementStateDetails.Offer_Letter
+                                        ? 
+                                        // 'http://csiddu.tech' + 
+                                        domainConfig.domain + 
+                                        studentPlacementStateDetails.Offer_Letter
                                         : 'http://localhost:8000' + studentPlacementStateDetails.Offer_Letter
                                 }
                                 style={{ 'text-decoration': 'none' }}
