@@ -135,7 +135,7 @@ export default function UploadPhotoCard({ Student_Photo }) {
                                 style={{ "text-decoration": "none", "cursor": "pointer" }}
                                 href={
                                     process.env.NODE_ENV == "production" ?
-                                        "http://csiddu.tech" + Student_Photo : "http://localhost:8000" + Student_Photo
+                                        "http://placement.csiddu.tech" + Student_Photo : "http://localhost:8000" + Student_Photo
                                 }
                             >
                                 <Button variant="contained" size="large" color="primary">

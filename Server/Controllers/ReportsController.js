@@ -23,7 +23,7 @@ const getPlacementReportByBatchYear = async (req, res) => {
             return RESP(res, placements.length == 0 ? false : true, placements.length == 0 ? "No placements data!" : placements)
         }
         else {
-            throw "Error in getAllPlacements in reports"
+            throw "Error in getAllPlacements in reports. Status returned false."
         }
 
     }
@@ -31,7 +31,7 @@ const getPlacementReportByBatchYear = async (req, res) => {
         log.error(e.toString())
         // console.log(e.toString());
         // return ERROR(res, "Oops! some unknown error occured getting placements!")
-        return ERROR(res, e.toString())
+        return ERROR(res, "Error! While fetching report for placement!")
         // res.json({ status: false, data: e.toString() })
     }
 }
@@ -57,7 +57,7 @@ const multiplePlacements = async (req, res) => {
         log.error(e.toString())
         // console.log(e.toString());
         // return ERROR(res, "Oops! some unknown error occured getting placements!")
-        return ERROR(res, e.toString())
+        return ERROR(res, "Error! While fetching report for multiple placement!")
         // res.json({ status: false, data: e.toString() })
     }
 
@@ -88,7 +88,7 @@ const placedStudentsByCompany = async (req, res) => {
         log.error(e.toString())
         // console.log(e.toString());
         // return ERROR(res, "Oops! some unknown error occured getting placements!")
-        return ERROR(res, e.toString())
+        return ERROR(res, "Error! While fetching report for company!")
         // res.json({ status: false, data: e.toString() })
     }
 }
@@ -140,7 +140,7 @@ const studentsInterestedInHigherStudies = async (req, res) => {
         }
     } catch (error) {
         log.error(error.toString())
-        return res.json({ status: false, data: "Error from studentsInterestedInHigherStudies controller" })
+        return res.json({ status: false, data: "Error! While fetching report for higher study!" })
     }
 }
 
@@ -163,7 +163,7 @@ const unplacedStudents = async (req, res) => {
         }
     } catch (error) {
         log.error(error.toString())
-        return res.json({ status: false, data: "Error from unplacedStudents controller" })
+        return res.json({ status: false, data: "Error! While fecthing report for unplaced students!" })
     }
 }
 
@@ -185,7 +185,7 @@ const unplacedInternship = async(req, res) => {
 
     } catch (error) {
         log.error(error.toString())
-        return res.json({ status: false, data: "Error from unplacedInternship controller" })
+        return res.json({ status: false, data: "Error! While fecthing report for unplaced students!" })
     }
 }
 

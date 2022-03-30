@@ -78,7 +78,7 @@ const addAnnoucement = async (req, res) => {
             Eligible_Branches, Passed_out_year, Job_Role, Salary, Job_Location, Bond_Details, Other_Details, Job_Description_File, Registration_Deadline, Eligibility, IsOpen } = req.body;
 
         if (req.emptyField) {
-            throw req.empty_arr[0] + " cannot be empty!!"
+            throw req.empty_arr[0] + " cannot be empty!"
         }
         // valid
         else {
@@ -107,16 +107,16 @@ const addAnnoucement = async (req, res) => {
             const status = await NotificationService.broadcastNotification(company_name.Company_name + " opened a new " + Job_Role + " position check out announcement in your dashboard!")
             console.log(status);
             if (annoucementStatus) {
-                return res.json({ data: "Announcement Created", status: true })
+                return res.json({ data: "Announcement created successfully!", status: true })
             }
             else {
-                throw "Error from createdAnnoucement controller"
+                throw "Error from createdAnnoucement controller. Status returned false."
             }
         }
     }
     catch (e) {
         console.log(e.toString());
-        res.json({ status: false, data: e.toString() })
+        res.json({ status: false, data: "Error! While adding announcement!" })
     }
 }
 
@@ -125,7 +125,7 @@ const getAllAnnoucements = async (req, res) => {
     try {
         let announcements = await AnnouncementService.getAllAnnoucements()
         if (announcements) {
-            console.log("HERE")
+            // console.log("HERE")
             return RESP(res, announcements.length == 0 ? false : true, announcements.length == 0 ? "No Announcement data!" : announcements)
             // return res.json({ status: announcements.length == 0 ? false : true, data: announcements.length == 0 ? "No Student data!" : announcements })
         }
@@ -180,7 +180,7 @@ const updateAnnoucement = async (req, res) => {
         console.log(req.fileName)
         const annoucement = await AnnouncementService.updateAnnoucement(req.body, id, true, req.fileName)
         if (annoucement) {
-            return OK(res, "Announcement Updated!")
+            return OK(res, "Announcement updated successfully!")
             // return res.json({ status: true, data: "Announcement Updated!!" })
         }
         else {
@@ -202,7 +202,7 @@ const deleteAnnoucement = async (req, res) => {
         let id = req.params.annoucementId
         const status = await AnnouncementService.deleteAnnoucement(id)
         if (status) {
-            return OK(res, "Announcement Deleted Successfully!")
+            return OK(res, "Announcement deleted successfully!")
             // return res.json({ status: true, data: "Announcement Deleted Successfully!!" })
         }
         else {
@@ -224,7 +224,7 @@ const requiredAnnoucementDetails = async (req, res) => {
     catch (e) {
         log.error(e.toString())
         // console.log(e.toString());
-        return ERROR(res, "Error! While fethcing required details for announcements!")
+        return ERROR(res, "Error! While fetching required details for announcements!")
         // res.json({ status: false, data: e.toString() })
     }
 }
@@ -249,7 +249,7 @@ const addComment = async (req, res) => {
 
         const commentStatus = await CommentService.createComment(comment);
         if (commentStatus) {
-            return OK(res, "Comment Created")
+            return OK(res, "Comment added successfully!")
             // return res.json({ data: "Comment Created", status: true })
         }
         else {

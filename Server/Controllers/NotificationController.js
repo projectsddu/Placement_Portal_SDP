@@ -16,7 +16,7 @@ const getUserNotifications = async (req, res) => {
     }
     catch (err) {
         log.error(err.toString())
-        return res.json({ data: err.toString(), status: false })
+        return res.json({ data: "Error! While fetching notifications!", status: false })
     }
 }
 module.exports = {
