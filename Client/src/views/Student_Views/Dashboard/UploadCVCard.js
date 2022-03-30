@@ -122,7 +122,7 @@ export default function UploadResumeCard({ CV_Upload }) {
                                 href={
 
                                     process.env.NODE_ENV == "production" ?
-                                        "http://csiddu.tech" + CV_Upload : "http://localhost:8000" + CV_Upload
+                                        "http://placement.csiddu.tech" + CV_Upload : "http://localhost:8000" + CV_Upload
                                 }
                             >
                                 <Button variant="contained" size="large" color="primary">

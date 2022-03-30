@@ -364,7 +364,7 @@ export default function S_ViewSingleAnnouncement() {
                                                     style={{ "text-decoration": "none", "cursor": "pointer" }}
                                                     href={
                                                         process.env.NODE_ENV == "production" ?
-                                                            "http://csiddu.tech" + announcement_details["Job_Description_File"] : "http://localhost:8000" + announcement_details["Job_Description_File"]
+                                                            "http://placement.csiddu.tech" + announcement_details["Job_Description_File"] : "http://localhost:8000" + announcement_details["Job_Description_File"]
 
                                                     }>
 

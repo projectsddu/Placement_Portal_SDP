@@ -13,16 +13,16 @@ const addStudentToAnnouncement = async (req, res) => {
         const studentId = req.userId
         const status = Subscibe.addSubsriberToAnnouncement(studentId, req.params.announcementId)
         if (status) {
-            return res.json({ status: true, data: "Applied Successfully!" })
+            return res.json({ status: true, data: "Announcement applied successfully!" })
         }
         else {
-            throw "Error in Subscribing student"
+            throw "Error in Subscribing student. Status returned false."
         }
     }
     catch (err) {
         console.log(err.toString());
         log.error(err.toString())
-        return res.json({ status: false, data: "Error applying to announcement!" })
+        return res.json({ status: false, data: "Error! While applying to announcement!" })
     }
 }
 
@@ -42,7 +42,7 @@ const getSubscribedStatus = async (req, res) => {
     catch (err) {
         console.log(err.toString());
         log.error(err.toString())
-        return res.json({ status: false, data: "Error Fetching status!" })
+        return res.json({ status: false, data: "Error! While fetching status!" })
     }
 }
 
@@ -62,7 +62,7 @@ const removeStudentToAnnouncement = async (req, res) => {
     catch (err) {
         console.log(err.toString());
         log.error(err.toString())
-        return res.json({ status: false, data: "Error Fetching status!" })
+        return res.json({ status: false, data: "Error! While fetching status!" })
     }
 }
 
@@ -78,7 +78,7 @@ const getSubscribedAnnouncements = async (req, res) => {
     catch (err) {
         console.log(err.toString());
         log.error(err.toString())
-        return res.json({ status: false, data: "Error Fetching announcements!" })
+        return res.json({ status: false, data: "Error! While fetching subscribed announcements!" })
     }
 }
 
@@ -95,7 +95,7 @@ const getSubscribedStudentsOfAnnouncement = async (req, res) => {
     catch (err) {
         console.log(err.toString());
         log.error(err.toString())
-        return res.json({ status: false, data: "Error Fetching announcements!" })
+        return res.json({ status: false, data: "Error! While fetching subscribed students!" })
     }
 }
 
@@ -150,7 +150,7 @@ const downloadSubscribedStudentZip = async (req, res) => {
     catch (err) {
         console.log(err.toString());
         log.error(err.toString())
-        return res.json({ status: false, data: "Error Fetching student data!" })
+        return res.json({ status: false, data: "Error! While downloading zip!" })
     }
 
 
