@@ -361,7 +361,38 @@ export default function S_ViewSingleAnnouncement() {
                                         </TableCell>
                                         <TableCell align="right">
                                             {announcement_details === undefined ? "Wait Loading...." : <>
-                                                <a target='blank'
+                                                {announcement_details.Job_Description_File != undefined ?
+                                                    <>
+                                                        <a target='blank'
+                                                            style={{ "text-decoration": "none", "cursor": "pointer" }}
+                                                            href={
+                                                                process.env.NODE_ENV == "production" ?
+                                                                    domainConfig.domain +
+                                                                    // "http://placement.csiddu.tech" + 
+                                                                    announcement_details["Job_Description_File"] : "http://localhost:8000" + announcement_details["Job_Description_File"]
+
+                                                            }>
+
+                                                            {announcement_details === undefined ? "Wait Loading...." : <>
+
+                                                                {announcement_details.Job_Description_File != undefined ?
+                                                                    <Chip
+                                                                        label={"View Job Description File"}
+                                                                        // variant="outlined"
+                                                                        color='primary'
+                                                                        clickable
+                                                                    /> :
+                                                                    <>
+                                                                        <Chip label="No Job Description File!" />
+                                                                    </>
+                                                                }
+
+                                                            </>
+                                                            }
+                                                        </a>
+                                                    </> : <Chip label="No Job Description File!" />
+                                                }
+                                                {/* <a target='blank'
                                                     style={{ "text-decoration": "none", "cursor": "pointer" }}
                                                     href={
                                                         process.env.NODE_ENV == "production" ?
@@ -372,17 +403,23 @@ export default function S_ViewSingleAnnouncement() {
                                                     }>
 
                                                     {announcement_details === undefined ? "Wait Loading...." : <>
+                                                    
+                                                    {announcement_details.Job_Description_File != undefined ?
                                                         <Chip
                                                             label={"View Job Description File"}
                                                             // variant="outlined"
                                                             color='primary'
                                                             clickable
-                                                        />
+                                                        />:
+                                                        <>
+                                                            <Chip label="No Job Description File!" />
+                                                        </>
+                                                    }
 
                                                     </>
                                                     }
+                                                </a> */}
 
-                                                </a>
                                             </>}
 
 
