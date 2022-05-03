@@ -100,6 +100,12 @@ function GetPlacementReport() {
             }
         },
     ];
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const [dataLoading, setDataLoading] = useState(true)
+    const handleOpenLoading = () => setOpen(true);
+    const handleCloseLoading = () => setOpen(false);
 
     return (
         <MainCard title="View / Download Placement Report">

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Paper, Typography, IconButton, Box, Grid, Button, ListItem, List } from '@material-ui/core';
+import { Paper, Typography, IconButton, Box, Grid, Button, ListItem, List, CircularProgress } from '@material-ui/core';
 import { useTheme } from '@material-ui/styles';
 import MainCard from './../../ui-component/cards/MainCard';
 import SubCard from './../../ui-component/cards/SubCard';
@@ -141,18 +141,18 @@ function ViewCompany() {
 
                 setCompany_list_original([].concat(jsonData["data"]))
                 setCompany_list_copy([].concat(jsonData["data"]))
+                handleCloseLoading()
                 // console.log(company_list_original)
             }
         }
     }, []);
 
     function handleRedirect(id) {
-        
+
         history.push("/company/edit_company/" + id)
     }
 
-    async function handleDelete(id)
-    {
+    async function handleDelete(id) {
         console.log(id)
         let Resp = await axios({
             method: 'post',
@@ -206,13 +206,13 @@ function ViewCompany() {
                     //     View Full Company
                     // </Button>
                     <>
-                    <IconButton color="primary" 
-                        component="span"
-                        onClick={handleOpen}
-                        aria-label="upload picture">
-                        <DeleteIcon />
-                    </IconButton>
-                    <Modal
+                        <IconButton color="primary"
+                            component="span"
+                            onClick={handleOpen}
+                            aria-label="upload picture">
+                            <DeleteIcon />
+                        </IconButton>
+                        <Modal
                             open={open}
                             onClose={handleClose}
                             aria-labelledby="modal-modal-title"
@@ -239,18 +239,18 @@ function ViewCompany() {
 
                             </Box>
                         </Modal>
-                    <IconButton color="primary" 
-                        onClick={() => handleRedirect(temp_id)}
-                        aria-label="upload picture" component="span">
+                        <IconButton color="primary"
+                            onClick={() => handleRedirect(temp_id)}
+                            aria-label="upload picture" component="span">
                             <EditIcon />
                         </IconButton>
-                    <IconButton color="primary"
-                    onClick={() => {
+                        <IconButton color="primary"
+                            onClick={() => {
                                 history.push('/company/view_company/' + temp_id);
                             }}
-                    aria-label="upload picture" component="span">
-                        <VisibilityIcon />
-                    </IconButton>
+                            aria-label="upload picture" component="span">
+                            <VisibilityIcon />
+                        </IconButton>
                     </>
                 );
             }
@@ -274,8 +274,8 @@ function ViewCompany() {
         { field: 'Contact_person_3_Mobile', headerName: 'Contact Person 3 Mobile', width: 240, editable: false, hide: true },
         { field: 'Company_web_site', headerName: 'Company Website', width: 230, editable: false, hide: true },
         { field: 'Remarks', headerName: 'Remarks', width: 200, editable: false, hide: true },
-        { field: 'Company_offer_type', headerName: 'Company Offer Type', width: 230, editable: false, hide: true},
-        { field: 'State', headerName: 'State', width: 200, editable: false, hide: true}
+        { field: 'Company_offer_type', headerName: 'Company Offer Type', width: 230, editable: false, hide: true },
+        { field: 'State', headerName: 'State', width: 200, editable: false, hide: true }
 
     ];
 
@@ -327,6 +327,18 @@ function ViewCompany() {
     //     }
     // }
 
+    const Modalstyle = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        bgcolor: 'background.paper',
+        // boxShadow: 24,
+        p: 4,
+        border: "0px solid white"
+    };
+    const [dataLoading, setDataLoading] = useState(true)
+    const handleOpenLoading = () => setOpen(true);
+    const handleCloseLoading = () => setOpen(false);
     return (
         <>
             {/* /**{ (setData(data)).map((e) => {return e})} */}
@@ -340,29 +352,41 @@ function ViewCompany() {
                 ) :
                     // required_data['data'] == 'No Student data!'
                     company_list_original.length == 0
-                        ?
-                        (
-                            <>
-                                <ChipCard loading={false} data={<EmptyCompany />} />
-                            </>
-                            // <SubCard>
-                            //     <Grid container spacing={2}>
-                            //         <Grid item xs={12} md={10}>
-                            //             <Typography variant="h2">No Company is added yet!!!</Typography>
-                            //         </Grid>
-                            //         <Grid item xs={12} md={2}>
-                            //         <Button variant="contained" 
-                            //             size='large'
-                            //             startIcon={<IconCirclePlus />} 
-                            //             color="primary"
-                            //             onClick={() => {
-                            //                 history.push('/company/add_company');
-                            //             }}
-                            //             > Add </Button>
-                            //         </Grid>
-                            //     </Grid>
-                            // </SubCard>
-                        ) : (
+                        ? dataLoading == true ?
+                            <Modal
+                                open={dataLoading}
+                                onClose={handleCloseLoading}
+                                aria-labelledby="modal-modal-title"
+                                aria-describedby="modal-modal-description"
+                            >
+                                <Box>
+
+                                    <CircularProgress style={Modalstyle} color="primary" />
+                                </Box>
+                            </Modal>
+                            :
+                            (
+                                <>
+                                    <ChipCard loading={false} data={<EmptyCompany />} />
+                                </>
+                                // <SubCard>
+                                //     <Grid container spacing={2}>
+                                //         <Grid item xs={12} md={10}>
+                                //             <Typography variant="h2">No Company is added yet!!!</Typography>
+                                //         </Grid>
+                                //         <Grid item xs={12} md={2}>
+                                //         <Button variant="contained" 
+                                //             size='large'
+                                //             startIcon={<IconCirclePlus />} 
+                                //             color="primary"
+                                //             onClick={() => {
+                                //                 history.push('/company/add_company');
+                                //             }}
+                                //             > Add </Button>
+                                //         </Grid>
+                                //     </Grid>
+                                // </SubCard>
+                            ) : (
                             <div style={{ height: 400, width: '100%' }}>
                                 <DataGrid
                                     checkboxSelection
