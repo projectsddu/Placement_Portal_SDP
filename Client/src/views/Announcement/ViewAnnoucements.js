@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Paper, Typography, Box, Grid, Button, ListItem, List } from '@material-ui/core';
+import { Paper, Typography, Box, Grid, Button, ListItem, List, CircularProgress } from '@material-ui/core';
 // import { useTheme } from '@material-ui/styles';
 import MainCard from './../../ui-component/cards/MainCard';
 // import SubCard from './../../ui-component/cards/SubCard';
@@ -165,6 +165,7 @@ function ViewAnnoucements() {
                 setAnnouncement_list_original([].concat(jsonData["data"]))
                 setAnnouncement_list_copy([].concat(jsonData["data"]))
                 console.log(jsonData["data"]);
+                handleCloseLoading()
 
                 // console.log()
             }
@@ -363,6 +364,20 @@ function ViewAnnoucements() {
         console.log(params);
     }
 
+
+    const Modalstyle = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        bgcolor: 'background.paper',
+        // boxShadow: 24,
+        p: 4,
+        border: "0px solid white"
+    };
+    const [dataLoading, setDataLoading] = useState(true)
+    const handleOpenLoading = () => setOpen(true);
+    const handleCloseLoading = () => setOpen(false);
+
     return (
         <>
             <MainCard title="View Announcements">
@@ -373,46 +388,59 @@ function ViewAnnoucements() {
                 <div style={{ height: 400, width: '100%' }}>
                     {announcement_list_original === undefined ? (
                         ''
-                    ) : announcement_list_original.length == 0 ? (
-                        <>
-                            <ChipCard loading={false} data={<EmptyAnnouncement />} />
-                        </>
-                    ) : (
-                        // <SubCard>
-                        //     <Grid container spacing={2}>
-                        //         <Grid item xs={12} md={10}>
-                        //             <Typography variant="h1">No Announcement is added yet!!!</Typography>
-                        //         </Grid>
-                        //         <Grid item xs={12} md={2}>
-                        //             <Button
-                        //                 variant="contained"
-                        //                 size="large"
-                        //                 startIcon={<IconCirclePlus />}
-                        //                 color="primary"
-                        //                 onClick={() => {
-                        //                     history.push('/announcement/add_annoucement');
-                        //                 }}
-                        //             >
-                        //                 {' '}
-                        //                 Add{' '}
-                        //             </Button>
-                        //         </Grid>
-                        //     </Grid>
-                        // </SubCard>
-                        <DataGrid
-                            editMode="row"
-                            onEditCellChange={handleEditRowsModelChange}
-                            onCellClick={handleCellClick}
-                            checkboxSelection
-                            rows={announcement_list_copy}
-                            columns={columns}
-                            components={{
-                                Toolbar: CustomToolbar
-                            }}
-                            editRowsModel={editRowsModel}
-                            onEditRowsModelChange={handleEditRowsModelChange}
-                        />
-                    )}
+                    ) : announcement_list_original.length == 0 ?
+                        dataLoading == true ?
+                            <Modal
+                                open={dataLoading}
+                                onClose={handleCloseLoading}
+                                aria-labelledby="modal-modal-title"
+                                aria-describedby="modal-modal-description"
+                            >
+                                <Box>
+
+                                    <CircularProgress style={Modalstyle} color="primary" />
+                                </Box>
+                            </Modal>
+                            : (
+                                <>
+                                    <ChipCard loading={false} data={<EmptyAnnouncement />} />
+                                </>
+                            ) : (
+                            // <SubCard>
+                            //     <Grid container spacing={2}>
+                            //         <Grid item xs={12} md={10}>
+                            //             <Typography variant="h1">No Announcement is added yet!!!</Typography>
+                            //         </Grid>
+                            //         <Grid item xs={12} md={2}>
+                            //             <Button
+                            //                 variant="contained"
+                            //                 size="large"
+                            //                 startIcon={<IconCirclePlus />}
+                            //                 color="primary"
+                            //                 onClick={() => {
+                            //                     history.push('/announcement/add_annoucement');
+                            //                 }}
+                            //             >
+                            //                 {' '}
+                            //                 Add{' '}
+                            //             </Button>
+                            //         </Grid>
+                            //     </Grid>
+                            // </SubCard>
+                            <DataGrid
+                                editMode="row"
+                                onEditCellChange={handleEditRowsModelChange}
+                                onCellClick={handleCellClick}
+                                checkboxSelection
+                                rows={announcement_list_copy}
+                                columns={columns}
+                                components={{
+                                    Toolbar: CustomToolbar
+                                }}
+                                editRowsModel={editRowsModel}
+                                onEditRowsModelChange={handleEditRowsModelChange}
+                            />
+                        )}
                 </div>
             </MainCard>
         </>

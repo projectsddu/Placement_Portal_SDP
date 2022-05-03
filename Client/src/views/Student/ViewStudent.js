@@ -13,6 +13,7 @@ import { Paper, Typography, Box, Grid, IconButton, Button, ListItem, List } from
 import { IconDashboard, IconEye, IconCirclePlus, IconDeviceAnalytics, IconSpeakerphone } from '@tabler/icons';
 import UseFetch from '../../Utilities/UseFetch';
 import SubCard from './../../ui-component/cards/SubCard';
+import CircularProgress from '@mui/material/CircularProgress';
 import { useHistory } from 'react-router-dom';
 import ChipCard from '../../ui-component/cards/GenericCards/ChipCard';
 import EmptyStudent from './JSX/EmptyStudent';
@@ -57,12 +58,22 @@ export default function ViewStudent() {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+
+    // const [openLoading, setOpenLoading] = React.useState(false);
+    const [dataLoading, setDataLoading] = useState(true)
+    const handleOpenLoading = () => setOpen(true);
+    const handleCloseLoading = () => setOpen(false);
+
+
+
     const history = useHistory();
     const [search, setSearch] = useState('');
     const [student_list_original, setStudent_list_original] = useState([]);
     const [student_list_copy, setStudent_list_copy] = useState([]);
 
     useEffect(async () => {
+        const handleOpenLoading = () => setOpen(true);
+
         let response = undefined;
         response = await fetch("/student/getAllStudents", { method: "GET" })
 
@@ -81,6 +92,8 @@ export default function ViewStudent() {
 
                 setStudent_list_original([].concat(jsonData["data"]))
                 setStudent_list_copy([].concat(jsonData["data"]))
+                setDataLoading(false)
+                handleCloseLoading()
                 // console.log(company_list_original)
             }
         }
@@ -201,13 +214,13 @@ export default function ViewStudent() {
                         startIcon={<EditIcon />}
                     >
                     </Button> */}
-                    <IconButton color="primary" 
-                        component="span"
-                        onClick={handleOpen}
-                        aria-label="upload picture">
-                        <DeleteIcon />
-                    </IconButton>
-                    <Modal
+                        <IconButton color="primary"
+                            component="span"
+                            onClick={handleOpen}
+                            aria-label="upload picture">
+                            <DeleteIcon />
+                        </IconButton>
+                        <Modal
                             open={open}
                             onClose={handleClose}
                             aria-labelledby="modal-modal-title"
@@ -299,7 +312,7 @@ export default function ViewStudent() {
         { field: 'Skills', headerName: 'Skills', width: 200, editable: false, hide: true },
 
 
-    // ]);
+        // ]);
     ]
     const [editRowsModel, setEditRowsModel] = React.useState({});
 
@@ -311,6 +324,15 @@ export default function ViewStudent() {
     function handleCellClick(params) {
         console.log(params);
     }
+    const Modalstyle = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        bgcolor: 'background.paper',
+        // boxShadow: 24,
+        p: 4,
+        border: "0px solid white"
+    };
 
     return (
         <MainCard title={ViewConfig.admin.student.view_student.title}>
@@ -320,46 +342,58 @@ export default function ViewStudent() {
             <br />
             {/* <code>Editing: {JSON.stringify(editRowsModel)}</code> */}
             <div style={{ height: 500, width: '100%' }}>
-                {student_list_original.length == 0 ? (
-                    <>
-                        <ChipCard loading={false} data={<EmptyStudent />} />
-                    </>
-                ) : (
-                    // <SubCard>
-                    //     <Grid container spacing={2}>
-                    //         <Grid item xs={12} md={10}>
-                    //             <Typography variant="h1">No Stduent is added yet!!!</Typography>
-                    //         </Grid>
-                    //         <Grid item xs={12} md={2}>
-                    //             <Button
-                    //                 variant="contained"
-                    //                 size="large"
-                    //                 startIcon={<IconCirclePlus />}
-                    //                 color="primary"
-                    //                 onClick={() => {
-                    //                     history.push('/student/add_student');
-                    //                 }}
-                    //             >
-                    //                 {' '}
-                    //                 Add{' '}
-                    //             </Button>
-                    //         </Grid>
-                    //     </Grid>
-                    // </SubCard>
-                    <DataGrid
-                        editMode="row"
-                        onEditCellChange={handleEditRowsModelChange}
-                        onCellClick={handleCellClick}
-                        checkboxSelection
-                        rows={student_list_copy}
-                        columns={columns}
-                        components={{
-                            Toolbar: CustomToolbar
-                        }}
-                        editRowsModel={editRowsModel}
-                        onEditRowsModelChange={handleEditRowsModelChange}
-                    />
-                )}
+                {dataLoading == true ?
+                    <Modal
+                        open={dataLoading}
+                        onClose={handleCloseLoading}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <Box>
+
+                            <CircularProgress style={Modalstyle} color="primary" />
+                        </Box>
+                    </Modal>
+                    : student_list_original.length == 0 ? (
+                        <>
+                            <ChipCard loading={false} data={<EmptyStudent />} />
+                        </>
+                    ) : (
+                        // <SubCard>
+                        //     <Grid container spacing={2}>
+                        //         <Grid item xs={12} md={10}>
+                        //             <Typography variant="h1">No Stduent is added yet!!!</Typography>
+                        //         </Grid>
+                        //         <Grid item xs={12} md={2}>
+                        //             <Button
+                        //                 variant="contained"
+                        //                 size="large"
+                        //                 startIcon={<IconCirclePlus />}
+                        //                 color="primary"
+                        //                 onClick={() => {
+                        //                     history.push('/student/add_student');
+                        //                 }}
+                        //             >
+                        //                 {' '}
+                        //                 Add{' '}
+                        //             </Button>
+                        //         </Grid>
+                        //     </Grid>
+                        // </SubCard>
+                        <DataGrid
+                            editMode="row"
+                            onEditCellChange={handleEditRowsModelChange}
+                            onCellClick={handleCellClick}
+                            checkboxSelection
+                            rows={student_list_copy}
+                            columns={columns}
+                            components={{
+                                Toolbar: CustomToolbar
+                            }}
+                            editRowsModel={editRowsModel}
+                            onEditRowsModelChange={handleEditRowsModelChange}
+                        />
+                    )}
             </div>
         </MainCard>
     );

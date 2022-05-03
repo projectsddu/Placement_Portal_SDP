@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MainCard from '../../ui-component/cards/MainCard';
-import { TextField } from '@material-ui/core';
+import { TextField, Box } from '@material-ui/core';
 import CompanyPlacementCard from './CompanyPlacementCard';
 import { ToastContainer, toast } from 'react-toastify';
 import UseFetch from '../../Utilities/UseFetch';
@@ -313,7 +313,10 @@ function AddPlacement() {
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                 >
-                    <CircularProgress style={style} color="primary" />
+                    <Box>
+
+                        <CircularProgress style={style} color="primary" />
+                    </Box>
                 </Modal>
                 <TextField
                     type='text'
