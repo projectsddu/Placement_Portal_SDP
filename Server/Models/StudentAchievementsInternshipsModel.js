@@ -17,17 +17,17 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         Company_Address: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         },
         Description: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         }
     },
-    {
-        timestamps: false
-    }
+        {
+            timestamps: false
+        }
     )
 
     return StudentAchievementsInternships

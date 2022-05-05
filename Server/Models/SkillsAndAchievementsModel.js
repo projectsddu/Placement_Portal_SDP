@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         Skills: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         },
         // Programming_Language_Skills: {
@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true
         }
     }, {
-        timestamps: false   
+        timestamps: false
     })
     return SkillsAndAchievements
 }

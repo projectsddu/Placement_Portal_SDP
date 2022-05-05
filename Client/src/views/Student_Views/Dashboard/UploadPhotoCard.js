@@ -40,30 +40,43 @@ export default function UploadPhotoCard({ Student_Photo }) {
         console.log(event.target.files[0])
         const file_data = event.target.files[0]
         const file_name = event.target.files[0]["name"]
-        document.getElementById("fileUploadName1").innerText = " " + file_name
-        let temp = data
-        console.log(document.getElementById('fileUploadName1'));
-        temp["Student_Photo_File"] = file_data
-        console.log(temp)
-        setData(temp)
+        const file_size = parseInt(event.target.files[0]["size"])
+        if (file_size > 2000000) {
+            toast.error("The file size must be less than 2mb.")
+            event.target.files[0] = undefined
+        }
+        else {
+            document.getElementById("fileUploadName1").innerText = " " + file_name
+            let temp = data
+            console.log(document.getElementById('fileUploadName1'));
+            temp["Student_Photo_File"] = file_data
+            console.log(temp)
+            setData(temp)
+        }
     };
 
     async function handleSubmit() {
         handleOpen()
-        setuploadingData(true)
-        const res = await UsePostFile("/student/uploadPhoto", data, "POST")
-        setuploadingData(false)
-        // console.log(res);
-        const params1 = {
-            data: res,
-            HandleToast: {
-                toast: toast,
-                flag: false,
+        if (JSON.stringify(data) == "{}") {
+            toast.error("Please upload photo file")
+        }
+        else {
+
+            setuploadingData(true)
+            const res = await UsePostFile("/student/uploadPhoto", data, "POST")
+            setuploadingData(false)
+            // console.log(res);
+            const params1 = {
+                data: res,
+                HandleToast: {
+                    toast: toast,
+                    flag: false,
+                }
             }
+            responsePipelineHandler(params1, 1)
         }
         handleClose()
         // console.log(res);
-        responsePipelineHandler(params1, 1)
         // END OF POSTING DATA EXAMPLE
     }
 
@@ -135,7 +148,7 @@ export default function UploadPhotoCard({ Student_Photo }) {
                                 style={{ "text-decoration": "none", "cursor": "pointer" }}
                                 href={
                                     process.env.NODE_ENV == "production" ?
-                                        domainConfig.domain + 
+                                        domainConfig.domain +
                                         // "http://placement.csiddu.tech" + 
                                         Student_Photo : "http://localhost:8000" + Student_Photo
                                 }

@@ -457,10 +457,10 @@ function S_EditProfile() {
                                         label="Enrollment Year"
                                         // required
                                         value={studentDetails['Enrollment_year']}
-                                        onChange={(e) => {
-                                            setStudentDetails({ ...studentDetails, Enrollment_year: e });
-                                        }}
-                                        renderInput={(params) => <TextField {...params} helperText={'Enter the enrollment year'} fullWidth />}
+                                        // onChange={(e) => {
+                                        //     setStudentDetails({ ...studentDetails, Enrollment_year: e });
+                                        // }}
+                                        renderInput={(params) => <TextField {...params} helperText={'Enter the enrollment year'} fullWidth disabled />}
                                     />
                                 </LocalizationProvider>
                             </Grid>
@@ -473,10 +473,10 @@ function S_EditProfile() {
                                         fullwidth
                                         // required
                                         value={studentDetails['Passed_out_year']}
-                                        onChange={(e) => {
-                                            setStudentDetails({ ...studentDetails, Passed_out_year: e });
-                                        }}
-                                        renderInput={(params) => <TextField {...params} helperText={'Enter the passed out year'} fullWidth />}
+                                        // onChange={(e) => {
+                                        //     setStudentDetails({ ...studentDetails, Passed_out_year: e });
+                                        // }}
+                                        renderInput={(params) => <TextField {...params} helperText={'Enter the passed out year'} fullWidth disabled />}
                                     />
                                 </LocalizationProvider>
                             </Grid>
@@ -621,7 +621,7 @@ function S_EditProfile() {
                         <hr style={{ 'border-top': '2px solid #b8b8b8' }} />
                         <br />
                         <Grid container spacing={2}>
-                            <Grid item md={4} xs={12}>
+                            {/* <Grid item md={4} xs={12}>
                                 <TextField
                                     // required
                                     id="select"
@@ -637,14 +637,14 @@ function S_EditProfile() {
                                     <MenuItem value="TRUE">TRUE</MenuItem>
                                     <MenuItem value="FALSE">FALSE</MenuItem>
                                 </TextField>
-                            </Grid>
-                            <Grid item md={4} xs={12}>
+                            </Grid> */}
+                            <Grid item md={6} xs={12}>
                                 <TextField
                                     // required
                                     disabled
                                     fullWidth
                                     label="Diploma Result CPI"
-                                    helperText="Enter the diploma result CPI"
+                                    helperText="Diploma result CPI (If applicable)"
                                     type="number"
                                     value={studentDetails['Diploma_Result_CPI']}
                                     onChange={(e) => {
@@ -652,12 +652,12 @@ function S_EditProfile() {
                                     }}
                                 />
                             </Grid>
-                            <Grid item md={4} xs={12}>
+                            <Grid item md={6} xs={12}>
                                 <TextField
                                     // required
                                     fullWidth
-                                    label="Diploma Result Percentage"
-                                    helperText="Enter the diploma result percentage"
+                                    label="Diploma Result Percentage (If applicable)"
+                                    helperText="Enter the diploma result percentage (If applicable)"
                                     type="number"
                                     value={studentDetails['Diploma_Result_Percentage']}
                                     onChange={(e) => {
@@ -672,7 +672,7 @@ function S_EditProfile() {
                             // required
                             fullWidth
                             label="Diploma College Name"
-                            helperText="Enter the diploma college name"
+                            helperText="Enter the diploma college name (If applicable)"
                             value={studentDetails['Diploma_College_Name']}
                             onChange={(e) => {
                                 setStudentDetails({ ...studentDetails, Diploma_College_Name: e.target.value });
@@ -684,7 +684,7 @@ function S_EditProfile() {
                             // required
                             fullWidth
                             label="Diploma University"
-                            helperText="Enter the diploma university"
+                            helperText="Enter the diploma university (If applicable)"
                             value={studentDetails['Diploma_University']}
                             onChange={(e) => {
                                 setStudentDetails({ ...studentDetails, Diploma_University: e.target.value });

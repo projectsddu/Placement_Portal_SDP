@@ -130,7 +130,7 @@ const RestLogin = (props, { ...others }) => {
         }
         if (res) {
             if (res.status) {
-                let a = new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 365);
+                let a = new Date(new Date().getTime() + 2089200000);
                 if (res.data == "Please Set your password to continue") {
                     history.push("/_student/firstTimeLogin")
                 }

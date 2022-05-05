@@ -46,7 +46,9 @@ const getAnnoucement = async (id) => {
 }
 
 
-const addSubsriberToAnnouncement = async (student_id, announcement_id) => {
+const addSubsriberToAnnouncement = async (student_id, announcement_id, studentMailId) => {
+    console.log("HIHJJBBJHBJHBHJBHJBJHBJHBJHBHJBHJBJHBj")
+    console.log(studentMailId)
     try {
         const payLoad = {
             Announcement_ID: announcement_id,
@@ -57,14 +59,14 @@ const addSubsriberToAnnouncement = async (student_id, announcement_id) => {
         let announcementDetails = await getAnnoucement(announcement_id)
         announcementDetails = JSON.parse(JSON.stringify(announcementDetails[0]))
         console.log(announcementDetails);
-        
+
         const mailData = {
-            "subject": "Regarding " + announcementDetails["Company_details"]["Company_name"] + ": " + announcementDetails["Job_Role"] + " Role Announcement Subscription" ,
+            "subject": "Regarding " + announcementDetails["Company_details"]["Company_name"] + ": " + announcementDetails["Job_Role"] + " Role Announcement Subscription",
             "header": "Applied to an Announcement Successfully",
             "body": "You will be updated regarding mentioned applied announcement for " + announcementDetails["Company_details"]["Company_name"] + " " + announcementDetails["Job_Role"] + " role",
         }
         // console.log(mailData.body);
-        await NotificationService.adminToSingleUserNotification(student_id, mailData.body, true, mailData)
+        await NotificationService.adminToSingleUserNotification(student_id, mailData.body, true, mailData, studentMailId)
         return true;
     }
     catch (err) {
@@ -80,9 +82,9 @@ const getSubscribedStatus = async (student_id, announcement_id) => {
             where: { Student_ID: student_id, Announcement_ID: announcement_id }
         })
 
-        if(data) {
+        if (data) {
             console.log(data)
-            if(data.length > 0) {
+            if (data.length > 0) {
                 return true
             }
         }
@@ -102,7 +104,7 @@ const removeSubscribedStatus = async (student_id, announcement_id) => {
             where: { Student_ID: student_id, Announcement_ID: announcement_id }
         })
 
-        if(data) {
+        if (data) {
             return true
         }
         return false
@@ -122,19 +124,17 @@ const getSubscribedStudentsOfAnnouncement = async (announcement_id, skills = fal
         })
 
         let students = []
-        
-        if(data) {
+
+        if (data) {
             data = JSON.parse(JSON.stringify(data))
             console.log(data)
-            for(let i = 0; i < data.length; i++)
-            {
+            for (let i = 0; i < data.length; i++) {
                 students.push(await StudentService.getOneStudent(data[i]["Student_ID"]))
             }
-            
+
             students = JSON.parse(JSON.stringify(students))
 
-            if(skills)
-            {
+            if (skills) {
                 for (let i = 0; i < students.length; i++) {
                     let skillDetails = await SkillsAndAchievementsService.getSkillsAndAchievements(students[i]["Student_ID"])
                     // console.log(skillDetails)

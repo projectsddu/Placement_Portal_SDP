@@ -1,5 +1,5 @@
 const domainConfig = {
-    "domain": "http://placement.csiddu.tech"
+    "domain": process.env.React_App_DOMAIN
 }
 
 export default domainConfig

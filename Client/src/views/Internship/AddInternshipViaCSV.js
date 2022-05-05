@@ -39,16 +39,22 @@ export default function AddInternshipViaCSV() {
     };
 
     async function handleSubmit() {
-        const res = await UsePostFile("/studentinternship/addStudentInternshipViaCSV", data, "POST")
-        const params1 = {
-            data: res,
-            HandleToast: {
-                toast: toast,
-                flag: false,
-            }
+        if (JSON.stringify(data) == "{}") {
+            toast.error("Please upload a file.")
         }
-        // console.log(res);
-        responsePipelineHandler(params1, 1)
+        else {
+
+            const res = await UsePostFile("/studentinternship/addStudentInternshipViaCSV", data, "POST")
+            const params1 = {
+                data: res,
+                HandleToast: {
+                    toast: toast,
+                    flag: false,
+                }
+            }
+            // console.log(res);
+            responsePipelineHandler(params1, 1)
+        }
         // END OF POSTING DATA EXAMPLE
     }
 

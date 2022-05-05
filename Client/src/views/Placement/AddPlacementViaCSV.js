@@ -54,17 +54,23 @@ export default function AddPlacementViaCSV() {
 
     async function handleSubmit() {
         handleOpen()
-        const res = await UsePostFile("/studentplacement/addStudentPlacementWithCSV", data, "POST")
-        const params1 = {
-            data: res,
-            HandleToast: {
-                toast: toast,
-                flag: false,
-            }
+        if (JSON.stringify(data) == "{}") {
+            toast.error("Please upload a file.")
         }
-        // console.log(res);
+        else {
+
+            const res = await UsePostFile("/studentplacement/addStudentPlacementWithCSV", data, "POST")
+            const params1 = {
+                data: res,
+                HandleToast: {
+                    toast: toast,
+                    flag: false,
+                }
+            }
+            // console.log(res);
+            responsePipelineHandler(params1, 1)
+        }
         handleClose()
-        responsePipelineHandler(params1, 1)
         // END OF POSTING DATA EXAMPLE
     }
 

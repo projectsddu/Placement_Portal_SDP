@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         Company_address: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         },
         Contact_person_1_name: {
@@ -67,11 +67,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         Remarks: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         },
         Company_offer_type: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         },
         City: {

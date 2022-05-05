@@ -12,11 +12,11 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         Comment_text: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         },
 
-        Comment_Date:{
+        Comment_Date: {
             type: DataTypes.DATE,
             allowNull: false,
             defaultValue: DataTypes.NOW
@@ -27,9 +27,9 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         }
     },
-    {
-        timestamps: false
-    }
+        {
+            timestamps: false
+        }
     )
 
     return Comment

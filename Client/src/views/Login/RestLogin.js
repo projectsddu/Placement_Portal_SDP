@@ -130,7 +130,7 @@ const RestLogin = (props, { ...others }) => {
         console.log(res)
         if (res) {
             if (res.status) {
-                let a = new Date(new Date().getTime() + 2589200000);
+                let a = new Date(new Date().getTime() + 2089200000);
                 await SetClientAdminCookies(data.adminName, a)
                 history.push("/dashboard/default")
                 console.log(res);

@@ -52,17 +52,23 @@ export default function UpdateStudent() {
 
     async function handleSubmit() {
         handleOpen()
-        const res = await UsePostFile("/student/updateStudent/", data, "POST")
-        const params1 = {
-            data: res,
-            HandleToast: {
-                toast: toast,
-                flag: false,
+        if (JSON.stringify(data) == "{}") {
+            toast.error("Please upload a file.")
+        }
+        else {
+
+            const res = await UsePostFile("/student/updateStudent/", data, "POST")
+            const params1 = {
+                data: res,
+                HandleToast: {
+                    toast: toast,
+                    flag: false,
+                }
             }
+            responsePipelineHandler(params1, 1)
         }
         handleClose()
         // console.log(res);
-        responsePipelineHandler(params1, 1)
         // END OF POSTING DATA EXAMPLE
     }
 

@@ -29,23 +29,23 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         Job_Role: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         },
         Salary: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         },
         Job_Location: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         },
         Bond_Details: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         },
         Other_Details: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         },
         Job_Description_File: {
@@ -59,7 +59,7 @@ module.exports = (sequelize, DataTypes) => {
 
         // doubt (JHB Sir)
         Eligibility: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         },
 
