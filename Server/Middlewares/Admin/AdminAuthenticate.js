@@ -13,6 +13,7 @@ const AdminAuthenticate = async (req, res, next) => {
         console.log("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
         const AdminloginToken = req.cookies.AdminLoginToken
         let adminObj = await AdminLoginService.getAdminLogin(AdminloginToken)
+        req.usertype = "admin"
 
         if (adminObj) {
             adminObj = JSON.parse(JSON.stringify(adminObj))

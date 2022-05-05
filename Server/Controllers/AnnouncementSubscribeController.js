@@ -11,7 +11,8 @@ const ERROR = ResponseService.ERROR
 const addStudentToAnnouncement = async (req, res) => {
     try {
         const studentId = req.userId
-        const status = Subscibe.addSubsriberToAnnouncement(studentId, req.params.announcementId)
+        const studentMailId = req.userObj.Email_ID
+        const status = Subscibe.addSubsriberToAnnouncement(studentId, req.params.announcementId, studentMailId)
         if (status) {
             return res.json({ status: true, data: "Announcement applied successfully!" })
         }

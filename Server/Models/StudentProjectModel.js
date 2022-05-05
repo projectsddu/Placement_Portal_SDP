@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         Brief_Description: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         },
         Project_Link: {
@@ -23,12 +23,12 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         Technologies: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         }
-    }, 
-    {
-        timestamps: false
-    })
+    },
+        {
+            timestamps: false
+        })
     return StudentProject
 }

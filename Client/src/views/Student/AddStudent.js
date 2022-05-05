@@ -42,6 +42,8 @@ export default function AddStudent() {
 
     const changeHandler = (event) => {
         // console.log(event.target.files[0])
+
+
         document.getElementById("fileUploadDetails").innerText = event.target.files[0].name
         const file_data = event.target.files[0]
         console.log(file_data);
@@ -52,17 +54,23 @@ export default function AddStudent() {
 
     async function handleSubmit() {
         handleOpen()
-        const res = await UsePostFile("/student/addStudent", data, "POST")
-        const params1 = {
-            data: res,
-            HandleToast: {
-                toast: toast,
-                flag: false,
+        if (JSON.stringify(data) == "{}") {
+            toast.error("Please upload a file.")
+        }
+        else {
+
+            const res = await UsePostFile("/student/addStudent", data, "POST")
+            const params1 = {
+                data: res,
+                HandleToast: {
+                    toast: toast,
+                    flag: false,
+                }
             }
+            responsePipelineHandler(params1, 1)
         }
         handleClose()
         // console.log(res);
-        responsePipelineHandler(params1, 1)
         // END OF POSTING DATA EXAMPLE
     }
 

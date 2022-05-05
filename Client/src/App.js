@@ -27,7 +27,7 @@ const App = () => {
                 <CssBaseline />
                 <NavigationScroll>
                     <Routes />
-                    <ToastContainer />
+                    <ToastContainer limit={3} />
                 </NavigationScroll>
             </ThemeProvider>
         </StyledEngineProvider>

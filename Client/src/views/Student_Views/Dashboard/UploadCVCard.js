@@ -39,30 +39,46 @@ export default function UploadResumeCard({ CV_Upload }) {
         console.log(event.target.files[0])
         const file_data = event.target.files[0]
         const file_name = event.target.files[0]["name"]
-        document.getElementById("fileUploadName2").innerText = " " + file_name
-        let temp = data
-        temp["Student_CV_File"] = file_data
-        setData(temp)
+        const file_size = parseInt(event.target.files[0]["size"])
+
+        if (file_size > 3000000) {
+            toast.error("The file size must be less than 3mb.")
+            event.target.files[0] = undefined
+        }
+        else {
+            document.getElementById("fileUploadName2").innerText = " " + file_name
+            let temp = data
+            temp["Student_CV_File"] = file_data
+            setData(temp)
+        }
     };
 
     async function handleSubmit() {
 
         handleOpen()
         setuploadingData(true)
-        const res = await UsePostFile("/student/addCV", data, "POST")
-        setuploadingData(false)
-        // console.log(res);
-        const params1 = {
-            data: res,
-            HandleToast: {
-                toast: toast,
-                flag: false,
-            }
+        console.log("Debug log..")
+        console.log(JSON.stringify(data) == "{}")
+        if (JSON.stringify(data) == "{}") {
+            toast.error("Please upload a CV file")
         }
-        // console.log(res);
+        else {
+
+            const res = await UsePostFile("/student/addCV", data, "POST")
+            setuploadingData(false)
+            // console.log(res);
+            const params1 = {
+                data: res,
+                HandleToast: {
+                    toast: toast,
+                    flag: false,
+                }
+            }
+            // console.log(res);
+            responsePipelineHandler(params1, 1)
+            // END OF POSTING DATA EXAMPLE
+        }
         handleClose()
-        responsePipelineHandler(params1, 1)
-        // END OF POSTING DATA EXAMPLE
     }
 
     return (
@@ -123,7 +139,7 @@ export default function UploadResumeCard({ CV_Upload }) {
                                 href={
 
                                     process.env.NODE_ENV == "production" ?
-                                        domainConfig.domain + 
+                                        domainConfig.domain +
                                         // "http://placement.csiddu.tech" + 
                                         CV_Upload : "http://localhost:8000" + CV_Upload
                                 }

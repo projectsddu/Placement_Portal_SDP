@@ -109,7 +109,7 @@ const sendPasswords = async (dateYear) => {
             let password = allPasswords[current_student["Student_ID"]]
             // console.log(current_student)
             await MailerService.notificationMail({
-                "subject": "FIRST TIME PASSWORD - PLACEMENT PORTAL @DHARMSINH DESAI UNIVERSITY", "header": "Your Access To Placement Portal", "body": `You can access the DDU placement portal via the following credentials<br/><b>Student Id:</b>${password.student_id}<br/><b>Password:</b> ${password.password}<br/>please visit ${process.env.DOMAIN}  to login`
+                "subject": "FIRST TIME PASSWORD - PLACEMENT PORTAL @DHARMSINH DESAI UNIVERSITY", "header": "Your Access To Placement Portal", "body": `You can access the DDU placement portal via the following credentials<br/><b>Student Id:</b>${password.student_id}<br/><b>Password:</b> ${password.password}<br/>please visit <a href="${process.env.DOMAIN}">${process.env.DOMAIN}</a>  to login`
             }, current_student["Email_ID"]
             )
         }

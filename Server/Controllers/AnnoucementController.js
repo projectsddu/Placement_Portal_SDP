@@ -14,6 +14,7 @@ const RESP = ResponseService.RESP
 const { request } = require("express");
 const { companies } = require("../Models");
 
+
 async function checkExists(id) {
     const annoucements = await Announcement.findAll({ where: { Announcement_ID: id } })
     return annoucements.length > 0 ? true : false
@@ -123,7 +124,15 @@ const addAnnoucement = async (req, res) => {
 // returns all annoucements
 const getAllAnnoucements = async (req, res) => {
     try {
-        let announcements = await AnnouncementService.getAllAnnoucements()
+        let announcements;
+        console.log(req.usertype)
+        if (req.usertype == "admin") {
+            announcements = await AnnouncementService.getAllAnnoucements("all")
+        }
+        else {
+            let passedOutYear = req.userObj.Passed_out_year
+            announcements = await AnnouncementService.getAllAnnoucements(passedOutYear)
+        }
         if (announcements) {
             // console.log("HERE")
             return RESP(res, announcements.length == 0 ? false : true, announcements.length == 0 ? "No Announcement data!" : announcements)

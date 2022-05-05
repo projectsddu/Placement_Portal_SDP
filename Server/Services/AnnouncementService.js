@@ -11,6 +11,8 @@ const AnnouncementSubscribeService = require("./AnnouncementSubscribe");
 const NotificationService = require("./NotificationService");
 // const AnnouncementSubscribe = require("../Models/AnnouncementSubscribe");
 const Announcement = db.announcements
+const { sequelize } = require("../Models/index")
+const Sequelize = require("sequelize")
 
 async function checkExists(id) {
     const announcements = await Announcement.findAll({
@@ -57,12 +59,28 @@ const createdAnnoucement = async (announcementData, job_description_file) => {
     }
 }
 
-const getAllAnnoucements = async () => {
+const getAllAnnoucements = async (Passed_out_year = "all") => {
     try {
-        let announcements = await Announcement.findAll({
-            order: [
-                ['Announcement_ID', 'DESC']]
-        })
+        let announcements;
+        if (Passed_out_year == "all") {
+
+            announcements = await Announcement.findAll({
+                order: [
+                    ['Announcement_ID', 'DESC']]
+            })
+        }
+        else {
+            let year = new Date(Date.now())
+            year.setDate(0)
+            year.setMonth(0)
+            year.setFullYear(parseInt(Passed_out_year))
+            log.info(year)
+            announcements = await Announcement.findAll({
+                where: sequelize.where(sequelize.fn('YEAR', sequelize.col('Passed_out_year')), year),
+                order: [
+                    ['Announcement_ID', 'DESC']]
+            })
+        }
         if (announcements) {
             announcements = JSON.parse(JSON.stringify(announcements))
             for (let i = 0; i < announcements.length; i++) {

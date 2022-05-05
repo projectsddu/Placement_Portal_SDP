@@ -6,22 +6,22 @@ const StudentService = require("./StudentService")
 const Mailer = require("./MailerService")
 
 
-const adminToSingleUserNotification = async (userId, message, sendMail = false, mailData = {}) => {
+const adminToSingleUserNotification = async (userId, message, sendMail = false, mailData = {}, studentMailId = "") => {
 
     try {
+        console.log(studentMailId)
         const payLoad = {
             userId: userId,
             message: message,
             dateAdded: Date.now(),
             isSeen: false
         }
-        
+
         const status = await Notifications.create(payLoad)
         if (status) {
             console.log(message);
-            if(sendMail)
-            {
-                Mailer.notificationMail(mailData, userId+"@ddu.ac.in")
+            if (sendMail) {
+                Mailer.notificationMail(mailData, studentMailId)
             }
             return true
         }
@@ -36,7 +36,7 @@ const adminToSingleUserNotification = async (userId, message, sendMail = false, 
     }
 }
 
-const adminToBatchNotification = async (student_list, message, sendMail = false, mailData={}) => {
+const adminToBatchNotification = async (student_list, message, sendMail = false, mailData = {}) => {
     try {
         let results = 0
         for (let i = 0; i < student_list.length; i++) {
@@ -144,17 +144,15 @@ const broadcastNotification = async (message) => {
     }
 }
 
-const deleteAllNotificationsOfStudent = async(id) => {
+const deleteAllNotificationsOfStudent = async (id) => {
     try {
         const temp = await Notifications.findAll({ where: { userId: id } })
         const status = temp.length > 0 ? true : false
-        if(status)
-        {
+        if (status) {
             await Notifications.destroy({ where: { userId: id } })
             return true
         }
-        else
-        {
+        else {
             throw "Notification record doesn't exist for the particular Student_ID"
         }
 
