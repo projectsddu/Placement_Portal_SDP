@@ -12,7 +12,9 @@ async function sendMail(mailDetails) {
 
     try {
         let mailTransporter = nodemailer.createTransport({
-            service: EmailService,
+            service: 'gmail',
+            port: 587,
+            secure: true,
             auth: {
                 user: EmailId,
                 pass: EmailPassword
