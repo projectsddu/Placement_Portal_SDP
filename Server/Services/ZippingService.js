@@ -112,12 +112,12 @@ const downloadZipFile = async (fromDir, zipFileName, selectFileNames = "all") =>
         console.log(filesToZip);
         const zip = new AdmZip();
         for (let i = 0; i < filesToZip.length; i++) {
-            const fileZippth = cvPathName + "\\" + filesToZip[i]
+            const fileZippth = path.join(cvPathName, filesToZip[i])
             zip.addLocalFile(fileZippth)
         }
         const downloadName = zipFileName + ".zip"
         const data = zip.toBuffer()
-        zip.writeZip(zipPath + "/" + downloadName)
+        zip.writeZip(path.join(zipPath, downloadName))
         return data
     }
     catch (err) {
