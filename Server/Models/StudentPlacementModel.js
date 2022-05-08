@@ -10,23 +10,23 @@ module.exports = (sequelize, DataTypes) => {
         },
         Designation: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         Salary: {
             type: DataTypes.DOUBLE,
-            allowNull: false
+            allowNull: true
         },
         Offer_Letter: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         Passed_out_year: {
             type: DataTypes.DATE,
-            allowNull: false
+            allowNull: true
         },
         IsFinal: {
             type: DataTypes.BOOLEAN,
-            allowNull: false
+            allowNull: true
         },
 
     }, {

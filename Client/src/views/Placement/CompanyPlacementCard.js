@@ -1,7 +1,7 @@
 import { Typography, MenuItem, Button, Checkbox } from '@material-ui/core';
 import React, { useState, useEffect } from 'react';
 import SubCard from '../../ui-component/cards/SubCard';
-import { TextField } from '@material-ui/core';
+import { TextField, Chip } from '@material-ui/core';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import UseFetch from '../../Utilities/UseFetch';
@@ -269,6 +269,7 @@ function CompanyPlacementCard(props) {
                     </Grid>
                     {studentPlacementStateDetails.Company_details === undefined ? "" :
                         <Grid justifyContent={"flex-start"} md={2} style={{ "padding-top": "1%" }} >
+                            {studentPlacementStateDetails["Offer_Letter"] != "no_offer_letter.pdf" ?
                             <a target="_blank" href={
 
                                 process.env.NODE_ENV == "production" ?
@@ -281,7 +282,11 @@ function CompanyPlacementCard(props) {
                             } style={{ "text-decoration": "none" }}>
 
                                 <Button variant="contained">View File</Button>
-                            </a>
+                            </a>:
+                            <>
+                            <Chip style={{ fontWeight:'bold'}} variant="filled" label="No Offer Letter" />
+                        </>
+                    }
                         </Grid>
                     }
 

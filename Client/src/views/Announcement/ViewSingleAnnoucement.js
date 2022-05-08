@@ -195,6 +195,7 @@ function ViewSingleAnnoucement() {
     //     responsePipelineHandler(params1, 1)
     // }
 
+    // console.log("from line 198", announcement_details)
 
     return (
         <>
@@ -255,28 +256,33 @@ function ViewSingleAnnoucement() {
                                         </TableCell>
                                         <TableCell align="right">
                                             {announcement_details === undefined ? "Wait Loading...." : <>
-                                                <a target='blank'
-                                                    style={{ "text-decoration": "none", "cursor": "pointer" }}
-                                                    href={
-                                                        process.env.NODE_ENV == "production" ?
-                                                            // "http://csiddu.tech" + 
-                                                            domainConfig.domain + 
-                                                            
-                                                            announcement_details["Job_Description_File"]
-                                                            : "http://localhost:8000" + announcement_details["Job_Description_File"]
-                                                    }>
+                                                {announcement_details["Job_Description_File"] != null ?
+                                                    <a target='blank'
+                                                        style={{ "text-decoration": "none", "cursor": "pointer" }}
+                                                        href={
+                                                            process.env.NODE_ENV == "production" ?
+                                                                // "http://csiddu.tech" + 
+                                                                domainConfig.domain +
 
-                                                    {announcement_details === undefined ? "Wait Loading...." : <>
-                                                        <Chip
-                                                            label={"View Job Description File"}
-                                                            // variant="outlined"
-                                                            color='primary'
-                                                            clickable
-                                                        />
+                                                                announcement_details["Job_Description_File"]
+                                                                : "http://localhost:8000" + announcement_details["Job_Description_File"]
+                                                        }>
+
+                                                        {announcement_details === undefined ? "Wait Loading...." : <>
+                                                            <Chip
+                                                                label={"View Job Description File"}
+                                                                // variant="outlined"
+                                                                color='primary'
+                                                                clickable
+                                                            />
+                                                        </>
+                                                        }
+
+                                                    </a> :
+                                                    <>
+                                                        <Chip variant="filled" label="No Job Description File" />
                                                     </>
-                                                    }
-
-                                                </a>
+                                                }
                                             </>}
 
                                         </TableCell>

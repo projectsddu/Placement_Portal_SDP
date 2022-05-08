@@ -208,6 +208,9 @@ function AddAnnoucement() {
         boxShadow: 24,
         p: 4,
     };
+
+    // console.log("from line 212", data)
+
     return (
 
         <MainCard title="Edit Announcement" >
@@ -410,12 +413,28 @@ function AddAnnoucement() {
                             data === undefined ? "" :
                                 process.env.NODE_ENV == "production" ?
                                     // "http://csiddu.tech" + 
-                                    domainConfig.domain + 
+                                    domainConfig.domain +
                                     data["Job_Description_File"]
                                     : "http://localhost:8000" + data["Job_Description_File"]
                         }>
                             <Button variant="contained">View Job Description File</Button>
                         </a>
+                        {/* {data["Job_Description_File"] != undefined ?
+                            <a target='_blank' style={{ "text-decoration": "none" }} href={
+                                data === undefined ? "" :
+                                    process.env.NODE_ENV == "production" ?
+                                        // "http://csiddu.tech" + 
+                                        domainConfig.domain +
+                                        data["Job_Description_File"]
+                                        : "http://localhost:8000" + data["Job_Description_File"]
+                            }>
+                                <Button variant="contained">View Job Description File</Button>
+                            </a>
+                            :
+                            <>
+                                <Chip variant="filled" label="No Job Description File" />
+                            </>
+                        } */}
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>

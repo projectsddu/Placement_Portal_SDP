@@ -202,7 +202,7 @@ const RestLogin = (props, { ...others }) => {
 
             </FormControl>
             <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
-                <FormControlLabel
+                {/* <FormControlLabel
                     control={
                         <Checkbox
                             checked={checked}
@@ -212,7 +212,8 @@ const RestLogin = (props, { ...others }) => {
                         />
                     }
                     label="Remember me"
-                />
+                /> */}
+                <br />
                 <Typography
                     variant="subtitle1"
                     component={Link}
@@ -222,6 +223,7 @@ const RestLogin = (props, { ...others }) => {
                 >
                     Forgot Password?
                 </Typography>
+                <br />
             </Stack>
             {/* {errors.submit && (
                             <Box
