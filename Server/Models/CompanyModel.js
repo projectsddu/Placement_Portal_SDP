@@ -12,75 +12,75 @@ module.exports = (sequelize, DataTypes) => {
         },
         Company_address: {
             type: DataTypes.TEXT,
-            allowNull: false
+            allowNull: true
         },
         Contact_person_1_name: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         Contact_person_1_email_ID: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         Contact_person_1_designation: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         Contact_person_1_Mobile: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         Contact_person_2_name: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         Contact_person_2_email_ID: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         Contact_person_2_designation: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         Contact_person_2_Mobile: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         Contact_person_3_name: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         Contact_person_3_email_ID: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         Contact_person_3_designation: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         Contact_person_3_Mobile: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         Company_web_site: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         Remarks: {
             type: DataTypes.TEXT,
-            allowNull: false
+            allowNull: true
         },
         Company_offer_type: {
             type: DataTypes.TEXT,
-            allowNull: false
+            allowNull: true
         },
         City: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         State: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
 
     }, {

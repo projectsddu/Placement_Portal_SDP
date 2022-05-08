@@ -78,7 +78,7 @@ const checkDuplicate = async (studentId, companyId, Designation) => {
 
 
 const createStudentPlacement = async (studentplacementdata, fromFile = false) => {
-    console.log("Create service callsed")
+    console.log("Create service called")
     try {
         const status = await isFirstPlacement(studentplacementdata.Student_ID)
         if (status) {
@@ -92,6 +92,10 @@ const createStudentPlacement = async (studentplacementdata, fromFile = false) =>
 
         }
         const student_details = await StudentService.getOneStudent(studentplacementdata.Student_ID)
+        if(studentplacementdata["Offer_Letter"] == '')
+        {
+            studentplacementdata["Offer_Letter"] = "no_offer_letter.pdf"
+        }
 
         if (fromFile) {
             // console.log("from line 72", studentplacementdata)

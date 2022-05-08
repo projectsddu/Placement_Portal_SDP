@@ -14,14 +14,19 @@ async function checkExists(id) {
     return studentinternships.length > 0 ? true : false
 }
 
-async function checkDuplicate(Student_ID, Company_ID, Stipend) {
+// async function checkDuplicate(Student_ID, Company_ID, Stipend) {
+async function checkDuplicate(Student_ID, Company_ID) {
     try {
         let internships = await StudentInternship.findAll({
             where: {
                 Student_ID
-                    : Student_ID, Company_ID
-                    : Company_ID, Stipend
-                    : Stipend
+                    : Student_ID, 
+                    Company_ID
+                    : Company_ID
+                    // Company_ID
+                    // : Company_ID, 
+                    // Stipend
+                    // : Stipend
             }
         })
         internships = JSON.parse(JSON.stringify(internships))
@@ -78,7 +83,8 @@ const createStudentInternship = async (data, viaCSV = false) => {
 
         }
         data["Passed_out_year"] = studentDetails.Passed_out_year
-        const duplicateStatus = await checkDuplicate(data["Student_ID"], data["Company_ID"], data["Stipend"])
+        // const duplicateStatus = await checkDuplicate(data["Student_ID"], data["Company_ID"], data["Stipend"])
+        const duplicateStatus = await checkDuplicate(data["Student_ID"], data["Company_ID"])
         if (!duplicateStatus) {
 
             await StudentInternship.create(data)

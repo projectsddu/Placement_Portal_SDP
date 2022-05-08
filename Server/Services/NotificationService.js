@@ -19,7 +19,7 @@ const adminToSingleUserNotification = async (userId, message, sendMail = false, 
 
         const status = await Notifications.create(payLoad)
         if (status) {
-            console.log(message);
+            // console.log(message);
             if (sendMail) {
                 Mailer.notificationMail(mailData, studentMailId)
             }

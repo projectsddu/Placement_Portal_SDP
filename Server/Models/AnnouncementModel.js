@@ -13,16 +13,16 @@ module.exports = (sequelize, DataTypes) => {
         },
         Date_of_Visit: {
             type: DataTypes.DATE,
-            allowNull: false
+            allowNull: true
         },
         Date_of_announcement: {
             type: DataTypes.DATE,
-            allowNull: false,
+            allowNull: true,
             defaultValue: DataTypes.NOW
         },
         Eligible_Branches: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         Passed_out_year: {
             type: DataTypes.DATE,
@@ -30,23 +30,23 @@ module.exports = (sequelize, DataTypes) => {
         },
         Job_Role: {
             type: DataTypes.TEXT,
-            allowNull: false
+            allowNull: true
         },
         Salary: {
             type: DataTypes.TEXT,
-            allowNull: false
+            allowNull: true
         },
         Job_Location: {
             type: DataTypes.TEXT,
-            allowNull: false
+            allowNull: true
         },
         Bond_Details: {
             type: DataTypes.TEXT,
-            allowNull: false
+            allowNull: true
         },
         Other_Details: {
             type: DataTypes.TEXT,
-            allowNull: false
+            allowNull: true
         },
         Job_Description_File: {
             type: DataTypes.TEXT,
@@ -60,12 +60,12 @@ module.exports = (sequelize, DataTypes) => {
         // doubt (JHB Sir)
         Eligibility: {
             type: DataTypes.TEXT,
-            allowNull: false
+            allowNull: true
         },
 
         IsOpen: {
             type: DataTypes.BOOLEAN,
-            allowNull: false
+            allowNull: true
         }
 
     },

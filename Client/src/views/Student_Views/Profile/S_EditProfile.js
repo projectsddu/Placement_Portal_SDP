@@ -606,6 +606,7 @@ function S_EditProfile() {
                             <Grid item md={6} xs={12}>
                                 <TextField
                                     // required
+                                    disabled
                                     fullWidth
                                     label="Branch"
                                     helperText="Enter the branch"

@@ -390,7 +390,7 @@ export default function S_ViewSingleAnnouncement() {
                                                             </>
                                                             }
                                                         </a>
-                                                    </> : <Chip label="No Job Description File!" />
+                                                    </> : <Chip label="No Job Description File" />
                                                 }
                                                 {/* <a target='blank'
                                                     style={{ "text-decoration": "none", "cursor": "pointer" }}

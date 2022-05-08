@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SubCard from '../../../ui-component/cards/SubCard';
 import { withStyles } from '@material-ui/styles';
-import { TextField, Typography, MenuItem, Button, Checkbox } from '@material-ui/core';
+import { TextField, Typography, MenuItem, Button, Checkbox, Chip } from '@material-ui/core';
 import Grid from '@mui/material/Grid';
 import { red, blue } from '@mui/material/colors';
 import domainConfig from '../../../Config/domainConfig';
@@ -21,6 +21,8 @@ function S_PlacementCard(props) {
         // console.log(props)
         setstudentPlacementStateDetails(props.details);
     }, []);
+
+    // console.log("from line 25",studentPlacementStateDetails["Offer_Letter"])
 
     return (
         <>
@@ -66,6 +68,7 @@ function S_PlacementCard(props) {
                 <Grid item xs={12} md={12}>
                     <Grid container spacing={1}>
                         <Grid style={{"padding-top" : "1.5%"}} item xs={6} md={2}>
+                        {studentPlacementStateDetails["Offer_Letter"] != "no_offer_letter.pdf" ?
                             <a
                                 target="_blank"
                                 href={
@@ -81,7 +84,11 @@ function S_PlacementCard(props) {
                                 <Button size='small'
                                     style={{backgroundColor: btn_color}}
                                 variant="contained">View File</Button>
-                            </a>
+                            </a> :
+                            <>
+                            <Chip style={{ color:'white', fontWeight:'bold' }} variant="outlined" label="No Offer Letter" />
+                        </>
+                    }
                         </Grid>
                         <Grid  item xs={6} md={10}>
                             <label>Final</label>{' '}
