@@ -43,24 +43,6 @@ async function sendMail(mailDetails) {
     //         pass: process.env.EMAIL_PASSWORD
     //     }
     // });
-
-    // await mailTransporter.sendMail(mailDetails, function (err, data) {
-    //     if (err) {
-    //         log.error(err.toString())
-    //         return false
-    //     } else {
-    //         console.log(`Email sent to ${mailDetails.to} successfully`);
-    //         return true
-    //     }
-    // })
-
-    // return false
-    // let mailDetails = {
-    //     from: 'abcxyz1814@gmail.com',
-    //     to: 'abc@gmail.com',
-    //     subject: 'Test mail',
-    //     text: 'Node.js testing mail for GeeksforGeeks'
-    // };
 }
 
 

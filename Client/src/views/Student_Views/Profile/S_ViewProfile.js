@@ -256,25 +256,21 @@ export default function S_ViewProfile() {
                     setSkillDetails(data[0]);
                     setSkillExist(true);
 
-                    
+
                 }
                 console.log(data[0]);
 
                 let response1 = undefined
                 response1 = await fetch("/studentplacement/getStudentPlacementInStudent/")
-                if(response1 != undefined)
-                {
+                if (response1 != undefined) {
                     let placementData = undefined
                     placementData = await response1.json()
                     // let studentPlacementCardCopy = placementCard
-                    if(placementData != undefined)
-                    {
-                        if(placementData["data"] == "Student Placement Record Not Found!")
-                        {
+                    if (placementData != undefined) {
+                        if (placementData["data"] == "Student Placement Record Not Found!") {
                             setPlacementDetails(undefined)
                         }
-                        else
-                        {
+                        else {
                             setPlacementDetails(placementData["data"])
                         }
                     }
@@ -290,25 +286,21 @@ export default function S_ViewProfile() {
                     //     }
                     //     setPlacementCard([].concat(studentPlacementCardCopy))
                     // }
-                        // console.log(placementData)
+                    // console.log(placementData)
 
                     let response2 = undefined
                     response2 = await fetch("/studentinternship/getStudentInternshipInStudent/")
 
-                    if(response2 != undefined)
-                    {
+                    if (response2 != undefined) {
                         let internshipsData = undefined
                         internshipsData = await response2.json()
                         // let internshipCardCopy = internshipCard
                         console.log(internshipsData["data"])
-                        if(internshipsData != undefined)
-                        {
-                            if(internshipsData["data"] == "Student Internship Record Not Found!")
-                            {
+                        if (internshipsData != undefined) {
+                            if (internshipsData["data"] == "Student Internship Record Not Found!") {
                                 setInternshipDetails(undefined)
                             }
-                            else
-                            {
+                            else {
                                 setInternshipDetails(internshipsData["data"])
                             }
                         }
@@ -523,8 +515,8 @@ export default function S_ViewProfile() {
                         {/* <SubCard> */}
                         <TableContainer component={Paper}
                             style={{ width: "100%" }}
-                            // md={{minWidth: "50%"}}
-                            // sx={{ minWidth: 500 }}
+                        // md={{minWidth: "50%"}}
+                        // sx={{ minWidth: 500 }}
                         >
                             <Table
                                 // sx={{ minWidth: 500 }} 
@@ -564,7 +556,7 @@ export default function S_ViewProfile() {
 
                                                         process.env.NODE_ENV == "production" ?
                                                             // "http://placement.csiddu.tech" + 
-                                                            domainConfig.domain + 
+                                                            domainConfig.domain +
                                                             student_details["CV_Upload"] : "http://localhost:8000" + student_details["CV_Upload"]
                                                     }>
 
@@ -600,7 +592,7 @@ export default function S_ViewProfile() {
                                                     href={
                                                         process.env.NODE_ENV == "production" ?
                                                             // "http://placement.csiddu.tech" + 
-                                                            domainConfig.domain + 
+                                                            domainConfig.domain +
                                                             student_details["Student_Photo"] : "http://localhost:8000" + student_details["Student_Photo"]
 
 
@@ -624,41 +616,41 @@ export default function S_ViewProfile() {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        <br/>
-                        <br/>
+                        <br />
+                        <br />
                         <MainCard title={ViewConfig.student.Profile.placements.Header}>
                             {
-                                placementDetails == undefined ? 
+                                placementDetails == undefined ?
                                     <>
                                         <ChipCard loading={false} data={<EmptyPlacement />} />
                                     </>
-                                : 
-                                placementDetails.map((e) => {
-                                    return(<>
-                                        {/* {e} */}
-                                        <ChipCard data={<S_PlacementCard details={e} />} />
-                                        <br />
-                                    </>)
-                                })
-                            }                        
-                        </MainCard>
-                        <br/>
-                        <MainCard title={ViewConfig.student.Profile.internships.Header}>
-                            {
-                                internshipDetails == undefined ? 
-                                    <>
-                                        <ChipCard loading={false} data={<EmptyInternship />} />
-                                </>
-                                :
-                                internshipDetails.map((e) => {
-                                    return(<>
-                                        <ChipCard data={<S_InternshipCard details={e} />} />
-                                        <br />
-                                    </>)
-                                })
+                                    :
+                                    placementDetails.map((e) => {
+                                        return (<>
+                                            {/* {e} */}
+                                            <ChipCard data={<S_PlacementCard details={e} />} />
+                                            <br />
+                                        </>)
+                                    })
                             }
                         </MainCard>
-                        
+                        <br />
+                        <MainCard title={ViewConfig.student.Profile.internships.Header}>
+                            {
+                                internshipDetails == undefined ?
+                                    <>
+                                        <ChipCard loading={false} data={<EmptyInternship />} />
+                                    </>
+                                    :
+                                    internshipDetails.map((e) => {
+                                        return (<>
+                                            <ChipCard data={<S_InternshipCard details={e} />} />
+                                            <br />
+                                        </>)
+                                    })
+                            }
+                        </MainCard>
+
                         {/* </SubCard> */}
 
 

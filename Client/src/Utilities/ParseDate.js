@@ -2,6 +2,33 @@ function getTime(date) {
     return date.getHours() + ":" + date.getMinutes()
 }
 
+const PadZeros = function (number) {
+    if (parseInt(number) < 10) {
+        return "0" + number
+    }
+    return number
+}
+
+const Convert24To12Time = function (dt) {
+    let Hour = dt.getHours()
+    let Minutes = dt.getMinutes()
+    let Meridian = "AM"
+    if (Hour > 12) {
+        Hour -= 12
+        Meridian = "PM"
+    }
+    if (Hour == 12) {
+        Meridian = "PM"
+    }
+
+    Hour = PadZeros(Hour)
+    Minutes = PadZeros(Minutes)
+
+    return Hour + ":" + Minutes + " " + Meridian
+}
+
+
+
 const ParseDate = function (date, time_required = false) {
     // console.log(date)
     var new_date = new Date(date)
@@ -12,10 +39,10 @@ const ParseDate = function (date, time_required = false) {
         var date_part = parse_date[0]
         var time_part = parse_date[1]
         var date_splitted = date_part.split("-")
-        return_date += new_date.getDate() + "/" + (new_date.getMonth() + 1) + "/" + new_date.getFullYear()
+        return_date += PadZeros(new_date.getDate()) + "/" + PadZeros(new_date.getMonth() + 1) + "/" + new_date.getFullYear()
         if (time_required) {
             var time_splitted = time_part.split(":")
-            return_date += " " + new_date.getHours() + ":" + new_date.getMinutes()
+            return_date += " " + Convert24To12Time(new_date)
         }
 
         return return_date

@@ -48,7 +48,7 @@ const getPlacementReportByBatchYear = async (batch_year) => {
         for (let i = 0; i < placements.length; i++) {
             let student = await StudentService.getOneStudent(placements[i]["Student_ID"])
 
-            placements[i]["Student_Name"] = student["FirstName"] + " "+ student["LastName"]
+            placements[i]["Student_Name"] = student["FirstName"] + " " + student["LastName"]
 
             if (student["Gender"].toLowerCase() == "male" || student["Gender"].toLowerCase() == "m") {
                 placementsMetadata["Male"]++;
@@ -81,6 +81,7 @@ const getPlacementReportByBatchYear = async (batch_year) => {
 
             // console.log("Company Name: ", companyDetails["Company_name"])
             placements[i]["Company_name"] = companyDetails["Company_name"]
+            placements[i]["Current_CPI"] = student["Current_CPI"]
         }
 
         // average salary
@@ -245,8 +246,8 @@ const placedStudentsByCompany = async (batch_year) => {
             // use according name of the table by lloking at ppmyadmin
             let placementsData = await StudentPlacement.findAll({
                 attributes: ['id', 'Company_ID', 'Designation', 'Salary', [sequelize.fn('count', sequelize.col('Student_ID')), 'student_count']],
-                where: {IsFinal: 1},
-                group : ['StudentPlacement.Company_ID'],
+                where: { IsFinal: 1 },
+                group: ['StudentPlacement.Company_ID'],
                 raw: true,
             })
             placements = placementsData
@@ -255,10 +256,10 @@ const placedStudentsByCompany = async (batch_year) => {
             console.log("inside the else")
             let placementsData = await StudentPlacement.findAll({
                 attributes: ['id', 'Company_ID', 'Designation', 'Salary', [sequelize.fn('count', sequelize.col('Student_ID')), 'student_count']],
-                where:[ sequelize.where(sequelize.fn('YEAR', sequelize.col('Passed_out_year')), batch_year),
-                {IsFinal: 1}
+                where: [sequelize.where(sequelize.fn('YEAR', sequelize.col('Passed_out_year')), batch_year),
+                { IsFinal: 1 }
                 ],
-                group : ['StudentPlacement.Company_ID'],
+                group: ['StudentPlacement.Company_ID'],
                 raw: true,
             })
 
@@ -292,13 +293,11 @@ const placedStudentsByCompany = async (batch_year) => {
 }
 
 const singleCompanyDetails = async (company_id, batch_year) => {
-    try
-    {
+    try {
 
         let placements;
 
-        if(batch_year == "all" || batch_year == "ALL" || batch_year == "All")
-        {
+        if (batch_year == "all" || batch_year == "ALL" || batch_year == "All") {
             placements = await StudentPlacement.findAll({
                 where: {
                     IsFinal: 1, Company_ID: company_id
@@ -307,13 +306,13 @@ const singleCompanyDetails = async (company_id, batch_year) => {
         }
         else {
             placements = await StudentPlacement.findAll({
-                where: [ sequelize.where(sequelize.fn('YEAR', sequelize.col('Passed_out_year')), batch_year),
-                    {IsFinal: 1},
-                    {Company_ID: company_id}
+                where: [sequelize.where(sequelize.fn('YEAR', sequelize.col('Passed_out_year')), batch_year),
+                { IsFinal: 1 },
+                { Company_ID: company_id }
                 ]
             })
         }
-        
+
 
         placements = JSON.parse(JSON.stringify(placements))
 
@@ -321,8 +320,7 @@ const singleCompanyDetails = async (company_id, batch_year) => {
 
         let student_list = []
 
-        for(let i = 0; i < placements.length; i++)
-        {
+        for (let i = 0; i < placements.length; i++) {
             let student_details = await StudentService.getOneStudent(placements[i]["Student_ID"])
 
             student_list.push(student_details)

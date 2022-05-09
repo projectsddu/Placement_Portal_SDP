@@ -90,6 +90,7 @@ function GetPlacementReport() {
         { field: 'Student_Name', headerName: 'Student Name', width: 200, editable: false },
         { field: 'Company_name', headerName: 'Company Name', width: 220, editable: false },
         { field: 'Designation', headerName: 'Designation', width: 220, editable: false },
+        { field: 'Current_CPI', headerName: 'CPI', width: 220, editable: false },
         {
             field: 'Salary', headerName: 'Salary', width: 180, editable: false,
             renderCell: (id) => {
