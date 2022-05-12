@@ -7,6 +7,7 @@ const StudentPlacement = db.student_placements
 const Company = db.companies
 const CompanyService = require("./CompanyService")
 const StudentService = require("./StudentService")
+const MailerService = require("./MailerService")
 
 
 async function isFinalPlacementPresent(studentId) {
@@ -79,6 +80,8 @@ const checkDuplicate = async (studentId, companyId, Designation) => {
 
 const createStudentPlacement = async (studentplacementdata, fromFile = false) => {
     console.log("Create service called")
+
+    console.log(JSON.stringify(studentplacementdata))
     try {
         const status = await isFirstPlacement(studentplacementdata.Student_ID)
         if (status) {
@@ -92,8 +95,7 @@ const createStudentPlacement = async (studentplacementdata, fromFile = false) =>
 
         }
         const student_details = await StudentService.getOneStudent(studentplacementdata.Student_ID)
-        if(studentplacementdata["Offer_Letter"] == '')
-        {
+        if (studentplacementdata["Offer_Letter"] == '') {
             studentplacementdata["Offer_Letter"] = "no_offer_letter.pdf"
         }
 
@@ -121,7 +123,7 @@ const createStudentPlacement = async (studentplacementdata, fromFile = false) =>
                 if (studentplacementdata["Company_ID"] == "" || studentplacementdata["Company_ID"] == undefined || studentplacementdata["Company_ID"] == null) {
                     return "Company name for record:" + studentplacementdata["Student_ID"] + " cannot be empty"
                 }
-                return "No company named " + studentplacementdata["Company_ID"] + " found for record" + studentplacementdata["Student_ID"]
+                return "No company named " + studentplacementdata["Company_Name"] + " found for record" + studentplacementdata["Student_ID"]
             }
             studentplacementdata["Company_ID"] = res2[0]["Company_ID"]
         }
@@ -134,9 +136,20 @@ const createStudentPlacement = async (studentplacementdata, fromFile = false) =>
         if (!status2) {
             console.log("Creating data")
             await StudentPlacement.create(studentplacementdata)
+
+            const company = await CompanyService.getCompany(studentplacementdata["Company_ID"])
+
+
+            const payload = {
+                subject: "Congrats on your achievement.",
+                header: "You have been offered a role at " + company["Company_name"],
+                body: "Congrats on your role in " + company["Company_name"] + ".Check your placement details by logging in placement portal."
+            }
+
+
+            await MailerService.notificationMail(payload, student_details["Email_ID"] == "" ? student_details["Student_ID"] + "@ddu.ac.in" : student_details["Email_ID"])
         }
-        else {
-        }
+
         return "OK"
     } catch (error) {
         console.log(JSON.parse(JSON.stringify(studentplacementdata)))

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from '@material-ui/core';
-import { red } from '@mui/material/colors';
+import { red, lightGreen, green } from '@mui/material/colors';
 // assets
 import {
     // Avatar,
@@ -174,6 +174,9 @@ function ViewSingleAnnoucement() {
         ];
     }
 
+    const handleNotification = async (idx) => {
+        history.push("/announcement/notification/" + idx)
+    }
     // const name = new URLSearchParams(search).get('id');
 
     // const [commentData, setcommentData] = useState({
@@ -205,17 +208,28 @@ function ViewSingleAnnoucement() {
                     ''
                 ) : (
                     <>
-                        <Grid container spacing={2}>
-                            <Grid item xs={6} md={3}>
+                        <Grid container spacing={2} justifyContent="flex-start">
+                            <Grid item>
                                 <Button onClick={() => handleEdit(announcement_details["Announcement_ID"])} variant="contained" size="large" color="primary">
                                     Edit Announcement
                                 </Button>
 
                             </Grid>
-                            <Grid item xs={6} md={9}>
+                            <Grid item
+                            // xs={4} md={3}
+                            >
 
                                 <Button onClick={() => handleSubscribedStudents(announcement_details["Announcement_ID"])} variant="contained" size="large" style={{ "backgroundColor": red["A400"] }}>
                                     See Applied Students
+                                </Button>
+                            </Grid>
+
+                            <Grid item
+                            // xs={4} md={6}
+                            >
+
+                                <Button onClick={() => handleNotification(announcement_details["Announcement_ID"])} variant="contained" size="large" style={{ "backgroundColor": "#24cc1f" }}>
+                                    Send Notification
                                 </Button>
                             </Grid>
 

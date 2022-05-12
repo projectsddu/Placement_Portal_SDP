@@ -13,6 +13,9 @@ import { styled } from '@mui/material/styles';
 import UsePostFile from '../../Utilities/UsePostFile'
 import HandleToast from '../../Utilities/HandleToast'
 import { ToastContainer, toast } from 'react-toastify';
+
+import CircularProgress from '@mui/material/CircularProgress';
+import Modal from '@mui/material/Modal';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import UseFetch from '../../Utilities/UseFetch';
 
@@ -24,6 +27,9 @@ const Input = styled('input')({
 
 export default function AddInternshipViaCSV() {
 
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     const [data, setData] = useState({
     });
     useEffect(() => { }, [data]);
@@ -39,6 +45,7 @@ export default function AddInternshipViaCSV() {
     };
 
     async function handleSubmit() {
+        handleOpen()
         if (JSON.stringify(data) == "{}") {
             toast.error("Please upload a file.")
         }
@@ -55,11 +62,29 @@ export default function AddInternshipViaCSV() {
             // console.log(res);
             responsePipelineHandler(params1, 1)
         }
+        handleClose()
         // END OF POSTING DATA EXAMPLE
     }
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        bgcolor: 'background.paper',
+        // boxShadow: 24,
+        p: 4,
+        border: "0px solid white"
+    };
 
     return (
         <MainCard title="Add Student Internship Via CSV">
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <CircularProgress style={style} color="primary" />
+            </Modal>
             <form enctype="multipart/form-data">
                 <label htmlFor="contained-button-file">
                     <Input
