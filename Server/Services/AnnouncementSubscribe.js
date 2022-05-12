@@ -13,6 +13,7 @@ const CompanyService = require("./CompanyService")
 const Subscribers = db.subscribes
 const NotificationService = require("./NotificationService")
 const SkillsAndAchievementsService = require("./SkillsAndAchievementsService")
+const MailerService = require("./MailerService")
 
 async function checkExists(id) {
     const announcements = await Announcement.findAll({
@@ -61,9 +62,9 @@ const addSubsriberToAnnouncement = async (student_id, announcement_id, studentMa
         console.log(announcementDetails);
 
         const mailData = {
-            "subject": "Regarding " + announcementDetails["Company_details"]["Company_name"] + ": " + announcementDetails["Job_Role"] + " Role Announcement Subscription",
-            "header": "Applied to an Announcement Successfully",
-            "body": "You will be updated regarding mentioned applied announcement for " + announcementDetails["Company_details"]["Company_name"] + " " + announcementDetails["Job_Role"] + " role",
+            "subject": "Regarding " + announcementDetails["Company_details"]["Company_name"] + ": " + announcementDetails["Job_Role"] + " Role Announcement.",
+            "header": "Applied to Announcement Successfully",
+            "body": "You will be updated regarding mentioned applied announcement for " + announcementDetails["Company_details"]["Company_name"] + " " + announcementDetails["Job_Role"] + " role.",
         }
         // console.log(mailData.body);
         await NotificationService.adminToSingleUserNotification(student_id, mailData.body, true, mailData, studentMailId)
@@ -195,10 +196,50 @@ const getSubscribedAnnouncements = async (student_id) => {
     }
 }
 
+const sendSubscribedStudentsMail = async (announcement_id, payload) => {
+    try {
+
+        let students = await getSubscribedStudentsOfAnnouncement(announcement_id)
+        students = JSON.parse(JSON.stringify(students))
+
+        let announcement = await Announcement.findAll({
+            where: { Announcement_ID: announcement_id }
+        })
+        announcement = JSON.parse(JSON.stringify(announcement))
+        let company = await CompanyService.getCompany(announcement[0].Company_ID)
+        announcement[0]["Company_details"] = company
+
+        payload["subject"] = company["Company_name"] + " " + (announcement["Job_Role"] == undefined ? "" : " Role:" + announcement["Job_Role"]) + "\n" + payload["subject"]
+
+        payload["header"] = company["Company_name"] + " " + (announcement["Job_Role"] == undefined ? "" : " Role:" + announcement["Job_Role"]) + "\n" + payload["header"]
+
+        for (let i = 0; i < students.length; i++) {
+            let studentEmailId = ""
+            if (students[i]["Email_ID"] == "") {
+                studentEmailId = students[i]["Student_ID"] + "@ddu.ac.in"
+            }
+            else {
+                studentEmailId = students[i]["Email_ID"]
+            }
+            const status = await MailerService.notificationMail(payload, studentEmailId)
+            if (!status) {
+                log.error("> Some error while sending mail.")
+            }
+        }
+        return true
+
+    }
+    catch (err) {
+        log.error(err.toString())
+        return false
+    }
+}
+
 module.exports = {
     addSubsriberToAnnouncement,
     getSubscribedAnnouncements,
     getSubscribedStatus,
     removeSubscribedStatus,
-    getSubscribedStudentsOfAnnouncement
+    getSubscribedStudentsOfAnnouncement,
+    sendSubscribedStudentsMail
 }

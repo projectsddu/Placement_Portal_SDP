@@ -157,11 +157,36 @@ const downloadSubscribedStudentZip = async (req, res) => {
 
 }
 
+const sendSubscribedStudentsMail = async (req, res) => {
+    try {
+        let announcementIdx = req.params.id
+        let data = req.body.data
+        log.info(JSON.stringify(req.body))
+        const payload = {
+            subject: req.body.Subject,
+            header: req.body.Header,
+            body: req.body.Body
+        }
+        let status = await Subscibe.sendSubscribedStudentsMail(announcementIdx, payload)
+        if (status) {
+            return OK(res, "Mail sent to students successfully!")
+        }
+        else {
+            throw "While sending subscribed students mail status returned false."
+        }
+    }
+    catch (err) {
+        log.error(err.toString());
+        return ERROR(res, "Error sending mail to students.")
+    }
+}
+
 module.exports = {
     addStudentToAnnouncement,
     getSubscribedAnnouncements,
     getSubscribedStatus,
     removeStudentToAnnouncement,
     getSubscribedStudentsOfAnnouncement,
-    downloadSubscribedStudentZip
+    downloadSubscribedStudentZip,
+    sendSubscribedStudentsMail
 }

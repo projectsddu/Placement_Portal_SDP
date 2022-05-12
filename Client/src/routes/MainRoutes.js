@@ -26,6 +26,7 @@ const SReg = Loadable(lazy(() => import('../views/utilities/StudentRegisterExamp
 // announcement starts
 const Announcement = Loadable(lazy(() => import('../views/Announcement/index')));
 const AddAnnouncement = Loadable(lazy(() => import('../views/Announcement/AddAnnoucement')));
+const AnnouncementNotification = Loadable(lazy(() => import('../views/Announcement/AnnouncementNotification')));
 const ViewAnnouncement = Loadable(lazy(() => import('../views/Announcement/ViewAnnoucements')));
 const ViewSingleAnnoucement = Loadable(lazy(() => import('../views/Announcement/ViewSingleAnnoucement')));
 const EditAnnouncement = Loadable(lazy(() => import('../views/Announcement/EditAnnouncement')));
@@ -162,6 +163,7 @@ const MainRoutes = () => {
 
                 // Announcement Routes
                 "/announcement/index",
+                "/announcement/notification/:notificationId",
                 '/announcement/add_annoucement',
                 "/announcement/view_annoucement",
                 "/announcement/view_annoucement/:annoucement_id",
@@ -248,6 +250,7 @@ const MainRoutes = () => {
 
                     {/* Announcement Routes */}
                     <Route path="/announcement/index" component={Announcement} />
+                    <Route path="/announcement/notification/:notificationId" component={AnnouncementNotification} />
                     <Route path="/announcement/add_annoucement" component={AddAnnouncement} />
                     <Route path="/announcement/edit_announcement/:annoucement_id" component={EditAnnouncement} />
                     <Route path="/announcement/view_annoucement/:annoucement_id" component={ViewSingleAnnoucement} />

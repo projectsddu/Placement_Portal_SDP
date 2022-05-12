@@ -14,6 +14,7 @@ import { ReportMenu } from './ReportMenu';
 import { AchievementsMenu } from './Student/AchievementsMenu';
 import { AdminDashboard } from './AdminDashboard';
 import { AboutMenu } from './Student/AboutMenu';
+import { NotificationMenu } from './NotificationMenu';
 import { useLocation } from 'react-router';
 
 
