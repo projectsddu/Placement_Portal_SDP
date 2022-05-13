@@ -117,8 +117,7 @@ function ForgotPassword() {
                     }
                 }
                 // console.log(res.data)
-                if(res.data["data"] == "Login using first time password!")
-                {
+                if (res.data["data"] == "Login using first time password!") {
                     history.push("/_student/login/")
                 }
                 if (res.data.status) {
@@ -343,7 +342,7 @@ function ForgotPassword() {
                                                 <FormControl fullWidth
 
                                                     className={classes.loginInput}>
-                                                    <InputLabel htmlFor="outlined-adornment-email-login">Enter New Password</InputLabel>
+                                                    <InputLabel htmlFor="outlined-adornment-email-login">Confirm New Password</InputLabel>
                                                     <OutlinedInput
                                                         type={showPassword ? 'text' : 'password'}
                                                         value={data.confirmNewPassword}

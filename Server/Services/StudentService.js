@@ -75,6 +75,7 @@ const createStudent = async (studentData) => {
         }
         else {
             studentData["Student_Photo"] = "/public/student_details/Photo/Placement_Portal_Default_Image.jpg"
+            studentData["CV_Upload"] = "image.png"
             const student = await Student.create(studentData)
             const password = await FirstTimePasswordService.AddFirstTimePassword(student.Student_ID, student.Passed_out_year)
             await UserLoginService.createUserLogin(student.Student_ID, password)
@@ -133,8 +134,7 @@ const updateStudent = async (data, id) => {
             const student = await Student.update(data, { where: { Student_ID: id } })
             const status = await FirstTimeModel.update({ Passed_out_year: data["Passed_out_year"] }, { where: { StudentId: id } })
             console.log(id)
-            if(status)
-            {
+            if (status) {
                 return student
             }
         }

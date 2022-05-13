@@ -380,7 +380,7 @@ export default function S_ViewProfile() {
                 responsePipelineHandler(params1, 1);
             }
         }
-
+        setSearchData("")
         handleClose()
     }
     async function handleDelete(idx) {

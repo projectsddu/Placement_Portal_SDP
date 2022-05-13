@@ -41,8 +41,8 @@ export default function UploadPhotoCard({ Student_Photo }) {
         const file_data = event.target.files[0]
         const file_name = event.target.files[0]["name"]
         const file_size = parseInt(event.target.files[0]["size"])
-        if (file_size > 2000000) {
-            toast.error("The file size must be less than 2mb.")
+        if (file_size > (2000000 / 4)) {
+            toast.error("The file size must be less than 500Kb.")
             event.target.files[0] = undefined
         }
         else {
