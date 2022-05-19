@@ -85,38 +85,68 @@ function AddComment(props) {
 
 
     async function handleComment(id) {
-        // console.log("clicked " + id);
-        const res = await UsePost("/annoucement/addComment/" + id, commentData, "POST")
-        const params1 = {
-            data: res,
-            HandleToast: {
-                toast: toast,
-                flag: false,
+
+
+        const keys = Object.keys(commentData);
+        // console.log(keys)
+        let count = 0;
+        let flag = false;
+        for (let i = 0; i < keys.length; i++) {
+            let key = keys[i];
+            // console.log(studentInternshipStateDetails[key]);
+            if (commentData[key] == '' || commentData[key] == null) {
+                // alert("Please fill all fields.")
+                // count++;
+                flag = true;
+                break;
             }
         }
-        // console.log(res);
-        responsePipelineHandler(params1, 1)
-
-        setcommentData({ Comment_text: "" })
-
-        // ajax call
-        $.ajax({
-            url: '/annoucement/getAllComments/' + id,
-            type: "GET",
-            success: function (data) {
-                console.log(data)
-
-                let data1 = data["data"]
-
-                data1.sort(function (a, b) {
-                    return new Date(b.Comment_Date) - new Date(a.Comment_Date);
-                })
-
-                setallComments(data1)
-                // const redirect_url = "http://localhost:3000/announcement/view_annoucement/" + id;
-                // $.post(redirect_url, data)
+        // console.log("Count: ", count)
+        // if (count != 0 ) {
+        //     toast.error("All fields are required in internships!")
+        // } 
+        if(flag)
+        {
+            // console.log("inside the error!!")
+            toast.error("Comment text required!") 
+        }
+        else
+        {
+            // console.log("inside the else...")    
+            
+            // console.log("clicked " + id);
+            const res = await UsePost("/annoucement/addComment/" + id, commentData, "POST")
+            const params1 = {
+                data: res,
+                HandleToast: {
+                    toast: toast,
+                    flag: false,
+                }
             }
-        })
+            // console.log(res);
+            responsePipelineHandler(params1, 1)
+            
+            setcommentData({ Comment_text: "" })
+            
+            // ajax call
+            $.ajax({
+                url: '/annoucement/getAllComments/' + id,
+                type: "GET",
+                success: function (data) {
+                    console.log(data)
+                    
+                    let data1 = data["data"]
+                    
+                    data1.sort(function (a, b) {
+                        return new Date(b.Comment_Date) - new Date(a.Comment_Date);
+                    })
+                    
+                    setallComments(data1)
+                    // const redirect_url = "http://localhost:3000/announcement/view_annoucement/" + id;
+                    // $.post(redirect_url, data)
+                }
+            })
+        }
     }
 
 
