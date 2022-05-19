@@ -1,20 +1,51 @@
-const multer = require('multer');
-const router = require('express').Router()
-const ReportController = require("../Controllers/ReportsController")
+const multer = require("multer");
 
+const router = require("express").Router();
 
-router.post("/getPlacementReportByBatchYear", ReportController.getPlacementReportByBatchYear)
+const ReportController = require("../Controllers/ReportsController");
 
-router.post("/multiplePlacements", ReportController.multiplePlacements)
+const AdminAuthenticate = require("../Middlewares/Admin/AdminAuthenticate");
 
-router.post("/placedStudentsByCompany", ReportController.placedStudentsByCompany)
+router.post(
+  "/getPlacementReportByBatchYear",
+  [AdminAuthenticate.AdminAuthenticate],
+  ReportController.getPlacementReportByBatchYear
+);
 
-router.get("/singleCompanyDetails/:id/:batch_year", ReportController.singleCompanyDetails)
+router.post(
+  "/multiplePlacements",
+  [AdminAuthenticate.AdminAuthenticate],
+  ReportController.multiplePlacements
+);
 
-router.post("/studentsInterestedInHigherStudies", ReportController.studentsInterestedInHigherStudies)
+router.post(
+  "/placedStudentsByCompany",
+  [AdminAuthenticate.AdminAuthenticate],
+  ReportController.placedStudentsByCompany
+);
 
-router.post("/unplacedStudents", ReportController.unplacedStudents)
+router.get(
+  "/singleCompanyDetails/:id/:batch_year",
+  [AdminAuthenticate.AdminAuthenticate],
+  ReportController.singleCompanyDetails
+);
 
-router.post("/unplacedInternship", ReportController.unplacedInternship)
+router.post(
+  "/studentsInterestedInHigherStudies",
+  [AdminAuthenticate.AdminAuthenticate],
+  ReportController.studentsInterestedInHigherStudies
+);
 
-module.exports = router
+router.post(
+  "/unplacedStudents",
+  [AdminAuthenticate.AdminAuthenticate],
+  ReportController.unplacedStudents
+);
+
+router.post(
+  "/unplacedInternship",
+  [AdminAuthenticate.AdminAuthenticate],
+  ReportController.unplacedInternship
+);
+
+module.exports = router;

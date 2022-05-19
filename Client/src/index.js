@@ -17,6 +17,12 @@ import './assets/scss/style.scss';
 
 //-----------------------|| REACT DOM RENDER  ||-----------------------//
 
+if (process.env.NODE_ENV == "production") {
+    console.log = () => { }
+    console.warn = () => { }
+    console.error = () => { }
+}
+
 ReactDOM.render(
     <Provider store={store}>
         <PersistGate loading={null} persistor={persister}>
