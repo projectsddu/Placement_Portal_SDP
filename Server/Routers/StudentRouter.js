@@ -14,6 +14,8 @@ const ResponseService = require("../Services/ResponseService")
 const ERROR = ResponseService.ERROR
 const fs = require("fs")
 const fileUpload = require("../Middlewares/FileUpload/FileUpload")
+const CryptoJS = require("crypto-js")
+const SHA = CryptoJS.SHA1
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "./public/student_details")
@@ -36,10 +38,11 @@ const fileStorage1 = multer.diskStorage({
     filename: (req, file, cb) => {
         // const dat = Date.parse(req.body.Date_of_Visit)
         // console.log(typeof req.body.Date_of_Visit)
+        let fileName = req.userId + "-" + SHA(SHA(req.userId).toString()).toString()
         console.log(req.body)
         const extension = file.originalname.split(".")[1]
-        cb(null, req.userId + "." + extension)
-        req.filename = "/student_details/CV/" + req.userId + "." + extension
+        cb(null, fileName + "." + extension)
+        req.filename = "/student_details/CV/" + fileName + "." + extension
         console.log(req.filename);
     }
 
@@ -54,10 +57,11 @@ const fileStorage2 = multer.diskStorage({
     },
 
     filename: (req, file, cb) => {
+        let fileName = req.userId + "-" + SHA(SHA(req.userId).toString()).toString()
         const extension = file.originalname.split(".")[1]
         console.log(req.body)
-        cb(null, req.userId + "." + extension)
-        req.filename = "/public/student_details/Photo/" + req.userId + "." + extension
+        cb(null, fileName + "." + extension)
+        req.filename = "/public/student_details/Photo/" + fileName + "." + extension
         console.log(req.body)
     }
 })

@@ -5,6 +5,7 @@ const http = require("http")
 const proc = require("process")
 const app = express()
 const fs = require("fs")
+const rateLimit = require("express-rate-limit");
 const hostingConfig = require("./Config/hostingConfig")
 const StudentRouter = require("./Routers/StudentRouter")
 const AnnoucementRouter = require("./Routers/AnnoucementRouter")
@@ -55,6 +56,14 @@ try {
     app.use(express.urlencoded({ extended: true }))
     app.use(express.static(__dirname + '/public'));
     app.use(cookieParser());
+    app.use(
+        rateLimit({
+            windowMs: 1000 * 60, // 12 hour duration in milliseconds
+            max: 500,
+            message: "You exceeded the allowed requests. Please try again!",
+            headers: true,
+        })
+    );
     // app.use(fileupload());
 
 
