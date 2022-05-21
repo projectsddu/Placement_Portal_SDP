@@ -141,16 +141,16 @@ const ProfileSection = () => {
             // console.log("in student")
             const res = await UsePost("/logout/student", {}, "POST")
             if (res.data == "Successfully logged out!") {
-                localStorage.clear()
-                history.push("/")
             }
+            localStorage.clear()
+            history.push("/")
         }
         else {
             const res = await UsePost("/logout/admin", {}, "POST")
             if (res.data == "Successfully logged out!") {
-                localStorage.clear()
-                history.push("/admin/login")
             }
+            localStorage.clear()
+            history.push("/admin/login")
         }
     };
     const handleToggle = () => {
@@ -178,7 +178,7 @@ const ProfileSection = () => {
 
             let resp = undefined
             resp = await axios.get("/student/getOneStudent")
-            console.log("In profile section")
+            // console.log("In profile section")
             if (resp) {
                 let data = undefined
                 data = await resp.data.data

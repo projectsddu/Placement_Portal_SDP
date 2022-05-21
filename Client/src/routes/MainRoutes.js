@@ -111,7 +111,7 @@ const MainRoutes = () => {
     const exemptRoutes = ["/admin/login", "/_student/login", "/_student/forgotPassword"]
 
     const isAdminRoute = function (location) {
-        console.log(location.split("/")[2])
+        // console.log(location.split("/")[2])
         if (location.split("/")[1] == "_student") {
             return false
         }
@@ -121,12 +121,12 @@ const MainRoutes = () => {
     }
 
     useEffect(() => {
-        console.log(location.pathname)
+        // console.log(location.pathname)
         if (location.pathname != "/admin/login" && location.pathname != "/_student/login" && location.pathname != "/_student/firstTimeLogin" && location.pathname != "/_student/forgotPassword") {
-            console.log("here")
+            // console.log("here")
 
             const isAdmin = isAdminRoute(location.pathname)
-            console.log(document.cookie)
+            // console.log(document.cookie)
             // const allCookies = HandleCookies.parseCookies(document.cookie)
 
             if (isAdmin) {

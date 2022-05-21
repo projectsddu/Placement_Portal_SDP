@@ -25,16 +25,16 @@ let menuItems
 
 
 if (current_location[3] == "_student" || current_location[3] == "") {
-    console.log(current_location)
-    console.log("Here in student")
+    // console.log(current_location)
+    // console.log("Here in student")
     menuItems = {
         items: [ProfileMenu, AchievementsMenu, AnnouncementStudentMenu, AboutMenu]
     }
 }
 
 else {
-    console.log(current_location)
-    console.log("Here in admin")
+    // console.log(current_location)
+    // console.log("Here in admin")
     menuItems = {
 
         items: [AdminDashboard, StudentMenu, PlacementMenu, InternshipMenu, AnnouncementMenu, CompanyMenu, ReportMenu]

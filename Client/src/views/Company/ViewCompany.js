@@ -126,24 +126,33 @@ function ViewCompany() {
     const [company_list_copy, setCompany_list_copy] = useState([]);
 
     useEffect(async () => {
-        let response = undefined;
-        response = await fetch("/company/getCompany", { method: "GET" })
+        try {
 
-        if (response != undefined) {
-            let jsonData = undefined
-            jsonData = await response.json()
-            if (jsonData != undefined) {
-                console.log(jsonData);
 
-                for (let i = 0; i < jsonData["data"].length; i++) {
-                    jsonData["data"][i]["id"] = i;
+            let response = undefined;
+            response = await fetch("/company/getCompany", { method: "GET" })
+
+            if (response != undefined) {
+                let jsonData = undefined
+                jsonData = await response.json()
+                if (jsonData != undefined) {
+                    console.log(jsonData);
+
+                    for (let i = 0; i < jsonData["data"].length; i++) {
+                        jsonData["data"][i]["id"] = i;
+                    }
+
+                    setCompany_list_original([].concat(jsonData["data"]))
+                    setCompany_list_copy([].concat(jsonData["data"]))
+                    handleCloseLoading()
+                    setDataLoading(false)
+
+                    // console.log(company_list_original)
                 }
-
-                setCompany_list_original([].concat(jsonData["data"]))
-                setCompany_list_copy([].concat(jsonData["data"]))
-                handleCloseLoading()
-                // console.log(company_list_original)
             }
+        }
+        catch (err) {
+            setDataLoading(false)
         }
     }, []);
 
