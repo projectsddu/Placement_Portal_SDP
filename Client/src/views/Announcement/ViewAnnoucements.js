@@ -129,46 +129,57 @@ function ViewAnnoucements() {
     const [announcement_list_copy, setAnnouncement_list_copy] = useState([]);
 
     useEffect(async () => {
-        let response = undefined;
-        response = await fetch("/annoucement/getAllAnnoucements/", { method: "GET" })
-
-        if (response != undefined) {
-            let jsonData = undefined
-            jsonData = await response.json()
-            if (jsonData != undefined) {
-                console.log(jsonData);
-
-                for (let i = 0; i < jsonData["data"].length; i++) {
-                    jsonData["data"][i]["id"] = i;
-
-                    jsonData["data"][i]["Date_of_Visit"] = ParseDate.ParseDate(jsonData["data"][i]["Date_of_Visit"]);
-
-                    jsonData["data"][i]["Date_of_announcement"] = ParseDate.ParseDate(jsonData["data"][i]["Date_of_announcement"]);
-
-                    jsonData["data"][i]["Passed_out_year"] = ParseDate.getYear(jsonData["data"][i]["Passed_out_year"]);
-
-                    jsonData["data"][i]["Registration_Deadline"] = ParseDate.ParseDate(jsonData["data"][i]["Registration_Deadline"], true);
+        try {
 
 
-                    jsonData["data"][i]["title"] = jsonData['data'][i]['Company_details']['Company_name'] +
-                        '-' +
-                        jsonData['data'][i]['Job_Role'] +
-                        (
-                            jsonData['data'][i]['Passed_out_year'] == null || jsonData['data'][i]['Passed_out_year'] == undefined ? " for all batch year" :
-                                ' for ' +
-                                ParseDate.getYear(jsonData['data'][i]['Passed_out_year']) +
-                                ' Batch');
+            let response = undefined;
+            response = await fetch("/annoucement/getAllAnnoucements/", { method: "GET" })
+
+            if (response != undefined) {
+                let jsonData = undefined
+                jsonData = await response.json()
+                if (jsonData != undefined) {
+                    console.log(jsonData);
+
+                    for (let i = 0; i < jsonData["data"].length; i++) {
+                        jsonData["data"][i]["id"] = i;
+
+                        jsonData["data"][i]["Date_of_Visit"] = ParseDate.ParseDate(jsonData["data"][i]["Date_of_Visit"]);
+
+                        jsonData["data"][i]["Date_of_announcement"] = ParseDate.ParseDate(jsonData["data"][i]["Date_of_announcement"]);
+
+                        jsonData["data"][i]["Passed_out_year"] = ParseDate.getYear(jsonData["data"][i]["Passed_out_year"]);
+
+                        jsonData["data"][i]["Registration_Deadline"] = ParseDate.ParseDate(jsonData["data"][i]["Registration_Deadline"], true);
 
 
+                        jsonData["data"][i]["title"] = jsonData['data'][i]['Company_details']['Company_name'] +
+                            '-' +
+                            jsonData['data'][i]['Job_Role'] +
+                            (
+                                jsonData['data'][i]['Passed_out_year'] == null || jsonData['data'][i]['Passed_out_year'] == undefined ? " for all batch year" :
+                                    ' for ' +
+                                    ParseDate.getYear(jsonData['data'][i]['Passed_out_year']) +
+                                    ' Batch');
+
+
+                    }
+
+                    setAnnouncement_list_original([].concat(jsonData["data"]))
+                    setAnnouncement_list_copy([].concat(jsonData["data"]))
+                    console.log(jsonData["data"]);
+                    setDataLoading(false)
+                    handleCloseLoading()
+
+
+                    // console.log()
                 }
 
-                setAnnouncement_list_original([].concat(jsonData["data"]))
-                setAnnouncement_list_copy([].concat(jsonData["data"]))
-                console.log(jsonData["data"]);
-                handleCloseLoading()
-
-                // console.log()
             }
+        }
+        catch (err) {
+            setDataLoading(false)
+
         }
 
     }, []);

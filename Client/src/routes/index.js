@@ -8,6 +8,8 @@ import AuthenticationRoutes from './AuthenticationRoutes';
 
 // project imports
 import config from './../config';
+import { Route } from 'react-router-dom/cjs/react-router-dom.min';
+import ErrorPage from '../views/Error/ErrorPage';
 
 //-----------------------|| ROUTING RENDER ||-----------------------//
 
@@ -24,6 +26,9 @@ const Routes = () => {
 
                 {/* Routes for main layouts */}
                 <MainRoutes />
+                {/* <Route exact path={["*"]}>
+                    <Route exact path="*" component={ErrorPage} />
+                </Route> */}
             </React.Fragment>
         </Switch>
     );

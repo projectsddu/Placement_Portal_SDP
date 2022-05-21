@@ -141,16 +141,16 @@ const ProfileSection = () => {
             // console.log("in student")
             const res = await UsePost("/logout/student", {}, "POST")
             if (res.data == "Successfully logged out!") {
-                localStorage.clear()
-                history.push("/")
             }
+            localStorage.clear()
+            history.push("/")
         }
         else {
             const res = await UsePost("/logout/admin", {}, "POST")
             if (res.data == "Successfully logged out!") {
-                localStorage.clear()
-                history.push("/admin/login")
             }
+            localStorage.clear()
+            history.push("/admin/login")
         }
     };
     const handleToggle = () => {

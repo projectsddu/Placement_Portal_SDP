@@ -72,30 +72,38 @@ export default function ViewStudent() {
     const [student_list_copy, setStudent_list_copy] = useState([]);
 
     useEffect(async () => {
-        const handleOpenLoading = () => setOpen(true);
+        try {
 
-        let response = undefined;
-        response = await fetch("/student/getAllStudents", { method: "GET" })
 
-        if (response != undefined) {
-            let jsonData = undefined
-            jsonData = await response.json()
-            if (jsonData != undefined) {
-                console.log(jsonData);
+            const handleOpenLoading = () => setOpen(true);
 
-                for (let i = 0; i < jsonData["data"].length; i++) {
-                    jsonData["data"][i]["id"] = i;
-                    jsonData["data"][i]["DOB"] = ParseDate(jsonData["data"][i]["DOB"]);
-                    jsonData["data"][i]["Enrollment_year"] = getYear(jsonData["data"][i]["Enrollment_year"]);
-                    jsonData["data"][i]["Passed_out_year"] = getYear(jsonData["data"][i]["Passed_out_year"]);
+            let response = undefined;
+            response = await fetch("/student/getAllStudents", { method: "GET" })
+
+            if (response != undefined) {
+                let jsonData = undefined
+                jsonData = await response.json()
+                if (jsonData != undefined) {
+                    console.log(jsonData);
+
+                    for (let i = 0; i < jsonData["data"].length; i++) {
+                        jsonData["data"][i]["id"] = i;
+                        jsonData["data"][i]["DOB"] = ParseDate(jsonData["data"][i]["DOB"]);
+                        jsonData["data"][i]["Enrollment_year"] = getYear(jsonData["data"][i]["Enrollment_year"]);
+                        jsonData["data"][i]["Passed_out_year"] = getYear(jsonData["data"][i]["Passed_out_year"]);
+                    }
+
+                    setStudent_list_original([].concat(jsonData["data"]))
+                    setStudent_list_copy([].concat(jsonData["data"]))
+                    setDataLoading(false)
+                    handleCloseLoading()
+                    // console.log(company_list_original)
                 }
-
-                setStudent_list_original([].concat(jsonData["data"]))
-                setStudent_list_copy([].concat(jsonData["data"]))
-                setDataLoading(false)
-                handleCloseLoading()
-                // console.log(company_list_original)
             }
+        }
+        catch (err) {
+            setDataLoading(false)
+            // handleCloseLoading(false)
         }
 
     }, []);
@@ -125,6 +133,7 @@ export default function ViewStudent() {
         }
 
         setStudent_list_copy(temp);
+
 
     }
 

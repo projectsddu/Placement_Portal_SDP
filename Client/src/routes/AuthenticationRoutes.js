@@ -1,6 +1,7 @@
 import React, { lazy, useEffect } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import Loadable from '../ui-component/Loadable';
+import ErrorPage from '../views/Error/ErrorPage';
 
 // project imports
 import MinimalLayout from './../layout/MinimalLayout';
@@ -28,6 +29,7 @@ const AuthenticationRoutes = () => {
                     <Route path="/_student/firstTimeLogin" component={FirstTimeLogin} />
                     <Route path="/pages/login/login3" component={AuthLogin3} />
                     <Route path="/pages/register/register3" component={AuthRegister3} />
+                    {/* <Route path="*" component={ErrorPage} /> */}
                 </Switch>
             </MinimalLayout>
         </Route>

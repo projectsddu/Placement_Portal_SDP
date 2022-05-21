@@ -23,13 +23,13 @@ function EmptyCompany() {
         <>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={10}>
-                    <WhiteTextTypography variant="h1">No company added yet</WhiteTextTypography>
+                    <WhiteTextTypography variant="h2">No company added yet</WhiteTextTypography>
                 </Grid>
                 <Grid item xs={12} md={2}>
                     <Button
-                        style={{backgroundColor: color}}
+                        style={{ backgroundColor: color }}
                         variant="contained"
-                        size="large"
+                        size="small"
                         startIcon={<IconCirclePlus />}
                         // color={color}
                         onClick={() => {
