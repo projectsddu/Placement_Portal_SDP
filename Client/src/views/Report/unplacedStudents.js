@@ -111,7 +111,7 @@ function UnplacedStudents() {
                         data={
 
                             <WhiteTextTypography
-                                variant="h1"
+                                variant="h2"
                                 color="secondary"
                             >
                                 Total students who didn't got any placement : {count == "undefined" ? "" : count}

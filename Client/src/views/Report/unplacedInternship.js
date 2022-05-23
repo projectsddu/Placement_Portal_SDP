@@ -111,7 +111,7 @@ function UnplacedInternship() {
                         data={
 
                             <WhiteTextTypography
-                                variant="h1"
+                                variant="h2"
                                 color="secondary"
                             >
                                 Total students who didn't got any internship : {count == "undefined" ? "" : count}

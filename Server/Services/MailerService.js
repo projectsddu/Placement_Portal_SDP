@@ -62,7 +62,7 @@ const notificationMail = async (notificationData, to) => {
                 <div style="width:800px; margin:0 auto; text-align: center; background: #F55734">
                     <i>
                         <h2 style="color: white; padding: 2%;">
-                            DHARMSINH DESAI UNIVERSITY
+                            CE DEPARTMENT, DHARMSINH DESAI UNIVERSITY
                         </h2>
                     </i>
                 </div>
@@ -79,7 +79,7 @@ const notificationMail = async (notificationData, to) => {
                 <div style="width:800px; margin:0 auto; text-align: center; background: #706e6f">
                     <i>
                         <h2 style="color: white; padding: 2%;">
-                            &copy; DHARMSINH DESAI UNIVERSITY PLACEMENT PORTAL
+                            &copy;CE DEPARTMENT, DHARMSINH DESAI UNIVERSITY PLACEMENT PORTAL
                         </h2>
                     </i>
                 </div>
@@ -95,6 +95,7 @@ const notificationMail = async (notificationData, to) => {
     }
     catch (err) {
         log.error(err.toString())
+        console.log(err)
         return false
     }
 }

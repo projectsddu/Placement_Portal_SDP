@@ -111,7 +111,7 @@ function InterestedInHigherStudies() {
                         data={
 
                             <WhiteTextTypography
-                                variant="h1"
+                                variant="h2"
                                 color="secondary"
                             >
                                 Total students who are interested in higher studies : {count == "undefined" ? "" : count}

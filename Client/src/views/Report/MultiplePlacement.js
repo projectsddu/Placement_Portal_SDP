@@ -144,7 +144,7 @@ export default function MultiplePlacement() {
                         data={
 
                             <WhiteTextTypography
-                                variant="h1"
+                                variant="h2"
                                 color="secondary"
                             >
                                 Total students who got multiple placements : {count == "undefined" ? "" : count}

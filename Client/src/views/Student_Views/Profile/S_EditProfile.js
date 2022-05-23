@@ -642,10 +642,10 @@ function S_EditProfile() {
                             <Grid item md={6} xs={12}>
                                 <TextField
                                     // required
-                                    disabled
+
                                     fullWidth
-                                    label="Diploma Result CPI"
-                                    helperText="Diploma result CPI (If applicable)"
+                                    label="Diploma Result CGPA"
+                                    helperText="Diploma result CGPA (If applicable)"
                                     type="number"
                                     value={studentDetails['Diploma_Result_CPI']}
                                     onChange={(e) => {
