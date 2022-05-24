@@ -39,7 +39,8 @@
     },
     "scripts": {
         "start": "react-scripts --max_old_space_size=40000 start",
-        "build": "react-scripts build",
+        "winBuild": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
+        "build": "GENERATE_SOURCEMAP=false react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
@@ -60,6 +61,7 @@
     },
     "devDependencies": {
         "@material-ui/codemod": "^5.0.0-alpha.35",
-        "sass": "^1.32.11"
+        "sass": "^1.32.11",
+        "webpack-bundle-analyzer": "^4.5.0"
     }
 }

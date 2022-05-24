@@ -17,8 +17,6 @@ rm -rf "PlacementPortalBundle.tar"
 
 mv "../PlacementPortalBundle.tar" "."
 
-VERSION_NUMBER = git rev-list --all --count
-
 git add .
  
 git commit -m "Latest Version is pushed"

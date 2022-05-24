@@ -20,7 +20,8 @@ else
     echo "> Client: Installing ${MODULES_DIR} please wait"
     npm i
 fi
-npm run build
+
+npm run winBuild
 
 echo "> Client: Frontend build created"
 cd "../Server"
@@ -53,9 +54,10 @@ else
     mkdir "./${VERSION_DIR}"
 fi
 
-./Scripts/PushVersion.sh
 
 mv "./Server/${BUILD_FOLDER_NAME}.tar" "./${VERSION_DIR}"
+
+./Scripts/PushVersion.sh
 
 echo "> Root: All process completed successfully"
 echo "> Root: Checkout the file named: ${BUILD_FOLDER_NAME}.tar in ${VERSION_DIR}"
