@@ -101,9 +101,16 @@ const downloadZipFile = async (fromDir, zipFileName, selectFileNames = "all") =>
             filesToZip = fs.readdirSync(cvPathName)
         }
         else {
+            console.log(fs.readdirSync(cvPathName))
+            console.log("Select File names here")
+            console.log(selectFileNames)
             fs.readdirSync(cvPathName).map((elem) => {
                 const fileName = elem.split(".")[0]
-                if (selectFileNames.includes(fileName)) {
+
+                console.log("Filename")
+                console.log(fileName)
+
+                if (selectFileNames.includes(fileName.split("-")[0])) {
                     filesToZip.push(elem)
                 }
             })

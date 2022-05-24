@@ -25,6 +25,7 @@ const StudentAchievementsInternshipsRouter = require("./Routers/StudentAchieveme
 const ReportsRouter = require("./Routers/ReportsRouter");
 const LogoutRouter = require("./Routers/LogoutRouter");
 const fileupload = require("express-fileupload");
+const { exec } = require("child_process");
 
 require("dotenv").config();
 
@@ -60,27 +61,34 @@ try {
       headers: true,
     })
   );
-  // app.use(fileupload());
 
-  // Testing API
 
-  app.get("/dummyMail", async (req, res) => {
-    let status = await MailerService.notificationMail(
-      "keval sleeping",
-      "jenilgandhi2111@gmail.com"
-    );
-    console.log(status);
-    res.send(status);
-  });
-  app.post("/postTest", (req, res) => {
-    res.send(req.body);
-  });
 
   // const port = hostingConfig.SERVER_PORT_NO
+  if (process.env.NODE_ENV == "production") {
+    app.listen(3000, '127.0.0.1', 511, () => {
+      console.log(`Production server is running on port 3000`);
+    });
 
-  app.listen(process.env.PORT, () => {
-    console.log(`Server is running on port ${process.env.PORT}`);
-  });
+    app.post("/monitorstats", (req, res) => {
+      exec(`echo "-------------------------------------------";mpstat;echo "-------------------------------------------";iostat; echo "-------------------------------------------";vmstat;`, (error, stdout, stderr) => {
+        if (error) {
+          return res.send(error.toString())
+        }
+        if (stderr) {
+          return res.send(stderr.toString())
+        }
+        // console.log(`stdout: ${stdout}`);
+        return res.send(stdout.toString())
+      });
+    });
+  }
+  else {
+
+    app.listen(process.env.PORT, () => {
+      console.log(`Development server is running on port ${process.env.PORT}`);
+    });
+  }
 
   //routers
   app.use("/public", express.static(__dirname + "/public"));
