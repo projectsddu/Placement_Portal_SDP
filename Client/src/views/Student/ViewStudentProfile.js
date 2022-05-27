@@ -65,7 +65,8 @@ function ViewStudentProfile() {
 
     if (!loading) {
         student_details = required_data['data'];
-        student_details["DOB"] = ParseDate(student_details["DOB"])
+        // console.log(student_details["DOB"])
+        student_details["DOB"] = (student_details["DOB"])
         student_details["Enrollment_year"] = getYear(student_details["Enrollment_year"])
         student_details['Passed_out_year'] = getYear(student_details['Passed_out_year'])
         // console.log(required_data["data"])
@@ -77,7 +78,7 @@ function ViewStudentProfile() {
             createData('Admission Type', student_details['Admission_type']),
             createData('Cast Category', student_details['Cast_category']),
             createData('Gender', student_details['Gender']),
-            createData('DOB', student_details['DOB']),
+            createData('DOB', ParseDate(student_details['DOB'])),
             createData('SSC Percentage', student_details['SSC_Percentage']),
             createData('SSC Percentile', student_details['SSC_Percentile']),
             createData('SSC Board', student_details['SSC_Board']),
@@ -253,7 +254,7 @@ function ViewStudentProfile() {
                                                         href={
                                                             process.env.NODE_ENV == "production" ?
                                                                 // "http://csiddu.tech" + 
-                                                                
+
                                                                 domainConfig.domain +
                                                                 student_details["Student_Photo"] : "http://localhost:8000" + student_details["Student_Photo"]
 
@@ -335,6 +336,7 @@ function ViewStudentProfile() {
                                     return (
                                         <>
                                             <ChipCard data={<StudentProjectCard e={e} />} />
+                                            <br />
                                             {/* <SubCard>
                                             
                                             <Grid container spacing={1}>

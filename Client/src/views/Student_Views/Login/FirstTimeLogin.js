@@ -89,6 +89,11 @@ const FirstTimeLogin = () => {
 
                                         <TextField
                                             type={showPassword ? "text" : "password"}
+                                            onKeyPress={(e) => {
+                                                if (e.key === "Enter") {
+                                                    handleSubmit(e)
+                                                }
+                                            }}
                                             fullWidth
                                             value={password.oldPassword}
                                             onChange={(e) => {
@@ -99,6 +104,11 @@ const FirstTimeLogin = () => {
                                         <br />
                                         <TextField
                                             type={showPassword ? "text" : "password"}
+                                            onKeyPress={(e) => {
+                                                if (e.key === "Enter") {
+                                                    handleSubmit(e)
+                                                }
+                                            }}
                                             onChange={(e) => {
                                                 setpassword({ ...password, newPassword: e.target.value });
                                             }}
@@ -108,6 +118,11 @@ const FirstTimeLogin = () => {
                                         <br />
                                         <TextField
                                             type={showPassword ? "text" : "password"}
+                                            onKeyPress={(e) => {
+                                                if (e.key === "Enter") {
+                                                    handleSubmit(e)
+                                                }
+                                            }}
                                             onChange={(e) => {
                                                 setpassword({ ...password, confirmNewPassword: e.target.value });
                                             }}

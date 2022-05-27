@@ -169,7 +169,8 @@ export default function S_ViewProfile() {
     if (!loading) {
         student_details = required_data['data'];
         student_id = student_details['Student_ID'];
-        student_details["DOB"] = ParseDate(student_details["DOB"])
+        console.log(student_details["DOB"])
+        // student_details["DOB"] = ParseDate(student_details["DOB"])
         student_details["Enrollment_year"] = getYear(student_details["Enrollment_year"])
         student_details['Passed_out_year'] = getYear(student_details['Passed_out_year'])
         // console.log("Student Id: ", student_id)
@@ -182,7 +183,7 @@ export default function S_ViewProfile() {
             createData('Admission type', student_details['Admission_type']),
             createData('Cast category', student_details['Cast_category']),
             createData('Gender', student_details['Gender']),
-            createData('DOB', student_details['DOB']),
+            createData('DOB', ParseDate(student_details['DOB'])),
             createData('SSC Percentage', student_details['SSC_Percentage']),
             createData('SSC Percentile', student_details['SSC_Percentile']),
             createData('SSC Board', student_details['SSC_Board']),

@@ -160,6 +160,11 @@ const RestLogin = (props, { ...others }) => {
                     name="Student_ID"
                     type="text"
                     value={data['Student_ID']}
+                    onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                            handleSubmit(e)
+                        }
+                    }}
                     // onBlur={handleBlur}
                     onChange={(e) => {
                         setData({ ...data, Student_ID: e.target.value });
@@ -184,6 +189,11 @@ const RestLogin = (props, { ...others }) => {
                     type={showPassword ? 'text' : 'password'}
                     value={data['password']}
                     // onBlur={handleBlur}
+                    onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                            handleSubmit(e)
+                        }
+                    }}
                     onChange={(e) => {
                         setData({ ...data, password: e.target.value });
                     }}

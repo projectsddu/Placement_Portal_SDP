@@ -155,6 +155,11 @@ const RestLogin = (props, { ...others }) => {
                     type="text"
                     value={data['adminName']}
                     // onBlur={handleBlur}
+                    onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                            handleSubmit(e)
+                        }
+                    }}
                     onChange={(e) => {
                         setData({ ...data, adminName: e.target.value });
                     }}
@@ -177,6 +182,11 @@ const RestLogin = (props, { ...others }) => {
                     label="Admin Password"
                     type={showPassword ? 'text' : 'password'}
                     value={data['adminPassword']}
+                    onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                            handleSubmit(e)
+                        }
+                    }}
                     // onBlur={handleBlur}
                     onChange={(e) => {
                         setData({ ...data, adminPassword: e.target.value });
@@ -213,8 +223,8 @@ const RestLogin = (props, { ...others }) => {
                     }
                     label="Remember me"
                 /> */}
-                <br />
-                <Typography
+                {/* <br /> */}
+                {/* <Typography
                     variant="subtitle1"
                     component={Link}
                     to={props.login ? '/pages/forgot-password/forgot-password' + props.login : '#'}
@@ -222,7 +232,7 @@ const RestLogin = (props, { ...others }) => {
                     sx={{ textDecoration: 'none' }}
                 >
                     Forgot Password?
-                </Typography>
+                </Typography> */}
                 <br />
             </Stack>
             {/* {errors.submit && (
