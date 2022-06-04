@@ -53,6 +53,10 @@ const createdAnnoucement = async (announcementData, job_description_file) => {
         for (let i = 0; i < branches.length; i++) {
             const status = await BranchAnnouncementService.addBranchToAnnouncement(aData.Announcement_ID, branches[i])
         }
+        if (announcementData.sendMail) {
+            console.log("in announcement email")
+            await sendAnnouncementEmailNotification(announcementData.Passed_out_year)
+        }
         return true
     }
     catch (err) {
@@ -63,27 +67,31 @@ const createdAnnoucement = async (announcementData, job_description_file) => {
 
 const sendAnnouncementEmailNotification = async (year) => {
     try {
-        year = parseInt(year)
-        let students = await StudentModel.findAll({ where: [sequelize.where(sequelize.fn('YEAR', sequelize.col('Passed_out_year')), year)] })
+        console.log("in email")
+        // year = parseInt(year)
+
+        var students = await StudentModel.findAll({ where: [sequelize.where(sequelize.fn('YEAR', sequelize.col('Passed_out_year')), year)] })
 
         students = JSON.parse(JSON.stringify(students))
+        console.log("from email notification: ", students)
 
         let email_list = [];
 
         for (let i = 0; i < students.length; i++) {
             let student = students[i]
             let email = student["Email_ID"]
+            // console.log(email)
             email_list.push(email)
         }
 
         console.log(email_list)
 
-        const announcement = await Announcement.findAll({})
+        // const announcement = await Announcement.findAll({})
 
-        await MailerService.batchNotificationMail({
-            "subject": "NEW ANNOUNCEMENT - PLACEMENT PORTAL - CE DEPARTMENT, DHARMSINH DESAI UNIVERSITY", "header": "New Announcement created", "body": `You can access the DDU placement portal via the following credentials:<br/><br/><b>Student Id:</b>${password.student_id}<br/><b>Password:</b> ${password.password}<br/><br/>Please visit <a href="${process.env.DOMAIN}">${process.env.DOMAIN}</a> to login.<br/><br/><b>Follow these steps to set up your account:</b><br/><br/>Step-1: Open the url given above and login using your student id and first time password.<br/>Step-2: Go to the 'edit profile' page and add your personal email id there (if not added) and update your profile (This is the email where you would receive all the notifications about any placement announcement).<br/>Step-3: Next add your CV and photo from 'dashboard' page.<br/>Step-4: Update all the your profile details (NOTE: edit only the details that are editable) under 'edit profile' page.<br/><br/><b>NOTE: Please mail to jatayubaxi.ce@ddu.ac.in incase you face any issue while using the placement portal web application.</b><br/><b>Note:</b> Ignore if already recieved.`
-        }, email_list
-        )
+        // await MailerService.batchNotificationMail({
+        //     "subject": "NEW ANNOUNCEMENT - PLACEMENT PORTAL - CE DEPARTMENT, DHARMSINH DESAI UNIVERSITY", "header": "New Announcement created", "body": `You can access the DDU placement portal via the following credentials:<br/><br/><b>Student Id:</b>${password.student_id}<br/><b>Password:</b> ${password.password}<br/><br/>Please visit <a href="${process.env.DOMAIN}">${process.env.DOMAIN}</a> to login.<br/><br/><b>Follow these steps to set up your account:</b><br/><br/>Step-1: Open the url given above and login using your student id and first time password.<br/>Step-2: Go to the 'edit profile' page and add your personal email id there (if not added) and update your profile (This is the email where you would receive all the notifications about any placement announcement).<br/>Step-3: Next add your CV and photo from 'dashboard' page.<br/>Step-4: Update all the your profile details (NOTE: edit only the details that are editable) under 'edit profile' page.<br/><br/><b>NOTE: Please mail to jatayubaxi.ce@ddu.ac.in incase you face any issue while using the placement portal web application.</b><br/><b>Note:</b> Ignore if already recieved.`
+        // }, email_list
+        // )
     }
     catch (err) {
         log.error(err.toString())
@@ -242,5 +250,6 @@ module.exports = {
     getAllAnnoucements,
     getAnnoucement,
     updateAnnoucement,
-    deleteAnnoucement
+    deleteAnnoucement,
+    sendAnnouncementEmailNotification
 }
