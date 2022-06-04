@@ -24,6 +24,8 @@ import Modal from '@mui/material/Modal';
 import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import ViewConfig from '../../Config/ViewConfig';
+import UsePost from '../../Utilities/UsePost';
+// import axios from 'axios';
 
 function CustomToolbar() {
     return (
@@ -343,6 +345,28 @@ export default function ViewStudent() {
         border: "0px solid white"
     };
 
+
+    const [selectedRows, setselectedRows] = useState(undefined)
+
+    const handleSelectedCV = async () => {
+        const link = '/student/getSelectedCV'
+        const stds = []
+
+        selectedRows.forEach((elem) => {
+            stds.push(elem["Student_ID"])
+        })
+
+        // const status = await UsePost(link, stds, "POST")
+        // console.log(status)
+        // const link = '/subscribeannouncement/downloadSubscribedStudentZip
+        const resp = await axios.post(link, stds)
+        const driveLink = resp.data
+        console.log(resp)
+        console.log(driveLink)
+        const win = window.open("/public/student_details/Zips/SelectedStudents.zip", "_blank");
+
+    }
+
     return (
         <MainCard title={ViewConfig.admin.student.view_student.title}>
             <TextField label="Search" value={search} onInput={(e) => handleSearch(e)} fullWidth></TextField>
@@ -389,21 +413,42 @@ export default function ViewStudent() {
                         //         </Grid>
                         //     </Grid>
                         // </SubCard>
-                        <DataGrid
-                            editMode="row"
-                            onEditCellChange={handleEditRowsModelChange}
-                            onCellClick={handleCellClick}
-                            checkboxSelection
-                            rows={student_list_copy}
-                            columns={columns}
-                            components={{
-                                Toolbar: CustomToolbar
-                            }}
-                            editRowsModel={editRowsModel}
-                            onEditRowsModelChange={handleEditRowsModelChange}
-                        />
+
+                        <>
+                            <Grid justifyContent={"flex-start"} spacing={2}>
+                                <Grid xs={12} md={3} item>
+                                    <Button onClick={handleSelectedCV} variant="contained" size='large'>Download Selected CV's</Button><br />
+                                </Grid>
+
+                            </Grid>
+                            <br />
+                            <DataGrid
+                                editMode="row"
+                                onEditCellChange={handleEditRowsModelChange}
+                                onCellClick={handleCellClick}
+                                checkboxSelection
+                                rows={student_list_copy}
+                                columns={columns}
+                                components={{
+                                    Toolbar: CustomToolbar
+                                }}
+                                editRowsModel={editRowsModel}
+                                onEditRowsModelChange={handleEditRowsModelChange}
+                                onSelectionModelChange={(data) => {
+                                    let updatedStudentData = []
+                                    console.log(data.selectionModel)
+                                    data.selectionModel.forEach((elem) => {
+                                        updatedStudentData.push(student_list_copy[elem])
+                                    })
+                                    setselectedRows([].concat(updatedStudentData))
+                                    console.log(selectedRows)
+                                }}
+                            />
+                        </>
                     )}
+                {/* <Button onClick={() => { console.log(selectedRows) }}>Click</Button> */}
             </div>
+
         </MainCard>
     );
 }

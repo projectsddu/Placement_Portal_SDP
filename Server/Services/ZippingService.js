@@ -90,41 +90,53 @@ const stringToStream = require("string-to-stream")
 // }
 
 const downloadZipFile = async (fromDir, zipFileName, selectFileNames = "all") => {
-    const cvPathName = path.join(__dirname, "..", "public", "student_details", "CV")
-    const zipPath = path.join(__dirname, "..", "public", "student_details", "Zips")
+
+    console.log("...................................")
+    console.log(selectFileNames)
+    console.log("...................................")
+
+    let cvPathName = path.join(__dirname, "..", "public", "student_details", "CV")
+    let zipPath = path.join(__dirname, "..", "public", "student_details", "Zips")
 
 
     console.log(fs.readdirSync(cvPathName));
     try {
-        const filesToZip = []
+        let filesToZip = []
         if (selectFileNames == "all") {
             filesToZip = fs.readdirSync(cvPathName)
         }
         else {
             console.log(fs.readdirSync(cvPathName))
-            console.log("Select File names here")
+            console.log("Select File names here########")
             console.log(selectFileNames)
             fs.readdirSync(cvPathName).map((elem) => {
-                const fileName = elem.split(".")[0]
+                let fileName = elem.split(".")[0]
 
-                console.log("Filename")
-                console.log(fileName)
+                console.log("--------------------Filename------------------")
+                console.log(fileName.split("-")[0])
+                console.log(selectFileNames)
 
                 if (selectFileNames.includes(fileName.split("-")[0])) {
                     filesToZip.push(elem)
+                    console.log(elem)
                 }
+
             })
         }
 
+        console.log("FILES TO ZIP&&&&&&&&&&&&&")
         console.log(filesToZip);
-        const zip = new AdmZip();
+        let zip = new AdmZip();
         for (let i = 0; i < filesToZip.length; i++) {
-            const fileZippth = path.join(cvPathName, filesToZip[i])
+            let fileZippth = path.join(cvPathName, filesToZip[i])
             zip.addLocalFile(fileZippth)
+            // console.log("HEREAAAAAAAAAAAAAAAAAANNNNNNNNNNNNNNNNN")
+            console.log(fileZippth)
         }
-        const downloadName = zipFileName + ".zip"
+        let downloadName = zipFileName + ".zip"
         const data = zip.toBuffer()
         zip.writeZip(path.join(zipPath, downloadName))
+        console.log("HERE")
         return data
     }
     catch (err) {

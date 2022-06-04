@@ -6,6 +6,8 @@ const Student = db.students
 const Announcement = db.announcements
 // require csvtojson module
 const CSVToJSON = require('csvtojson');
+const ZippingService = require("../Services/ZippingService")
+
 
 const fs = require("fs")
 const { ERROR, OK } = require("../Services/ResponseService")
@@ -342,6 +344,36 @@ const searchStudent = async (req, res) => {
     }
 }
 
+const downloadSelectedCV = async (req, res) => {
+    try {
+        let studentData = (req.body)
+        console.log("CLG>>>>>>>>>>>>>>>>", studentData)
+        let datas = []
+        studentData.forEach((e) => {
+            datas.push(e.split("/").slice(-1)[0])
+        })
+        let date_suffix = new Date().toDateString()
+        let zipName = "SelectedStudents"
+        const data = await ZippingService.downloadZipFile("../public/student_details/CV/", zipName, datas)
+        if (!data) {
+            return ERROR(res, "Error fetching zip file")
+        }
+        else {
+            return OK(res, "Success fetching file.")
+        }
+
+        // res.set('Content-Type', 'application/octet-stream');
+        // res.set('Content-Disposition', `attachment; filename=${zipName
+        //     }.zip`);
+        // res.set('Content-Length', data.length);
+        // return res.send(data);
+    }
+    catch (err) {
+        log.error(err.toString())
+        return ERROR(res, "Error downloading selected CV's")
+    }
+}
+
 module.exports = {
     addStudent,
     getAllStudents,
@@ -354,9 +386,7 @@ module.exports = {
     updateOneStudent,
     getAllStudentPasswords,
     sendFirstTimePasswords,
-
     searchStudent,
-
-    updateStudentDetailsFromStudentSide
-
+    updateStudentDetailsFromStudentSide,
+    downloadSelectedCV
 }

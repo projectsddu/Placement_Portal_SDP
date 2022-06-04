@@ -143,6 +143,10 @@ function AddAnnoucement() {
         // END OF POSTING DATA EXAMPLE
     }
 
+    async function handleSendEmail() {
+
+    }
+
 
     function handleCheckBox(branchName, c) {
         for (let i = 0; i < Branches.length; i++) {
@@ -279,6 +283,15 @@ function AddAnnoucement() {
                         })
                     }
                 </Grid>
+                Send Email Notification
+                <RadioGroup
+                    row
+                    aria-labelledby="demo-row-radio-buttons-group-label"
+                    name="row-radio-buttons-group"
+                >
+                    <FormControlLabel value="no" checked control={<Radio />} label="No" />
+                    <FormControlLabel value="yes" control={<Radio />} label="Yes" />
+                </RadioGroup>
                 {/* <TextField
                     fullWidth
                     id="eligible-currencies"
@@ -437,9 +450,22 @@ function AddAnnoucement() {
 
                 <br />
                 <br />
-                <Button onClick={handleSubmit} variant="contained" size="large" color="primary">
-                    Add Announcement
-                </Button>
+                <Grid container spacing={1}>
+                    <Grid item xs={12} md={3}>
+                        <Button onClick={handleSubmit} variant="contained" size="large" color="primary">
+                            Add Announcement
+                        </Button>
+                    </Grid>
+                    <Grid item xs={12} md={3}>
+                        <Button
+                            // onClick={handleSendEmail} 
+                            variant="contained"
+                            size="large"
+                            color="primary">
+                            Send Email
+                        </Button>
+                    </Grid>
+                </Grid>
             </form>
         </MainCard>
     );

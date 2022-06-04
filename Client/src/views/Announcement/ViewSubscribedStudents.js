@@ -112,7 +112,7 @@ function ViewSubscribedStudents() {
         { field: 'Career_Preference', headerName: 'Career Preference', width: 200, editable: false, hide: true },
         { field: 'Skills', headerName: 'Skills', width: 200, editable: false, hide: true },
 
-        
+
     ];
     const [editRowsModel, setEditRowsModel] = React.useState({});
     const handleEditRowsModelChange = React.useCallback((model) => {
@@ -130,7 +130,7 @@ function ViewSubscribedStudents() {
         console.log("Here")
         const link = '/subscribeannouncement/downloadSubscribedStudentZip/' + id
         setfolderData(true)
-        const resp = await axios.get(link)
+        const resp = await axios.post(link)
         const driveLink = resp.data.data
         setfolderData(false)
         const win = window.open(driveLink, "_blank");
@@ -149,7 +149,7 @@ function ViewSubscribedStudents() {
 
                                 process.env.NODE_ENV == "production" ?
                                     // "http://csiddu.tech" + 
-                                    domainConfig.domain + 
+                                    domainConfig.domain +
                                     "/subscribeannouncement/downloadSubscribedStudentZip/" + id : "http://localhost:8000" + "/subscribeannouncement/downloadSubscribedStudentZip/" + id
 
 

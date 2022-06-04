@@ -130,4 +130,6 @@ router.post(
   StudentController.Photo_Upload
 );
 
+router.post("/getSelectedCV", [Authenticate], StudentController.downloadSelectedCV)
+
 module.exports = router;
