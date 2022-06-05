@@ -15,6 +15,8 @@ const { sequelize } = require("../Models/index")
 const Sequelize = require("sequelize")
 const StudentModel = db.students
 const MailerService = require("./MailerService")
+const Company = db.companies
+const ParseDate = require("../../Client/src/Utilities/ParseDate")
 
 async function checkExists(id) {
     const announcements = await Announcement.findAll({
@@ -53,9 +55,10 @@ const createdAnnoucement = async (announcementData, job_description_file) => {
         for (let i = 0; i < branches.length; i++) {
             const status = await BranchAnnouncementService.addBranchToAnnouncement(aData.Announcement_ID, branches[i])
         }
-        if (announcementData.sendMail) {
-            console.log("in announcement email")
-            await sendAnnouncementEmailNotification(announcementData.Passed_out_year)
+        // console.log("announcement id: " + aData.Announcement_ID)
+        if (announcementData.sendMail === "true") {
+            // console.log("in announcement email")
+            await sendAnnouncementEmailNotification(aData.Announcement_ID, announcementData.Passed_out_year, announcementData.Company_ID, announcementData.Registration_Deadline, announcementData.Job_Role)
         }
         return true
     }
@@ -65,36 +68,63 @@ const createdAnnoucement = async (announcementData, job_description_file) => {
     }
 }
 
-const sendAnnouncementEmailNotification = async (year) => {
+const sendAnnouncementEmailNotification = async (announcementId, year, companyId, registrationDeadline, jobRole) => {
     try {
-        console.log("in email")
+        // console.log("in email")
         // year = parseInt(year)
+        // year = year.getYear()
+        let y = year.split(" ")
+        y = y[3]
+        console.log(y)
 
-        var students = await StudentModel.findAll({ where: [sequelize.where(sequelize.fn('YEAR', sequelize.col('Passed_out_year')), year)] })
+        var students = await StudentModel.findAll({ where: [sequelize.where(sequelize.fn('YEAR', sequelize.col('Passed_out_year')), y)] })
 
         students = JSON.parse(JSON.stringify(students))
-        console.log("from email notification: ", students)
+        // console.log("from email notification: ", students)
 
         let email_list = [];
 
         for (let i = 0; i < students.length; i++) {
             let student = students[i]
             let email = student["Email_ID"]
+            if (email !== "") {
+                email_list.push(email)
+            }
             // console.log(email)
-            email_list.push(email)
         }
 
-        console.log(email_list)
+        // console.log("email list: " + email_list)
 
-        // const announcement = await Announcement.findAll({})
+        function tConvert(time) {
+            time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
 
-        // await MailerService.batchNotificationMail({
-        //     "subject": "NEW ANNOUNCEMENT - PLACEMENT PORTAL - CE DEPARTMENT, DHARMSINH DESAI UNIVERSITY", "header": "New Announcement created", "body": `You can access the DDU placement portal via the following credentials:<br/><br/><b>Student Id:</b>${password.student_id}<br/><b>Password:</b> ${password.password}<br/><br/>Please visit <a href="${process.env.DOMAIN}">${process.env.DOMAIN}</a> to login.<br/><br/><b>Follow these steps to set up your account:</b><br/><br/>Step-1: Open the url given above and login using your student id and first time password.<br/>Step-2: Go to the 'edit profile' page and add your personal email id there (if not added) and update your profile (This is the email where you would receive all the notifications about any placement announcement).<br/>Step-3: Next add your CV and photo from 'dashboard' page.<br/>Step-4: Update all the your profile details (NOTE: edit only the details that are editable) under 'edit profile' page.<br/><br/><b>NOTE: Please mail to jatayubaxi.ce@ddu.ac.in incase you face any issue while using the placement portal web application.</b><br/><b>Note:</b> Ignore if already recieved.`
-        // }, email_list
-        // )
+            if (time.length > 1) {
+                time = time.slice(1)
+                time[5] = +time[0] < 12 ? ' AM' : ' PM'
+                time[0] = +time[0] % 12 || 12
+            }
+            return time.join('')
+        }
+        registrationDeadline = registrationDeadline.split(" ")
+        let time = registrationDeadline[4]
+        time = time.slice(0, -3)
+        time = tConvert(time)
+        let deadline = registrationDeadline[0] + " " + registrationDeadline[1] + " " + registrationDeadline[2] + " " + registrationDeadline[3] + " " + time
+
+        let company = await Company.findAll({ where: { Company_ID: companyId }, raw: true })
+        let companyName = company[0]["Company_name"]
+
+        // console.log("Company name: ", companyName)
+        // console.log("Job role: " + jobRole)
+        // console.log("Registration deadline: " + deadline)
+
+        await MailerService.batchNotificationMail({
+            "subject": "NEW ANNOUNCEMENT - PLACEMENT PORTAL - CE DEPARTMENT, DHARMSINH DESAI UNIVERSITY", "header": "New Announcement Opened", "body": `Overview of the new announcement opened:<br/><br/><b>Company name: </b>${companyName}<br/><b>Job role: </b>${jobRole}<br/><b>Registration deadline: </b>${deadline}<br/><br/>Please visit <a href="${process.env.DOMAIN}_student/announcement/view_announcement/${announcementId}">${process.env.DOMAIN}_student/announcement/view_announcement</a> to view full announcement details. And Apply to this announcement if interested before registration deadline as specified above.<br/><br/><b>NOTE: Please mail to jatayubaxi.ce@ddu.ac.in incase you face any issue while viewing the announcement details in the placement portal web application.</b>`
+        }, email_list
+        )
     }
     catch (err) {
-        log.error(err.toString())
+        log.error(error.toString())
         return false
     }
 }
@@ -174,12 +204,16 @@ const updateAnnoucement = async (data, id, sendNotification = false, job_descrip
             console.log(JSON.parse(JSON.stringify(data)))
             // console.log(data["Eligible_Branches"])
             const fileName = job_description_file
-            if (fileName != "") {
+            console.log("filename: " + fileName)
+            if (fileName != null || fileName != "" || fileName != undefined) {
 
                 data["Job_Description_File"] = fileName
             }
-
-            console.log("File Naem", fileName == "")
+            if (fileName == "") {
+                // console.log(`in filename == ""`)
+                data["Job_Description_File"] = null
+            }
+            console.log("File name", fileName == "")
             // return false
             // data["Job_Description_File"] = fileName
             await BranchAnnouncementService.deleteBranchesOfAnnouncement(id)
@@ -189,7 +223,14 @@ const updateAnnoucement = async (data, id, sendNotification = false, job_descrip
                 // console.log(branches[i])
             }
             data["Eligible_Branches"] = ""
+            // console.log("hello rikin")
             const announcement = await Announcement.update(data, { where: { Announcement_ID: id } })
+
+            // console.log("hi rikin")
+            // console.log("bye rikin")
+            // console.log("passed out year in update: " + data["Passed_out_year"])
+            await sendUpdateAnnouncementEmailNotification(id, data["Passed_out_year"], data["Company_ID"], data["Job_Role"], data["Registration_Deadline"])
+            // console.log("goodbye rikin")
 
             if (sendNotification) {
                 let students = await AnnouncementSubscribeService.getSubscribedStudentsOfAnnouncement(id)
@@ -221,8 +262,55 @@ const updateAnnoucement = async (data, id, sendNotification = false, job_descrip
                 }
             }
 
+
             return true
         }
+    } catch (error) {
+        log.error(error.toString())
+        return false
+    }
+}
+
+const sendUpdateAnnouncementEmailNotification = async (announcementId, year, companyId, jobRole, registrationDeadline) => {
+    try {
+
+        // console.log("year from update " + year)
+
+        let y = year.split("-")
+        y = y[0]
+        console.log(y)
+
+        var students = await StudentModel.findAll({ where: [sequelize.where(sequelize.fn('YEAR', sequelize.col('Passed_out_year')), y)] })
+
+        students = JSON.parse(JSON.stringify(students))
+        // console.log("from email notification: ", students)
+
+        let email_list = [];
+
+        for (let i = 0; i < students.length; i++) {
+            let student = students[i]
+            let email = student["Email_ID"]
+            if (email !== "") {
+                email_list.push(email)
+            }
+            // console.log(email)
+        }
+
+        // console.log("email list: " + email_list)
+
+        let deadline = ParseDate.ParseDate(registrationDeadline, true)
+
+        let company = await Company.findAll({ where: { Company_ID: companyId }, raw: true })
+        let companyName = company[0]["Company_name"]
+
+        // console.log("Company name: ", companyName)
+        // console.log("Job role: " + jobRole)
+        // console.log("Registration deadline: " + deadline)
+
+        await MailerService.batchNotificationMail({
+            "subject": "ANNOUNCEMENT DETAILS UPDATED - PLACEMENT PORTAL - CE DEPARTMENT, DHARMSINH DESAI UNIVERSITY", "header": "Announcement Details Updated", "body": `<b>Company name: </b>${companyName}<br/><b>Job role: </b>${jobRole}<br/><b>Registration deadline: </b>${deadline}<br/><br/>Announcement details for the above mentioned company is updated. Please visit <a href="${process.env.DOMAIN}_student/announcement/view_announcement/${announcementId}">${process.env.DOMAIN}_student/announcement/view_announcement</a> to view full updated announcement details. And Apply to this announcement if interested and still not applied before registration deadline as specified above.<br/><br/><b>NOTE: Please mail to jatayubaxi.ce@ddu.ac.in incase you face any issue while viewing the announcement details in the placement portal web application.</b>`
+        }, email_list
+        )
     } catch (error) {
         log.error(error.toString())
         return false
@@ -251,5 +339,6 @@ module.exports = {
     getAnnoucement,
     updateAnnoucement,
     deleteAnnoucement,
-    sendAnnouncementEmailNotification
+    sendAnnouncementEmailNotification,
+    sendUpdateAnnouncementEmailNotification
 }
