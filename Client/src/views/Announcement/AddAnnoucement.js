@@ -98,7 +98,8 @@ function AddAnnoucement() {
         Bond_Details: '',
         Other_Details: '',
         Registration_Deadline: null,
-        Eligibility: ''
+        Eligibility: '',
+        sendMail: false
     });
     useEffect(() => { }, [data]);
 
@@ -283,15 +284,8 @@ function AddAnnoucement() {
                         })
                     }
                 </Grid>
-                Send Email Notification
-                <RadioGroup
-                    row
-                    aria-labelledby="demo-row-radio-buttons-group-label"
-                    name="row-radio-buttons-group"
-                >
-                    <FormControlLabel value="no" checked control={<Radio />} label="No" />
-                    <FormControlLabel value="yes" control={<Radio />} label="Yes" />
-                </RadioGroup>
+
+
                 {/* <TextField
                     fullWidth
                     id="eligible-currencies"
@@ -435,7 +429,23 @@ function AddAnnoucement() {
                     </Grid> */}
                 </Grid>
                 <br />
-                <br />
+                {/* <Grid container direction="row">
+                    <FormLabel id="demo-controlled-radio-buttons-group"
+                    // style={{ alignItems: "center", alignContent: "center" }}
+                    >
+                    Send Email Notification
+                    </FormLabel>
+                    <RadioGroup
+                        row
+                        aria-labelledby="demo-row-radio-buttons-group-label"
+                        name="row-radio-buttons-group"
+                        defaultValue="no"
+                    >
+                        <FormControlLabel value="no" control={<Radio />} label="No" />
+                        <FormControlLabel value="yes" control={<Radio />} label="Yes" />
+                    </RadioGroup>
+                </Grid> */}
+
                 <TextField
                     fullWidth
                     // required
@@ -447,7 +457,33 @@ function AddAnnoucement() {
                         setData({ ...data, Eligibility: e.target.value });
                     }}
                 />
+                <Grid container
+                    direction="row">
+                    <Grid item>
 
+                        <Checkbox value={"Jenil"} label="Send Email"
+                            onClick={(e) => {
+                                setData({ ...data, sendMail: e.target.checked });
+                                // console.log(e.target.checked)
+                            }}
+                        /><label>Send Email</label>
+                    </Grid>
+                    {/* {
+                        Branches.map((e) => {
+                            return (
+                                <>
+                                    <div>
+                                        <Checkbox
+                                            checked={e.checked}
+                                            value={e.value}
+                                            onClick={() => handleCheckBox(e.value, e)}
+                                        /><label>{e.label}</label>
+                                    </div>
+                                </>
+                            )
+                        })
+                    } */}
+                </Grid>
                 <br />
                 <br />
                 <Grid container spacing={1}>
