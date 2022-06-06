@@ -161,7 +161,7 @@ function ViewSingleAnnoucement() {
         rows = [
             // createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
             createData("Date of Announcement", ParseDate.ParseDate(announcement_details["Date_of_announcement"])),
-            createData("Date of Visit", HandleNull(ParseDate.ParseDate(announcement_details["Date_of_Visit"]))),
+            // createData("Date of Visit", HandleNull(ParseDate.ParseDate(announcement_details["Date_of_Visit"]))),
             createData("Registration Deadline", HandleNull(ParseDate.ParseDate(announcement_details["Registration_Deadline"]), true)),
             createData("Eligible Branches", branches),
             createData("Passed out year", HandleNull(ParseDate.getYear(announcement_details["Passed_out_year"]))),

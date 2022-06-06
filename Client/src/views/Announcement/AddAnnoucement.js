@@ -222,7 +222,7 @@ function AddAnnoucement() {
                 <br />
                 <br />
                 <Grid container spacing={2}>
-                    <Grid item md={4} xs={12}>
+                    {/* <Grid item md={4} xs={12}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                                 label="Date of Visit"
@@ -234,8 +234,8 @@ function AddAnnoucement() {
                                 renderInput={(params) => <TextField fullWidth {...params} />}
                             />
                         </LocalizationProvider>
-                    </Grid>
-                    <Grid item md={4} xs={12}>
+                    </Grid> */}
+                    <Grid item md={6} xs={12}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                                 label="Date of Annoucement"
@@ -248,7 +248,7 @@ function AddAnnoucement() {
                             />
                         </LocalizationProvider>
                     </Grid>
-                    <Grid item md={4} xs={12}>
+                    <Grid item md={6} xs={12}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                                 views={['year']}
@@ -468,21 +468,6 @@ function AddAnnoucement() {
                             }}
                         /><label>Send Email</label>
                     </Grid>
-                    {/* {
-                        Branches.map((e) => {
-                            return (
-                                <>
-                                    <div>
-                                        <Checkbox
-                                            checked={e.checked}
-                                            value={e.value}
-                                            onClick={() => handleCheckBox(e.value, e)}
-                                        /><label>{e.label}</label>
-                                    </div>
-                                </>
-                            )
-                        })
-                    } */}
                 </Grid>
                 <br />
                 <br />
@@ -490,15 +475,6 @@ function AddAnnoucement() {
                     <Grid item xs={12} md={3}>
                         <Button onClick={handleSubmit} variant="contained" size="large" color="primary">
                             Add Announcement
-                        </Button>
-                    </Grid>
-                    <Grid item xs={12} md={3}>
-                        <Button
-                            // onClick={handleSendEmail} 
-                            variant="contained"
-                            size="large"
-                            color="primary">
-                            Send Email
                         </Button>
                     </Grid>
                 </Grid>

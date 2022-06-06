@@ -162,7 +162,7 @@ export default function S_ViewSingleAnnouncement() {
         rows = [
             // createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
             createData("Date of Announcement", ParseDate.ParseDate(announcement_details["Date_of_announcement"])),
-            createData("Date of Visit", handleNull(ParseDate.ParseDate(announcement_details["Date_of_Visit"]))),
+            // createData("Date of Visit", handleNull(ParseDate.ParseDate(announcement_details["Date_of_Visit"]))),
             createData("Registration Deadline", handleNull(ParseDate.ParseDate(announcement_details["Registration_Deadline"], true))),
             // createData("Eligible Branches", announcement_details["Eligible_Branches"]),
             createData("Eligible Branches", handleNull(branches)),
