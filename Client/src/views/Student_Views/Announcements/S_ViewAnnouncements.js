@@ -159,7 +159,7 @@ function S_ViewAnnoucements() {
                                                     </Grid>
                                                 </Grid>
                                             </Grid>
-                                            <Grid item xs={12} md={12}>
+                                            {/* <Grid item xs={12} md={12}>
                                                 <Grid container spacing={1}>
                                                     <Grid item xs={6} md={4}>
                                                         <Typography variant="h4" style={{ color: "rgb(97, 97, 97)" }}>Visiting On: </Typography>
@@ -170,7 +170,7 @@ function S_ViewAnnoucements() {
                                                         </Typography>
                                                     </Grid>
                                                 </Grid>
-                                            </Grid>
+                                            </Grid> */}
 
                                             <Grid item xs={12} md={12}>
                                                 <Grid container spacing={1}>

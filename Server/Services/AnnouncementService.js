@@ -229,7 +229,10 @@ const updateAnnoucement = async (data, id, sendNotification = false, job_descrip
             // console.log("hi rikin")
             // console.log("bye rikin")
             // console.log("passed out year in update: " + data["Passed_out_year"])
-            await sendUpdateAnnouncementEmailNotification(id, data["Passed_out_year"], data["Company_ID"], data["Job_Role"], data["Registration_Deadline"])
+            if (data.sendMail === "true") {
+                // console.log("in announcement email")
+                await sendUpdateAnnouncementEmailNotification(id, data["Passed_out_year"], data["Company_ID"], data["Job_Role"], data["Registration_Deadline"])
+            }
             // console.log("goodbye rikin")
 
             if (sendNotification) {
@@ -303,12 +306,12 @@ const sendUpdateAnnouncementEmailNotification = async (announcementId, year, com
         let company = await Company.findAll({ where: { Company_ID: companyId }, raw: true })
         let companyName = company[0]["Company_name"]
 
-        // console.log("Company name: ", companyName)
-        // console.log("Job role: " + jobRole)
-        // console.log("Registration deadline: " + deadline)
+        console.log("Company name: ", companyName)
+        console.log("Job role: " + jobRole)
+        console.log("Registration deadline: " + deadline)
 
         await MailerService.batchNotificationMail({
-            "subject": "ANNOUNCEMENT DETAILS UPDATED - PLACEMENT PORTAL - CE DEPARTMENT, DHARMSINH DESAI UNIVERSITY", "header": "Announcement Details Updated", "body": `<b>Company name: </b>${companyName}<br/><b>Job role: </b>${jobRole}<br/><b>Registration deadline: </b>${deadline}<br/><br/>Announcement details for the above mentioned company is updated. Please visit <a href="${process.env.DOMAIN}_student/announcement/view_announcement/${announcementId}">${process.env.DOMAIN}_student/announcement/view_announcement</a> to view full updated announcement details. And Apply to this announcement if interested and still not applied before registration deadline as specified above.<br/><br/><b>NOTE: Please mail to jatayubaxi.ce@ddu.ac.in incase you face any issue while viewing the announcement details in the placement portal web application.</b>`
+            "subject": "ANNOUNCEMENT DETAILS UPDATED - PLACEMENT PORTAL - CE DEPARTMENT, DHARMSINH DESAI UNIVERSITY", "header": "Announcement Details Updated", "body": `<b>Company name: </b>${companyName}<br/><b>Job role: </b>${jobRole}<br/><b>Registration deadline: </b>${deadline}<br/><br/>Announcement details for the above mentioned company is updated. Please visit <a href="${process.env.DOMAIN}_student/announcement/view_announcement/${announcementId}">${process.env.DOMAIN}_student/announcement/view_announcement</a> to view full updated announcement details. And apply to this announcement if interested and still not applied before registration deadline as specified above.<br/><br/><b>NOTE: Please mail to jatayubaxi.ce@ddu.ac.in incase you face any issue while viewing the announcement details in the placement portal web application.</b>`
         }, email_list
         )
     } catch (error) {

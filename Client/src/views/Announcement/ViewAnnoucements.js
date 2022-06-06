@@ -338,7 +338,7 @@ function ViewAnnoucements() {
         },
         { field: 'id', headerName: 'ID', hide: true },
         { field: 'title', headerName: 'Title', width: 300, editable: false },
-        { field: 'Date_of_Visit', headerName: 'Date of Visit', width: 180, editable: false },
+        // { field: 'Date_of_Visit', headerName: 'Date of Visit', width: 180, editable: false },
         { field: 'Registration_Deadline', headerName: 'Registration Deadline', width: 220, editable: false },
         { field: 'Salary', headerName: 'Salary', width: 155, editable: false, hide: false },
 

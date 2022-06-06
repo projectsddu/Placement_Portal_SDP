@@ -448,7 +448,9 @@ export default function ViewStudent() {
                     )}
                 {/* <Button onClick={() => { console.log(selectedRows) }}>Click</Button> */}
             </div>
-
+            <br />
+            <br />
+            <br />
         </MainCard>
     );
 }

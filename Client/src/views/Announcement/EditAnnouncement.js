@@ -242,7 +242,7 @@ function AddAnnoucement() {
                 <br />
                 <br />
                 <Grid container spacing={2}>
-                    <Grid item xs={12} md={4}>
+                    {/* <Grid item xs={12} md={4}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                                 label="Date of Visit"
@@ -252,10 +252,11 @@ function AddAnnoucement() {
                                     setData({ ...data, Date_of_Visit: e });
                                 }}
                                 renderInput={(params) => <TextField fullWidth {...params} />}
+                                
                             />
                         </LocalizationProvider>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
+                    </Grid> */}
+                    <Grid item xs={12} md={6}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                                 label="Date of Annoucement"
@@ -268,7 +269,7 @@ function AddAnnoucement() {
                             />
                         </LocalizationProvider>
                     </Grid>
-                    <Grid item xs={12} md={4}>
+                    <Grid item xs={12} md={6}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                                 views={['year']}
@@ -487,7 +488,18 @@ function AddAnnoucement() {
                         setData({ ...data, Eligibility: e.target.value });
                     }}
                 />
+                <Grid container
+                    direction="row">
+                    <Grid item>
 
+                        <Checkbox value={"Jenil"} label="Send Email"
+                            onClick={(e) => {
+                                setData({ ...data, sendMail: e.target.checked });
+                                // console.log(e.target.checked)
+                            }}
+                        /><label>Send Email</label>
+                    </Grid>
+                </Grid>
                 <br />
                 <br />
                 <Button onClick={handleSubmit} variant="contained" size="large" color="primary">

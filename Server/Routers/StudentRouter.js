@@ -40,7 +40,8 @@ const fileStorage1 = multer.diskStorage({
     let fileName =
       req.userId + "-" + SHA(SHA(req.userId).toString()).toString();
     console.log(req.body);
-    const extension = file.originalname.split(".")[1];
+    // const extension = file.originalname.split(".")[1];
+    const extension = file.originalname.split(".").splice(-1);
     cb(null, fileName + "." + extension);
     req.filename = "/student_details/CV/" + fileName + "." + extension;
     console.log(req.filename);
@@ -57,7 +58,8 @@ const fileStorage2 = multer.diskStorage({
   filename: (req, file, cb) => {
     let fileName =
       req.userId + "-" + SHA(SHA(req.userId).toString()).toString();
-    const extension = file.originalname.split(".")[1];
+    // const extension = file.originalname.split(".")[1];
+    const extension = file.originalname.split(".").splice(-1);
     console.log(req.body);
     cb(null, fileName + "." + extension);
     req.filename =
