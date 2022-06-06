@@ -25,6 +25,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import responsePipelineHandler from '../../Utilities/ResponsePipelineHandler';
 import ViewConfig from '../../Config/ViewConfig';
 import UsePost from '../../Utilities/UsePost';
+import DomainConfig from "../../Config/domainConfig"
 // import axios from 'axios';
 
 function CustomToolbar() {
@@ -363,7 +364,7 @@ export default function ViewStudent() {
         const driveLink = resp.data
         console.log(resp)
         console.log(driveLink)
-        const win = window.open("/public/student_details/Zips/SelectedStudents.zip", "_blank");
+        const win = window.open(process.env.NODE_ENV == "production" ? "http://placement.ceddu.in" : "http://localhost:8000" + "/public/student_details/Zips/SelectedStudents.zip", "_blank");
 
     }
 
