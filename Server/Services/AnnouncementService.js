@@ -16,7 +16,7 @@ const Sequelize = require("sequelize")
 const StudentModel = db.students
 const MailerService = require("./MailerService")
 const Company = db.companies
-const ParseDate = require("../../Client/src/Utilities/ParseDate")
+const ParseDate = require("../Helper/ParseDate")
 
 async function checkExists(id) {
     const announcements = await Announcement.findAll({

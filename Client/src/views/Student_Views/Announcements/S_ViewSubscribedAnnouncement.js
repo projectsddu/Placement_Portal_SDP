@@ -123,19 +123,19 @@ function S_ViewSubscribedAnnouncement() {
                                 <SubCard title={e.Company_details["Company_name"] + "-" + e.Job_Role + " for " + ParseDate.getYear(e.Passed_out_year) + " Batch"}>
                                     <Typography variant="h5"></Typography>
                                     <Grid container spacing={1}>
-                                            <Grid item xs={12} md={12}>
-                                                <Grid container spacing={1}>
+                                        <Grid item xs={12} md={12}>
+                                            <Grid container spacing={1}>
                                                 <Grid item xs={6} md={4}>
                                                     <Typography style={{ color: "rgb(97, 97, 97)" }} variant="h4">Posted On: </Typography>
                                                 </Grid>
                                                 <Grid item xs={6} md={8}>
                                                     <Typography style={{ color: "#828282" }} variant="h5">
-                                                    {HandleNull(ParseDate.ParseDate(e.Date_of_announcement))}
+                                                        {HandleNull(ParseDate.ParseDate(e.Date_of_announcement))}
                                                     </Typography>
                                                 </Grid>
-                                                </Grid>
                                             </Grid>
-                                            <Grid item xs={12} md={12}>
+                                        </Grid>
+                                        {/* <Grid item xs={12} md={12}>
                                                 <Grid container spacing={1}>
                                                 <Grid item xs={6} md={4}>
                                                     <Typography style={{ color: "rgb(97, 97, 97)" }} variant="h4">Visiting On: </Typography>
@@ -146,32 +146,32 @@ function S_ViewSubscribedAnnouncement() {
                                                     </Typography>
                                                 </Grid>
                                                 </Grid>
-                                            </Grid>
-                                            <Grid item xs={12} md={12}>
-                                                <Grid container spacing={1}>
+                                            </Grid> */}
+                                        <Grid item xs={12} md={12}>
+                                            <Grid container spacing={1}>
                                                 <Grid item xs={6} md={4}>
                                                     <Typography style={{ color: "rgb(97, 97, 97)" }} variant="h4">Job Location: </Typography>
                                                 </Grid>
                                                 <Grid item xs={6} md={8}>
                                                     <Typography style={{ color: "#828282" }} variant="h5">
-                                                    {HandleNull(e.Job_Location)}
+                                                        {HandleNull(e.Job_Location)}
                                                     </Typography>
                                                 </Grid>
-                                                </Grid>
                                             </Grid>
-                                            <Grid item xs={12} md={12}>
-                                                <Grid container spacing={1}>
+                                        </Grid>
+                                        <Grid item xs={12} md={12}>
+                                            <Grid container spacing={1}>
                                                 <Grid item xs={6} md={4}>
                                                     <Typography style={{ color: "rgb(97, 97, 97)" }} variant="h4">Job Role: </Typography>
                                                 </Grid>
                                                 <Grid item xs={6} md={8}>
                                                     <Typography style={{ color: "#828282" }} variant="h5">
-                                                    {HandleNull(e.Job_Role)}
+                                                        {HandleNull(e.Job_Role)}
                                                     </Typography>
-                                                </Grid>
                                                 </Grid>
                                             </Grid>
                                         </Grid>
+                                    </Grid>
                                     {/* <List dense={false}>
                                         <ListItem>Posted On: {ParseDate.ParseDate(e.Date_of_announcement)}</ListItem>
                                         <ListItem>Visiting On: {ParseDate.ParseDate(e.Date_of_Visit)}</ListItem>
@@ -179,7 +179,7 @@ function S_ViewSubscribedAnnouncement() {
                                         <ListItem>Branches: {e.Eligible_Branches}</ListItem>
                                     </List> */}
 
-                                    <br/>
+                                    <br />
 
                                     <Button onClick={() => handleRedirect(e.Announcement_ID)} size='large' fullWidth className={classes.applyBtn}>View Full Announcement</Button>
                                 </SubCard>
