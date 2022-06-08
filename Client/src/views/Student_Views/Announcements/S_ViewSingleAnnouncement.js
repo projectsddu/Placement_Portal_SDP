@@ -157,13 +157,14 @@ export default function S_ViewSingleAnnouncement() {
         let branches = ""
         for (let i = 0; i < announcement_details["Eligible_Branches"].length; i++) {
             branches += (announcement_details["Eligible_Branches"][i]["BranchName"] + " ")
+            console.log(announcement_details["Eligible_Branches"])
         }
 
         rows = [
             // createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-            createData("Date of Announcement", ParseDate.ParseDate(announcement_details["Date_of_announcement"])),
+            createData("Date of Announcement", ParseDate.dateWithDay(announcement_details["Date_of_announcement"])),
             // createData("Date of Visit", handleNull(ParseDate.ParseDate(announcement_details["Date_of_Visit"]))),
-            createData("Registration Deadline", handleNull(ParseDate.ParseDate(announcement_details["Registration_Deadline"], true))),
+            createData("Registration Deadline", handleNull(ParseDate.dateWithDay(announcement_details["Registration_Deadline"], true))),
             // createData("Eligible Branches", announcement_details["Eligible_Branches"]),
             createData("Eligible Branches", handleNull(branches)),
             createData("Passed out year", handleNull(ParseDate.getYear(announcement_details["Passed_out_year"]))),
@@ -267,7 +268,7 @@ export default function S_ViewSingleAnnouncement() {
                     justify="space-between"
                 >
                     <Grid item>
-                        {subscribeStatus === undefined ? "Loading" : subscribeStatus == true ? <>
+                        {announcement_details == undefined ? "LOADING....." : subscribeStatus === undefined ? "Loading" : subscribeStatus == true && new Date(Date.now()).getTime() < new Date(announcement_details["Registration_Deadline"]).getTime() ? <>
                             <Button
                                 // onClick={handleUnsubscribe} 
                                 onClick={handleOpen}

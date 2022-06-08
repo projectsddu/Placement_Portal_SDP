@@ -89,7 +89,7 @@ function AddAnnoucement() {
     const [data, setData] = useState({
         Company_ID: '',
         Date_of_announcement: new Date(),
-        Date_of_Visit: null,
+        Date_of_Visit: new Date(),
         Eligible_Branches: ["CE"],
         Passed_out_year: null,
         Job_Role: '',
@@ -235,7 +235,7 @@ function AddAnnoucement() {
                             />
                         </LocalizationProvider>
                     </Grid> */}
-                    <Grid item md={6} xs={12}>
+                    {/* <Grid item md={6} xs={12}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                                 label="Date of Annoucement"
@@ -247,8 +247,8 @@ function AddAnnoucement() {
                                 renderInput={(params) => <TextField fullWidth {...params} />}
                             />
                         </LocalizationProvider>
-                    </Grid>
-                    <Grid item md={6} xs={12}>
+                    </Grid> */}
+                    <Grid item md={12} xs={12}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                                 views={['year']}
@@ -466,7 +466,7 @@ function AddAnnoucement() {
                                 setData({ ...data, sendMail: e.target.checked });
                                 // console.log(e.target.checked)
                             }}
-                        /><label>Send Email</label>
+                        /><label>Send Email &nbsp; &nbsp; &nbsp; <b>(Note: Sending mails might take a while)</b></label>
                     </Grid>
                 </Grid>
                 <br />

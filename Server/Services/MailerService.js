@@ -8,27 +8,74 @@ const EmailId = process.env.EMAIL_ID
 const EmailPassword = process.env.EMAIL_PASSWORD
 const EmailService = process.env.EMAIL_SERVICE
 
+const CLIENT_ID = process.env.CLIENT_ID
+const CLIENT_SECRET = process.env.CLIENT_SECRET
+const REDIRECT_URI = process.env.REDIRECT_URI
+const REFRESH_TOKEN = process.env.REFRESH_TOKEN
+
+const oAuth2Client = new google.auth.OAuth2(
+    CLIENT_ID,
+    CLIENT_SECRET,
+    REDIRECT_URI
+);
+oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+
+console.log("Client ID", CLIENT_ID)
+console.log("Client SECRET", CLIENT_SECRET)
+console.log("Client URI", REDIRECT_URI)
+
 async function sendMail(mailDetails) {
 
     try {
-        let mailTransporter = nodemailer.createTransport({
+        // let mailTransporter = nodemailer.createTransport({
+        //     service: 'gmail',
+        //     port: 587,
+        //     secure: true,
+        //     auth: {
+        //         user: EmailId,
+        //         pass: EmailPassword
+        //     }
+        // });
+        // let result = await mailTransporter.sendMail(mailDetails)
+        // if (result) {
+        //     // console.log("Here in true")
+        //     return true
+        // }
+        // else {
+        //     // console.log("Here in false")
+        //     return false
+        // }
+
+        const accessToken = await oAuth2Client.getAccessToken();
+
+        const transport = nodemailer.createTransport({
             service: 'gmail',
-            port: 587,
-            secure: true,
             auth: {
-                user: EmailId,
-                pass: EmailPassword
-            }
+                type: 'OAuth2',
+                user: 'abcxyz1814@gmail.com',
+                clientId: CLIENT_ID,
+                clientSecret: CLIENT_SECRET,
+                refreshToken: REFRESH_TOKEN,
+                accessToken: accessToken,
+            },
         });
-        let result = await mailTransporter.sendMail(mailDetails)
+
+        // const mailOptions = {
+        //     from: 'placement.csiddu.tech',
+        //     to: 'jenilgandhi2111@gmail.com',
+        //     subject: 'Hello from gmail using API',
+        //     text: 'Hello from gmail email using API',
+        //     html: '<h1>Hello from gmail email using API</h1>',
+        // };
+        const result = await transport.sendMail(mailDetails);
+        console.log(result)
         if (result) {
-            // console.log("Here in true")
             return true
         }
         else {
-            // console.log("Here in false")
             return false
         }
+
     }
     catch (err) {
         console.log("Some error")

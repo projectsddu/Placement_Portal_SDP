@@ -28,7 +28,7 @@ async function checkExists(id) {
 const createdAnnoucement = async (announcementData, job_description_file) => {
     try {
         console.log(announcementData)
-        const dat = Date.parse(announcementData["Date_of_Visit"])
+        // const dat = Date.parse(announcementData["Date_of_Visit"])
         // const fileName = "./public/" + announcementData["Company_ID"] + "-" + dat.toString() + ".pdf"
         const fileName = job_description_file
         if (fileName != null || fileName != "" || fileName != undefined) {
