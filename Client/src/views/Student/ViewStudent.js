@@ -364,7 +364,7 @@ export default function ViewStudent() {
         const driveLink = resp.data
         console.log(resp)
         console.log(driveLink)
-        const win = window.open(process.env.NODE_ENV == "production" ? "http://placement.ceddu.in" : "http://localhost:8000" + "/public/student_details/Zips/SelectedStudents.zip", "_blank");
+        const win = window.open(process.env.NODE_ENV == "production" ? "http://placement.ceddu.in/public/student_details/Zips/SelectedStudents.zip" : "http://localhost:8000/public/student_details/Zips/SelectedStudents.zip", "_blank");
 
     }
 
