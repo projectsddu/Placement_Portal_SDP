@@ -27,7 +27,7 @@ const Input = styled('input')({
 
 
 
-export default function UploadPhotoCard({ Student_Photo }) {
+export default function UploadPhotoCard({ Student_Photo, fetchStudentDetails }) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -72,6 +72,10 @@ export default function UploadPhotoCard({ Student_Photo }) {
                     toast: toast,
                     flag: false,
                 }
+            }
+            // console.log("response from upload photo card: ", res["status"]);
+            if (res["status"]) {
+                fetchStudentDetails()
             }
             responsePipelineHandler(params1, 1)
         }
@@ -143,7 +147,8 @@ export default function UploadPhotoCard({ Student_Photo }) {
 
                     {Student_Photo === undefined ? "Wait Loading...." : <>
                         {/* {console.log(Student_Photo)} */}
-                        {Student_Photo != "image1.png" || Student_Photo != "" ?
+                        {Student_Photo != "image1.png" || Student_Photo != ""
+                            ?
                             <a target='blank'
                                 style={{ "text-decoration": "none", "cursor": "pointer" }}
                                 href={

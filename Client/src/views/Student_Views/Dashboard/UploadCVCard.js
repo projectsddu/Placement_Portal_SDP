@@ -25,7 +25,7 @@ const Input = styled('input')({
 
 
 
-export default function UploadResumeCard({ CV_Upload }) {
+export default function UploadResumeCard({ CV_Upload, fetchStudentDetails }) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -74,7 +74,11 @@ export default function UploadResumeCard({ CV_Upload }) {
                     flag: false,
                 }
             }
-            // console.log(res);
+            // console.log("response from upload cv card: ", res["status"]);
+            if (res["status"]) {
+                // location.reload()
+                fetchStudentDetails()
+            }
             responsePipelineHandler(params1, 1)
             // END OF POSTING DATA EXAMPLE
         }
@@ -149,7 +153,7 @@ export default function UploadResumeCard({ CV_Upload }) {
                                 </Button>
                             </a> :
                             <>
-                                <Chip label="No CV Uploaded!" />
+                                <Chip label="No CV Uploaded" />
                             </>
                         }
 

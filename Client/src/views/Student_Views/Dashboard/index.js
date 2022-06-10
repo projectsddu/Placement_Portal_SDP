@@ -36,9 +36,7 @@ const Dashboard = () => {
 
     const [studentDetails, setStudentDetails] = useState(undefined);
 
-
-    useEffect(async () => {
-
+    async function fetchStudentDetails() {
         const data = await fetch("/student/getOneStudent/", { method: 'GET' })
 
         let data1 = await data.json();
@@ -84,8 +82,58 @@ const Dashboard = () => {
             setStudent_spi(student_spi_list)
             setStudentDetails({ Student_ID, FirstName, MiddleName, LastName, Email_ID, CV_Upload, Student_Photo })
         }
+    }
 
+    // useEffect(async () => {
+    useEffect(() => {
 
+        // const data = await fetch("/student/getOneStudent/", { method: 'GET' })
+
+        // let data1 = await data.json();
+
+        // let student_spi_list = []
+
+        // const required_data = data1
+        // console.log(required_data)
+
+        // if (required_data) {
+        //     // console.log(required_data["data"]);
+        //     Student_ID = required_data["data"]["Student_ID"];
+        //     FirstName = required_data["data"]["FirstName"];
+        //     Email_ID = required_data["data"]["Email_ID"];
+        //     MiddleName = required_data["data"]["MiddleName"];
+        //     LastName = required_data["data"]["LastName"];
+        //     Sem_1_SPI = required_data["data"]["Sem_1_SPI"];
+        //     Sem_2_SPI = required_data["data"]["Sem_2_SPI"];
+        //     Sem_3_SPI = required_data["data"]["Sem_3_SPI"];
+        //     Sem_4_SPI = required_data["data"]["Sem_4_SPI"];
+        //     Sem_5_SPI = required_data["data"]["Sem_5_SPI"];
+        //     Sem_6_SPI = required_data["data"]["Sem_6_SPI"];
+        //     Sem_7_SPI = required_data["data"]["Sem_7_SPI"];
+        //     Sem_8_SPI = required_data["data"]["Sem_8_SPI"];
+        //     console.log()
+        //     CV_Upload = required_data["data"]["CV_Upload"];
+        //     // console.log(CV_Upload);
+        //     Student_Photo = required_data["data"]["Student_Photo"]
+        //     // console.log(Student_Photo)
+
+        //     // push spi into list one by one
+        //     student_spi_list.push(Sem_1_SPI)
+        //     student_spi_list.push(Sem_2_SPI)
+        //     student_spi_list.push(Sem_3_SPI)
+        //     student_spi_list.push(Sem_4_SPI)
+        //     student_spi_list.push(Sem_5_SPI)
+        //     student_spi_list.push(Sem_6_SPI)
+        //     student_spi_list.push(Sem_7_SPI)
+        //     student_spi_list.push(Sem_8_SPI)
+
+        //     console.log(student_spi_list)
+
+        //     setStudent_spi(student_spi_list)
+        //     setStudentDetails({ Student_ID, FirstName, MiddleName, LastName, Email_ID, CV_Upload, Student_Photo })
+        // }
+
+        fetchStudentDetails()
 
     }, []);
 
@@ -163,13 +211,13 @@ const Dashboard = () => {
                 <Grid item xs={12}>
                     <Grid container spacing={gridSpacing}>
                         <Grid item xs={12} md={12}>
-                            {studentDetails === undefined ? "" : <UploadCVCard CV_Upload={studentDetails.CV_Upload} />}
+                            {studentDetails === undefined ? "" : <UploadCVCard CV_Upload={studentDetails.CV_Upload} fetchStudentDetails={fetchStudentDetails} />}
 
                         </Grid>
                         <Grid item xs={12} md={12}>
                             {studentDetails === undefined ? "" : <>
                                 {/* {studentDetails.Student_Photo} */}
-                                <UploadPhotoCard Student_Photo={studentDetails.Student_Photo} />
+                                <UploadPhotoCard Student_Photo={studentDetails.Student_Photo} fetchStudentDetails={fetchStudentDetails} />
                             </>}
 
                         </Grid>
