@@ -205,7 +205,14 @@ const ProfileSection = () => {
 
 
     function handleChangePassword() {
-        history.push("/_student/changePassword")
+        const url = location.pathname
+        // console.log(url.includes("_student"))
+        if (url.includes("_student")) {
+            history.push("/_student/changePassword")
+        }
+        else {
+            history.push("/admin/changePassword")
+        }
     }
 
 

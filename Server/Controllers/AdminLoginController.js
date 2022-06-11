@@ -14,8 +14,8 @@ const login = async (req, res) => {
         const admin_name = req.body.adminName
         const admin_password = req.body.adminPassword
         console.log("body fromn controller");
-        console.log(admin_name)
-        console.log(admin_password)
+        console.log("admin name: ", admin_name)
+        console.log("admin password", admin_password)
 
         const token = await AdminLoginService.verifyAdmin(admin_name, admin_password)
 
@@ -39,6 +39,33 @@ const login = async (req, res) => {
     }
 }
 
+const changePassword = async (req, res) => {
+    try {
+
+        const oldPassword = req.body.oldPassword
+        const newPassword = req.body.newPassword
+        const newPasswordConfirm = req.body.newPasswordConfirm
+
+        const status = await AdminLoginService.changePassword(oldPassword, newPassword, newPasswordConfirm)
+
+        console.log("status : ", status)
+
+        if (status == true) {
+            await res.clearCookie('AdminLoginToken')
+            return OK(res, "Password updated successfully. Please login again")
+        }
+
+        else {
+            return ERROR(res, status)
+        }
+
+    } catch (error) {
+        console.log(error)
+        return ERROR(res, "Cannot set your password!")
+    }
+}
+
 module.exports = {
-    login
+    login,
+    changePassword
 }
