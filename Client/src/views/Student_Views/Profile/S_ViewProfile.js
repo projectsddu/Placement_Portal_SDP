@@ -551,28 +551,34 @@ export default function S_ViewProfile() {
                                         </TableCell>
                                         <TableCell align="right">
                                             {student_details === undefined ? "Wait Loading...." : <>
-                                                <a target='blank'
-                                                    style={{ "text-decoration": "none", "cursor": "pointer" }}
-                                                    href={
+                                                {student_details["CV_Upload"] != "image.png" ?
+                                                    <a target='blank'
+                                                        style={{ "text-decoration": "none", "cursor": "pointer" }}
+                                                        href={
 
-                                                        process.env.NODE_ENV == "production" ?
-                                                            // "http://placement.csiddu.tech" + 
-                                                            domainConfig.domain +
-                                                            student_details["CV_Upload"] : "http://localhost:8000" + student_details["CV_Upload"]
-                                                    }>
+                                                            process.env.NODE_ENV == "production" ?
+                                                                // "http://placement.csiddu.tech" + 
+                                                                domainConfig.domain +
+                                                                student_details["CV_Upload"] : "http://localhost:8000" + student_details["CV_Upload"]
+                                                        }>
 
-                                                    {student_details === undefined ? "Wait Loading...." : <>
-                                                        <Chip
-                                                            label={"View CV"}
-                                                            // variant="outlined"
-                                                            color='primary'
-                                                            clickable
-                                                        />
+                                                        {student_details === undefined ? "Wait Loading...." : <>
+                                                            <Chip
+                                                                label={"View CV"}
+                                                                // variant="outlined"
+                                                                color='primary'
+                                                                clickable
+                                                            />
 
+                                                        </>
+                                                        }
+
+                                                    </a> :
+                                                    <>
+                                                        <Chip label="No CV Uploaded" />
                                                     </>
-                                                    }
+                                                }
 
-                                                </a>
                                             </>}
 
                                         </TableCell>
