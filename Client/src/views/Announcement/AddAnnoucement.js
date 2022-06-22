@@ -19,7 +19,8 @@ import {
     Stack,
     Button,
     Checkbox,
-    Typography
+    Typography,
+    Chip
 } from '@material-ui/core';
 import SecondaryAction from './../../ui-component/cards/CardSecondaryAction';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -34,8 +35,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import UseFetch from '../../Utilities/UseFetch';
 import Modal from '@mui/material/Modal';
 import CircularProgress from '@mui/material/CircularProgress';
-
+import { IconPlus } from '@tabler/icons';
+// import Chip from '@material-ui/core';
+import { IconInfoCircle } from '@tabler/icons';
 // style constant
+
 const useStyles = makeStyles((theme) => ({
     frame: {
         height: 'calc(100vh - 210px)',
@@ -83,6 +87,12 @@ function AddAnnoucement() {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const [open1, setOpen1] = React.useState(false);
+    const handleOpen1 = () => setOpen1(true);
+    const handleClose1 = () => setOpen1(false);
+
+
     const [selectedFile, setSelectedFile] = useState();
     const [isFilePicked, setIsFilePicked] = useState(false);
 
@@ -99,9 +109,31 @@ function AddAnnoucement() {
         Other_Details: '',
         Registration_Deadline: null,
         Eligibility: '',
-        sendMail: false
+        sendMail: false,
+        Additional_Requirement: []
     });
     useEffect(() => { }, [data]);
+
+
+    const handleRoleAdd = function () {
+        let dataCopy = data
+        dataCopy.Additional_Requirement.push(Role)
+        setData(dataCopy)
+        console.log(data)
+        handleClose1()
+        setRole("")
+    }
+
+    const handleDeleteRole = function (elem) {
+        let Preference = data.Additional_Requirement.filter((element) => {
+            return element != elem
+        })
+        console.log(Preference)
+        setData({ ...data, Additional_Requirement: [].concat(Preference) })
+    }
+
+    const [AdditionalRequirement, setAdditionalRequirement] = useState(false)
+    const [Role, setRole] = useState("")
 
     const { required_data, loading } = UseFetch('/annoucement/requiredAnnoucementDetails', 'GET');
 
@@ -180,6 +212,18 @@ function AddAnnoucement() {
         bgcolor: 'background.paper',
         boxShadow: 24,
         p: 4,
+    };
+
+    const style1 = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        boxShadow: 24,
+        borderRadius: '2%',
+        p: 4
     };
     return (
         <MainCard title="Add Announcement">
@@ -469,7 +513,64 @@ function AddAnnoucement() {
                         /><label>Send Email &nbsp; &nbsp; &nbsp; <b>(Note: Sending mails might take a while)</b></label>
                     </Grid>
                 </Grid>
+
+                {/* <br /> */}
                 <br />
+                <Grid container
+                    direction="row">
+                    <Grid item>
+
+                        <Checkbox value={"Jenil"} label="Preference Requirement"
+                            onClick={(e) => {
+                                // let checked = e.target.checked
+                                setAdditionalRequirement(e.target.checked ? true : false);
+                                if (!e.target.checked) {
+                                    console.log("Here")
+                                    let DataCopy = data
+                                    DataCopy.Additional_Requirement = [].concat([])
+                                    setData(DataCopy)
+                                }
+                                console.log(data)
+                            }}
+                        /><label>Preference Requirement &nbsp; &nbsp; &nbsp;</label>
+                    </Grid>
+                </Grid>
+                {AdditionalRequirement ? <> <Grid container
+                    direction="row">
+                    {/* <br /> */}
+
+                </Grid>
+                    {/* <br /> */}
+                    {/* <Grid item>
+                        <Button onClick={handleOpen1}>Add</Button>
+                    </Grid> */}
+                    <br />
+                    <Button
+                        size="medium"
+                        onClick={handleOpen1}
+                        variant="contained"
+                        startIcon={<IconPlus />}
+                    >
+                        Add Job Preference
+                    </Button>
+                    <br />
+                    <br />
+                    {data.Additional_Requirement.map((elem) => {
+                        return (<>
+                            <Chip
+                                style={{ margin: '1%' }}
+                                icon={IconInfoCircle}
+                                variant="outlined"
+                                color="primary"
+                                onDelete={() => handleDeleteRole(elem)}
+                                label={elem}
+                            />
+
+                        </>)
+                    })}
+                    <br />
+
+                </> : ""}
                 <br />
                 <Grid container spacing={1}>
                     <Grid item xs={12} md={3}>
@@ -478,6 +579,40 @@ function AddAnnoucement() {
                         </Button>
                     </Grid>
                 </Grid>
+                <Modal
+                    open={open1}
+                    onClose={handleClose1}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+
+                    <Box sx={style1}>
+                        <Grid spacing={2} container justifyContent={'space-between'}>
+                            <Grid item>
+                                <TextField
+                                    onChange={(e) => {
+                                        setRole(e.target.value);
+                                    }}
+                                    value={Role}
+                                    size="small"
+                                />
+                            </Grid>
+                            <Grid item>
+                                <Button
+                                    size="medium"
+                                    onClick={() => {
+                                        handleRoleAdd();
+                                    }}
+                                    variant="contained"
+                                    startIcon={<IconPlus />}
+                                >
+                                    Add Role
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Box>
+
+                </Modal>
             </form>
         </MainCard>
     );
