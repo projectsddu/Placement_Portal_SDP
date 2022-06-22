@@ -39,6 +39,7 @@ import { IconLogout, IconSearch, IconSettings, IconKey } from '@tabler/icons';
 import User1 from './../../../../assets/images/users/user-round.svg';
 import { useHistory } from 'react-router';
 import UsePost from "../../../../Utilities/UsePost"
+import { useLocation } from 'react-router';
 
 // style const
 const useStyles = makeStyles((theme) => ({
@@ -203,7 +204,7 @@ const ProfileSection = () => {
         }
     }, [open]);
 
-
+    const location = useLocation()
     function handleChangePassword() {
         const url = location.pathname
         // console.log(url.includes("_student"))
