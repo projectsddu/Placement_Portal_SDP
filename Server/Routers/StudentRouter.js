@@ -134,4 +134,6 @@ router.post(
 
 router.post("/getSelectedCV", [Authenticate], StudentController.downloadSelectedCV)
 
+router.post("/sendStudentsBatchMailNotification/", [AdminAuthenticate.AdminAuthenticate], StudentController.sendBatchMailNotification)
+
 module.exports = router;

@@ -12,6 +12,7 @@ import Chart from 'react-apexcharts';
 import SkeletonTotalGrowthBarChart from '../../../ui-component/cards/Skeleton/TotalGrowthBarChart';
 import MainCard from '../../../ui-component/cards/MainCard';
 import { gridSpacing } from '../../../store/constant';
+import "./studentDataBarChart.css"
 
 // chart data
 // import chartData from './chart-data/StudentSemCPIBar';

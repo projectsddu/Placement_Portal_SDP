@@ -62,6 +62,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT,
             allowNull: true
         },
+        Job_Preferences: {
+            type: DataTypes.TEXT,
+            allowNull: true
+        },
 
         IsOpen: {
             type: DataTypes.BOOLEAN,

@@ -7,7 +7,11 @@ module.exports = (sequelize, DataTypes) => {
         Student_ID: {
             type: DataTypes.STRING,
             allowNull: false
-        }
+        },
+        Job_Preferences: {
+            type: DataTypes.TEXT,
+            allowNull: true
+        },
     },
         {
             timestamps: false

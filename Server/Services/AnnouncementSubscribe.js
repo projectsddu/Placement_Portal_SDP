@@ -47,19 +47,41 @@ const getAnnoucement = async (id) => {
 }
 
 
-const addSubsriberToAnnouncement = async (student_id, announcement_id, studentMailId) => {
+const addSubsriberToAnnouncement = async (student_id, announcement_id, studentMailId, jobPreferences) => {
     console.log("HIHJJBBJHBJHBHJBHJBJHBJHBJHBHJBHJBJHBj")
     console.log(studentMailId)
     try {
-        const payLoad = {
-            Announcement_ID: announcement_id,
-            Student_ID: student_id
-        }
-        await Subscribers.create(payLoad);
-        // let announcementDetails = await AnnouncementHelper.AnnouncementService.getAnnoucement(announcement_id)
+
         let announcementDetails = await getAnnoucement(announcement_id)
+
         announcementDetails = JSON.parse(JSON.stringify(announcementDetails[0]))
-        console.log(announcementDetails);
+
+        // console.log("announcementDetails : ", announcementDetails?.Job_Preferences)
+
+        if (announcementDetails?.Job_Preferences == null) {
+            const payLoad = {
+                Announcement_ID: announcement_id,
+                Student_ID: student_id,
+                Job_Preferences: null
+            }
+            await Subscribers.create(payLoad);
+        }
+        else {
+            console.log("job preference while creating : ", jobPreferences)
+            if (jobPreferences == "undefined") {
+                jobPreferences = announcementDetails?.Job_Preferences
+            }
+            const payLoad = {
+                Announcement_ID: announcement_id,
+                Student_ID: student_id,
+                Job_Preferences: jobPreferences
+            }
+            await Subscribers.create(payLoad);
+        }
+        // let announcementDetails = await AnnouncementHelper.AnnouncementService.getAnnoucement(announcement_id)
+        // let announcementDetails = await getAnnoucement(announcement_id)
+        // announcementDetails = JSON.parse(JSON.stringify(announcementDetails[0]))
+        // console.log(announcementDetails);
 
         const mailData = {
             "subject": "Regarding " + announcementDetails["Company_details"]["Company_name"] + ": " + announcementDetails["Job_Role"] + " Role Announcement.",
@@ -83,13 +105,18 @@ const getSubscribedStatus = async (student_id, announcement_id) => {
             where: { Student_ID: student_id, Announcement_ID: announcement_id }
         })
 
+        const jobPreferences = JSON.parse(JSON.stringify(data))[0]?.Job_Preferences
+
+        console.log("data from get subscibed data : ", data)
+
         if (data) {
-            console.log(data)
+            // console.log(data)
             if (data.length > 0) {
-                return true
+                // return { "status": true, }
+                return { "status": true, "Job_Preferences": jobPreferences }
             }
         }
-        return false
+        return { "status": false }
     }
     catch (err) {
         console.log(err.toString());
@@ -130,21 +157,30 @@ const getSubscribedStudentsOfAnnouncement = async (announcement_id, skills = fal
             data = JSON.parse(JSON.stringify(data))
             console.log(data)
             for (let i = 0; i < data.length; i++) {
-                students.push(await StudentService.getOneStudent(data[i]["Student_ID"]))
+                let studentData = {
+                    studentDetails: await StudentService.getOneStudent(data[i]["Student_ID"]),
+                    jobPreferences: data[i]["Job_Preferences"]
+                }
+
+
+                // students.push(await StudentService.getOneStudent(data[i]["Student_ID"]))
+                students.push(studentData)
             }
 
             students = JSON.parse(JSON.stringify(students))
 
+            console.log("students : ", students)
+
             if (skills) {
                 for (let i = 0; i < students.length; i++) {
-                    let skillDetails = await SkillsAndAchievementsService.getSkillsAndAchievements(students[i]["Student_ID"])
+                    let skillDetails = await SkillsAndAchievementsService.getSkillsAndAchievements(students[i]["studentDetails"]["Student_ID"])
                     // console.log(skillDetails)
                     if (skillDetails.length != 0) {
                         skillDetails = JSON.parse(JSON.stringify(skillDetails))
-                        students[i]["Skills"] = skillDetails[0]["Skills"]
+                        students[i]["studentDetails"]["Skills"] = skillDetails[0]["Skills"]
                     }
                     else {
-                        students[i]["Skills"] = ""
+                        students[i]["studentDetails"]["Skills"] = ""
                     }
                 }
             }

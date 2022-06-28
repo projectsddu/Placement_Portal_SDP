@@ -1,7 +1,6 @@
-
-
-// assets
 import { IconDashboard, IconDeviceAnalytics, IconSpeakerphone, IconLayoutGridAdd, IconCirclePlus, IconEye, IconArtboard, IconFileUpload, IconNotification, IconBellRinging } from '@tabler/icons';
+import NotificationAddRoundedIcon from '@mui/icons-material/NotificationAddRounded';
+import NotificationAddOutlinedIcon from '@mui/icons-material/NotificationAddOutlined';
 
 // constant
 const icons = {
@@ -15,7 +14,9 @@ const icons = {
     IconArtboard,
     IconFileUpload,
     IconNotification,
-    IconBellRinging
+    IconBellRinging,
+    NotificationAddRoundedIcon,
+    NotificationAddOutlinedIcon
 };
 
 export const NotificationMenu = {
@@ -24,26 +25,19 @@ export const NotificationMenu = {
     type: 'group',
     children: [
         {
-            id: 'icons',
-            title: 'Notification',
+            id: 'Notification Menu',
+            title: 'Send Notification',
             type: 'collapse',
-            icon: icons['IconBellRinging'],
+            icon: icons['NotificationAddOutlinedIcon'],
             children: [{
                 id: 'Batch Notification',
-                title: 'Notification to batch',
+                title: 'Send Batch Notification',
                 type: 'item',
-                url: '/notification/batchNotification',
-                icon: icons['IconCirclePlus'],
+                url: '/notification/send_batch_notificataion',
+                icon: icons['IconBellRinging'],
                 breadcrumbs: false
             },
-            {
-                id: 'AddInternshipViaCSV',
-                title: 'Add Internship Via CSV',
-                type: 'item',
-                url: '/internship/add_internship_via_csv',
-                icon: icons['IconFileUpload'],
-                breadcrumbs: false
-            }
+
             ]
         }
     ]

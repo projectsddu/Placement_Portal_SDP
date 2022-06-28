@@ -171,6 +171,7 @@ function ViewSingleAnnoucement() {
             createData("Bond Details", HandleNull(announcement_details["Bond_Details"])),
             createData("Other Details", HandleNull(announcement_details["Other_Details"])),
             createData("Eligibility", HandleNull(announcement_details["Eligibility"])),
+            createData("Job Preferences", HandleNull(announcement_details["Job_Preferences"]))
         ];
     }
 

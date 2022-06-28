@@ -10,9 +10,24 @@ const ERROR = ResponseService.ERROR
 
 const addStudentToAnnouncement = async (req, res) => {
     try {
+        const jobPreferenceList = req.body
+
+        // console.log("job preference data in req.body : ", jobPreferenceList)
+
+        let jobPreferences = "";
+
+        jobPreferences += jobPreferenceList[0]
+
+        for (let i = 1; i < jobPreferenceList.length; i++) {
+            jobPreferences += ","
+            jobPreferences += jobPreferenceList[i]
+        }
+
+        console.log("job preference data created as string : ", jobPreferences)
+
         const studentId = req.userId
         const studentMailId = req.userObj.Email_ID
-        const status = Subscibe.addSubsriberToAnnouncement(studentId, req.params.announcementId, studentMailId)
+        const status = Subscibe.addSubsriberToAnnouncement(studentId, req.params.announcementId, studentMailId, jobPreferences)
         if (status) {
             return res.json({ status: true, data: "Announcement applied successfully!" })
         }
@@ -33,8 +48,10 @@ const getSubscribedStatus = async (req, res) => {
         const studentId = req.userId
         const status = await Subscibe.getSubscribedStatus(studentId, req.params.announcementId)
 
-        if (status) {
-            return res.json({ status: true })
+        // console.log("status : ", status)
+
+        if (status?.status) {
+            return res.json({ status: true, data: status?.Job_Preferences })
         }
         else {
             return res.json({ status: false })

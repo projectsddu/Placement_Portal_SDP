@@ -27,7 +27,7 @@ async function checkExists(id) {
 
 const createdAnnoucement = async (announcementData, job_description_file) => {
     try {
-        console.log(announcementData)
+        console.log("from create announcement : ", announcementData)
         // const dat = Date.parse(announcementData["Date_of_Visit"])
         // const fileName = "./public/" + announcementData["Company_ID"] + "-" + dat.toString() + ".pdf"
         const fileName = job_description_file
@@ -43,6 +43,9 @@ const createdAnnoucement = async (announcementData, job_description_file) => {
         const branches = announcementData["Eligible_Branches"].split(",")
         // console.log(branches)
         announcementData["Eligible_Branches"] = ""
+        if (announcementData["Job_Preferences"] == "") {
+            announcementData["Job_Preferences"] = null
+        }
         await Announcement.create(announcementData)
         let aData = await Announcement.findAll({
             order: [

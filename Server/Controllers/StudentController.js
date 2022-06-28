@@ -7,11 +7,11 @@ const Announcement = db.announcements
 // require csvtojson module
 const CSVToJSON = require('csvtojson');
 const ZippingService = require("../Services/ZippingService")
-
-
+const { sequelize } = require("../Models/index")
 const fs = require("fs")
 const { ERROR, OK } = require("../Services/ResponseService")
 const FirstTimePasswordService = require("../Services/FirstTimePasswordService")
+const MailerService = require("../Services/MailerService")
 
 // to add a new student
 const addStudent = async (req, res) => {
@@ -374,6 +374,43 @@ const downloadSelectedCV = async (req, res) => {
     }
 }
 
+const sendBatchMailNotification = async (req, res) => {
+    try {
+        // console.log("req.body : ", req.body)
+
+        const Passed_out_year = req.body?.Passed_out_year.split("-")[0]
+
+        // console.log("passed out year :", Passed_out_year)
+
+        let students = await Student.findAll({ where: [sequelize.where(sequelize.fn('YEAR', sequelize.col('Passed_out_year')), Passed_out_year)] })
+
+        // console.log("students count : ", students.length)
+
+        students = JSON.parse(JSON.stringify(students))
+
+        let email_list = [];
+
+        for (let i = 0; i < students.length; i++) {
+            let student = students[i]
+            let email = student["Email_ID"]
+            if (email !== "") {
+                email_list.push(email)
+            }
+            // console.log(email)
+        }
+
+        // console.log("email list : ", email_list)
+
+        await MailerService.batchNotificationMail({
+            "subject": req.body.Subject, "header": req.body.Header, "body": req.body.Body
+        }, email_list
+        )
+    } catch (error) {
+        log.error(error.toString())
+        return res.json({ status: false, data: "Error sending batch mail notification " + error })
+    }
+}
+
 module.exports = {
     addStudent,
     getAllStudents,
@@ -388,5 +425,6 @@ module.exports = {
     sendFirstTimePasswords,
     searchStudent,
     updateStudentDetailsFromStudentSide,
-    downloadSelectedCV
+    downloadSelectedCV,
+    sendBatchMailNotification
 }

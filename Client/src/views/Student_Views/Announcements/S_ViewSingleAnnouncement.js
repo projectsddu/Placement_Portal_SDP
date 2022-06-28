@@ -51,6 +51,24 @@ import Modal from '@mui/material/Modal';
 import handleNull from "../../../Utilities/HandleNull"
 import domainConfig from '../../../Config/domainConfig';
 // import Fetch
+import { useTheme } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import FormHelperText from '@mui/material/FormHelperText';
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 250,
+        },
+    },
+};
 
 export default function S_ViewSingleAnnouncement() {
     const useStyles = makeStyles((theme) => ({
@@ -143,11 +161,13 @@ export default function S_ViewSingleAnnouncement() {
 
 
     const location = useLocation().pathname;
+
     const id = location.split("/")[4]
 
     const { required_data, loading } = UseFetch("/annoucement/getAnnoucement/" + id, "GET")
 
     let announcement_details = undefined, rows;
+
     if (!loading) {
 
         announcement_details = required_data["data"][0];
@@ -173,10 +193,46 @@ export default function S_ViewSingleAnnouncement() {
             createData("Job Location", handleNull(announcement_details["Job_Location"])),
             createData("Bond Details", handleNull(announcement_details["Bond_Details"])),
             createData("Other Details", handleNull(announcement_details["Other_Details"])),
-
             createData("Eligibility", handleNull(announcement_details["Eligibility"])),
         ];
     }
+
+    // console.log("announcement details Job Preferences : ", announcement_details?.Job_Preferences)
+
+    let jobPreferences = []
+
+    if (announcement_details?.Job_Preferences != null) {
+        announcement_details?.Job_Preferences.split(",").map((item) => {
+            jobPreferences.push(item)
+        })
+
+    }
+
+
+    function getStyles(name, jobPreferenceName, theme) {
+        return {
+            fontWeight:
+                jobPreferenceName.indexOf(name) === -1
+                    ? theme.typography.fontWeightRegular
+                    : theme.typography.fontWeightMedium,
+        };
+    }
+
+    const theme = useTheme();
+
+    const [jobPreferenceName, setJobPreferenceName] = React.useState([]);
+
+    const handleChange = (event) => {
+        const {
+            target: { value },
+        } = event;
+        setJobPreferenceName(
+            // On autofill we get a stringified value.
+            typeof value === 'string' ? value.split(',') : value,
+        );
+    };
+
+    // console.log("student selected job preferences : ", jobPreferenceName)
 
     // const name = new URLSearchParams(search).get('id');
 
@@ -187,27 +243,47 @@ export default function S_ViewSingleAnnouncement() {
 
 
     const [subscribeStatus, setsubscribeStatus] = useState(undefined);
+
     const [deadline, setDeadline] = useState(undefined);
 
     // const subscribedata = fetch("/subscribeannouncement/getSubscribedStatus/" + id, "GET")
 
-
-    useEffect(async () => {
-
+    async function fetchSubscsribedData() {
         const subscribedata = await fetch("/subscribeannouncement/getSubscribedStatus/" + id, { method: "GET" });
 
         let data1 = await subscribedata.json();
+
+        let jobPreferenceList = data1["data"]
+
         data1 = data1["status"]
-        console.log(data1)
+
+        // console.log("subscribed data : ", jobPreferenceList)
+
+        let jobPreferences1 = []
 
         if (data1) {
             setsubscribeStatus(true)
+            // if (data1["data"].length != 0 || data1["data"] != null) {
+            jobPreferenceList.split(",").map((item) => {
+                jobPreferences1.push(item)
+                // console.log("item : ", item)
+            })
+            // }
+
+            // console.log("job preference 1 : ", jobPreferences1)
+            setJobPreferenceName(jobPreferences1)
         }
         else {
             setsubscribeStatus(false)
         }
+    }
 
-    }, []);
+    useEffect(() => {
+        fetchSubscsribedData()
+        if (subscribeStatus == false) {
+            setJobPreferenceName([])
+        }
+    }, [subscribeStatus]);
 
 
     // if (!subscribedata["loading"]) {
@@ -232,8 +308,10 @@ export default function S_ViewSingleAnnouncement() {
 
 
     async function handleSubscribe() {
-        const res = await UsePost("/subscribeannouncement/subscribe/" + id, {}, "POST")
+        const res = await UsePost("/subscribeannouncement/subscribe/" + id, jobPreferenceName, "POST")
+
         setsubscribeStatus(true)
+
         const params1 = {
             data: res,
             HandleToast: {
@@ -241,8 +319,11 @@ export default function S_ViewSingleAnnouncement() {
                 flag: false,
             }
         }
+
         console.log(res);
+
         responsePipelineHandler(params1, 1)
+
         handleClose()
     }
 
@@ -331,9 +412,55 @@ export default function S_ViewSingleAnnouncement() {
                     ''
                 ) : (
                     <>
+                        {announcement_details?.Job_Preferences === null || announcement_details?.Job_Preferences.length === 0 ? ("") : (
+                            // { subscribeStatus ? (<></>) : (<></>)}
+                            <>
+                                {/* <div>
+                                job preference exists
+                            </div> */}
+                                <br />
+                                <FormControl sx={{ m: 1 }} fullWidth disabled={subscribeStatus === true}>
+                                    {/* <Grid container> */}
+                                    {/* <Grid item> */}
+                                    <InputLabel id="demo-multiple-chip-label">Select Job Preference</InputLabel>
+                                    <Select
+                                        labelId="demo-multiple-chip-label"
+                                        id="demo-multiple-chip"
+                                        multiple
+                                        value={jobPreferenceName}
+                                        onChange={handleChange}
+                                        input={<OutlinedInput id="select-multiple-chip" label="Select Job Preference" />}
+                                        renderValue={(selected) => (
+                                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                                {selected.map((value, index) => (
+                                                    <Chip key={value} label={"(" + ++index + ") " + value} />
+                                                ))}
+                                            </Box>
+                                        )}
+                                        MenuProps={MenuProps}
+                                    >
+                                        {jobPreferences.map((name) => (
+                                            <MenuItem
+                                                key={name}
+                                                value={name}
+                                                style={getStyles(name, jobPreferenceName, theme)}
+                                            >
+                                                {name}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                    {/* </Grid> */}
+                                    <Grid padding={1}>
+                                        <Typography variant="h5">
+                                            Note: The order in which you select job title will be considered as your preference and you will not be able to change once applied. If you want to change, you can, by again applying to the same announcement within specified registration deadline.
+                                        </Typography>
+                                    </Grid>
+                                    {/* </Grid> */}
+                                </FormControl>
+                                <br />
+                                <br />
 
-
-
+                            </>)}
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 200 }} aria-label="simple table">
 

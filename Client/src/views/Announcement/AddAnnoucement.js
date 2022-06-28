@@ -110,14 +110,14 @@ function AddAnnoucement() {
         Registration_Deadline: null,
         Eligibility: '',
         sendMail: false,
-        Additional_Requirement: []
+        Job_Preferences: []
     });
     useEffect(() => { }, [data]);
 
 
     const handleRoleAdd = function () {
         let dataCopy = data
-        dataCopy.Additional_Requirement.push(Role)
+        dataCopy.Job_Preferences.push(Role)
         setData(dataCopy)
         console.log(data)
         handleClose1()
@@ -125,11 +125,11 @@ function AddAnnoucement() {
     }
 
     const handleDeleteRole = function (elem) {
-        let Preference = data.Additional_Requirement.filter((element) => {
+        let Preference = data.Job_Preferences.filter((element) => {
             return element != elem
         })
         console.log(Preference)
-        setData({ ...data, Additional_Requirement: [].concat(Preference) })
+        setData({ ...data, Job_Preferences: [].concat(Preference) })
     }
 
     const [AdditionalRequirement, setAdditionalRequirement] = useState(false)
@@ -527,7 +527,7 @@ function AddAnnoucement() {
                                 if (!e.target.checked) {
                                     console.log("Here")
                                     let DataCopy = data
-                                    DataCopy.Additional_Requirement = [].concat([])
+                                    DataCopy.Job_Preferences = [].concat([])
                                     setData(DataCopy)
                                 }
                                 console.log(data)
@@ -555,7 +555,7 @@ function AddAnnoucement() {
                     </Button>
                     <br />
                     <br />
-                    {data.Additional_Requirement.map((elem) => {
+                    {data.Job_Preferences.map((elem) => {
                         return (<>
                             <Chip
                                 style={{ margin: '1%' }}

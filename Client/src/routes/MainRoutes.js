@@ -69,6 +69,8 @@ const EditSingleStudent = Loadable(lazy(() => import('../views/Student/EditSingl
 const ViewStudentProfile = Loadable(lazy(() => import('../views/Student/ViewStudentProfile')));
 const StudentPasswords = Loadable(lazy(() => import('../views/Student/StudentPasswords')));
 const UpdateStudent = Loadable(lazy(() => import('../views/Student/UpdateStudent')));
+
+
 const S_ViewAnnouncements = Loadable(lazy(() => import('../views/Student_Views/Announcements/S_ViewAnnouncements')));
 const S_ViewSingleAnnouncement = Loadable(lazy(() => import('../views/Student_Views/Announcements/S_ViewSingleAnnouncement')));
 
@@ -98,7 +100,12 @@ const InterestedInHigherStudies = Loadable(lazy(() => import('../views/Report/In
 
 
 // report ends
+
+const BatchNotification = Loadable(lazy(() => import('../views/Notifications/BatchNotification')));
+
 const ErrorPage = Loadable(lazy(() => import('../views/Error/ErrorPage')));
+
+
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('../views/sample-page')));
@@ -225,7 +232,9 @@ const MainRoutes = () => {
                 "/reports/single_company_details/:id/:batch_year",
                 "/reports/unplaced_students_report",
                 "/reports/unplaced_internship_report",
-                "/reports/interested_in_higher_studies_report"
+                "/reports/interested_in_higher_studies_report",
+
+                "/notification/send_batch_notificataion"
 
                 // for any errorneous page
                 // "/"
@@ -311,6 +320,8 @@ const MainRoutes = () => {
                     <Route path="/reports/unplaced_students_report" component={UnplacedStudents} />
                     <Route path="/reports/unplaced_internship_report" component={UnplacedInternship} />
                     <Route path="/reports/interested_in_higher_studies_report" component={InterestedInHigherStudies} />
+
+                    <Route path="/notification/send_batch_notificataion" component={BatchNotification} />
 
                     {/* for any errorneous page */}
                     {/* <Route path="" component={ErrorPage} /> */}

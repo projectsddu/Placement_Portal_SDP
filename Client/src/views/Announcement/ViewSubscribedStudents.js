@@ -25,16 +25,48 @@ function ViewSubscribedStudents() {
     const location = useLocation().pathname;
     const id = location.split('/')[3];
 
+    const announcementData = UseFetch("/annoucement/getAnnoucement/" + id, "GET")
+
+    const jobPreferences1 = announcementData?.required_data?.data[0]?.Job_Preferences
+
+    console.log("announcement data : ", jobPreferences1)
+
     const { required_data, loading } = UseFetch('/subscribeannouncement/getSubscribedStudentsOfAnnouncement/' + id, 'GET');
 
     let students_list = [];
+
     if (!loading) {
-        // console.log(required_data["data"]);
+        // console.log("required data : ", required_data["data"]);
 
         for (let i = 0; i < required_data['data'].length; i++) {
+
             var obj = {};
-            obj = required_data['data'][i];
-            // console.log(obj)
+
+            obj = required_data['data'][i]["studentDetails"];
+
+            if (required_data['data'][i]?.jobPreferences != null) {
+
+                let jobPreferences = []
+
+                required_data['data'][i]?.jobPreferences.split(",").map((item) => {
+                    jobPreferences.push(item)
+                })
+
+                // console.log(`students_list[0]["Job_Preferences"] : `, jobPreferences.length)
+
+                let j = 1
+
+                for (let i = 0; i < jobPreferences.length; i++) {
+
+                    let label = "Job_Preferences_" + j
+                    j++
+                    obj[label] = jobPreferences[i]
+                }
+
+                obj.Job_Preferences = required_data['data'][i]["jobPreferences"]
+            }
+
+            // console.log("one object : ", obj)
             students_list.push(obj);
         }
 
@@ -57,7 +89,7 @@ function ViewSubscribedStudents() {
             return b.Current_CPI - a.Current_CPI
         });
 
-        console.log(students_list);
+        console.log("student_list : ", students_list);
     }
 
     const icons = {
@@ -65,11 +97,12 @@ function ViewSubscribedStudents() {
         IconDeviceAnalytics,
         IconSpeakerphone
     };
+
     const rows = [];
 
     const columns = [
         { field: 'id', headerName: 'ID', hide: true },
-        { field: 'Student_ID', headerName: 'Student_ID', width: 200, editable: true },
+        { field: 'Student_ID', headerName: 'Student_ID', width: 200, editable: false },
         { field: 'FirstName', headerName: 'First Name', width: 200, editable: false },
         { field: 'MiddleName', headerName: 'Middle Name', width: 200, editable: false },
         { field: 'LastName', headerName: 'Last Name', width: 200, editable: false },
@@ -111,9 +144,29 @@ function ViewSubscribedStudents() {
         { field: 'Current_semester', headerName: 'Current Semester', width: 200, editable: false, hide: true },
         { field: 'Career_Preference', headerName: 'Career Preference', width: 200, editable: false, hide: true },
         { field: 'Skills', headerName: 'Skills', width: 200, editable: false, hide: true },
-
-
     ];
+
+
+
+
+
+    if (jobPreferences1 != null) {
+
+        let jobPreferences = []
+
+        jobPreferences1.split(",").map((item) => {
+            jobPreferences.push(item)
+        })
+
+        for (let i = 1; i <= jobPreferences.length; i++) {
+            columns.push(
+                { field: 'Job_Preferences_' + i, headerName: 'Job Preference - ' + i, width: 200, editable: false },
+            )
+        }
+    }
+
+
+
     const [editRowsModel, setEditRowsModel] = React.useState({});
     const handleEditRowsModelChange = React.useCallback((model) => {
         setEditRowsModel(model);
