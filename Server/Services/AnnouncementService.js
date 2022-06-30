@@ -233,7 +233,11 @@ const updateAnnoucement = async (data, id, sendNotification = false, job_descrip
             // console.log("bye rikin")
             // console.log("passed out year in update: " + data["Passed_out_year"])
             console.log("data.sendMAil : ", typeof data.sendMail)
+<<<<<<< HEAD
             if (data.sendMail == "true") {
+=======
+            if (data?.sendMail == "true") {
+>>>>>>> 6401ce9 (job preference functionality implemented and tested, batch email notification implemented and tested)
                 // console.log("in announcement email")
                 await sendUpdateAnnouncementEmailNotification(id, data["Passed_out_year"], data["Company_ID"], data["Job_Role"], data["Registration_Deadline"])
             }

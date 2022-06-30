@@ -434,7 +434,7 @@ export default function S_ViewSingleAnnouncement() {
                                 new Date(Date.now()).getTime() > new Date(announcement_details["Registration_Deadline"]).getTime() ?
                                     (
                                         <>
-                                            {announcement_details.Job_Preferences === null || announcement_details.Job_Preferences.length === 0 ? ("") : (
+                                            {announcement_details?.Job_Preferences === null || announcement_details?.Job_Preferences.length === 0 ? ("") : (
                                                 <>
                                                     <br />
                                                     <FormControl sx={{ m: 1 }} fullWidth disabled>
@@ -486,7 +486,7 @@ export default function S_ViewSingleAnnouncement() {
 
                                     (<>
 
-                                        {announcement_details.Job_Preferences === null || announcement_details.Job_Preferences.length === 0 ? ("") : (
+                                        {announcement_details?.Job_Preferences === null || announcement_details?.Job_Preferences.length === 0 ? ("") : (
                                             <>
                                                 <br />
                                                 <FormControl sx={{ m: 1 }} fullWidth disabled={subscribeStatus === true}>

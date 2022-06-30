@@ -69,7 +69,11 @@ const addSubsriberToAnnouncement = async (student_id, announcement_id, studentMa
         else {
             console.log("job preference while from announcement subscribe creating : ", jobPreferences)
             if (jobPreferences == "undefined") {
+<<<<<<< HEAD
                 // jobPreferences = announcementDetails.Job_Preferences
+=======
+                // jobPreferences = announcementDetails?.Job_Preferences
+>>>>>>> 6401ce9 (job preference functionality implemented and tested, batch email notification implemented and tested)
                 return { status: false }
             }
             const payLoad = {

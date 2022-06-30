@@ -28,11 +28,11 @@ export default function BatchNotification() {
 
             console.log("email status : ", status)
 
-            if (status.status) {
-                toast.success(status.data)
+            if (status?.status) {
+                toast.success(status?.data)
             }
             else {
-                toast.error(status.data)
+                toast.error(status?.data)
             }
 
             // console.log(data)
