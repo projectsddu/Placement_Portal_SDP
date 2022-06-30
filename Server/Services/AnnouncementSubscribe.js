@@ -56,9 +56,9 @@ const addSubsriberToAnnouncement = async (student_id, announcement_id, studentMa
 
         announcementDetails = JSON.parse(JSON.stringify(announcementDetails[0]))
 
-        // console.log("announcementDetails : ", announcementDetails?.Job_Preferences)
+        // console.log("announcementDetails : ", announcementDetails.Job_Preferences)
 
-        if (announcementDetails?.Job_Preferences == null) {
+        if (announcementDetails.Job_Preferences == null) {
             const payLoad = {
                 Announcement_ID: announcement_id,
                 Student_ID: student_id,
@@ -69,7 +69,7 @@ const addSubsriberToAnnouncement = async (student_id, announcement_id, studentMa
         else {
             console.log("job preference while from announcement subscribe creating : ", jobPreferences)
             if (jobPreferences == "undefined") {
-                // jobPreferences = announcementDetails?.Job_Preferences
+                // jobPreferences = announcementDetails.Job_Preferences
                 return { status: false }
             }
             const payLoad = {
@@ -106,7 +106,7 @@ const getSubscribedStatus = async (student_id, announcement_id) => {
             where: { Student_ID: student_id, Announcement_ID: announcement_id }
         })
 
-        const jobPreferences = JSON.parse(JSON.stringify(data))[0]?.Job_Preferences
+        const jobPreferences = JSON.parse(JSON.stringify(data))[0].Job_Preferences
 
         console.log("data from get subscibed data : ", data)
 

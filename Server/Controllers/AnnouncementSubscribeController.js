@@ -31,10 +31,10 @@ const addStudentToAnnouncement = async (req, res) => {
 
         console.log("status  : ", status)
 
-        if (status?.status) {
+        if (status.status) {
             return res.json({ status: true, data: "Announcement applied successfully!" })
         }
-        else if (status?.status == false) {
+        else if (status.status == false) {
             return res.json({ status: false, data: "Error select atleast one job preference." })
         }
         else {
@@ -56,8 +56,8 @@ const getSubscribedStatus = async (req, res) => {
 
         // console.log("status : ", status)
 
-        if (status?.status) {
-            return res.json({ status: true, data: status?.Job_Preferences })
+        if (status.status) {
+            return res.json({ status: true, data: status.Job_Preferences })
         }
         else {
             return res.json({ status: false })

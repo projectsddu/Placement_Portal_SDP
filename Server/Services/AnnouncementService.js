@@ -233,7 +233,7 @@ const updateAnnoucement = async (data, id, sendNotification = false, job_descrip
             // console.log("bye rikin")
             // console.log("passed out year in update: " + data["Passed_out_year"])
             console.log("data.sendMAil : ", typeof data.sendMail)
-            if (data?.sendMail == "true") {
+            if (data.sendMail == "true") {
                 // console.log("in announcement email")
                 await sendUpdateAnnouncementEmailNotification(id, data["Passed_out_year"], data["Company_ID"], data["Job_Role"], data["Registration_Deadline"])
             }

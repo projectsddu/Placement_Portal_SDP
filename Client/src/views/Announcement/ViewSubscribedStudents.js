@@ -27,7 +27,7 @@ function ViewSubscribedStudents() {
 
     const announcementData = UseFetch("/annoucement/getAnnoucement/" + id, "GET")
 
-    const jobPreferences1 = announcementData?.required_data?.data[0]?.Job_Preferences
+    const jobPreferences1 = announcementData.required_data.data[0].Job_Preferences
 
     console.log("announcement data : ", jobPreferences1)
 
@@ -44,11 +44,11 @@ function ViewSubscribedStudents() {
 
             obj = required_data['data'][i]["studentDetails"];
 
-            if (required_data['data'][i]?.jobPreferences != null) {
+            if (required_data['data'][i].jobPreferences != null) {
 
                 let jobPreferences = []
 
-                required_data['data'][i]?.jobPreferences.split(",").map((item) => {
+                required_data['data'][i].jobPreferences.split(",").map((item) => {
                     jobPreferences.push(item)
                 })
 
