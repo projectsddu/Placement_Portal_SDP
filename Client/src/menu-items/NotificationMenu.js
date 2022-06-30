@@ -1,6 +1,4 @@
 import { IconDashboard, IconDeviceAnalytics, IconSpeakerphone, IconLayoutGridAdd, IconCirclePlus, IconEye, IconArtboard, IconFileUpload, IconNotification, IconBellRinging } from '@tabler/icons';
-import NotificationAddRoundedIcon from '@mui/icons-material/NotificationAddRounded';
-import NotificationAddOutlinedIcon from '@mui/icons-material/NotificationAddOutlined';
 
 // constant
 const icons = {
@@ -15,8 +13,6 @@ const icons = {
     IconFileUpload,
     IconNotification,
     IconBellRinging,
-    NotificationAddRoundedIcon,
-    NotificationAddOutlinedIcon
 };
 
 export const NotificationMenu = {
@@ -28,7 +24,7 @@ export const NotificationMenu = {
             id: 'Notification Menu',
             title: 'Send Notification',
             type: 'collapse',
-            icon: icons['NotificationAddOutlinedIcon'],
+            icon: icons['IconBellRinging'],
             children: [{
                 id: 'Batch Notification',
                 title: 'Send Batch Notification',

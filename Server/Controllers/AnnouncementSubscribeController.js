@@ -27,9 +27,15 @@ const addStudentToAnnouncement = async (req, res) => {
 
         const studentId = req.userId
         const studentMailId = req.userObj.Email_ID
-        const status = Subscibe.addSubsriberToAnnouncement(studentId, req.params.announcementId, studentMailId, jobPreferences)
-        if (status) {
+        const status = await Subscibe.addSubsriberToAnnouncement(studentId, req.params.announcementId, studentMailId, jobPreferences)
+
+        console.log("status  : ", status)
+
+        if (status?.status) {
             return res.json({ status: true, data: "Announcement applied successfully!" })
+        }
+        else if (status?.status == false) {
+            return res.json({ status: false, data: "Error select atleast one job preference." })
         }
         else {
             throw "Error in Subscribing student. Status returned false."
