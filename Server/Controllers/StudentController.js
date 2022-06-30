@@ -393,18 +393,28 @@ const sendBatchMailNotification = async (req, res) => {
         for (let i = 0; i < students.length; i++) {
             let student = students[i]
             let email = student["Email_ID"]
-            if (email !== "") {
-                email_list.push(email)
+            if (email === "") {
+                email = student["Student_ID"] + "@ddu.ac.in"
             }
+            email_list.push(email)
+
             // console.log(email)
         }
 
-        // console.log("email list : ", email_list)
+        console.log("email list : ", email_list)
 
-        await MailerService.batchNotificationMail({
-            "subject": req.body.Subject, "header": req.body.Header, "body": req.body.Body
-        }, email_list
-        )
+        if (email_list.length == 0) {
+            return res.json({ status: false, data: "Error student batch record does not exists" })
+        }
+        else {
+            await MailerService.batchNotificationMail({
+                "subject": req.body.Subject, "header": req.body.Header, "body": req.body.Body
+            }, email_list
+            )
+            return res.json({ status: true, data: "Mail sent successfully" })
+        }
+
+        // return true
     } catch (error) {
         log.error(error.toString())
         return res.json({ status: false, data: "Error sending batch mail notification " + error })

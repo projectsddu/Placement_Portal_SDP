@@ -155,7 +155,7 @@ function AddAnnoucement() {
         delete temp["Company_Details"]
         console.log(data)
         const response = await UsePostFile("/annoucement/updateAnnoucement/" + id, data, "POST")
-        // console.log(response)
+        console.log(response)
         const params1 = {
             data: response,
             HandleToast: {

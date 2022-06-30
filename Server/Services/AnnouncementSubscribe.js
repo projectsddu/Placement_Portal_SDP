@@ -67,9 +67,10 @@ const addSubsriberToAnnouncement = async (student_id, announcement_id, studentMa
             await Subscribers.create(payLoad);
         }
         else {
-            console.log("job preference while creating : ", jobPreferences)
+            console.log("job preference while from announcement subscribe creating : ", jobPreferences)
             if (jobPreferences == "undefined") {
-                jobPreferences = announcementDetails?.Job_Preferences
+                // jobPreferences = announcementDetails?.Job_Preferences
+                return { status: false }
             }
             const payLoad = {
                 Announcement_ID: announcement_id,
@@ -90,7 +91,7 @@ const addSubsriberToAnnouncement = async (student_id, announcement_id, studentMa
         }
         // console.log(mailData.body);
         await NotificationService.adminToSingleUserNotification(student_id, mailData.body, true, mailData, studentMailId)
-        return true;
+        return { status: true };
     }
     catch (err) {
         console.log(err.toString());

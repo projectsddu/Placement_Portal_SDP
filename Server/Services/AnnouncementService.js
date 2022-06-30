@@ -204,10 +204,10 @@ const updateAnnoucement = async (data, id, sendNotification = false, job_descrip
             throw "Announcement doesn't exist"
         }
         else {
-            console.log(JSON.parse(JSON.stringify(data)))
+            // console.log(JSON.parse(JSON.stringify(data)))
             // console.log(data["Eligible_Branches"])
             const fileName = job_description_file
-            console.log("filename: " + fileName)
+            // console.log("filename: " + fileName)
             if (fileName != null || fileName != "" || fileName != undefined) {
 
                 data["Job_Description_File"] = fileName
@@ -216,7 +216,7 @@ const updateAnnoucement = async (data, id, sendNotification = false, job_descrip
                 // console.log(`in filename == ""`)
                 data["Job_Description_File"] = null
             }
-            console.log("File name", fileName == "")
+            // console.log("File name", fileName == "")
             // return false
             // data["Job_Description_File"] = fileName
             await BranchAnnouncementService.deleteBranchesOfAnnouncement(id)
@@ -232,43 +232,52 @@ const updateAnnoucement = async (data, id, sendNotification = false, job_descrip
             // console.log("hi rikin")
             // console.log("bye rikin")
             // console.log("passed out year in update: " + data["Passed_out_year"])
-            if (data.sendMail === "true") {
+            console.log("data.sendMAil : ", typeof data.sendMail)
+            if (data?.sendMail == "true") {
                 // console.log("in announcement email")
                 await sendUpdateAnnouncementEmailNotification(id, data["Passed_out_year"], data["Company_ID"], data["Job_Role"], data["Registration_Deadline"])
             }
             // console.log("goodbye rikin")
 
-            if (sendNotification) {
-                let students = await AnnouncementSubscribeService.getSubscribedStudentsOfAnnouncement(id)
-                students = JSON.parse(JSON.stringify(students))
-                const student_list = []
-                for (let i = 0; i < students.length; i++) {
-                    student_list.push(students[i].Student_ID)
-                }
+            // console.log("hello rikin")
+            // if (sendNotification) {
+            //     let students = await AnnouncementSubscribeService.getSubscribedStudentsOfAnnouncement(id)
+            //     students = JSON.parse(JSON.stringify(students))
+            //     const student_list = []
+            //     for (let i = 0; i < students.length; i++) {
+            //         student_list.push(students[i].Student_ID)
+            //     }
 
-                // console.log(student_list)
+            //     // console.log(student_list)
 
-                const announcementDetails = await getAnnoucement(id)
+            //     const announcementDetails = await getAnnoucement(id)
+            //     console.log("hello rikin 1")
 
-                const message = announcementDetails[0]["Company_details"]["Company_name"] + " " + announcementDetails[0]["Job_Role"] + " has been updated. Please check the updated announcement details!"
+            //     const message = announcementDetails[0]["Company_details"]["Company_name"] + " " + announcementDetails[0]["Job_Role"] + " has been updated. Please check the updated announcement details!"
 
-                const mailData = {
-                    "subject": "DDU Placement Cell - " + announcementDetails[0]["Company_details"]["Company_name"] + " announcement has been updated!",
-                    "header": message,
-                    "body": ""
-                }
+            //     const mailData = {
+            //         "subject": "DDU Placement Cell - " + announcementDetails[0]["Company_details"]["Company_name"] + " announcement has been updated!",
+            //         "header": message,
+            //         "body": ""
+            //     }
 
-                const status = await NotificationService.adminToBatchNotification(student_list, message, true, mailData)
+            //     console.log("hello rikin 2")
 
-                if (status) {
-                    return true
-                }
-                else {
-                    throw "Error in sending the notifications!!"
-                }
-            }
+            //     const status = await NotificationService.adminToBatchNotification(student_list, message, true, mailData)
 
+            //     console.log("hello rikin 3")
 
+            //     if (status) {
+            //         return true
+            //     }
+            //     else {
+            //         console.log("hello rikin 4")
+            //         throw "Error in sending the notifications!!"
+            //     }
+
+            // }
+
+            // console.log("hello rikin")
             return true
         }
     } catch (error) {

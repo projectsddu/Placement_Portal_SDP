@@ -230,7 +230,15 @@ export default function S_ViewSingleAnnouncement() {
             // On autofill we get a stringified value.
             typeof value === 'string' ? value.split(',') : value,
         );
+
     };
+
+    useEffect(() => {
+        if (jobPreferenceName.length != 0) {
+            setIsJobPreferenceError(false)
+        }
+    }, [jobPreferenceName])
+
 
     // console.log("student selected job preferences : ", jobPreferenceName)
 
@@ -305,12 +313,20 @@ export default function S_ViewSingleAnnouncement() {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [isJobPreferenceError, setIsJobPreferenceError] = useState(false)
 
 
     async function handleSubscribe() {
         const res = await UsePost("/subscribeannouncement/subscribe/" + id, jobPreferenceName, "POST")
 
-        setsubscribeStatus(true)
+        console.log("response from handle subscribe : ", res)
+
+        if (res.status) {
+            setsubscribeStatus(true)
+        }
+        else {
+            setIsJobPreferenceError(true)
+        }
 
         const params1 = {
             data: res,
@@ -320,7 +336,7 @@ export default function S_ViewSingleAnnouncement() {
             }
         }
 
-        console.log(res);
+        // console.log(res);
 
         responsePipelineHandler(params1, 1)
 
@@ -329,6 +345,7 @@ export default function S_ViewSingleAnnouncement() {
 
     async function handleUnsubscribe() {
         const res = await UsePost("/subscribeannouncement/unsubscribe/" + id, {}, "POST")
+        setIsJobPreferenceError(false)
         setsubscribeStatus(false)
         const params1 = {
             data: res,
@@ -412,55 +429,114 @@ export default function S_ViewSingleAnnouncement() {
                     ''
                 ) : (
                     <>
-                        {announcement_details?.Job_Preferences === null || announcement_details?.Job_Preferences.length === 0 ? ("") : (
-                            // { subscribeStatus ? (<></>) : (<></>)}
-                            <>
-                                {/* <div>
-                                job preference exists
-                            </div> */}
-                                <br />
-                                <FormControl sx={{ m: 1 }} fullWidth disabled={subscribeStatus === true}>
-                                    {/* <Grid container> */}
-                                    {/* <Grid item> */}
-                                    <InputLabel id="demo-multiple-chip-label">Select Job Preference</InputLabel>
-                                    <Select
-                                        labelId="demo-multiple-chip-label"
-                                        id="demo-multiple-chip"
-                                        multiple
-                                        value={jobPreferenceName}
-                                        onChange={handleChange}
-                                        input={<OutlinedInput id="select-multiple-chip" label="Select Job Preference" />}
-                                        renderValue={(selected) => (
-                                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                                                {selected.map((value, index) => (
-                                                    <Chip key={value} label={"(" + ++index + ") " + value} />
-                                                ))}
-                                            </Box>
-                                        )}
-                                        MenuProps={MenuProps}
-                                    >
-                                        {jobPreferences.map((name) => (
-                                            <MenuItem
-                                                key={name}
-                                                value={name}
-                                                style={getStyles(name, jobPreferenceName, theme)}
-                                            >
-                                                {name}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                    {/* </Grid> */}
-                                    <Grid padding={1}>
-                                        <Typography variant="h5">
-                                            Note: The order in which you select job title will be considered as your preference and you will not be able to change once applied. If you want to change, you can, by again applying to the same announcement within specified registration deadline.
-                                        </Typography>
-                                    </Grid>
-                                    {/* </Grid> */}
-                                </FormControl>
-                                <br />
-                                <br />
+                        {announcement_details == undefined
+                            ? ("") : (
+                                new Date(Date.now()).getTime() > new Date(announcement_details["Registration_Deadline"]).getTime() ?
+                                    (
+                                        <>
+                                            {announcement_details?.Job_Preferences === null || announcement_details?.Job_Preferences.length === 0 ? ("") : (
+                                                <>
+                                                    <br />
+                                                    <FormControl sx={{ m: 1 }} fullWidth disabled>
+                                                        {/* <Grid container> */}
+                                                        {/* <Grid item> */}
+                                                        <InputLabel id="demo-multiple-chip-label">Select Job Preference</InputLabel>
+                                                        <Select
 
-                            </>)}
+                                                            labelId="demo-multiple-chip-label"
+                                                            id="demo-multiple-chip"
+                                                            multiple
+                                                            value={jobPreferenceName}
+                                                            onChange={handleChange}
+                                                            input={<OutlinedInput id="select-multiple-chip" label="Select Job Preference" />}
+                                                            renderValue={(selected) => (
+                                                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                                                    {selected.map((value, index) => (
+                                                                        <Chip key={value} label={"(" + ++index + ") " + value} />
+                                                                    ))}
+                                                                </Box>
+                                                            )}
+                                                            MenuProps={MenuProps}
+                                                            error={isJobPreferenceError == true}
+                                                        >
+                                                            {jobPreferences.map((name) => (
+                                                                <MenuItem
+                                                                    key={name}
+                                                                    value={name}
+                                                                    style={getStyles(name, jobPreferenceName, theme)}
+                                                                >
+                                                                    {name}
+                                                                </MenuItem>
+                                                            ))}
+                                                        </Select>
+                                                        {/* </Grid> */}
+                                                        <Grid padding={1}>
+                                                            <Typography variant="h5">
+                                                                Note: The order in which you select job title will be considered as your preference and you will not be able to change once applied. If you want to change, you can, by clicking withdraw application button first, and then again apply to the same announcement within specified registration deadline.
+                                                            </Typography>
+                                                        </Grid>
+                                                        {/* </Grid> */}
+                                                    </FormControl>
+                                                    <br />
+                                                    <br />
+
+                                                </>)}
+                                        </>
+                                    ) :
+
+                                    (<>
+
+                                        {announcement_details?.Job_Preferences === null || announcement_details?.Job_Preferences.length === 0 ? ("") : (
+                                            <>
+                                                <br />
+                                                <FormControl sx={{ m: 1 }} fullWidth disabled={subscribeStatus === true}>
+                                                    {/* <Grid container> */}
+                                                    {/* <Grid item> */}
+                                                    <InputLabel id="demo-multiple-chip-label">Select Job Preference</InputLabel>
+                                                    <Select
+
+                                                        labelId="demo-multiple-chip-label"
+                                                        id="demo-multiple-chip"
+                                                        multiple
+                                                        value={jobPreferenceName}
+                                                        onChange={handleChange}
+                                                        input={<OutlinedInput id="select-multiple-chip" label="Select Job Preference" />}
+                                                        renderValue={(selected) => (
+                                                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                                                {selected.map((value, index) => (
+                                                                    <Chip key={value} label={"(" + ++index + ") " + value} />
+                                                                ))}
+                                                            </Box>
+                                                        )}
+                                                        MenuProps={MenuProps}
+                                                        error={isJobPreferenceError == true}
+                                                    >
+                                                        {jobPreferences.map((name) => (
+                                                            <MenuItem
+                                                                key={name}
+                                                                value={name}
+                                                                style={getStyles(name, jobPreferenceName, theme)}
+                                                            >
+                                                                {name}
+                                                            </MenuItem>
+                                                        ))}
+                                                    </Select>
+                                                    {/* </Grid> */}
+                                                    <Grid padding={1}>
+                                                        <Typography variant="h5">
+                                                            Note: The order in which you select job title will be considered as your preference and you will not be able to change once applied. If you want to change, you can, by clicking withdraw application button first, and then again apply to the same announcement within specified registration deadline.
+                                                        </Typography>
+                                                    </Grid>
+                                                    {/* </Grid> */}
+                                                </FormControl>
+                                                <br />
+                                                <br />
+
+                                            </>)}
+                                    </>)
+
+                            )}
+
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 200 }} aria-label="simple table">
 

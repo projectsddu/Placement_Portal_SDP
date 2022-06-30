@@ -26,14 +26,16 @@ export default function BatchNotification() {
         else {
             const status = await UsePost("/student/sendStudentsBatchMailNotification/", data, "POST")
 
-            if (status) {
-                toast.success("Mail Sent Successfully")
+            console.log("email status : ", status)
+
+            if (status?.status) {
+                toast.success(status?.data)
             }
             else {
-                toast.error("Some error while sending mail.")
+                toast.error(status?.data)
             }
 
-            console.log(data)
+            // console.log(data)
         }
         handleClose()
     }
