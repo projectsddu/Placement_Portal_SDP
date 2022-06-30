@@ -160,9 +160,11 @@ const downloadSubscribedStudentZip = async (req, res) => {
         // console.log(zipName);
         const subscribedStudents = await AnnouncementSubscribeService.getSubscribedStudentsOfAnnouncement(announcement_id)
         const subscribedStudentList = []
+        // console.log("subscribed student : ", subscribedStudents)
         subscribedStudents.map((student) => {
-            subscribedStudentList.push(student["Student_ID"])
+            subscribedStudentList.push(student["studentDetails"]["Student_ID"])
         })
+        console.log("subscribed students : ", subscribedStudentList)
         const data = await ZippingService.downloadZipFile("../public/student_details/CV/", zipName, subscribedStudentList)
 
         res.set('Content-Type', 'application/octet-stream');
