@@ -10,7 +10,8 @@ const REDIRECT_URI = process.env.REDIRECT_URI
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN
 
 const Readable = require('stream').Readable;
-const stringToStream = require("string-to-stream")
+const stringToStream = require("string-to-stream");
+const { file } = require('googleapis/build/src/apis/file');
 
 // function bufferToStream(buffer) {
 //     var stream = new Readable();
@@ -92,7 +93,7 @@ const stringToStream = require("string-to-stream")
 const downloadZipFile = async (fromDir, zipFileName, selectFileNames = "all") => {
 
     console.log("...................................")
-    console.log(selectFileNames)
+    console.log("selectFileNames : ", selectFileNames)
     console.log("...................................")
 
     let cvPathName = path.join(__dirname, "..", "public", "student_details", "CV")
@@ -125,9 +126,10 @@ const downloadZipFile = async (fromDir, zipFileName, selectFileNames = "all") =>
         }
 
         console.log("FILES TO ZIP&&&&&&&&&&&&&")
-        console.log(filesToZip);
+        console.log("filesToZip : ", filesToZip);
         let zip = new AdmZip();
         for (let i = 0; i < filesToZip.length; i++) {
+            console.log("file to zip : ", filesToZip[i])
             let fileZippth = path.join(cvPathName, filesToZip[i])
             zip.addLocalFile(fileZippth)
             // console.log("HEREAAAAAAAAAAAAAAAAAANNNNNNNNNNNNNNNNN")

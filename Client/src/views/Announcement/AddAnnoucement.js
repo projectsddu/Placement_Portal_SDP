@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 // getting required data
 
-// Eligible Branches
+// List of Eligible Branches
 
 const Branches = [
     {
