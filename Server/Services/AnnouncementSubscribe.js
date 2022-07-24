@@ -58,7 +58,7 @@ const addSubsriberToAnnouncement = async (student_id, announcement_id, studentMa
 
         // console.log("announcementDetails : ", announcementDetails.Job_Preferences)
 
-        if (announcementDetails.Job_Preferences == null) {
+        if (announcementDetails?.Job_Preferences == null) {
             const payLoad = {
                 Announcement_ID: announcement_id,
                 Student_ID: student_id,
@@ -69,11 +69,7 @@ const addSubsriberToAnnouncement = async (student_id, announcement_id, studentMa
         else {
             console.log("job preference while from announcement subscribe creating : ", jobPreferences)
             if (jobPreferences == "undefined") {
-<<<<<<< HEAD
-                // jobPreferences = announcementDetails.Job_Preferences
-=======
                 // jobPreferences = announcementDetails?.Job_Preferences
->>>>>>> 6401ce9 (job preference functionality implemented and tested, batch email notification implemented and tested)
                 return { status: false }
             }
             const payLoad = {
@@ -110,7 +106,7 @@ const getSubscribedStatus = async (student_id, announcement_id) => {
             where: { Student_ID: student_id, Announcement_ID: announcement_id }
         })
 
-        const jobPreferences = JSON.parse(JSON.stringify(data))[0].Job_Preferences
+        const jobPreferences = JSON.parse(JSON.stringify(data))[0]?.Job_Preferences
 
         console.log("data from get subscibed data : ", data)
 

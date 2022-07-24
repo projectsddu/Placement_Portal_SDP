@@ -31,17 +31,10 @@ const addStudentToAnnouncement = async (req, res) => {
 
         console.log("status  : ", status)
 
-<<<<<<< HEAD
-        if (status.status) {
-            return res.json({ status: true, data: "Announcement applied successfully!" })
-        }
-        else if (status.status == false) {
-=======
         if (status?.status) {
             return res.json({ status: true, data: "Announcement applied successfully!" })
         }
         else if (status?.status == false) {
->>>>>>> 6401ce9 (job preference functionality implemented and tested, batch email notification implemented and tested)
             return res.json({ status: false, data: "Error select atleast one job preference." })
         }
         else {
@@ -63,7 +56,7 @@ const getSubscribedStatus = async (req, res) => {
 
         // console.log("status : ", status)
 
-        if (status.status) {
+        if (status?.status) {
             return res.json({ status: true, data: status.Job_Preferences })
         }
         else {

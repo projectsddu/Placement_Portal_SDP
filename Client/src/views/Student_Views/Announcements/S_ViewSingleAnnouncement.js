@@ -199,11 +199,11 @@ export default function S_ViewSingleAnnouncement() {
         ];
     }
 
-    // console.log("announcement details Job Preferences : ", announcement_details.Job_Preferences)
+    // console.log("announcement details Job Preferences : ", announcement_details?.Job_Preferences)
 
     let jobPreferences = []
 
-    if (announcement_details.Job_Preferences != null) {
+    if (announcement_details?.Job_Preferences != null) {
         announcement_details.Job_Preferences.split(",").map((item) => {
             jobPreferences.push(item)
         })

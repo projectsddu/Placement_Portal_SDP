@@ -378,7 +378,7 @@ const sendBatchMailNotification = async (req, res) => {
     try {
         // console.log("req.body : ", req.body)
 
-        const Passed_out_year = req.body.Passed_out_year.split("-")[0]
+        const Passed_out_year = req.body?.Passed_out_year.split("-")[0]
 
         // console.log("passed out year :", Passed_out_year)
 
