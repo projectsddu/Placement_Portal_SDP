@@ -92,6 +92,11 @@ function AddAnnoucement() {
     const handleOpen1 = () => setOpen1(true);
     const handleClose1 = () => setOpen1(false);
 
+    
+    const [open2, setOpen2] = React.useState(false);
+    const handleOpen2 = () => setOpen2(true);
+    const handleClose2 = () => setOpen2(false);
+
 
     const [selectedFile, setSelectedFile] = useState();
     const [isFilePicked, setIsFilePicked] = useState(false);
@@ -110,7 +115,8 @@ function AddAnnoucement() {
         Registration_Deadline: null,
         Eligibility: '',
         sendMail: false,
-        Job_Preferences: []
+        Job_Preferences: [],
+        Additional_Fields:[]
     });
     useEffect(() => { }, [data]);
 
@@ -123,6 +129,15 @@ function AddAnnoucement() {
         handleClose1()
         setRole("")
     }
+    
+    const handleFieldAdd = function () {
+        let dataCopy = data
+        dataCopy.Additional_Fields.push(Fields)
+        setData(dataCopy)
+        console.log(data)
+        handleClose2()
+        setFields("")
+    }
 
     const handleDeleteRole = function (elem) {
         let Preference = data.Job_Preferences.filter((element) => {
@@ -131,9 +146,18 @@ function AddAnnoucement() {
         console.log(Preference)
         setData({ ...data, Job_Preferences: [].concat(Preference) })
     }
+     const handleDeleteField = function (elem) {
+        let Field = data.Additional_Fields.filter((element) => {
+            return element != elem
+        })
+        console.log(Field)
+        setData({ ...data, Additional_Fields: [].concat(Field) })
+    }
 
     const [AdditionalRequirement, setAdditionalRequirement] = useState(false)
+    const [AdditionalFields, setAdditionalFields] = useState(false)
     const [Role, setRole] = useState("")
+    const [Fields, setFields] = useState("")
 
     const { required_data, loading } = UseFetch('/annoucement/requiredAnnoucementDetails', 'GET');
 
@@ -572,6 +596,64 @@ function AddAnnoucement() {
 
                 </> : ""}
                 <br />
+                
+
+
+
+
+                <Grid container
+                    direction="row">
+                    <Grid item>
+
+                        <Checkbox value={"Jenil"} label="Additional Fields"
+                            onClick={(e) => {
+                                // let checked = e.target.checked
+                                setAdditionalFields(e.target.checked ? true : false);
+                                if (!e.target.checked) {
+                                    console.log("Here")
+                                    let DataCopy = data
+                                    DataCopy.Job_Preferences = [].concat([])
+                                    setData(DataCopy)
+                                }
+                                console.log(data)
+                            }}
+                        /><label>Additional Fields &nbsp; &nbsp; &nbsp;</label>
+                    </Grid>
+                </Grid>
+                {AdditionalFields?<>
+                
+                 <Button
+                        size="medium"
+                        onClick={handleOpen2}
+                        variant="contained"
+                        startIcon={<IconPlus />}
+                    >
+                        Add Additional Fields
+                    </Button>
+                    <br/>
+                    <br/>
+                    {data.Additional_Fields.map((elem) => {
+                        return (<>
+                            <Chip
+                                style={{ margin: '1%' }}
+                                icon={IconInfoCircle}
+                                variant="outlined"
+                                color="primary"
+                                onDelete={() => handleDeleteField(elem)}
+                                label={elem}
+                            />
+
+                        </>)
+                    })}
+                    <br />
+                
+                </>:"No"}
+
+
+
+
+
+
                 <Grid container spacing={1}>
                     <Grid item xs={12} md={3}>
                         <Button onClick={handleSubmit} variant="contained" size="large" color="primary">
@@ -613,6 +695,44 @@ function AddAnnoucement() {
                     </Box>
 
                 </Modal>
+
+
+                <Modal
+                    open={open2}
+                    onClose={handleClose2}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+
+                    <Box sx={style1}>
+                        <Grid spacing={2} container justifyContent={'space-between'}>
+                            <Grid item>
+                                <TextField
+                                    onChange={(e) => {
+                                        setFields(e.target.value);
+                                        console.log(Fields)
+                                    }}
+                                    value={Fields}
+                                    size="small"
+                                />
+                            </Grid>
+                            <Grid item>
+                                <Button
+                                    size="medium"
+                                    onClick={() => {
+                                        handleFieldAdd();
+                                    }}
+                                    variant="contained"
+                                    startIcon={<IconPlus />}
+                                >
+                                    Add Field
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Box>
+
+                </Modal>
+
             </form>
         </MainCard>
     );

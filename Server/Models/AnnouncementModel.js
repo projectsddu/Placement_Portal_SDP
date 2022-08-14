@@ -66,6 +66,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT,
             allowNull: true
         },
+        Additional_Fields: {
+            type: DataTypes.TEXT,
+            allowNull: true
+        },
 
         IsOpen: {
             type: DataTypes.BOOLEAN,
