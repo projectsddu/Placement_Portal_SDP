@@ -21,6 +21,11 @@ module.exports = (sequelize, DataTypes) => {
         Requirement_Text: {
             type: DataTypes.TEXT,
             allowNull: false
+        },
+
+        Additional_Text: {
+            type: DataTypes.TEXT,
+            allowNull: false
         }
 
     },

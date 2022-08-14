@@ -8,7 +8,7 @@ const CLIENT_ID = process.env.CLIENT_ID
 const CLIENT_SECRET = process.env.CLIENT_SECRET
 const REDIRECT_URI = process.env.REDIRECT_URI
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN
-
+const StudentService  = require("./StudentService")
 const Readable = require('stream').Readable;
 const stringToStream = require("string-to-stream");
 const { file } = require('googleapis/build/src/apis/file');
@@ -90,6 +90,19 @@ const { file } = require('googleapis/build/src/apis/file');
 //     }
 // }
 
+function characterExists(MiddleName){
+
+    if((MiddleName[0]>='a' && MiddleName[0]<='z') || (MiddleName[0] >= 'A' && MiddleName[0] <= 'Z'))
+    {
+        return MiddleName.toUpperCase();
+    }
+    else
+    {
+        return ""
+    }
+
+}
+
 const downloadZipFile = async (fromDir, zipFileName, selectFileNames = "all") => {
 
     console.log("...................................")
@@ -130,13 +143,23 @@ const downloadZipFile = async (fromDir, zipFileName, selectFileNames = "all") =>
         let zip = new AdmZip();
         for (let i = 0; i < filesToZip.length; i++) {
             console.log("file to zip : ", filesToZip[i])
-            let fileZippth = path.join(cvPathName, filesToZip[i])
+            const studentData = await StudentService.getOneStudent(filesToZip[i].split("-")[0]);
+            const studentDataJson = JSON.parse(JSON.stringify(studentData))
+            const fullName = studentDataJson["FirstName"].toUpperCase() + "_"+ characterExists(studentData["MiddleName"]) + "_" + studentDataJson["LastName"].toUpperCase()
+            console.log("from line 136",fullName)
+            console.log("HEREAAAAAAAAAAAAAAAAAANNNNNNNNNNNNNNNNN")
+            fs.rename(path.join(cvPathName,filesToZip[i]),path.join(cvPathName,fullName+"."+filesToZip[i].split(".")[1]),()=>{})
+            console.log("HEREAAAAAAAAAAAAAAAAAANNNNNNNNNNNNNNNNN")
+            // let fileZippth = path.join(cvPathName, filesToZip[i])
+            let fileZippth = path.join(cvPathName, fullName+"."+filesToZip[i].split(".")[1])
             zip.addLocalFile(fileZippth)
-            // console.log("HEREAAAAAAAAAAAAAAAAAANNNNNNNNNNNNNNNNN")
+            fs.rename(path.join(cvPathName,fullName+"."+filesToZip[i].split(".")[1]),path.join(cvPathName,filesToZip[i]),()=>{})
             console.log(fileZippth)
+            console.log(filesToZip[i])
         }
         let downloadName = zipFileName + ".zip"
         const data = zip.toBuffer()
+        console.log("____________________________________________________\n")
         zip.writeZip(path.join(zipPath, downloadName))
         console.log("HERE")
         return data

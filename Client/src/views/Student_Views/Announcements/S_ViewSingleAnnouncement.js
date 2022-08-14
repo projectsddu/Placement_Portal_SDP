@@ -258,6 +258,10 @@ export default function S_ViewSingleAnnouncement() {
 
     // const subscribedata = fetch("/subscribeannouncement/getSubscribedStatus/" + id, "GET")
 
+    function IsDeadLineExpired(dt)
+    {
+        return new Date(Date.now()).getTime() > new Date(dt).getTime()
+    }
     async function fetchSubscsribedData() {
         const subscribedata = await fetch("/subscribeannouncement/getSubscribedStatus/" + id, { method: "GET" });
 
@@ -538,7 +542,26 @@ export default function S_ViewSingleAnnouncement() {
                                     </>)
 
                             )}
-
+                        <br/>
+                        <Grid>
+                        {
+                            loading?"":IsDeadLineExpired(announcement_details["Registration_Deadline"])?"":
+                            <>
+                                {announcement_details["Additional_Fields"].split(",").map((elem)=>{
+                                    return(<>
+                                    <Grid md={12} xs={12}>
+                                        <TextField 
+                                        label={elem}
+                                        value={""}
+                                        fullWidth
+                                        /><br/><br/>
+                                    </Grid>
+                                        
+                                    </>)
+                                })}
+                            </>
+                        }
+                        </Grid>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 200 }} aria-label="simple table">
 
