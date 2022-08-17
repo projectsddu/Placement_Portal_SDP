@@ -10,6 +10,7 @@
 cd ..
 while true;
 do
-git status
+RES=`git status`;
+echo $RES;
 sleep 1;
 done
