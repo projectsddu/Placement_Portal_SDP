@@ -185,7 +185,7 @@ function AddAnnoucement() {
     };
 
     async function handleSubmit() {
-        handleOpen()
+        handleOpen();
         const res = await UsePostFile('/annoucement/addAnnoucement', data, 'POST');
         const params1 = {
             data: res,
@@ -194,10 +194,9 @@ function AddAnnoucement() {
                 flag: false
             }
         };
-        handleClose()
+        handleClose();
         console.log(res);
         responsePipelineHandler(params1, 1);
-        // END OF POSTING DATA EXAMPLE
     }
 
     async function handleSendEmail() {
@@ -647,13 +646,7 @@ function AddAnnoucement() {
                     })}
                     <br />
                 
-                </>:"No"}
-
-
-
-
-
-
+                </>:""}
                 <Grid container spacing={1}>
                     <Grid item xs={12} md={3}>
                         <Button onClick={handleSubmit} variant="contained" size="large" color="primary">

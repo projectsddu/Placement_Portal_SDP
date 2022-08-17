@@ -27,7 +27,9 @@ function ViewSubscribedStudents() {
 
     const announcementData = UseFetch("/annoucement/getAnnoucement/" + id, "GET")
 
-    const jobPreferences1 = announcementData?.required_data?.data[0]?.Job_Preferences
+    const jobPreferences1 = announcementData?.required_data?.data[0]?.Job_Preferences;
+    const additionalField = announcementData?.required_data?.data[0]?.Additional_Fields;
+    // console.log(additionalField);
 
     console.log("announcement data : ", jobPreferences1)
 
@@ -43,7 +45,9 @@ function ViewSubscribedStudents() {
             var obj = {};
 
             obj = required_data['data'][i]["studentDetails"];
-
+            let Fields = required_data['data'][i]['additionalData'];
+            console.log(required_data['data'][i])
+            console.log(Fields)
             if (required_data['data'][i]?.jobPreferences != null) {
 
                 let jobPreferences = []
@@ -66,6 +70,18 @@ function ViewSubscribedStudents() {
                 obj.Job_Preferences = required_data['data'][i]["jobPreferences"]
             }
 
+            if (Fields==null||Fields=="")
+            {
+            }
+            else{
+                let jsonData = JSON.parse(Fields)
+                let AllKeys = Object.keys(jsonData)
+                for(let i=0;i<AllKeys.length;i++)
+                {
+                    obj[AllKeys[i]] = jsonData[AllKeys[i]]
+                }
+                console.log(AllKeys)
+            }
             // console.log("one object : ", obj)
             students_list.push(obj);
         }
@@ -162,6 +178,20 @@ function ViewSubscribedStudents() {
             columns.push(
                 { field: 'Job_Preferences_' + i, headerName: 'Job Preference - ' + i, width: 200, editable: false },
             )
+        }
+    }
+
+    if(additionalField==null||additionalField=="")
+    {
+    }
+    else{
+        let additionalFields = []
+        additionalField.split(",").map((item)=>{
+            additionalFields.push(item)
+        })
+        for(let i=0;i<additionalFields.length;i++)
+        {
+            columns.push({ field: additionalFields[i], headerName: additionalFields[i], width: 200, editable: false });
         }
     }
 
