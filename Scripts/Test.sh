@@ -13,7 +13,7 @@ do
 RES=`git status`;
 echo $RES;
 # On branch main Your branch is up to date with 'origin/main'. nothing to commit, working tree clean
-if [[ "$RES" == "On branch main Your branch is up to date with 'origin/main'. nothing to commit, working tree clean" ]]
+if [[ "$RES" == "On branch main Your branch is up to date with 'origin/main'.\n nothing to commit, working tree clean" ]]
 then
     echo "Hello moto"
 else
