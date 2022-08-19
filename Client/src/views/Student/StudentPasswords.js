@@ -83,10 +83,15 @@ export default function ViewStudent() {
             // console.log(keys)
             for (let j = 0; j < keys.length; j++) {
                 let key = keys[j];
-                let value = student_list_original[i][key].toString().toLowerCase();
-                if (value.includes(e.target.value.toString().toLowerCase())) {
-                    temp.push(student_list_original[i])
-                    break;
+                let value = student_list_original[i][key]
+                if(value!=undefined&&value!=null&&value!="")
+                {
+                    value = value.toString().toLowerCase();
+
+                    if (value.includes(e.target.value.toString().toLowerCase())) {
+                        temp.push(student_list_original[i])
+                        break;
+                    }
                 }
             }
 

@@ -47,10 +47,11 @@ const getAnnoucement = async (id) => {
 }
 
 
-const addSubsriberToAnnouncement = async (student_id, announcement_id, studentMailId, jobPreferences) => {
+const addSubsriberToAnnouncement = async (student_id, announcement_id, studentMailId, jobPreferences,addtionaldata) => {
     console.log("HIHJJBBJHBJHBHJBHJBJHBJHBJHBHJBHJBJHBj")
     console.log(studentMailId)
     try {
+        console.log(jobPreferences)
 
         let announcementDetails = await getAnnoucement(announcement_id)
 
@@ -58,27 +59,119 @@ const addSubsriberToAnnouncement = async (student_id, announcement_id, studentMa
 
         // console.log("announcementDetails : ", announcementDetails.Job_Preferences)
 
-        if (announcementDetails?.Job_Preferences == null) {
-            const payLoad = {
-                Announcement_ID: announcement_id,
-                Student_ID: student_id,
-                Job_Preferences: null
-            }
-            await Subscribers.create(payLoad);
+        // if (announcementDetails?.Job_Preferences == null) {
+        //     const payLoad = {
+        //         Announcement_ID: announcement_id,
+        //         Student_ID: student_id,
+        //         Job_Preferences: null
+        //     }
+        //     await Subscribers.create(payLoad);
+        // }
+        // else {
+        //     console.log("job preference while from announcement subscribe creating : ", jobPreferences)
+        //     if (jobPreferences == "undefined") {
+        //         // jobPreferences = announcementDetails?.Job_Preferences
+        //         return { status: false }
+        //     }
+            
+        // }
+        // if(announcementDetails?.Additional_Fields == null)
+        // {
+        //     const payLoad = {
+        //         Announcement_ID: announcement_id,
+        //         Student_ID: student_id,
+        //         Job_Preferences: jobPreferences
+        //     }
+        //         await Subscribers.create(payLoad);
+        // }
+        //     else
+        //     {
+        //         if (addtionaldata == "undefined") {
+        //         // jobPreferences = announcementDetails?.Job_Preferences
+        //             return { status: false }
+        //         }   
+        //         const payLoad = {
+        //             Announcement_ID: announcement_id,
+        //             Student_ID: student_id,
+        //             Job_Preferences: jobPreferences,
+        //             AdditionalData: addtionaldata
+        //         }
+                
+            
+
+        //     }
+
+
+        const PayLoad = {
+            Announcement_ID: announcement_id,
+            Student_ID: student_id,        
         }
-        else {
-            console.log("job preference while from announcement subscribe creating : ", jobPreferences)
-            if (jobPreferences == "undefined") {
-                // jobPreferences = announcementDetails?.Job_Preferences
-                return { status: false }
+        if(announcementDetails?.Job_Preferences != null)
+        {
+            if(jobPreferences=="undefined" || jobPreferences =="")
+            {
+                return {
+                  status: false,
+                  data: {
+                    field: "additionalData",
+                    err: "Please select atleast one job preference",
+                  },
+                };
             }
-            const payLoad = {
-                Announcement_ID: announcement_id,
-                Student_ID: student_id,
-                Job_Preferences: jobPreferences
+            else
+            {
+                PayLoad["Job_Preferences"] = jobPreferences
             }
-            await Subscribers.create(payLoad);
         }
+        if (
+          announcementDetails?.Additional_Fields== null ||
+          announcementDetails?.Additional_Fields== undefined ||
+          announcementDetails?.Additional_Fields== ""
+        ) {
+        }
+        else{
+          // console.log("UNIQ")
+          // // console.log(addtionaldata);
+          // let flag = false
+          // Object.keys(addtionaldata).forEach((key)=>{
+          //     console.log(key)
+          // })
+          AllFields = announcementDetails.Additional_Fields.split(",");
+
+          console.log(AllFields);
+
+          additionalFields = JSON.parse(addtionaldata);
+
+          let flag = false;
+          for (let i = 0; i < AllFields.length; i++) {
+            // console.log(AllFields[i])
+            // console.log(additionalFields)
+            // console.log(additionalFields[AllFields[i]])
+            if (
+              additionalFields[AllFields[i]] == "" ||
+              additionalFields[AllFields[i]] == undefined
+            ) {
+              flag = true;
+              break;
+            }
+          }
+
+          if (addtionaldata == "undefined" || flag) {
+            console.log(
+              "HERE IN UNDEFINEDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"
+            );
+            return {
+              status: false,
+              data: {
+                field: "additionalData",
+                err: "Please fill up the additional fields",
+              },
+            };
+          } else {
+            PayLoad["AdditionalData"] = addtionaldata;
+          }
+        }
+        await Subscribers.create(PayLoad);
         // let announcementDetails = await AnnouncementHelper.AnnouncementService.getAnnoucement(announcement_id)
         // let announcementDetails = await getAnnoucement(announcement_id)
         // announcementDetails = JSON.parse(JSON.stringify(announcementDetails[0]))
@@ -107,14 +200,18 @@ const getSubscribedStatus = async (student_id, announcement_id) => {
         })
 
         const jobPreferences = JSON.parse(JSON.stringify(data))[0]?.Job_Preferences
+        
+        const additionalData = JSON.parse(JSON.stringify(data))[0]?.AdditionalData
+        // console.log(additionalData)
 
-        console.log("data from get subscibed data : ", data)
+
+        // console.log("data from get subscibed data : ", data)
 
         if (data) {
             // console.log(data)
             if (data.length > 0) {
                 // return { "status": true, }
-                return { "status": true, "Job_Preferences": jobPreferences }
+                return { "status": true, "Job_Preferences": jobPreferences,"AdditionalData":additionalData }
             }
         }
         return { "status": false }
@@ -159,9 +256,12 @@ const getSubscribedStudentsOfAnnouncement = async (announcement_id, skills = fal
             console.log(data)
             for (let i = 0; i < data.length; i++) {
                 let studentData = {
-                    studentDetails: await StudentService.getOneStudent(data[i]["Student_ID"]),
-                    jobPreferences: data[i]["Job_Preferences"]
-                }
+                  studentDetails: await StudentService.getOneStudent(
+                    data[i]["Student_ID"]
+                  ),
+                  jobPreferences: data[i]["Job_Preferences"],
+                  additionalData: data[i]["AdditionalData"],
+                };
 
 
                 // students.push(await StudentService.getOneStudent(data[i]["Student_ID"]))

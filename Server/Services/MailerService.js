@@ -68,7 +68,7 @@ async function sendMail(mailDetails) {
         //     html: '<h1>Hello from gmail email using API</h1>',
         // };
         const result = await transport.sendMail(mailDetails);
-        console.log(result)
+        // console.log(result)
         if (result) {
             return true
         }

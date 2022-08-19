@@ -12,11 +12,11 @@ const addStudentToAnnouncement = async (req, res) => {
     try {
         const jobPreferenceList = req.body
 
-        // console.log("job preference data in req.body : ", jobPreferenceList)
+        console.log("job preference data in req.body : ", jobPreferenceList)
 
         let jobPreferences = "";
 
-        jobPreferences += jobPreferenceList[0]
+        jobPreferences += jobPreferenceList["JobPreferences"]
 
         for (let i = 1; i < jobPreferenceList.length; i++) {
             jobPreferences += ","
@@ -25,9 +25,11 @@ const addStudentToAnnouncement = async (req, res) => {
 
         console.log("job preference data created as string : ", jobPreferences)
 
+        const AdditionalFieldData = JSON.stringify(jobPreferenceList["AdditionalData"])
+
         const studentId = req.userId
         const studentMailId = req.userObj.Email_ID
-        const status = await Subscibe.addSubsriberToAnnouncement(studentId, req.params.announcementId, studentMailId, jobPreferences)
+        const status = await Subscibe.addSubsriberToAnnouncement(studentId, req.params.announcementId, studentMailId, jobPreferences,AdditionalFieldData)
 
         console.log("status  : ", status)
 
@@ -35,7 +37,7 @@ const addStudentToAnnouncement = async (req, res) => {
             return res.json({ status: true, data: "Announcement applied successfully!" })
         }
         else if (status?.status == false) {
-            return res.json({ status: false, data: "Error select atleast one job preference." })
+            return res.json({ status: false, data: status.data.err})
         }
         else {
             throw "Error in Subscribing student. Status returned false."
@@ -57,10 +59,14 @@ const getSubscribedStatus = async (req, res) => {
         // console.log("status : ", status)
 
         if (status?.status) {
-            return res.json({ status: true, data: status.Job_Preferences })
+            console.log("HJERELKNDKNKLSNKLNFKLNSLKNLKFNLKFNSLKNFLKSNFLK")
+            let payLoad = { status: true, data: {"JobPreference":status.Job_Preferences,"additionaldata":status.AdditionalData} } 
+            console.log(payLoad)
+            return res.json(payLoad)
         }
         else {
-            return res.json({ status: false })
+            console.log("Responding from here")
+            return res.json({ status : false, data : "Please fill out all the fields" })
         }
     }
     catch (err) {
@@ -165,7 +171,22 @@ const downloadSubscribedStudentZip = async (req, res) => {
             subscribedStudentList.push(student["studentDetails"]["Student_ID"])
         })
         console.log("subscribed students : ", subscribedStudentList)
-        const data = await ZippingService.downloadZipFile("../public/student_details/CV/", zipName, subscribedStudentList)
+        // const data = await ZippingService.downloadZipFile("../public/student_details/CV/", zipName, subscribedStudentList)
+        const data = await ZippingService.downloadZipFileV1(zipName,subscribedStudentList);
+        if(data)
+        {
+            return OK(
+              res,
+              process.env.NODE_ENV=="prodction"?"http://placement.ceddu.in/public/student_details/Zips"+zipName+".zip":
+              "http://localhost:8000/public/student_details/Zips/" + zipName + ".zip"
+            );
+            // http://localhost:8000/student_details/Zips/1_Amazion.zip
+        }
+        else
+        {
+            return ERROR(res,"File system error!")
+        }
+        return res.send("Hello")
 
         res.set('Content-Type', 'application/octet-stream');
         res.set('Content-Disposition', `attachment; filename=${zipName

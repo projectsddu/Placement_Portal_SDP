@@ -26,6 +26,7 @@
     "nodemon": "^2.0.15",
     "sequelize": "^6.12.0-beta.3",
     "serverloggerjs": "^1.1.6",
-    "string-to-stream": "^3.0.1"
+    "string-to-stream": "^3.0.1",
+    "zip-a-folder": "^1.1.5"
   }
 }

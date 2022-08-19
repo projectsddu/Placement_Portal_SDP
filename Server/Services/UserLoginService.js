@@ -130,6 +130,7 @@ const changePassword = async (studentId, oldPassword, newPassword) => {
 
 const loginUser = async (loginId, password) => {
     try {
+        console.log(loginId,password)
         const loginObj = await UserLogin.findAll({ where: { LoginId: loginId, Password: SHA256(password).toString() } })
 
         if (loginObj.length == 0) {

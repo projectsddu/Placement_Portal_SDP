@@ -11,6 +11,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { Grid } from '@material-ui/core';
 import axios from 'axios';
 import domainConfig from '../../Config/domainConfig';
+import { toast } from 'react-toastify';
 
 
 function CustomToolbar() {
@@ -209,46 +210,67 @@ function ViewSubscribedStudents() {
     console.log(id)
 
 
-    async function handleClick() {
-        console.log("Here")
+    // async function handleClick() {
+    //     console.log("Here")
+    //     // const link = '/subscribeannouncement/downloadSubscribedStudentZip/' + id
+    //     // const resp = await axios.post(link)
+    //     // setfolderData(true)
+    //     // const driveLink = resp.data
+    //     // setfolderData(false)
+    //     // const win = window.open(driveLink, "_blank");
+    //     // console.log(resp)
+    // }
+
+    async function handleSeeCV()
+    {
+
+        console.log('Heknlkdn');
         const link = '/subscribeannouncement/downloadSubscribedStudentZip/' + id
-        setfolderData(true)
-        const resp = await axios.post(link)
-        const driveLink = resp.data.data
+        const resp = await axios.get(link)
+        toast.success("Please wait a while")
+        setTimeout(()=>{    
+            console.log(resp)
+            if(resp.data.status)
+            {
+                window.open(resp.data.data,"_blank")
+            }
+            else
+            {
+                toast.error(resp.data.data)
+            }
+        },1000)
         setfolderData(false)
-        const win = window.open(driveLink, "_blank");
     }
 
     return (
         <>
             <MainCard title="Applied Students">
-
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={2}>
-                        <a
+                        {/* <a
                             target="self"
-                            style={{ "text-decoration": "none" }}
+                            style={{ 'text-decoration': 'none' }}
                             href={
-
-                                process.env.NODE_ENV == "production" ?
-                                    // "http://csiddu.tech" + 
-                                    domainConfig.domain +
-                                    "/subscribeannouncement/downloadSubscribedStudentZip/" + id : "http://localhost:8000" + "/subscribeannouncement/downloadSubscribedStudentZip/" + id
-
-
-                            }>
-                            <Button variant="contained" onClick={() => handleClick()} size="large" color="primary">
+                                process.env.NODE_ENV == 'production'
+                                    ? // "http://csiddu.tech" +
+                                      domainConfig.domain + '/subscribeannouncement/downloadSubscribedStudentZip/' + id
+                                    : 'http://localhost:8000' + '/subscribeannouncement/downloadSubscribedStudentZip/' + id
+                            }
+                        > */}
+                            <Button variant="contained" onClick={() => handleSeeCV()} size="large" color="primary">
                                 See All CV's
                             </Button>
-                        </a>
+                        {/* </a> */}
                     </Grid>
-                    {folderData === undefined ?
-                        "" :
-                        folderData == true ?
-                            <Grid item xs={12} md={2}>
-                                <CircularProgress />
-                            </Grid> : ""
-                    }
+                    {folderData === undefined ? (
+                        ''
+                    ) : folderData == true ? (
+                        <Grid item xs={12} md={2}>
+                            <CircularProgress />
+                        </Grid>
+                    ) : (
+                        ''
+                    )}
                 </Grid>
                 {/* // </a> */}
                 <br />
@@ -263,7 +285,7 @@ function ViewSubscribedStudents() {
                         }}
                     />
                 </div>
-            </MainCard >
+            </MainCard>
         </>
     );
 }

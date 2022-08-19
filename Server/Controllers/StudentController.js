@@ -354,7 +354,7 @@ const downloadSelectedCV = async (req, res) => {
         })
         let date_suffix = new Date().toDateString()
         let zipName = "SelectedStudents"
-        const data = await ZippingService.downloadZipFile("../public/student_details/CV/", zipName, datas)
+        const data = await ZippingService.downloadZipFileV1(zipName, datas)
         if (!data) {
             return ERROR(res, "Error fetching zip file")
         }

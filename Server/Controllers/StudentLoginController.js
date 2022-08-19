@@ -36,6 +36,7 @@ const loginUser = async (req, res) => {
         }
     }
     catch (err) {
+        console.log(err)
         log.error(err.toString())
         return res.json({ status: false, data: "Wrong username or password!" })
     }
