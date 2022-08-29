@@ -1,5 +1,5 @@
 ./Server/node_modules
-./Server/public
+./Server/public/**
 ./Client/node_modules
 ./Server/Logs
 ./Server/.env
