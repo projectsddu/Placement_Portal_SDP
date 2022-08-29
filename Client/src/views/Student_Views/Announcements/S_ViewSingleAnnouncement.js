@@ -332,6 +332,7 @@ export default function S_ViewSingleAnnouncement() {
 
         if (res.status) {
             setsubscribeStatus(true);
+            toast.success("Applied successfully.")
         } else {
             toast.error(res.data)
             // setIsJobPreferenceError(true);
